@@ -2,30 +2,6 @@
   text-align: center;
 }
 
-.nav {
-  background : rgb(76, 76, 76);
-  width : 100%;
-  display : flex;
-  color : white;
-  padding : 20px;
-}
-
-.modal{
-  margin-top : 20px;
-  padding : 20px;
-  background : #eee;
-  text-align : left;
-}
-
-div {
-  box-sizing : border-box
-}
-.list {
-  text-align : left;
-  padding-left : 20px;
-  border-bottom : 1px solid grey;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
