@@ -1,4 +1,4 @@
-//
+// 마이페이지
 
 function MyPage() {
     return (

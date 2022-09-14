@@ -11,3 +11,39 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-weight: 300;
+  src: url('./assets/fonts/NanumGothicLight.otf') format('woff2'),
+    url('./assets/fonts/NanumGothicLight.otf') format('woff'),
+    url('./assets/fonts/NanumGothicLight.otf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-weight: 400;
+  src: url('./assets/fonts/NanumGothic.otf') format('woff2'),
+    url('./assets/fonts/NanumGothic.otf') format('woff'),
+    url('./assets/fonts/NanumGothic.otf') format('truetype');
+}
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-weight: 700;
+  src: url('./assets/fonts/NanumGothicBold.otf') format('woff2'),
+    url('./assets/fonts/NanumGothicBold.otf') format('woff'),
+    url('./assets/fonts/NanumGothicBold.otf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nanum Gothic';
+  font-weight: 800;
+  src: url('./assets/fonts/NanumGothicExtraBold.otf') format('woff2'),
+    url('./assets/fonts/NanumGothicExtraBold.otf') format('woff'),
+    url('./assets/fonts/NanumGothicExtraBold.otf') format('truetype');
+}
+
+* {
+  box-sizing: border-box;
+  font-family: 'Nanum Gothic', sans-serif;
+}
