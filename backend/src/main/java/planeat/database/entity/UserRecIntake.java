@@ -9,6 +9,7 @@ package planeat.database.entity;
 */
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -53,27 +54,52 @@ public class UserRecIntake {
     private BigDecimal active;
 
     @Column(name = "calorie", nullable = false)
-    private float calorie;
+    private Float calorie;
 
     @Column(name = "carbohydrate", nullable = false)
-    private float carbohydrate;
+    private Float carbohydrate;
 
     @Column(name = "protein", nullable = false)
-    private float protein;
+    private Float protein;
 
     @Column(name = "fat", nullable = false)
-    private float fat;
+    private Float fat;
 
 
     @Builder
+    public UserRecIntake(Long id, User user, LocalDate updateDate, BigDecimal height, BigDecimal weight, BigDecimal bmi, BigDecimal active, Float calorie, Float carbohydrate, Float protein, Float fat) {
+        this.id = id;
+        this.user = user;
+        this.updateDate = updateDate;
+        this.height = height;
+        this.weight = weight;
+        this.bmi = bmi;
+        this.active = active;
+        this.calorie = calorie;
+        this.carbohydrate = carbohydrate;
+        this.protein = protein;
+        this.fat = fat;
+    }
 
 
+//    public void setHeight(BigDecimal height) { this.height = height; }
+//    public void setWeight(BigDecimal weight) { this.weight = weight; }
+//    public void setBmi(BigDecimal bmi) { this.bmi = bmi; }
+//    public void setActive(BigDecimal active) { this.active = active; }
+//    public void setCalorie(Float calorie) { this.calorie = calorie; }
+//    public void setCarbohydrate(Float carbohydrate) { this.carbohydrate = carbohydrate; }
+//    public void setProtein(Float protein) { this.protein = protein; }
+//    public void setFat(Float fat) { this.fat = fat; }
 
-    public void setUpdateDate()
-
-    public UserRecIntake update(String name, String email) {
-        this.name = name;
-        this.email = email;
+    public UserRecIntake update(BigDecimal height, BigDecimal weight, BigDecimal bmi, BigDecimal active, Float calorie, Float carbohydrate, Float protein, Float fat) {
+        this.height = height;
+        this.weight = weight;
+        this.bmi = bmi;
+        this.active = active;
+        this.calorie = calorie;
+        this.carbohydrate = carbohydrate;
+        this.protein = protein;
+        this.fat = fat;
         return this;
     }
 

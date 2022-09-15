@@ -19,8 +19,7 @@ import planeat.enums.Gender;
 import javax.persistence.*;
 
 import java.util.ArrayList;
-
-import static javax.persistence.FetchType.LAZY;
+import java.util.List;
 
 @Entity
 @Getter
@@ -54,11 +53,25 @@ public class User {
     private String refreshToken;
 
 
-    // 매핑관계 테이블 작성해야 함 OneToMany
-    // 유저 권장섭취량 테이블, 유저 영양제 테이블, 분석 기록, 섭취 기록, 내 식단
-//    @JsonIgnore
-//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
-//    List<UserNutirition> nutritionHistories = new ArrayList<>();
+     @JsonIgnore
+     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+     List<UserRecIntake> userRecIntakeList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<MyDiet> myDietList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<IntakeHistory> intakeHistoryList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<AnalysisHistory> analysisHistoryList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<UserNutrient> userNutrientList = new ArrayList<>();
 
 
     @Builder
@@ -72,18 +85,12 @@ public class User {
     }
 
 
-    public void setName(String name) {
-        this.name = name;
-    }
-    public void setEmail(String email) {
-        this.email = email;
-    }
-    public void setProvider(String provider) { this.provider = provider; }
-    public void setBirthyear(Integer birthyear) { this.birthyear = birthyear; }
-    public void setGender(Gender gender) { this.gender = gender; }
-    public void setRefreshToken(String refreshToken) {
-        this.refreshToken = refreshToken;
-    }
+//    public void setName(String name) { this.name = name; }
+//    public void setEmail(String email) { this.email = email; }
+//    public void setProvider(String provider) { this.provider = provider; }
+//    public void setBirthyear(Integer birthyear) { this.birthyear = birthyear; }
+//    public void setGender(Gender gender) { this.gender = gender; }
+//    public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
 
     public User update(String name, String email) {
