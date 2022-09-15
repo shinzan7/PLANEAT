@@ -14,12 +14,10 @@ import javax.persistence.*;
 @Entity
 @Getter
 @DynamicUpdate
-@Builder
-@AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "analysis_history")
 public class AnalysisHistory {
-    @Id @GeneratedValue
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "analysis_history_id")
     private Long id;
 
@@ -60,4 +58,72 @@ public class AnalysisHistory {
     private Float vitaminB1;
     private Float vitaminB2;
 
+    @Builder
+    public AnalysisHistory(User user, String analysis_score, Float calorie, Float protein, Float fat, Float carbohydrate, Float sugar, Float dietary_fiber, Float calcium, Float iron, Float magnesium, Float phosphorus, Float potassium, Float sodium, Float zinc, Float copper, Float manganese, Float selenium, Float vitaminA, Float vitaminD, Float vitaminB6, Float folate, Float vitaminB12, Float vitaminC, Float cholesterol, Float fattyAcid, Float linoleicAcid, Float alphaLinoleicAcid, Float transFattyAcid, Float vitaminB1, Float vitaminB2) {
+        this.user = user;
+        this.analysis_score = analysis_score;
+        this.calorie = calorie;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbohydrate = carbohydrate;
+        this.sugar = sugar;
+        this.dietary_fiber = dietary_fiber;
+        this.calcium = calcium;
+        this.iron = iron;
+        this.magnesium = magnesium;
+        this.phosphorus = phosphorus;
+        this.potassium = potassium;
+        this.sodium = sodium;
+        this.zinc = zinc;
+        this.copper = copper;
+        this.manganese = manganese;
+        this.selenium = selenium;
+        this.vitaminA = vitaminA;
+        this.vitaminD = vitaminD;
+        this.vitaminB6 = vitaminB6;
+        this.folate = folate;
+        this.vitaminB12 = vitaminB12;
+        this.vitaminC = vitaminC;
+        this.cholesterol = cholesterol;
+        this.fattyAcid = fattyAcid;
+        this.linoleicAcid = linoleicAcid;
+        this.alphaLinoleicAcid = alphaLinoleicAcid;
+        this.transFattyAcid = transFattyAcid;
+        this.vitaminB1 = vitaminB1;
+        this.vitaminB2 = vitaminB2;
+    }
+
+    public AnalysisHistory update(String analysis_score, Float calorie, Float protein, Float fat, Float carbohydrate, Float sugar, Float dietary_fiber, Float calcium, Float iron, Float magnesium, Float phosphorus, Float potassium, Float sodium, Float zinc, Float copper, Float manganese, Float selenium, Float vitaminA, Float vitaminD, Float vitaminB6, Float folate, Float vitaminB12, Float vitaminC, Float cholesterol, Float fattyAcid, Float linoleicAcid, Float alphaLinoleicAcid, Float transFattyAcid, Float vitaminB1, Float vitaminB2) {
+        this.analysis_score = analysis_score;
+        this.calorie = calorie;
+        this.protein = protein;
+        this.fat = fat;
+        this.carbohydrate = carbohydrate;
+        this.sugar = sugar;
+        this.dietary_fiber = dietary_fiber;
+        this.calcium = calcium;
+        this.iron = iron;
+        this.magnesium = magnesium;
+        this.phosphorus = phosphorus;
+        this.potassium = potassium;
+        this.sodium = sodium;
+        this.zinc = zinc;
+        this.copper = copper;
+        this.manganese = manganese;
+        this.selenium = selenium;
+        this.vitaminA = vitaminA;
+        this.vitaminD = vitaminD;
+        this.vitaminB6 = vitaminB6;
+        this.folate = folate;
+        this.vitaminB12 = vitaminB12;
+        this.vitaminC = vitaminC;
+        this.cholesterol = cholesterol;
+        this.fattyAcid = fattyAcid;
+        this.linoleicAcid = linoleicAcid;
+        this.alphaLinoleicAcid = alphaLinoleicAcid;
+        this.transFattyAcid = transFattyAcid;
+        this.vitaminB1 = vitaminB1;
+        this.vitaminB2 = vitaminB2;
+        return this;
+    }
 }
