@@ -1,4 +1,154 @@
 .bgColor {
-  background: linear-gradient(to top, skyblue, rgba(11, 5, 71, 1));
-  height: 4320px;
+  color: #fff;
+  background: linear-gradient(-45deg, #0e0120, #47445c
+  , #130524, #190730);
+  background-repeat: no-repeat;
+  background-size: 400% 400%;
+  animation: backgroundChange 5s ease-in-out infinite;
+  /* display: flex; */
 }
+
+@keyframes backgroundChange{
+  0%{
+      background-position: 0 50%;
+  }
+  50%{
+      background-position: 100% 50%;
+  }
+  100%{
+      background-position: 0 50%;
+  }
+}
+
+
+
+
+.login{
+  position: relative;
+  padding: 10%;
+  margin-top: 5%;
+  color: #03e9f4;
+  text-decoration: none;
+  transition: 0.5s;
+  letter-spacing: 4px;
+  overflow: hidden;
+  left: 20%;
+  display: inline-block;
+
+}
+
+.login:nth-child(1){
+  filter: hue-rotate(270deg);
+}
+.login:nth-child(2){
+  filter: hue-rotate(110deg);
+}
+.login span{
+  position: absolute;
+  display: block;
+}
+.login span:nth-child(1){
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg,transparent, #5D5A85);
+  animation: animate1 3s linear infinite;
+}
+@keyframes animate1{
+  0%{
+      left: -100%;
+  }
+  50%,100%{
+      left: 100%;
+  }
+}
+.login span:nth-child(2){
+  top: -100%;
+  right: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(180deg,transparent,#5D5A85);
+  animation: animate2 3s linear infinite;
+  animation-delay: 0.75s;
+}
+@keyframes animate2{
+  0%{
+      top: -100%;
+  }
+  50%,100%{
+      top: 100%;
+  }
+}
+.login span:nth-child(3){
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(270deg,transparent,#5D5A85);
+  animation: animate3 3s linear infinite;
+  animation-delay: 1.50s;
+}
+@keyframes animate3{
+  0%{
+      right: -100%;
+  }
+  50%,100%{
+      right: 100%;
+  }
+}
+
+
+.login span:nth-child(4){
+  bottom: -100%;
+  left: 0;
+  width: 2px;
+  height: 100%;
+  background: linear-gradient(360deg,transparent,#5D5A85);
+  animation: animate4 3s linear infinite;
+  animation-delay: 2.25s;
+}
+@keyframes animate4{
+  0%{
+      bottom: -100%;
+  }
+  50%,100%{
+      bottom: 100%;
+  }
+}
+
+
+
+
+
+.section2 {
+  margin-top: 20%;
+  text-align: center;
+  font-size: 3.3vw;
+}
+
+.cardsection {
+  margin-top: 5%;
+}
+
+.p {
+  font-size: 1.5vw;
+  color: white;
+  position: relative;
+  top: 40%;
+}
+
+.section3 {
+  margin-top: 20%;
+  font-size: 1.5vw;
+  text-align: center;
+  
+}
+
+.section4 {
+  margin-top: 20%;
+  font-size: 1.5vw;
+  text-align: center; 
+
+}
+

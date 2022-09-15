@@ -11,5 +11,5 @@ const BtnGray = styled(Button)`
         width: ${props => props.size};
     }
 `;
-  
+
 export default BtnGray;
