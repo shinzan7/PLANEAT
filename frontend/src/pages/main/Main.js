@@ -8,5 +8,5 @@ function Main() {
         <BtnGray size="120px">수정</BtnGray>
     );
 }
-  
+
 export default Main;
