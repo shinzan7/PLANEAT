@@ -38,7 +38,7 @@ public class UserRecIntake {
     private User user;
 
     @CreatedDate
-    @Column(name = "update_date")
+    @Column(name = "update_date", nullable = false)
     private LocalDate updateDate;
 
     @Column(name = "height", nullable = false)

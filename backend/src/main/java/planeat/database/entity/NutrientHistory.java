@@ -33,7 +33,8 @@ public class NutrientHistory {
     private Integer intakeReal;
 
     @Builder
-    public NutrientHistory(UserNutrient userNutrient, LocalDate intakeDate, Integer intakeReal) {
+    public NutrientHistory(Long id, UserNutrient userNutrient, LocalDate intakeDate, Integer intakeReal) {
+        this.id = id;
         this.userNutrient = userNutrient;
         this.intakeDate = intakeDate;
         this.intakeReal = intakeReal;

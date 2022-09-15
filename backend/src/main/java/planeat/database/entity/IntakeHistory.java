@@ -38,7 +38,7 @@ public class IntakeHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Column(name = "intake_history_id", nullable = false)
+    @Column(name = "date", nullable = false)
     private Date date;
 
     @Enumerated(EnumType.STRING)
@@ -47,7 +47,7 @@ public class IntakeHistory {
 
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "intakeHistory")
     List<IntakeFood> intakeFoodList = new ArrayList<>();
 
 

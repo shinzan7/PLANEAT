@@ -32,7 +32,8 @@ public class Category {
     private String categoryTag;
 
     @Builder
-    public Category(Ingredient ingredient, String categoryTag) {
+    public Category(Long id, Ingredient ingredient, String categoryTag) {
+        this.id = id;
         this.ingredient = ingredient;
         this.categoryTag = categoryTag;
     }
