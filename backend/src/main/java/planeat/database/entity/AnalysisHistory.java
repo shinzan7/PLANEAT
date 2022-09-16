@@ -21,7 +21,8 @@ public class AnalysisHistory {
     @Column(name = "analysis_history_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
     private String analysis_score;
 

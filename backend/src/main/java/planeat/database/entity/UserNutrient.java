@@ -28,10 +28,12 @@ public class UserNutrient {
     @Column(name = "user_nutrient_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nutrient_id")
     private Nutrient nutrient;
 
     private Integer intakeRecommend;

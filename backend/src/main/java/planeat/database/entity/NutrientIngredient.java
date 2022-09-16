@@ -26,10 +26,12 @@ public class NutrientIngredient {
     @Column(name = "nutrient_ingredient_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "nutrient_id")
     private Nutrient nutrient;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
     private Float ingredientAmount;

@@ -26,7 +26,8 @@ public class NutrientHistory {
     @Column(name = "nutrient_history_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_nutrient_id")
     private UserNutrient userNutrient;
 
     private LocalDate intakeDate;

@@ -26,7 +26,8 @@ public class Category {
     @Column(name = "category_id")
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ingredient_id")
     private Ingredient ingredient;
 
     private String categoryTag;
