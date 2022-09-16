@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import planeat.api.dto.user.UserResponse;
 import planeat.enums.Gender;
 
 import javax.persistence.*;
@@ -90,7 +91,7 @@ public class User {
 //    public void setProvider(String provider) { this.provider = provider; }
 //    public void setBirthyear(Integer birthyear) { this.birthyear = birthyear; }
 //    public void setGender(Gender gender) { this.gender = gender; }
-//    public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+    public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
 
 
     public User update(String name, String email) {
@@ -100,6 +101,13 @@ public class User {
     }
 
 
-    // DTO 만들고 set 해서 response 반환하는 녀석 추가해야함
+    public UserResponse toUserResponse() {
+        UserResponse userResponse = new UserResponse();
+        userResponse.setProvider(this.getProvider());
+        userResponse.setName(this.getName());
+        userResponse.setEmail(this.getEmail());
+
+        return userResponse;
+    }
 
 }

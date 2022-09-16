@@ -40,7 +40,7 @@ public class MyDiet {
 
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "myDiet")
     List<DietInfo> dietInfoList = new ArrayList<>();
 
 

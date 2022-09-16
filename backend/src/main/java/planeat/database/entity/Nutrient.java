@@ -6,6 +6,7 @@ package planeat.database.entity;
  @author 신지한
  @since 2022-09-15
 */
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -29,8 +32,15 @@ public class Nutrient {
     private String company;
     private String description;
 
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "nutrient")
+    List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
+
+
     @Builder
-    public Nutrient(String nutrientName, String company, String description) {
+    public Nutrient(Long id, String nutrientName, String company, String description) {
+        this.id = id;
         this.nutrientName = nutrientName;
         this.company = company;
         this.description = description;

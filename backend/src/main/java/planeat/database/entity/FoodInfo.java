@@ -35,7 +35,7 @@ public class FoodInfo {
     @Column(name = "food_type")
     private FoodType foodType;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String name;
 
     @Column(name = "year")
@@ -50,10 +50,10 @@ public class FoodInfo {
     @Column(name = "category_detail")
     private String categoryDetail;
 
-    @Column(name = "serving_size")
+    @Column(name = "serving_size", nullable = false)
     private Integer servingSize;
 
-    @Column(name = "serving_unit")
+    @Column(name = "serving_unit", nullable = false)
     private String servingUnit;
 
     @Column(name = "capacity_g")
@@ -151,11 +151,11 @@ public class FoodInfo {
 
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "foodInfo")
     List<DietInfo> dietInfoList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "foodInfo")
     List<IntakeFood> intakeFoodList = new ArrayList<>();
 
 

@@ -12,7 +12,7 @@ import javax.persistence.*;
  *
  * 영양제 성분의 함량
  *
- @author 신지한
+ @author 신지한, 박윤하
  @since 2022-09-15
 */
 @Entity
@@ -35,7 +35,8 @@ public class NutrientIngredient {
     private Float ingredientAmount;
 
     @Builder
-    public NutrientIngredient(Nutrient nutrient, Ingredient ingredient, Float ingredientAmount) {
+    public NutrientIngredient(Long id, Nutrient nutrient, Ingredient ingredient, Float ingredientAmount) {
+        this.id = id;
         this.nutrient = nutrient;
         this.ingredient = ingredient;
         this.ingredientAmount = ingredientAmount;

@@ -3,9 +3,10 @@ package planeat.database.entity;
  *
  * 유저가 섭취하는 영양제
  *
- @author 신지한
+ @author 신지한, 박윤하
  @since 2022-09-15
 */
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -13,6 +14,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -33,8 +36,15 @@ public class UserNutrient {
 
     private Integer intakeRecommend;
 
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "userNutrient")
+    List<NutrientHistory> nutrientHistoryList = new ArrayList<>();
+
+
     @Builder
-    public UserNutrient(User user, Nutrient nutrient, Integer intakeRecommend) {
+    public UserNutrient(Long id, User user, Nutrient nutrient, Integer intakeRecommend) {
+        this.id = id;
         this.user = user;
         this.nutrient = nutrient;
         this.intakeRecommend = intakeRecommend;
