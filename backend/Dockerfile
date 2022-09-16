@@ -1,4 +1,4 @@
-FROM openjdk:17-ea-11-jdk-slim
+FROM openjdk:8-jdk
 
 WORKDIR /server
 
