@@ -8,6 +8,8 @@ import ChipOrange from 'components/common/ChipOrange';
 import ChipDeletable from 'components/common/ChipDeletable';
 import CardNutrient from 'components/common/CardNutrient';
 import Header from 'components/nav/Header';
+import Footer from 'components/nav/Footer';
+
 function Main() {
 
     const data = {
@@ -21,15 +23,17 @@ function Main() {
     return (
         <div>
             <Header></Header>
-            <div style={{marginTop:80}}>
+                <div style={{ marginTop: 80 }} id="wrapper">   
             <BtnGray>회색버튼</BtnGray>
             <BtnMain>메인버튼</BtnMain>
             <ChipBlue label="갈비치킨피자"></ChipBlue>
             <ChipOrange label="갈비치킨피자"></ChipOrange>
             <ChipDeletable label="삭제가능칩" onClick={()=>console.log("delete") } onDelete={()=>console.log("delete")}></ChipDeletable>
                 <CardNutrient pill={data}></CardNutrient>
+                <CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient><CardNutrient pill={data}></CardNutrient>
             </div>
-        </div>
+            <Footer></Footer>
+            </div>
     );
 }
 
