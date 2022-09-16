@@ -11,7 +11,6 @@ import CardContent from '@mui/material/CardContent';
 import ChipBlue from './ChipBlue';
 import ChipOrange from './ChipOrange';
 import Typography from '@mui/material/Typography';
-import img from "assets/basic_nutrient.png";
 
 const CardNutrient = function MediaCard(props) {
     let imgUrl = props.pill.img; // props의 이미지 url
@@ -21,10 +20,10 @@ const CardNutrient = function MediaCard(props) {
           <CardContent>
           <p style={{textAlign: "center", marginTop:20}}>
               <img
-                  width="150"
+                width="150"
               height="100"
               src={
-                  imgUrl == "" ? img : imgUrl
+                  imgUrl == "" ? "/assets/basic_nutrient.png" : imgUrl
               }
                       
               />
