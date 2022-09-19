@@ -1,7 +1,4 @@
 FROM openjdk:8-jdk
-
-WORKDIR /server
-
-COPY ./build/libs/jenkins-cicd-todo-0.0.1-SNAPSHOT.jar todo-server.jar
-
-ENTRYPOINT ["java", "-jar", "todo-server.jar"]
+ARG JAR_FILE=build/libs/*.jar
+COPY ${JAR_FILE} app.jar
+ENTRYPOINT ["java","-jar","-Duser.timezone=Asia/Seoul","/app.jar"]
