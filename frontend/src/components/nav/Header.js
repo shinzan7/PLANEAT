@@ -1,17 +1,18 @@
+/*
+상단 헤더
+@author 여예원
+@since 2022.09.16
+*/
+
 import * as React from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
 import SettingsIcon from '@mui/icons-material/Settings';
-import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
-import { AppBar, Box, Toolbar, IconButton, Typography, Menu,    } from "@mui/material";
-// import logo from 'assets/planeat_logo.png'
+import { AppBar, Box, Toolbar, IconButton, Typography, Menu, Button, MenuItem, Container   } from "@mui/material";
 
 const pages = ['식사 기록', '영양제 검색', '내 영양분석'];
-const settings = ['마이페이지', '로그아웃'];
 
 const ResponsiveAppBar = () => {
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -34,7 +35,9 @@ const ResponsiveAppBar = () => {
     <AppBar style={{ position: 'fixed', backgroundColor: 'white' }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
+          { /* 좌측 로고 (기본 사이즈) */}
           <Box component="img" src="assets/planeat_logo.png"  sx={{ display: { xs: 'none', md: 'flex' }, width:'200px'}}></Box>
+          { /* 좌특 메뉴 아이콘 (모바일 사이즈)*/}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"
@@ -70,6 +73,7 @@ const ResponsiveAppBar = () => {
               ))}
             </Menu>
           </Box>
+          { /* 중앙 PLANEAT 글씨 (모바일 사이즈) */}
           <Typography
             variant="h5"
             noWrap
@@ -86,7 +90,7 @@ const ResponsiveAppBar = () => {
           >
             PLANEAT
           </Typography>
-          { /* 중앙 메뉴 영역 */}
+          { /* 중앙 메뉴 영역 (기본 사이즈) */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' }, ml:'200px' }}>
             {pages.map((page) => (
               <Button
@@ -99,7 +103,7 @@ const ResponsiveAppBar = () => {
               </Button>
             ))}
           </Box>
-          { /* 우측 아이콘 영역 */}
+          { /* 우측 아이콘 영역(기본 사이즈) */}
           <Box sx={{ flexGrow: 0 }}>
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0}}>
                 <SettingsIcon/>

@@ -18,5 +18,5 @@ const BtnGray = styled(Button)`
         height: 37px;
     }
 `;
-  
+
 export default BtnGray;
