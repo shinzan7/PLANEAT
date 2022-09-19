@@ -25,6 +25,7 @@ import UserTagForm from "pages/home/UserTagForm";
 
 import Header from "components/nav/Header";
 import Footer from "components/nav/Footer";
+import BtnMain from "components/common/BtnMain";
 
 const steps = ["이용약관 동의", "개인정보 입력", "건강고민 선택"];
 
@@ -60,19 +61,19 @@ function getStepContent(step) {
   }
 }
 
-const theme = createTheme({
-  typography: {
-    fontFamily: "'Nanum Gothic', sans-serif",
-  },
-  palette: {
-    purple: {
-      main: "#9DA6F8",
-    },
-    orange: {
-      main: "#F7BF87",
-    },
-  },
-});
+// const theme = createTheme({
+//   typography: {
+//     fontFamily: "'Nanum Gothic', sans-serif",
+//   },
+//   palette: {
+//     purple: {
+//       main: "#9DA6F8",
+//     },
+//     orange: {
+//       main: "#F7BF87",
+//     },
+//   },
+// });
 
 function Welcome() {
   const [activeStep, setActiveStep] = React.useState(0);
@@ -92,16 +93,43 @@ function Welcome() {
     console.log("메인페이지(식사기록페이지) 이동");
   };
 
+  const BeforeButton = styled(Button)`
+    &:hover {
+      background-color: #a9a9a9;
+    }
+    &:focus {
+      background-color: green;
+    }
+  `;
   return (
-    <ThemeProvider theme={theme}>
+    <div>
       <CssBaseline />
       <Header />
-      <Container component="main" maxWidth="md" sx={{ mb: 4 }}>
+      <Container component="main" maxWidth="md" sx={{ mb: 4, marginTop: "80px" }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <CelebrateLine></CelebrateLine>
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
             {steps.map((label) => (
-              <Step key={label}>
+              <Step
+                key={label}
+                sx={{
+                  "& .MuiStepLabel-root .Mui-completed": {
+                    color: "purple.main", // circle color (COMPLETED)
+                  },
+                  "& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel": {
+                    color: "purple.main", // Just text label (COMPLETED)
+                  },
+                  "& .MuiStepLabel-root .Mui-active": {
+                    color: "purple.main", // circle color (ACTIVE)
+                  },
+                  "& .MuiStepLabel-label.Mui-active.MuiStepLabel-alternativeLabel": {
+                    color: "purple.main", // Just text label (ACTIVE)
+                  },
+                  "& .MuiStepLabel-root .Mui-active .MuiStepIcon-text": {
+                    fill: "purple.main", // circle's number (ACTIVE)
+                  },
+                }}
+              >
                 <StepLabel>{label}</StepLabel>
               </Step>
             ))}
@@ -125,14 +153,33 @@ function Welcome() {
                 {getStepContent(activeStep)}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {activeStep !== 0 && (
-                    <Button onClick={handleBack} sx={{ mt: 3, ml: 1 }}>
+                    <BtnMain
+                      onClick={handleBack}
+                      sx={{
+                        "&:hover": {
+                          color: "purple.main",
+                        },
+                        mt: 3,
+                        ml: 1,
+                      }}
+                    >
                       이전
-                    </Button>
+                    </BtnMain>
                   )}
 
-                  <Button variant="contained" onClick={handleNext} sx={{ mt: 3, ml: 1 }}>
+                  <BtnMain
+                    width="120px"
+                    onClick={handleNext}
+                    sx={{
+                      "&:hover": {
+                        color: "purple.main",
+                      },
+                      mt: 3,
+                      ml: 1,
+                    }}
+                  >
                     {activeStep === steps.length - 1 ? "완료" : "다음"}
-                  </Button>
+                  </BtnMain>
                 </Box>
               </React.Fragment>
             )}
@@ -140,7 +187,7 @@ function Welcome() {
         </Paper>
       </Container>
       <Footer />
-    </ThemeProvider>
+    </div>
   );
 }
 
