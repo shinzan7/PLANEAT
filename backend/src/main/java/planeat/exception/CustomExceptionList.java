@@ -17,7 +17,8 @@ import org.springframework.http.HttpStatus;
 public enum CustomExceptionList {
 
     REFRESH_TOKEN_ERROR(HttpStatus.UNAUTHORIZED, "E001", "리프레쉬 토큰 오류입니다."),
-    USER_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E002", "존재하지 않는 회원입니다.");
+    USER_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E002", "존재하지 않는 회원입니다."),
+    ACCESS_TOKEN_ERROR(HttpStatus.UNAUTHORIZED, "E003", "엑세스 토큰 오류입니다.");
 
     private final HttpStatus status;
     private final String code;
