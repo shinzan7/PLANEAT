@@ -15,8 +15,6 @@ import Grid from '@mui/material/Grid';
 import { Card } from '@mui/material';
 import Stack from '@mui/material/Stack';
 
-import GoogleButton from './GoogleButton';
-
 function Home() {
   const monitordiv = { width:'35vw', height:'45vh', marginTop:'20vh'}
   const logodiv = { width:'10vw', height:'12.5vh', marginTop:'20vh'}
@@ -126,7 +124,6 @@ function Home() {
                   </svg>
                   &nbsp;&nbsp;&nbsp;
                   <br></br>
-                  <GoogleButton />
                   {/* <svg width="83" height="84" viewBox="0 0 83 84" fill="none" xmlns="http://www.w3.org/2000/svg" style={button}>
                     <circle cx="41.7741" cy="42.1411" r="41.2258" fill="white"/>
                     <path d="M69.5315 37.4318H67.2848V37.3143H42.1822V48.6428H57.9452C55.6456 55.2374 49.4661 59.9713 42.1822 59.9713C32.9402 59.9713 25.447 52.3628 25.447 42.9785C25.447 33.5943 32.9402 25.9858 42.1822 25.9858C46.4482 25.9858 50.3294 27.6199 53.2845 30.2892L61.1737 22.2785C56.1922 17.5644 49.5289 14.6572 42.1822 14.6572C26.7789 14.6572 14.2903 27.3381 14.2903 42.9785C14.2903 58.619 26.7789 71.2998 42.1822 71.2998C57.5854 71.2998 70.074 58.619 70.074 42.9785C70.074 41.0796 69.8816 39.226 69.5315 37.4318Z" fill="#FFC107"/>

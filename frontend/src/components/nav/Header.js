@@ -32,7 +32,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar style={{ position: 'fixed', backgroundColor: 'white' }}>
+    <AppBar style={{ position: 'fixed', backgroundColor: 'white', boxShadow: "none", borderBottom: "2px solid rgb(228, 225, 225)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           { /* 좌측 로고 (기본 사이즈) */}
@@ -86,6 +86,7 @@ const ResponsiveAppBar = () => {
               fontWeight: 700,
               letterSpacing: '.3rem',
               textDecoration: 'none',
+              color: "#9DA6F8",
             }}
           >
             PLANEAT
