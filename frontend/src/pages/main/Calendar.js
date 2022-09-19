@@ -11,6 +11,8 @@ function MainCalendar() {
     let today = new Date();
 
     const mark = ["2022-09-01", "2022-09-03", "2022-09-10", "2022-09-17", "2022-09-21"]; // 플래닛 지수 날짜 담을 배열
+    // todo: 플래닛 지수 별 배열 만들기
+    // todo: 날짜 클릭시 우측 영역 보여주기 함수
 
     return (
         <div>
@@ -20,10 +22,10 @@ function MainCalendar() {
                 defaultValue={today}
                 calendarType="Hebrew" // 일요일시작
                 showNeighboringMonth={false} // 이전, 다음 달 없애는 코드
-                minDetail="month"
-                maxDetail="month"
+                minDetail="month" // 최소 선택을 월 단위로 하는 코드
+                maxDetail="month" // 최대 선택을 월 단위로 하는 코드
                 // 날짜의 일을 빼는 코드
-                formatDay={(locale, date) => date.toLocaleString("en", { day: "numeric" })}
+                formatDay={(locale, date) => moment(date).format("DD")}
                 
                 tileContent={({ date, view }) => { 
                     // 추가할 html 태그를 변수 초기화

@@ -25,14 +25,15 @@ function Home() {
 
   return (
     <div className='bgColor'>
-    
+    <img src="assets/test.png" style={{width: "80%"}}></img>
         <Grid container>
           <Grid item xs={6}>
             <Grid container>
               <Grid item xs={2}>
 
-              </Grid>
-              <Grid item xs={8}>
+            </Grid>
+           
+            <Grid item xs={8}>
                 {/* <img src={monitor} alt='' style={monitordiv}/> */}
                 <svg width="847" height="513" viewBox="0 0 847 513" fill="none" xmlns="http://www.w3.org/2000/svg" style={monitordiv}>
                   <rect x="29" y="14" width="794" height="446" fill="#D9D9D9" fill-opacity="0.2"/>
@@ -60,7 +61,7 @@ function Home() {
                   </linearGradient>
                   </defs>
                 </svg>
-
+                
                 </Grid>
                 <Grid item xs={2}>
 
