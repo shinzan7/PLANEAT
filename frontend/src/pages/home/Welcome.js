@@ -26,6 +26,7 @@ import UserTagForm from "pages/home/UserTagForm";
 import Header from "components/nav/Header";
 import Footer from "components/nav/Footer";
 import BtnMain from "components/common/BtnMain";
+import TagMain from "components/common/TagMain";
 
 const steps = ["이용약관 동의", "개인정보 입력", "건강고민 선택"];
 
