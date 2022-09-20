@@ -13,6 +13,7 @@ import Chip from "@mui/material/Chip";
 import { Container, Grid } from "@mui/material";
 import TagMain from "components/common/TagMain";
 
+
 const userTags = [
   {
     id: "1",
@@ -182,15 +183,14 @@ export default function UserTagForm() {
 
       <Container sx={{ py: 8 }} maxWidth="lg">
         <Grid container spacing={5}>
-          {userTags.map((data) => (
-            <Grid item xs={3} sm={3} md={3}>
-              <TagMain
-                onClick={() => console.log("clicks")}
-                data={data.title}
-                checkedItems={checkedItems}
-                checkedItemHandler={checkedItemHandler}
+          {userTags.map((data, i) => (
+            <TagMain
+              key={ i}
+              click={ "userForm"}
+              data={data.title}
+              checkedItems={checkedItems}
+              checkedItemHandler={checkedItemHandler}
               />
-            </Grid>
           ))}
         </Grid>
       </Container>
