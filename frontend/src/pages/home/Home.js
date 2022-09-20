@@ -25,8 +25,7 @@ function Home() {
 
   return (
     <div className='bgColor'>
-    <img src="assets/test.png" style={{width: "80%"}}></img>
-        <Grid container>
+      <Grid container>
           <Grid item xs={6}>
             <Grid container>
               <Grid item xs={2}>

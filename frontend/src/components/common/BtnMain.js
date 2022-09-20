@@ -17,7 +17,7 @@ const BtnMain = styled(Button)`
         width: ${props => props.size};
         height: 37px;
         
-    },
+    }
     
 `;
   

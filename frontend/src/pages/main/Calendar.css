@@ -75,12 +75,6 @@
         text-decoration: none;
     }
 
-    /* abbr {
-        background-color: #9DA6F8;
-        border-radius: 9999px;
-        border: solid 10px #9DA6F8;
-    } */
-
   .react-calendar__tile {
     max-width: 100%;
     padding: 10px 6.6667px;
@@ -112,18 +106,16 @@
   }
   
   /* 오늘 날짜 */
-  /* .react-calendar__tile--now {
+  .react-calendar__tile--now {
     border: 1px;
     font-weight: bolder;
     font-size: 15px;
   }
 
   .react-calendar__tile--now > abbr{
-    background-color: #F7BF87;
-    border-radius: 9999px;
-    border: solid 5px #F7BF87;
-    color: white;
-  } */
+    color: #9DA6F8;
+    font-weight: bolder;
+  }
 
   /* 날짜 active시 컬러 */
   .react-calendar__tile--active {
@@ -169,7 +161,7 @@
     border-radius: 50%;
     display: flex;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 6px;
   }
 
   .unDot {
@@ -179,7 +171,7 @@
     border-radius: 50%;
     display: flex;
     margin: auto;
-    margin-top: 10px;
+    margin-top: 6px;
   }
 
   .dotArea {
