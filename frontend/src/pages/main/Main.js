@@ -9,6 +9,7 @@ import ChipDeletable from 'components/common/ChipDeletable';
 import CardNutrient from 'components/common/CardNutrient';
 import Header from 'components/nav/Header';
 import Footer from 'components/nav/Footer';
+import Calendar from './Calendar';
 
 function Main() {
 
@@ -23,8 +24,9 @@ function Main() {
     return (
         <div>
             <Header></Header>
-                <div style={{ marginTop: 80 }} id="wrapper">   
-            <BtnGray>회색버튼</BtnGray>
+                <div style={{ marginTop: 80 }}>   
+                <Calendar></Calendar>
+                <BtnGray>회색버튼</BtnGray>
             <BtnMain>메인버튼</BtnMain>
             <ChipBlue label="갈비치킨피자"></ChipBlue>
             <ChipOrange label="갈비치킨피자"></ChipOrange>
