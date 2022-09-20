@@ -25,15 +25,15 @@
 
 .login{
   position: relative;
-  padding: 10%;
+  padding: 5%;
   margin-top: 5%;
   color: #03e9f4;
   text-decoration: none;
   transition: 0.5s;
   letter-spacing: 4px;
   overflow: hidden;
-  left: 20%;
-  display: inline-block;
+  text-align: center;
+  margin-left: 20%;
 
 }
 
