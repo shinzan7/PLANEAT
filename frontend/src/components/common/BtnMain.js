@@ -16,7 +16,9 @@ const BtnMain = styled(Button)`
         border-radius: 24px;
         width: ${props => props.size};
         height: 37px;
+        
     }
+    
 `;
   
 export default BtnMain;
