@@ -37,7 +37,7 @@ const ResponsiveAppBar = () => {
         <Toolbar disableGutters>
           { /* 좌측 로고 (기본 사이즈) */}
           <Box component="img" src="assets/planeat_logo.png"  sx={{ display: { xs: 'none', md: 'flex' }, width:'200px'}}></Box>
-          { /* 좌특 메뉴 아이콘 (모바일 사이즈)*/}
+          { /* 좌측 메뉴 아이콘 (모바일 사이즈)*/}
           <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             <IconButton
               size="large"

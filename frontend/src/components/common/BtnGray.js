@@ -14,7 +14,7 @@ const BtnGray = styled(Button)`
         background-color: #D9D9D9;
         color: white;
         border-radius: 24px;
-        width: ${props => props.size};
+        width: ${props => props.width};
         height: 37px;
     }
 `;
