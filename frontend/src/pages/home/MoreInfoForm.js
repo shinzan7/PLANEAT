@@ -35,6 +35,7 @@ export default function MoreInfoForm() {
       <Typography variant="subtitle2">
         추가적으로 기입한 정보를 바탕으로 영양을 분석해드려요!
       </Typography>
+      {/* 성별 */}
       <Grid sx={{ mt: 3 }} item xs={12} md={6}>
         <FormControl>
           <FormLabel
@@ -84,6 +85,7 @@ export default function MoreInfoForm() {
           </RadioGroup>
         </FormControl>
       </Grid>
+      {/* 나이 */}
       <Grid sx={{ mb: 2 }} item xs={12} md={6}>
         <TextField
           required
@@ -96,6 +98,7 @@ export default function MoreInfoForm() {
           color="purple"
         />
       </Grid>
+      {/* 키 */}
       <Grid sx={{ mb: 2 }} item xs={12} md={6}>
         <TextField
           required
@@ -108,6 +111,7 @@ export default function MoreInfoForm() {
           color="purple"
         />
       </Grid>
+      {/* 몸무게 */}
       <Grid sx={{ mb: 2 }} item xs={12} md={6}>
         <TextField
           required
@@ -120,6 +124,7 @@ export default function MoreInfoForm() {
           color="purple"
         />
       </Grid>
+      {/* 활동량 */}
       <Grid sx={{ mt: 3 }} item xs={12} md={6}>
         <FormControl>
           <FormLabel
