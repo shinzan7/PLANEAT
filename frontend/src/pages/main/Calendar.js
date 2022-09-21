@@ -9,7 +9,7 @@ import Calendar from 'react-calendar';
 import './Calendar.css';
 import moment from 'moment';
 
-function MainCalendar() {
+function MainCalendar(props) {
 
     const [value, onChange] = useState(new Date());
     let today = new Date();
