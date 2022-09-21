@@ -4,130 +4,164 @@
 @since 2022.09.15
 */
 import * as React from "react";
-
+import { useState } from "react";
 import Typography from "@mui/material/Typography";
 
-import ListItemButton from "@mui/material/ListItemButton";
-
-import Chip from "@mui/material/Chip";
 import { Container, Grid } from "@mui/material";
+import TagMain from "components/common/TagMain";
 
-const images = [
+const userTags = [
   {
-    url: "https://images.unsplash.com/photo-1551963831-b3b1ca40c98e",
+    id: "1",
+    src: "assets/concerns/간건강.png",
     title: "간 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1551782450-a2132b4ba21d",
+    id: "2",
+    src: "assets/concerns/갑상선건강.png",
     title: "갑상선 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1522770179533-24471fcdba45",
+    id: "3",
+    src: "assets/concerns/관절&뼈건강.png",
     title: "관절 & 뼈 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1444418776041-9c7e33cc5a9c",
+    id: "4",
+    src: "assets/concerns/기억력개선.png",
     title: "기억력 개선",
   },
   {
-    url: "https://images.unsplash.com/photo-1533827432537-70133748f5c8",
+    id: "5",
+    src: "assets/concerns/긴장완화.png",
     title: "긴장 완화",
   },
   {
-    url: "https://images.unsplash.com/photo-1558642452-9d2a7deb7f62",
+    id: "6",
+    src: "assets/concerns/남성건강.png",
     title: "남성 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1516802273409-68526ee1bdd6",
-    title: "노화 & 항산화",
+    id: "7",
+    src: "assets/concerns/노화&항산화.png",
+    title: "노화",
   },
   {
-    url: "https://images.unsplash.com/photo-1518756131217-31eb79b20e8f",
+    id: "8",
+    src: "assets/concerns/눈건강.png",
     title: "눈 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1597645587822-e99fa5d45d25",
-    title: "두뇌활동",
+    id: "9",
+    src: "assets/concerns/두뇌활동.png",
+    title: "두뇌 활동",
   },
   {
-    url: "https://images.unsplash.com/photo-1567306301408-9b74779a11af",
+    id: "10",
+    src: "assets/concerns/면역기능.png",
     title: "면역 기능",
   },
   {
-    url: "https://images.unsplash.com/photo-1471357674240-e1a485acb3e1",
+    id: "11",
+    src: "assets/concerns/모발&손톱건강.png",
     title: "모발 & 손톱건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "12",
+    src: "assets/concerns/스트레스&수면.png",
     title: "스트레스 & 수면",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "13",
+    src: "assets/concerns/여성건강.png",
     title: "여성 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "운동 능력 개선",
+    id: "14",
+    src: "assets/concerns/운동능력개선.png",
+    title: "운동능력 개선",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "위 건강 & 소화기능",
+    id: "15",
+    src: "assets/concerns/위건강&소화.png",
+    title: "위건강 & 소화기능",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "16",
+    src: "assets/concerns/장건강.png",
     title: "장 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "전립선 건강",
-  },
-  {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "17",
+    src: "assets/concerns/체액농도밸런스.png",
     title: "체액 농도 밸런스",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "18",
+    src: "assets/concerns/체지방감소.png",
     title: "체지방 감소",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "19",
+    src: "assets/concerns/칼슘흡수촉진.png",
     title: "칼슘 흡수 촉진",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "피로 개선",
+    id: "20",
+    src: "assets/concerns/피로감.png",
+    title: "피로감",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "21",
+    src: "assets/concerns/피부건강.png",
     title: "피부 건강",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "22",
+    src: "assets/concerns/항산화.png",
     title: "항산화",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
+    id: "23",
+    src: "assets/concerns/혈관&혈액순환.png",
     title: "혈관 & 혈액순환",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "혈당조절",
+    id: "24",
+    src: "assets/concerns/혈당.png",
+    title: "혈당",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "혈압 조절",
+    id: "25",
+    src: "assets/concerns/혈압.png",
+    title: "혈압",
   },
   {
-    url: "https://images.unsplash.com/photo-1589118949245-7d38baf380d6",
-    title: "혈중 콜레스테롤 개선",
+    id: "26",
+    src: "assets/concerns/혈중콜레스테롤.png",
+    title: "혈중 콜레스테롤",
   },
 ];
 
-function clickTag() {
-  console.log("클릭");
-}
-
 export default function UserTagForm() {
+  const [clickedItems, setClickedItems] = useState([]);
+
+  const clickedItemHandler = (title) => {
+    //이미 클릭된 태그인 경우
+    if (clickedItems.includes(title)) {
+      let copy = [...clickedItems];
+      let index = copy.indexOf(title);
+      copy.splice(index, 1);
+      setClickedItems(copy);
+
+      // 클릭 안된 태그인 경우
+    } else {
+      let copy = [...clickedItems];
+      copy.push(title);
+      setClickedItems(copy);
+    }
+  };
+
   return (
     <React.Fragment>
       <Typography variant="h6" gutterBottom>
@@ -139,30 +173,27 @@ export default function UserTagForm() {
         선택하신 건강고민을 고려해서 영양제를 추천해드려요!
       </Typography>
 
-      <Container sx={{ py: 8 }} maxWidth="md">
-        {/* End hero unit */}
-        <Grid container spacing={4}>
-          {images.map((item) => (
-            <Grid item key={ListItemButton} xs={12} sm={6} md={2}>
-              {/* <Chip label="ㅁㄴㅇ" onClick={clickTag} /> */}
-              <Chip label={item.title} clickable onClick={clickTag}></Chip>
-            </Grid>
-          ))}
+      <Container sx={{ py: 8 }} maxWidth="lg">
+        <Grid container spacing={5}>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateRows: "1fr",
+              gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
+            }}
+          >
+            {userTags.map((data, i) => (
+              <TagMain
+                key={i}
+                src={data.src}
+                tag={data.title}
+                clickedItems={clickedItems}
+                clickedItemHandler={clickedItemHandler}
+              />
+            ))}
+          </div>
         </Grid>
       </Container>
-
-      {/* <List sx={{ width: 500, height: 450 }} cols={3} rowHeight={164}>
-        {images.map((item) => (
-          <ListItemButton key={item.url}>
-            <img
-              src={`${item.url}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${item.url}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
-              alt={item.title}
-              loading="lazy"
-            />
-          </ListItemButton>
-        ))}
-      </List> */}
     </React.Fragment>
   );
 }
