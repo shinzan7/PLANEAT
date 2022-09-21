@@ -1,7 +1,7 @@
 package planeat.database.entity;
 
 /*
- *
+ * 식단 정보 엔티티
  * DietInfo - diet_info table entity
  *
  @author 박윤하

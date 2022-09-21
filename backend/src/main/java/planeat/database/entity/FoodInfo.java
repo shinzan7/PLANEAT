@@ -29,7 +29,7 @@ public class FoodInfo {
     @Column(name = "food_info_id")
     private Long id;
 
-    @Column(name = "food_user")
+    @Column(name = "food_user", nullable = false)
     private Long foodUser;
 
     @Enumerated(EnumType.STRING)

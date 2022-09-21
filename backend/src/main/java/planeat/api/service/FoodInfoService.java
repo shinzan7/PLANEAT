@@ -9,6 +9,7 @@ package planeat.api.service;
 */
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import planeat.api.dto.foodInfo.FoodInfoRequest;
 import planeat.api.dto.foodInfo.FoodInfoResponse;
@@ -45,14 +46,15 @@ public class FoodInfoService {
 
     /**
      * 전체 식품 정보 조회 (다른 유저가 등록한 음식 제외)
-     * 페이징 처리 해야 함??? 하.........
+     * 가나다 순 100개
      *
      * @param userId 유저 번호 1:관리자
      * @return List<FoodInfoResponse>
      */
     public List<FoodInfoResponse> readAllFoodInfos(Long userId) {
         List<FoodInfoResponse> foodInfoList = new ArrayList<>();
-        List<FoodInfo> foodInfos = foodInfoRepository.findAllFoodInfo(userId);
+        PageRequest pageRequest = PageRequest.of(0,100);
+        List<FoodInfo> foodInfos = foodInfoRepository.findAllFoodInfo(userId, pageRequest);
         for (FoodInfo foodInfo : foodInfos) {
             foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
         }
@@ -62,7 +64,7 @@ public class FoodInfoService {
 
     /**
      * 유저 번호로 식품 정보 조회
-     * 페이징 처리 해야 함??? 하.........
+     *
      *
      * @param userId 유저 번호 1:관리자
      * @return List<FoodInfoResponse>

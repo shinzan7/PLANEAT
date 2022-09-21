@@ -16,6 +16,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.util.UriComponentsBuilder;
 import planeat.api.dto.auth.AuthResponse;
 import planeat.config.jwt.Jwt;
 import planeat.config.jwt.JwtService;
@@ -27,6 +28,7 @@ import planeat.exception.CustomExceptionList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -39,7 +41,7 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @GetMapping("/info")
-    public ResponseEntity<AuthResponse> createToken(HttpServletResponse response, Authentication authentication) throws IOException {
+    public void createToken(HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
@@ -53,17 +55,16 @@ public class AuthController {
         String accessTokenExpiration = jwtService.dateToString(token.getAccessToken());
         String refreshTokenExpiration = jwtService.dateToString(token.getRefreshToken());
 
-        AuthResponse res = new AuthResponse();
-        res.setStatusCode(200);
-        res.setMessage("Success");
-        res.setAccessToken(token.getAccessToken());
-        res.setRefeshToken(token.getRefreshToken());
-        res.setAccessTokenExpiration(accessTokenExpiration);
-        res.setRefreshTokenExpiration(refreshTokenExpiration);
-        res.setUserId(user.getId());
-        res.setName(user.getName());
-
-        return ResponseEntity.ok(res);
+        response.sendRedirect(UriComponentsBuilder.fromUriString("http://j7a701.p.ssafy.io/logincheck")
+                .queryParam("accessToken", token.getAccessToken())
+                .queryParam("refreshToken", token.getRefreshToken())
+                .queryParam("accessTokenExpiration", accessTokenExpiration)
+                .queryParam("refreshTokenExpiration", refreshTokenExpiration)
+                .queryParam("memberId", user.getId().toString())
+                .queryParam("name", user.getName())
+                .build()
+                .encode(StandardCharsets.UTF_8)
+                .toUriString());
 
     }
 
