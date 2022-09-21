@@ -32,7 +32,7 @@ const ResponsiveAppBar = () => {
   };
 
   return (
-    <AppBar style={{ position: 'fixed', backgroundColor: 'white', boxShadow: "none", borderBottom: "2px solid rgb(228, 225, 225)" }}>
+    <AppBar style={{ height: "68.5px", position: 'fixed', backgroundColor: 'white', boxShadow: "none", borderBottom: "2px solid rgb(228, 225, 225)" }}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           { /* 좌측 로고 (기본 사이즈) */}

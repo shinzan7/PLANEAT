@@ -1,4 +1,8 @@
-// 식사 기록 페이지 > 달력
+/*
+캘린더
+@author 여예원
+@since 2022.09.21
+*/
 
 import React, { useState} from 'react';
 import Calendar from 'react-calendar';
