@@ -4,14 +4,13 @@
 @since 2022.09.15
 */
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Home.css'
 import Grid from '@mui/material/Grid';
-import { Card, Button } from '@mui/material';
+import { Card } from '@mui/material';
 import BtnMain from 'components/common/BtnMain';
 import SimpleTestModal from 'components/modal/home/SimpleTestModal';
 import Google from './Google';
-import GoogleLogin from 'react-google-login';
 
 
 function Home() {
@@ -19,20 +18,11 @@ function Home() {
   const logo = { width:'30vw', height:'12.5vh' , marginTop:'20vh'}
   const card = { height:'50vh', backgroundColor:'transparent', fontSize:'1.5vw', color:'white'}
   const textcard = { height:'50vh', backgroundColor:'transparent', border:'none'}
-  const button = { width:'5vw', height:'5vw'}
   const chip = { marginLeft: '20%'}
 
   const [modalOpen, setModalOpen] = useState(false);
   const openModal = () => { setModalOpen(true);};
   const closeModal = () => {setModalOpen(false);};
-
-  
-  const responseGoogle=(response)=>{
-    console.log('응답', response);
-    console.log('프로필', response.profileObj);
-  }
-
-  const clientId = process.env.REACT_APP_GOOGLE_CLIENT_ID
 
   return (
     <div className='bgColor'>
@@ -93,14 +83,8 @@ function Home() {
                       <path d="M42.1823 71.2998C49.3868 71.2998 55.933 68.5003 60.8824 63.9476L52.2499 56.5303C49.4495 58.6841 45.9686 59.9713 42.1823 59.9713C34.9276 59.9713 28.7677 55.2742 26.4471 48.7192L17.3516 55.835C21.9677 65.0068 31.3421 71.2998 42.1823 71.2998Z" fill="#4CAF50"/>
                       <path d="M69.5315 37.432H67.2848V37.3145H42.1821V48.643H57.9452C56.8407 51.8107 54.8339 54.5423 52.2455 56.5319C52.2469 56.5305 52.2483 56.5305 52.2497 56.529L60.8822 63.9464C60.2714 64.51 70.074 57.1394 70.074 42.9787C70.074 41.0798 69.8815 39.2261 69.5315 37.432Z" fill="#1976D2"/>
                     </svg> */}
-                    <Google />
-                    {/* <GoogleLogin 
-                    clientId={clientId}
-                    buttonText='Login'
-                    onSuccess={responseGoogle}
-                    onFailure={responseGoogle}
-                    cookiePolicy={'single_host_origin'}
-                    /> */}
+                    {/* <Google /> */}
+                    {showMakeNickname ? null : <Google />}
                   </div>
               
             </Grid>
