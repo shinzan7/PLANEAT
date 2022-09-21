@@ -22,10 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/nutrient")
 public class NutrientController {
 
-    @GetMapping
-    public String hello(){
-        return "야호";
-    }
+
 
 //    @GetMapping
 //    public ResponseEntity<BasicResponse<ExerciseMemberHistoryResponse>> exerciseMemberHistory(@ModelAttribute ExerciseMemberHistoryRequest request) {

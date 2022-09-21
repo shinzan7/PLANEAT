@@ -15,7 +15,7 @@ class NutrientRepositoryTest {
 
     @Test
     void getTest(){
-        Nutrient nutrient = new Nutrient(1L, "비타민A", "하평회사", "하평이의 비타민");
+        Nutrient nutrient = new Nutrient(1L, "비타민A", "하평회사", "하평이의 비타민", "이미지경로1");
         Nutrient saveNutrient = nutrientRepository.save(nutrient);
 
         Nutrient findNutrient = nutrientRepository.findById(saveNutrient.getId()).get();
