@@ -1,7 +1,7 @@
 package planeat.database.entity;
 
 /*
- *
+ * 섭취 기록 엔티티
  * IntakeHistory - intake_history table entity
  *
  @author 박윤하

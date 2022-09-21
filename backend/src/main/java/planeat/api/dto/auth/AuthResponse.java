@@ -1,5 +1,13 @@
 package planeat.api.dto.auth;
 
+/*
+ *
+ * AuthResponse
+ *
+ @author 박윤하
+ @since 2022-09-16
+*/
+
 import lombok.Data;
 
 @Data

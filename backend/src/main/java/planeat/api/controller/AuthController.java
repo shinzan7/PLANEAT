@@ -41,7 +41,7 @@ public class AuthController {
     private final UserRepository userRepository;
 
     @GetMapping("/info")
-    public ResponseEntity<AuthResponse> createToken(HttpServletResponse response, Authentication authentication) throws IOException {
+    public void createToken(HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
@@ -55,17 +55,16 @@ public class AuthController {
         String accessTokenExpiration = jwtService.dateToString(token.getAccessToken());
         String refreshTokenExpiration = jwtService.dateToString(token.getRefreshToken());
 
-        AuthResponse res = new AuthResponse();
-        res.setStatusCode(200);
-        res.setMessage("Success");
-        res.setAccessToken(token.getAccessToken());
-        res.setRefeshToken(token.getRefreshToken());
-        res.setAccessTokenExpiration(accessTokenExpiration);
-        res.setRefreshTokenExpiration(refreshTokenExpiration);
-        res.setUserId(user.getId());
-        res.setName(user.getName());
-
-        return ResponseEntity.ok(res);
+        response.sendRedirect(UriComponentsBuilder.fromUriString("http://j7a701.p.ssafy.io/logincheck")
+                .queryParam("accessToken", token.getAccessToken())
+                .queryParam("refreshToken", token.getRefreshToken())
+                .queryParam("accessTokenExpiration", accessTokenExpiration)
+                .queryParam("refreshTokenExpiration", refreshTokenExpiration)
+                .queryParam("memberId", user.getId().toString())
+                .queryParam("name", user.getName())
+                .build()
+                .encode(StandardCharsets.UTF_8)
+                .toUriString());
 
     }
 
