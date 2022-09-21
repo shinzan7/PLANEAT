@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller
-@RequestMapping("/oauth")
+@RequestMapping("/api/oauth")
 @RequiredArgsConstructor
 public class AuthController {
 
