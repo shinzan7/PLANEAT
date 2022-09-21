@@ -31,19 +31,19 @@ public class Nutrient {
     private String nutrientName;
     private String company;
     private String description;
+    private String imagePath;
 
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "nutrient")
     List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
 
-
     @Builder
-    public Nutrient(Long id, String nutrientName, String company, String description) {
+    public Nutrient(Long id, String nutrientName, String company, String description, String imagePath) {
         this.id = id;
         this.nutrientName = nutrientName;
         this.company = company;
         this.description = description;
+        this.imagePath = imagePath;
     }
-
 }

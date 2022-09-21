@@ -10,6 +10,7 @@ package planeat.database.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
+import planeat.api.dto.foodInfo.FoodInfoRequest;
 import planeat.enums.FoodType;
 
 import javax.persistence.*;
@@ -205,48 +206,98 @@ public class FoodInfo {
     }
 
 
-    public FoodInfo update(Long foodUser, FoodType foodType, String name, Integer year, String manufacturer, String categoryLarge, String categoryDetail, Integer servingSize, String servingUnit, Float capacityG, Float capacityMl, Float calorie, Float protein, Float fat, Float carbohydrate, Float sugar, Float dietary_fiber, Float calcium, Float iron, Float magnesium, Float phosphorus, Float potassium, Float sodium, Float zinc, Float copper, Float manganese, Float selenium, Float vitaminA, Float vitaminD, Float vitaminB6, Float folate, Float vitaminB12, Float vitaminC, Float cholesterol, Float fattyAcid, Float linoleicAcid, Float alphaLinoleicAcid, Float transFattyAcid, Float vitaminB1, Float vitaminB2) {
-        this.foodUser = foodUser;
-        this.foodType = foodType;
-        this.name = name;
-        this.year = year;
-        this.manufacturer = manufacturer;
-        this.categoryLarge = categoryLarge;
-        this.categoryDetail = categoryDetail;
-        this.servingSize = servingSize;
-        this.servingUnit = servingUnit;
-        this.capacityG = capacityG;
-        this.capacityMl = capacityMl;
-        this.calorie = calorie;
-        this.protein = protein;
-        this.fat = fat;
-        this.carbohydrate = carbohydrate;
-        this.sugar = sugar;
-        this.dietary_fiber = dietary_fiber;
-        this.calcium = calcium;
-        this.iron = iron;
-        this.magnesium = magnesium;
-        this.phosphorus = phosphorus;
-        this.potassium = potassium;
-        this.sodium = sodium;
-        this.zinc = zinc;
-        this.copper = copper;
-        this.manganese = manganese;
-        this.selenium = selenium;
-        this.vitaminA = vitaminA;
-        this.vitaminD = vitaminD;
-        this.vitaminB6 = vitaminB6;
-        this.folate = folate;
-        this.vitaminB12 = vitaminB12;
-        this.vitaminC = vitaminC;
-        this.cholesterol = cholesterol;
-        this.fattyAcid = fattyAcid;
-        this.linoleicAcid = linoleicAcid;
-        this.alphaLinoleicAcid = alphaLinoleicAcid;
-        this.transFattyAcid = transFattyAcid;
-        this.vitaminB1 = vitaminB1;
-        this.vitaminB2 = vitaminB2;
-        return this;
+    public static FoodInfo createFoodInfo(Long userId, FoodInfoRequest foodInfoRequest) {
+        FoodInfo foodInfo = FoodInfo.builder()
+                //.id(foodInfoRequest.getFoodInfoId())
+                .foodUser(userId)
+                .foodType(foodInfoRequest.getFoodType())
+                .name(foodInfoRequest.getName())
+                .year(foodInfoRequest.getYear())
+                .manufacturer(foodInfoRequest.getManufacturer())
+                .categoryLarge(foodInfoRequest.getCategoryLarge())
+                .categoryDetail(foodInfoRequest.getCategoryDetail())
+                .servingSize(foodInfoRequest.getServingSize())
+                .servingUnit(foodInfoRequest.getServingUnit())
+                .capacityG(foodInfoRequest.getCapacityG())
+                .capacityMl(foodInfoRequest.getCapacityMl())
+                .calorie(foodInfoRequest.getCalorie())
+                .protein(foodInfoRequest.getProtein())
+                .fat(foodInfoRequest.getFat())
+                .carbohydrate(foodInfoRequest.getCarbohydrate())
+                .sugar(foodInfoRequest.getSugar())
+                .dietary_fiber(foodInfoRequest.getDietary_fiber())
+                .calcium(foodInfoRequest.getCalcium())
+                .iron(foodInfoRequest.getIron())
+                .magnesium(foodInfoRequest.getMagnesium())
+                .phosphorus(foodInfoRequest.getPhosphorus())
+                .potassium(foodInfoRequest.getPotassium())
+                .sodium(foodInfoRequest.getSodium())
+                .zinc(foodInfoRequest.getZinc())
+                .copper(foodInfoRequest.getCopper())
+                .manganese(foodInfoRequest.getManganese())
+                .selenium(foodInfoRequest.getSelenium())
+                .vitaminA(foodInfoRequest.getVitaminA())
+                .vitaminD(foodInfoRequest.getVitaminD())
+                .vitaminB6(foodInfoRequest.getVitaminB6())
+                .folate(foodInfoRequest.getFolate())
+                .vitaminB12(foodInfoRequest.getVitaminB12())
+                .vitaminC(foodInfoRequest.getVitaminC())
+                .cholesterol(foodInfoRequest.getCholesterol())
+                .fattyAcid(foodInfoRequest.getFattyAcid())
+                .linoleicAcid(foodInfoRequest.getLinoleicAcid())
+                .alphaLinoleicAcid(foodInfoRequest.getAlphaLinoleicAcid())
+                .transFattyAcid(foodInfoRequest.getTransFattyAcid())
+                .vitaminB1(foodInfoRequest.getVitaminB1())
+                .vitaminB2(foodInfoRequest.getVitaminB2())
+                .build();
+        return foodInfo;
+    }
+
+    public static FoodInfo updateFoodInfo(Long userId, FoodInfoRequest foodInfoRequest) {
+        FoodInfo foodInfo = FoodInfo.builder()
+                .id(foodInfoRequest.getFoodInfoId())
+                .foodUser(userId)
+                .foodType(foodInfoRequest.getFoodType())
+                .name(foodInfoRequest.getName())
+                .year(foodInfoRequest.getYear())
+                .manufacturer(foodInfoRequest.getManufacturer())
+                .categoryLarge(foodInfoRequest.getCategoryLarge())
+                .categoryDetail(foodInfoRequest.getCategoryDetail())
+                .servingSize(foodInfoRequest.getServingSize())
+                .servingUnit(foodInfoRequest.getServingUnit())
+                .capacityG(foodInfoRequest.getCapacityG())
+                .capacityMl(foodInfoRequest.getCapacityMl())
+                .calorie(foodInfoRequest.getCalorie())
+                .protein(foodInfoRequest.getProtein())
+                .fat(foodInfoRequest.getFat())
+                .carbohydrate(foodInfoRequest.getCarbohydrate())
+                .sugar(foodInfoRequest.getSugar())
+                .dietary_fiber(foodInfoRequest.getDietary_fiber())
+                .calcium(foodInfoRequest.getCalcium())
+                .iron(foodInfoRequest.getIron())
+                .magnesium(foodInfoRequest.getMagnesium())
+                .phosphorus(foodInfoRequest.getPhosphorus())
+                .potassium(foodInfoRequest.getPotassium())
+                .sodium(foodInfoRequest.getSodium())
+                .zinc(foodInfoRequest.getZinc())
+                .copper(foodInfoRequest.getCopper())
+                .manganese(foodInfoRequest.getManganese())
+                .selenium(foodInfoRequest.getSelenium())
+                .vitaminA(foodInfoRequest.getVitaminA())
+                .vitaminD(foodInfoRequest.getVitaminD())
+                .vitaminB6(foodInfoRequest.getVitaminB6())
+                .folate(foodInfoRequest.getFolate())
+                .vitaminB12(foodInfoRequest.getVitaminB12())
+                .vitaminC(foodInfoRequest.getVitaminC())
+                .cholesterol(foodInfoRequest.getCholesterol())
+                .fattyAcid(foodInfoRequest.getFattyAcid())
+                .linoleicAcid(foodInfoRequest.getLinoleicAcid())
+                .alphaLinoleicAcid(foodInfoRequest.getAlphaLinoleicAcid())
+                .transFattyAcid(foodInfoRequest.getTransFattyAcid())
+                .vitaminB1(foodInfoRequest.getVitaminB1())
+                .vitaminB2(foodInfoRequest.getVitaminB2())
+                .build();
+        return foodInfo;
     }
 
 }

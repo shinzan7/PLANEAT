@@ -1,4 +1,12 @@
-package planeat.api.dto.nutrient.response;
+package planeat.api.dto.nutrient;
+
+/*
+ *
+ * NutrientResponse
+ *
+ @author 박윤하
+ @since 2022-09-16
+*/
 
 import lombok.Getter;
 import lombok.Setter;

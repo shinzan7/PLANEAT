@@ -11,7 +11,6 @@ package planeat.database.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 import planeat.enums.Gender;
 
 import javax.persistence.*;
