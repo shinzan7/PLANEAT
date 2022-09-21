@@ -44,7 +44,7 @@ public class FoodInfoController {
 
 
     /**
-     * 전체 식품 정보 조회 - 페이징 처리 하던가 100개만 보여주던가
+     * 전체 식품 정보 조회 - 가나다 순 100개
      * food_user 칼럼의 값이 1(관리자 번호)와 일치하는 식품 리스트 반환
      *
      * @return SUCCCESS, List<FoodInfoResponse>, HttpStatus.OK(200)
