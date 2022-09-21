@@ -152,26 +152,29 @@ const userTags = [
   },
 ];
 
-function clickTag() {
-  console.log("클릭");
-}
-
 export default function UserTagForm() {
   const [checkedItems, setCheckedItems] = useState([]);
 
-  const checkedItemHandler = (code, isChecked) => {
-    if (isChecked) {
-      // 체크 추가할 때
-      setCheckedItems([...checkedItems, code]);
-    } else if (!isChecked && checkedItems.find((one) => one === code)) {
-      // 체크 해제할 때 checkedItems에 있을 경우
-      const filter = checkedItems.filter((one) => one !== code);
-      setCheckedItems([...filter]);
+  const checkedItemHandler = (title) => {
+
+    //이미 클릭된 태그인 경우
+    if (checkedItems.includes(title)) { 
+      let copy = [...checkedItems];
+      let index = copy.indexOf(title);
+      copy.splice(index, 1);
+      setCheckedItems(copy);
+      
+    // 클릭 안된 태그인 경우
+    } else {
+      let copy = [...checkedItems];
+      copy.push(title);
+      setCheckedItems(copy);
     }
   };
 
   return (
     <React.Fragment>
+      { checkedItems}
       <Typography variant="h6" gutterBottom>
         건강고민 선택
       </Typography>
@@ -186,8 +189,7 @@ export default function UserTagForm() {
           {userTags.map((data, i) => (
             <TagMain
               key={ i}
-              click={ "userForm"}
-              data={data.title}
+              tag={data.title}
               checkedItems={checkedItems}
               checkedItemHandler={checkedItemHandler}
               />
