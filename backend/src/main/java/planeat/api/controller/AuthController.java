@@ -55,13 +55,18 @@ public class AuthController {
         String accessTokenExpiration = jwtService.dateToString(token.getAccessToken());
         String refreshTokenExpiration = jwtService.dateToString(token.getRefreshToken());
 
+        String birthYear = user.getBirthyear() == null ? "" : user.getBirthyear().toString();
+        String gender = user.getGender() == null ? "" : user.getGender().toString();
+
         response.sendRedirect(UriComponentsBuilder.fromUriString("http://j7a701.p.ssafy.io/logincheck")
                 .queryParam("accessToken", token.getAccessToken())
                 .queryParam("refreshToken", token.getRefreshToken())
                 .queryParam("accessTokenExpiration", accessTokenExpiration)
                 .queryParam("refreshTokenExpiration", refreshTokenExpiration)
-                .queryParam("memberId", user.getId().toString())
+                .queryParam("useerId", user.getId().toString())
                 .queryParam("name", user.getName())
+                .queryParam("birthYear", birthYear)
+                .queryParam("gender", gender)
                 .build()
                 .encode(StandardCharsets.UTF_8)
                 .toUriString());
