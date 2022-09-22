@@ -6,7 +6,8 @@
 import React from "react";
 import TagMain from "components/common/TagMain";
 import { Grid } from "@mui/material";
-import Route from "react-router-dom";
+import {Link} from 'react-router-dom';
+
 
 function SearchByTag() {
   const userTags = [
@@ -151,13 +152,17 @@ function SearchByTag() {
           </Grid>
           <Grid item xs={8}>
             <Grid container>
-              {userTags.map((data, i) => (             
-                  <TagMain
-                  key={i}
-                  src={data.src}
-                  tag={data.title}
-                />
-              ))}
+              
+                {userTags.map((data, i) => (   
+                  <Link to="/search/result" style={{textDecoration:'none'}}>          
+                    <TagMain
+                    key={i}
+                    src={data.src}
+                    tag={data.title}
+                  />
+                  </Link>
+                ))}
+              
             </Grid>
           </Grid>
           <Grid item xs={2}>

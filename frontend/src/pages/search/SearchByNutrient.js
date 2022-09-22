@@ -6,6 +6,7 @@
 import React from "react";
 import TagNute from "components/common/TagNute";
 import { Grid } from "@mui/material";
+import {Link} from 'react-router-dom';
 
 function SearchByNutrient() {
 
@@ -120,11 +121,13 @@ function SearchByNutrient() {
           </Grid>
           <Grid item xs={8}>
             <Grid container>
-              {nuterientTags.map((data, i) => (             
+              {nuterientTags.map((data, i) => (  
+                // <Link to="/search/result" style={{textDecoration:'none'}}>           
                   <TagNute
                   key={i}
                   tag={data.title}
                 />
+                // </Link>
               ))}
             </Grid>
           </Grid>
