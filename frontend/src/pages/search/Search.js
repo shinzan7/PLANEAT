@@ -14,7 +14,7 @@ import SearchReseult from "./SearchResult";
 
 
 const section = { marginTop:'80px' }
-const section1 = { marginTop:'15vh', textAlign:'center'}
+const section1 = { marginTop:'25vh', textAlign:'center'}
 const title = { color:'gray', border:'none'}
 const section2 = { marginTop:'5vh', textAlign:'center'}
 const section3 = {marginTop:'5vh'}
@@ -26,21 +26,16 @@ function Search() {
     const data = [
       {
         id: 0,
-        title: "영양제 검색",
+        title: "영양제 추천",
         description: <SearchByReco />
       },
       {
         id: 1,
-        title: "제품 검색",
-        description: <SearchReseult />
-      },
-      {
-        id: 2,
         title: "고민별 검색",
         description: <SearchByTag />
       },
       {
-        id: 3,
+        id: 2,
         title: "성분별 검색",
         description: <SearchByNutrient />
       },
@@ -69,7 +64,7 @@ function Search() {
 
                 </Grid>
                 
-                <Grid item xs={6}>
+                <Grid item xs={4}>
                   <div>
                     <Paper component="form" sx={{display: 'flex', alignItems: 'center', borderRadius:100, backgroundColor:'#F5F5F5'}}>
                       <InputBase
@@ -81,13 +76,13 @@ function Search() {
                     </Paper>
                   </div>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={5}>
                   
                 </Grid>
               </Grid>
-
+              
               {data.filter(item => index === item.id).map(item => (
-              <div style={section3}>{item.description}</div>
+                <div style={section3}>{item.description}</div>
               ))}
             </Grid>
           </Grid>

@@ -16,11 +16,11 @@ const CardNutrient = function MediaCard(props) {
     let imgUrl = props.pill.img; // props의 이미지 url
 
   return (
-      <Card sx={{ width: 250, height: 300, borderRadius: 5, margin: 1}}>
+      <Card sx={{ width: {xs:'250px'}, height: 300, borderRadius: 5, margin: 1}}>
           <CardContent>
           <p style={{textAlign: "center", marginTop:20}}>
               <img
-                width="150"
+              sx={{width: {xs:'100px'}}}
               height="100"
               src={
                   imgUrl == "" ? "/assets/basic_nutrient.png" : imgUrl

@@ -5,6 +5,8 @@ import Welcome from "./pages/home/Welcome";
 import Analysis from "./pages/analysis/Analysis";
 import Search from "./pages/search/Search";
 import MyPage from "./pages/myPage/MyPage";
+import SearchDetail from "pages/search/SearchDetail";
+import SearchReseult from "pages/search/SearchResult";
 
 function Router() {
     return (
@@ -15,6 +17,8 @@ function Router() {
                     <Route path="/welcome" element={<Welcome />} />
                     <Route path="/analysis" element={<Analysis />} />
                     <Route path="/search" element={<Search />} />
+                    <Route path="/search/detail" element={<SearchDetail />} />
+                    <Route path="/search/result" element={<SearchReseult />} />
                     <Route path="/mypage" element={<MyPage />} />
                 </Routes>
             </BrowserRouter>
