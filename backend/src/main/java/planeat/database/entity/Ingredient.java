@@ -45,4 +45,9 @@ public class Ingredient {
         this.id = id;
         this.ingredientName = ingredientName;
     }
+
+    public void putCategory(Category category){
+        this.categoryList.add(category);
+    }
+
 }

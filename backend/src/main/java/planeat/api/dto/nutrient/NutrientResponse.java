@@ -1,38 +1,33 @@
 package planeat.api.dto.nutrient;
-
 /*
  *
- * NutrientResponse
+ * NutrientRequest의 설명을 여기 작성한다.
  *
- @author 박윤하
- @since 2022-09-16
+ @author 신지한
+ @since 2022-09-21
 */
-
-/*
- *
- * NutrientResponse
- *
- @author 박윤하
- @since 2022-09-16
-*/
-
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.List;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class NutrientResponse {
-    private List<NutrientResponse.EachNutrient> eachNutrients;
+    Long nutrientId;
+    String nutrientName;
+    String company;
+    String description;
+    String imagePath;
+    List<NutriIngredient> nutriIngredientList;
 
-    @Getter
-    @Setter
-    public static class EachNutrient{
-        private Integer intakeRecommend;
-        private String nutrientName;
-        private String company;
-        private String description;
+    @Getter @Setter
+    public static class NutriIngredient{
+        String ingredientName;
+        Float ingredientAmount;
+        List<String> categoryTagList;
     }
 
 }
