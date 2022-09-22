@@ -19,19 +19,16 @@ export default function RegistMeal(props) {
 
     return (
         <StyledWrapper>
-            <Grid id="container" xs={ 12}>
-                <Grid items id="mealDate" xs={ 12}> {month}월 {day}일 식사 등록하기</Grid>
-                <Grid items xs={12} style={{display: "grid",
-              gridTemplateRows: "1fr",
-              gridTemplateColumns: "1fr 1fr 1fr 1fr 1fr",
-}}>
-                    <BtnCircle></BtnCircle>
-                    <BtnCircle></BtnCircle>
-                    <BtnCircle></BtnCircle>
-                    <BtnCircle></BtnCircle>
-                    <BtnCircle></BtnCircle>
+            <Grid container id="container" xs={ 12} direction="row">
+                <Grid container id="mealDate" xs={ 12} > {month}월 {day}일 식사 등록하기</Grid>
+                <Grid container id="btnGroup" xs={12} zeroMinWidth direction="row" justifyContent="space-evenly">
+                    <BtnCircle type="아침"></BtnCircle>
+                    <BtnCircle type="점심"></BtnCircle>
+                    <BtnCircle type="저녁"></BtnCircle>
+                    <BtnCircle type="간식"></BtnCircle>
+                    <BtnCircle type="영양제"></BtnCircle>
+                </Grid>
             </Grid>
-        </Grid>
         </StyledWrapper>
     )
 }
@@ -41,9 +38,10 @@ const StyledWrapper = styled.div`
 #container {
     background-color: white;
     box-shadow: 1px 2px 5px #c7c7c7;
-    padding: 10px;
+    padding: 2vw;
     border-radius: 15px;
-    margin: 50px;
+    width: 90%;
+    margin: auto;
 }
 
 #mealDate {
@@ -53,7 +51,8 @@ const StyledWrapper = styled.div`
     font-weight: bold;
 }
 
-#registBtn {
-    display: inline-block !important;
+#btnGroup {
+    margin-top: 3vw;
 }
+
 `;

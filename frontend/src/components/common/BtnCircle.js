@@ -10,7 +10,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { keyframes } from "@emotion/react";
 import { Box, Typography, Grid } from '@mui/material';
   
-export default function BtnCircle() { 
+export default function BtnCircle(props) { 
     const enterKeyframe = keyframes`
   0% {
     transform: scale(0);
@@ -29,7 +29,6 @@ export default function BtnCircle() {
         border-radius: 50%;
         transform: scale(1.1);
         height: 64px !important;
-        margin: 15px;
         box-shadow: 1px 2px 5px #c7c7c7;
     }
 
@@ -46,12 +45,12 @@ export default function BtnCircle() {
 `;
     
     return (
-        <Grid items xs={ 2 }>
+        <Grid items xs={2} style={{textAlign: "center"}}>
             <BtnCircle>
                 <AddIcon/>
             </BtnCircle>
-            <Typography>
-                a
+            <Typography style={{marginTop: "1.5vw"}} >
+                { props.type }
             </Typography>
         </Grid>
     );

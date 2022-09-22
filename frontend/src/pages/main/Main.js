@@ -67,11 +67,12 @@ function Main() {
                     </Grid>
                     <Grid item style={{ background: "#FCFBFA", textAlign:"center" }} xs={12} md={ 6}>
                         { /* 우측 영역 */}
-                        <div>
+                        <Grid style={{margin: "auto"}}>
                             <RegistMeal
                                 clickDate={clickDate}
                             ></RegistMeal>
-                        </div>
+                            
+                        </Grid>
                     </Grid>
                 </Grid>
                 </div>
