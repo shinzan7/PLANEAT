@@ -21,22 +21,15 @@ const Pre = styled.pre`
   padding: 10px;
 `;
 
-const TermsOfService = (props) => {
-  const [checked, setChecked] = React.useState(false);
+const TermsOfService = ({ checked, setChecked }) => {
+  //   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (e) => {
     setChecked(e.target.checked);
     console.log("=============자식에서 데이터 확인=======");
     console.log(e.target.checked);
-
-    props.setCheck("asd");
-    console.log(props);
-    props.setCheck(props.value);
+    console.log(checked);
   };
-
-  useEffect(() => {
-    props.setCheck(checked);
-  });
 
   return (
     <React.Fragment>

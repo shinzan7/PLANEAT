@@ -28,6 +28,12 @@ import Footer from "components/nav/Footer";
 import BtnMain from "components/common/BtnMain";
 import TagMain from "components/common/TagMain";
 
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+
 const steps = ["이용약관 동의", "개인정보 입력", "건강고민 선택"];
 
 const userInfo = {
@@ -65,19 +71,32 @@ function getStepContent(step) {
 function Welcome() {
   const [activeStep, setActiveStep] = useState(0);
 
-  const [check, setCheck] = useState("ss"); // 약관동의 컴포넌트 체크 여부
+  // 약관동의 컴포넌트 체크 여부
+  const [checked, setChecked] = useState(false);
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
+  // 약관동의 alert 모달
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
-  // 변경 필요
-  const agreeHandler = () => {
-    // 약관동의 화면일 때 동의 체크 되어있으면 다음 스텝으로 이동, 체크 안되어있으면 alert
+  // 다음 버튼 클릭 시
+  const handleNext = () => {
+    // 약관동의 화면
     if (activeStep == 0) {
+      // 약관동의 체크 되어있으면 다음 스텝으로 이동, 체크 안되어있으면 alert
+      if (checked) {
+        setActiveStep(activeStep + 1);
+      } else {
+        setOpen(true);
+      }
+    } else {
+      setActiveStep(activeStep + 1);
     }
   };
 
+  // 이전 버튼 클릭 시
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
@@ -112,8 +131,6 @@ function Welcome() {
 
       <Container component="main" maxWidth="md" sx={{ mb: 4, marginTop: "100px" }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          {check}
-          asdf
           <CelebrateLine></CelebrateLine>
           {/* Stepper */}
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -190,7 +207,7 @@ function Welcome() {
               <React.Fragment>
                 {/* {getStepContent(activeStep)} */}
                 {activeStep == 0 && (
-                  <TermsOfService setCheck={setCheck} check={check}></TermsOfService>
+                  <TermsOfService setChecked={setChecked} checked={checked}></TermsOfService>
                 )}
                 {activeStep == 1 && <MoreInfoForm></MoreInfoForm>}
                 {activeStep == 2 && <UserTagForm></UserTagForm>}
@@ -223,7 +240,7 @@ function Welcome() {
                         ml: 1,
                       }}
                     >
-                      다음{activeStep}
+                      다음
                     </BtnMain>
                   )}
 
@@ -267,6 +284,30 @@ function Welcome() {
         </Paper>
       </Container>
       <Footer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText sx={{ textAlign: "center" }} id="alert-dialog-description">
+            <img
+              src="assets/planeat_logo_top.png"
+              width="150"
+              style={{ marginBottom: "15px" }}
+            ></img>
+            <br />
+            이용약관에 동의해 주세요.😉 <br />
+            이용약관에 동의하지 않으면 서비스를 이용하실 수 없습니다.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <BtnMain onClick={handleClose} autoFocus>
+            확인
+          </BtnMain>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
