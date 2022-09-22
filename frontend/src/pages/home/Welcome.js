@@ -6,7 +6,7 @@
 import * as React from "react";
 
 import styled from "styled-components";
-
+import { useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -52,7 +52,7 @@ function CelebrateLine() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <TermsOfService />; // 이용약관 화면
+      return <TermsOfService></TermsOfService>; // 이용약관 화면
     case 1:
       return <MoreInfoForm />; // 추가정보 기입 화면
     case 2:
@@ -63,7 +63,9 @@ function getStepContent(step) {
 }
 
 function Welcome() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
+
+  const [check, setCheck] = useState("ss"); // 약관동의 컴포넌트 체크 여부
 
   const handleNext = () => {
     setActiveStep(activeStep + 1);
@@ -107,8 +109,11 @@ function Welcome() {
     <div>
       <CssBaseline />
       <Header />
+
       <Container component="main" maxWidth="md" sx={{ mb: 4, marginTop: "100px" }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
+          {check}
+          asdf
           <CelebrateLine></CelebrateLine>
           {/* Stepper */}
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -183,7 +188,12 @@ function Welcome() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {/* {getStepContent(activeStep)} */}
+                {activeStep == 0 && (
+                  <TermsOfService setCheck={setCheck} check={check}></TermsOfService>
+                )}
+                {activeStep == 1 && <MoreInfoForm></MoreInfoForm>}
+                {activeStep == 2 && <UserTagForm></UserTagForm>}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {/* 이전버튼 */}
                   {activeStep !== 0 && (
@@ -213,7 +223,7 @@ function Welcome() {
                         ml: 1,
                       }}
                     >
-                      다음
+                      다음{activeStep}
                     </BtnMain>
                   )}
 
