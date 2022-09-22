@@ -12,6 +12,7 @@ import planeat.database.entity.Category;
 import planeat.database.entity.Ingredient;
 import planeat.database.entity.Nutrient;
 import planeat.database.entity.NutrientIngredient;
+import planeat.database.repository.IngredientRepository;
 import planeat.database.repository.NutrientRepository;
 
 import javax.transaction.Transactional;
@@ -24,6 +25,7 @@ import java.util.List;
 public class NutrientService {
 
     private final NutrientRepository nutrientRepository;
+    private final IngredientRepository ingredientRepository;
 
 
     /**
@@ -60,6 +62,7 @@ public class NutrientService {
                         .build();
                 ingredient.putCategory(category);
             }
+            ingredientRepository.save(ingredient);
         }
 
         nutrientRepository.save(nutrient);
