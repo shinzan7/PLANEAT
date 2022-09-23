@@ -13,6 +13,6 @@ import java.util.Optional;
 
 public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
     Optional<Nutrient> findById(Long id);
-
+    List<Nutrient> findAllByNutrientNameContains(String searchWord);
 
 }
