@@ -4,9 +4,12 @@
 @since 2022.09.22
 */
 import React from "react";
+import Header from 'components/nav/Header';
 import TagMain from "components/common/TagMain";
 import { Grid } from "@mui/material";
 import {Link} from 'react-router-dom';
+import SideBar from "components/common/SideBar";
+import SearchBar from "components/common/SearchBar";
 
 
 function SearchByTag() {
@@ -143,30 +146,61 @@ function SearchByTag() {
     },
   ];
 
+  const section = { marginTop:'80px' }
+  const section1 = { marginTop:'25vh', textAlign:'center'}
+  const section2 = { marginTop:'5vh', textAlign:'center'}
+  const section3 = { marginTop:'10vh' }
 
   return (
-      <div>
-        <Grid container>
-          <Grid item xs={2}>
-
-          </Grid>
-          <Grid item xs={8}>
-            <Grid container>
-              
-                {userTags.map((data, i) => (   
-                  <Link to="/search/result" style={{textDecoration:'none'}}>          
-                    <TagMain
-                    key={i}
-                    src={data.src}
-                    tag={data.title}
-                  />
-                  </Link>
-                ))}
-              
+      <div style={section}>
+        <Header />
+        <Grid container> 
+            <Grid item xs={1.5} style={section1}>
+              <SideBar />
             </Grid>
-          </Grid>
-          <Grid item xs={2}>
 
+            <Grid item xs={10.5} style={section2}>
+              <Grid container>
+                <Grid item xs={3}>
+
+                </Grid>
+                
+                <Grid item xs={4}>
+                  <SearchBar />
+                </Grid>
+                <Grid item xs={5}>
+                  
+                </Grid>
+            </Grid>
+
+            <div style={section3}>
+                
+            </div>
+              
+            <Grid container>
+              <Grid item xs={2}>
+
+              </Grid>
+              <Grid item xs={8}>
+                <Grid container>
+                  
+                    {userTags.map((data, i) => (   
+                      <Link to="/searchresult" style={{textDecoration:'none', color:'black'}}>          
+                        <TagMain
+                        key={i}
+                        src={data.src}
+                        tag={data.title}
+                      />
+                      </Link>
+                    ))}
+                  
+                </Grid>
+              </Grid>
+              <Grid item xs={2}>
+
+              </Grid>
+
+            </Grid>
           </Grid>
         </Grid>
       </div>

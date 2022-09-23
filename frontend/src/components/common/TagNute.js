@@ -46,7 +46,10 @@ const TagNute = ({ tag, clickedItems, clickedItemHandler, src }) => {
           onCheck(e);
         }}
       >
-        <div className={tag} style={{ fontWeight: "bold", fontSize: "15px", marginTop:"57.5px" }}>
+        <div className={tag} style={{ fontWeight: "bold", fontSize: "15px"}}>
+          <br></br>
+          <br></br>
+          <br></br>
           {tag}
         </div>
       </div>

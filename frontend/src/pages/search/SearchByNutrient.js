@@ -6,6 +6,9 @@
 import React from "react";
 import TagNute from "components/common/TagNute";
 import { Grid } from "@mui/material";
+import Header from 'components/nav/Header';
+import SideBar from "components/common/SideBar";
+import SearchBar from "components/common/SearchBar";
 import {Link} from 'react-router-dom';
 
 function SearchByNutrient() {
@@ -113,28 +116,61 @@ function SearchByNutrient() {
     },
   ];
 
-  return (
-      <div>
-        <Grid container>
-          <Grid item xs={2}>
+  const section = { marginTop:'80px' }
+  const section1 = { marginTop:'25vh', textAlign:'center'}
+  const section2 = { marginTop:'5vh', textAlign:'center'}
+  const section3 = { marginTop:'10vh'}
 
-          </Grid>
-          <Grid item xs={8}>
-            <Grid container>
-              {nuterientTags.map((data, i) => (  
-                // <Link to="/search/result" style={{textDecoration:'none'}}>           
-                  <TagNute
-                  key={i}
-                  tag={data.title}
-                />
-                // </Link>
-              ))}
+  return (
+      <div style={section}>
+        <Header />
+          <Grid container> 
+            <Grid item xs={1.5} style={section1}>
+              <SideBar />
+            </Grid>
+
+            <Grid item xs={10.5} style={section2}>
+              <Grid container>
+                <Grid item xs={3}>
+
+                </Grid>
+                
+                <Grid item xs={4}>
+                  <SearchBar />
+      
+                </Grid>
+                <Grid item xs={5}>
+                  
+                </Grid>
+              </Grid>
+
+              <div style={section3}>
+                
+              </div>
+              
+              <Grid container>
+                <Grid item xs={2}>
+
+                </Grid>
+                <Grid item xs={8}>
+                  <Grid container>
+                    {nuterientTags.map((data, i) => (  
+                      <Link to="/searchresult" style={{textDecoration:'none', color:'black'}}>           
+                        <TagNute
+                        key={i}
+                        tag={data.title}
+                      />
+                      </Link>
+                    ))}
+                  </Grid>
+                </Grid>
+                <Grid item xs={2}>
+
+                </Grid>
+            </Grid>
+
             </Grid>
           </Grid>
-          <Grid item xs={2}>
-
-          </Grid>
-        </Grid>
       </div>
   );
 }

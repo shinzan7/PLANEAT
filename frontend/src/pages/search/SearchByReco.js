@@ -64,7 +64,7 @@ function SearchByReco() {
 
   const section1 = { textAlign:'left', fontSize:'3.3vh'}
   const bold = {fontWeight:'bold'}
-  const card = {textAlign:'center'}
+  const card = {textAlign:'left'}
 
 
   return (
@@ -82,7 +82,7 @@ function SearchByReco() {
             <div style={card}>
               <Slider {...settings}>
                 <div>
-                  <Link to="/search/detail" style={{textDecoration:'none'}}>
+                  <Link to="/searchdetail" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
                 </div>
@@ -136,7 +136,7 @@ function SearchByReco() {
               <p>&nbsp;&nbsp;<span style={bold}>장건강</span>에 좋아요</p>
             </div>
 
-            <div>
+            <div style={card}>
               <Slider {...settings}>
                 <div>
                   <CardNutrient pill={data}/>
