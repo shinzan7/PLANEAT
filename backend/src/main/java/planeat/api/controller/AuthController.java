@@ -20,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
-import planeat.api.dto.auth.AuthResponse;
 import planeat.config.jwt.Jwt;
 import planeat.config.jwt.JwtService;
 import planeat.database.entity.User;
@@ -43,6 +42,14 @@ public class AuthController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+
+    /**
+     * AccessToken, RefreshToken 발급
+     *
+     * @param response FrontEnd 페이지로 리다이렉트할 때 담을 정보들
+     * @param authentication 유저 정보
+     * @throws IOException
+     */
     @GetMapping("/info")
     public void createToken(HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
@@ -58,19 +65,32 @@ public class AuthController {
         String accessTokenExpiration = jwtService.dateToString(token.getAccessToken());
         String refreshTokenExpiration = jwtService.dateToString(token.getRefreshToken());
 
+        String birthYear = user.getBirthyear() == null ? "" : user.getBirthyear().toString();
+        String gender = user.getGender() == null ? "" : user.getGender().toString();
+
         response.sendRedirect(UriComponentsBuilder.fromUriString("http://j7a701.p.ssafy.io/logincheck")
                 .queryParam("accessToken", token.getAccessToken())
                 .queryParam("refreshToken", token.getRefreshToken())
                 .queryParam("accessTokenExpiration", accessTokenExpiration)
                 .queryParam("refreshTokenExpiration", refreshTokenExpiration)
-                .queryParam("memberId", user.getId().toString())
+                .queryParam("userId", user.getId().toString())
                 .queryParam("name", user.getName())
+                .queryParam("birthYear", birthYear)
+                .queryParam("gender", gender)
                 .build()
                 .encode(StandardCharsets.UTF_8)
                 .toUriString());
 
     }
 
+
+    /**
+     * AccessToken 만료 시 재발급
+     *
+     * @param request RefreshToken 정보
+     * @param response
+     * @return 재발급된 AccessToken 반환
+     */
     @GetMapping("/refresh")
     public ResponseEntity<Map<String, String>> checkRefreshToken(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = request.getHeader("refreshToken");

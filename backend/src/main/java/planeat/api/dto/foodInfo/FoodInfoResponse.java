@@ -1,4 +1,4 @@
-package planeat.api.dto.foodInfo;
+package planeat.api.dto.foodinfo;
 
 /*
  *
@@ -19,7 +19,6 @@ import planeat.enums.FoodType;
 @Setter
 @NoArgsConstructor
 public class FoodInfoResponse {
-
 
     private Long foodInfoId;
     private Long foodUser;
@@ -56,7 +55,6 @@ public class FoodInfoResponse {
     private Float vitaminB12;
     private Float vitaminC;
     private Float cholesterol;
-
     private Float fattyAcid;
     private Float linoleicAcid;
     private Float alphaLinoleicAcid;

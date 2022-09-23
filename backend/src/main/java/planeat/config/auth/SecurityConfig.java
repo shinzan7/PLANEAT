@@ -29,14 +29,14 @@ public class SecurityConfig {
 
         http
                 .csrf().disable()
-                .cors().configurationSource(corsConfigurationSource());
-//                .and()
-//                .logout().logoutSuccessUrl("/")
-//                .and()
-//                .oauth2Login()
-//                .defaultSuccessUrl("/oauth/info", true)
-//                .userInfoEndpoint()
-//                .userService(AuthService);
+                .cors().configurationSource(corsConfigurationSource())
+                .and()
+                .logout().logoutSuccessUrl("/")
+                .and()
+                .oauth2Login()
+                .defaultSuccessUrl("/api/oauth/info", true)
+                .userInfoEndpoint()
+                .userService(AuthService);
 
         return http.build();
 

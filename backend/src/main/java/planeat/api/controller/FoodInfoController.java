@@ -13,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import planeat.api.dto.common.BasicResponse;
-import planeat.api.dto.foodInfo.FoodInfoRequest;
-import planeat.api.dto.foodInfo.FoodInfoResponse;
+import planeat.api.dto.foodinfo.FoodInfoRequest;
+import planeat.api.dto.foodinfo.FoodInfoResponse;
 import planeat.api.service.FoodInfoService;
 
 import java.util.List;
@@ -26,7 +26,6 @@ public class FoodInfoController {
 
     final FoodInfoService foodInfoService;
     static final String SUCCESS = "success";
-    static final String ERROR = "error";
 
 
     /**
@@ -37,7 +36,7 @@ public class FoodInfoController {
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
     @PostMapping("/{userId}")
-    public ResponseEntity<BasicResponse<Long>> CreateUserFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
+    public ResponseEntity<BasicResponse<Long>> CreateFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
         Long id = foodInfoService.createFoodInfo(userId, foodInfoRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
     }
@@ -92,7 +91,7 @@ public class FoodInfoController {
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
     @PutMapping("/{userId}")
-    public ResponseEntity<BasicResponse<Long>> UpdateUserFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
+    public ResponseEntity<BasicResponse<Long>> UpdateFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
         Long id = foodInfoService.updateFoodInfo(userId, foodInfoRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
 
@@ -107,7 +106,7 @@ public class FoodInfoController {
      * @return SUCCCESS, userId, HttpStatus.CREATED(200)
      */
     @DeleteMapping("/{userId}")
-    public ResponseEntity<BasicResponse<Long>> DeleteUserFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
+    public ResponseEntity<BasicResponse<Long>> DeleteFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
         Long id = foodInfoService.deleteFoodInfo(userId, foodInfoRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.OK);
     }
@@ -116,8 +115,8 @@ public class FoodInfoController {
     /**
      * 기본 Response 형식 DTO
      *
-     * @param message 성공, 실패 여부 메세지 "SUCCESS", "ERROR"
-     * @param data 반환할 데이터
+     * @param message 메세지 ex) 성공 : "SUCCESS"
+     * @param data    반환할 데이터
      * @return ResponseEntity의 Body
      */
     private <T> BasicResponse<T> makeBasicResponse(String message, T data) {
