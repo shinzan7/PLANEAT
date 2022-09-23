@@ -1,4 +1,4 @@
-package planeat.api.dto.foodInfo;
+package planeat.api.dto.foodinfo;
 
 /*
  *
@@ -8,15 +8,10 @@ package planeat.api.dto.foodInfo;
  @since 2022-09-20
 */
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import planeat.enums.FoodType;
-
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 @Getter
 @Setter

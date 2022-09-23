@@ -10,11 +10,10 @@ package planeat.database.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
-import planeat.api.dto.foodInfo.FoodInfoRequest;
+import planeat.api.dto.foodinfo.FoodInfoRequest;
 import planeat.enums.FoodType;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,7 +24,8 @@ import java.util.List;
 @Table(name = "food_info")
 public class FoodInfo {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "food_info_id")
     private Long id;
 
@@ -149,6 +149,18 @@ public class FoodInfo {
 
     @Column(name = "vitamin_b2")
     private Float vitaminB2;
+
+
+
+//    @JsonIgnore
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "diet_info_id")
+//    DietInfo dietInfo;
+//
+//    @JsonIgnore
+//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+//    @JoinColumn(name = "intake_food_id")
+//    IntakeFood intakeFood;
 
 
     @JsonIgnore

@@ -13,8 +13,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import planeat.api.dto.common.BasicResponse;
-import planeat.api.dto.foodInfo.FoodInfoRequest;
-import planeat.api.dto.foodInfo.FoodInfoResponse;
+import planeat.api.dto.foodinfo.FoodInfoRequest;
+import planeat.api.dto.foodinfo.FoodInfoResponse;
 import planeat.api.service.FoodInfoService;
 
 import java.util.List;

@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import planeat.database.entity.FoodInfo;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface FoodInfoRepository extends JpaRepository<FoodInfo, Long> {
 
@@ -26,4 +27,5 @@ public interface FoodInfoRepository extends JpaRepository<FoodInfo, Long> {
     @Query("select f from FoodInfo f where f.name like concat('%', :name, '%') and f.foodUser = :userId or f.foodUser = 1")
     List<FoodInfo> findByNameAndUserIdFoodInfo(String name, Long userId);
 
+    Optional<FoodInfo> findById(Long foodInfoId);
 }
