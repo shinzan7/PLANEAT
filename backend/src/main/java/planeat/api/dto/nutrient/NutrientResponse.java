@@ -6,9 +6,7 @@ package planeat.api.dto.nutrient;
  @author 신지한
  @since 2022-09-21
 */
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
@@ -24,10 +22,20 @@ public class NutrientResponse {
     List<NutriIngredient> nutriIngredientList;
 
     @Getter @Setter
+    @AllArgsConstructor
     public static class NutriIngredient{
         String ingredientName;
         Float ingredientAmount;
         List<String> categoryTagList;
     }
 
+    @Builder
+    public NutrientResponse(Long nutrientId, String nutrientName, String company, String description, String imagePath, List<NutriIngredient> nutriIngredientList) {
+        this.nutrientId = nutrientId;
+        this.nutrientName = nutrientName;
+        this.company = company;
+        this.description = description;
+        this.imagePath = imagePath;
+        this.nutriIngredientList = nutriIngredientList;
+    }
 }

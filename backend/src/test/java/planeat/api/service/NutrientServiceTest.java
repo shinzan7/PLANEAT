@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import planeat.api.dto.nutrient.NutrientRequest;
+import planeat.api.dto.nutrient.NutrientResponse;
 
 import javax.transaction.Transactional;
 
@@ -17,6 +18,13 @@ class NutrientServiceTest {
 
     @Autowired
     NutrientService nutrientService;
+
+    @Test
+    public void readTest(){
+        NutrientResponse nutrientResponse = nutrientService.readNutrientById(5L);
+        System.out.println(nutrientResponse.getNutrientName());
+        System.out.println(nutrientResponse.getNutriIngredientList());
+    }
 
     @Test
     public void saveTest(){
@@ -34,7 +42,7 @@ class NutrientServiceTest {
 
         nutriIngredientList.add(omega);
 
-        nutrientRequest.createNutrientRequest(1L, "나우푸드 오메가3", "나우푸드", "하루에 2번 먹어용", "omega_image1.jpg", nutriIngredientList);
+        nutrientRequest.createNutrientRequest("나우푸드 오메가3", "나우푸드", "하루에 2번 먹어용", "omega_image1.jpg", nutriIngredientList);
 
         nutrientService.createNutrientAndIngredients(nutrientRequest);
 

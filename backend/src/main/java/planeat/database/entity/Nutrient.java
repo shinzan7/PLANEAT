@@ -35,7 +35,7 @@ public class Nutrient {
     private String imagePath;
 
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "nutrient")
     List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
 

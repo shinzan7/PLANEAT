@@ -18,7 +18,6 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class NutrientRequest {
-    Long nutrientId;
     String nutrientName;
     String company;
     String description;
@@ -33,8 +32,7 @@ public class NutrientRequest {
     }
 
     @Builder
-    public void createNutrientRequest(Long nutrientId, String nutrientName, String company, String description, String imagePath, List<NutriIngredient> nutriIngredientList) {
-        this.nutrientId = nutrientId;
+    public void createNutrientRequest(String nutrientName, String company, String description, String imagePath, List<NutriIngredient> nutriIngredientList) {
         this.nutrientName = nutrientName;
         this.company = company;
         this.description = description;
