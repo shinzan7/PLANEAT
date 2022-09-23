@@ -14,6 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import planeat.api.dto.mydiet.MyDietRequest;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -38,8 +39,7 @@ public class MyDiet {
     @Column(name = "diet_name", nullable = false)
     private String dietName;
 
-
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "myDiet")
     List<DietInfo> dietInfoList = new ArrayList<>();
 
@@ -51,11 +51,26 @@ public class MyDiet {
         this.dietName = dietName;
     }
 
-//    public void setDietName(String dietName) { this.dietName = dietName; }
+    public static MyDiet createMyDiet(User user, MyDietRequest myDietRequest) {
+        MyDiet myDiet = MyDiet.builder()
+                .user(user)
+                .dietName(myDietRequest.getDietName())
+                .build();
+        return myDiet;
+    }
 
-    public MyDiet update(String dietName) {
-        this.dietName = dietName;
-        return this;
+
+    public static MyDiet updateMyDiet(User user, MyDietRequest myDietRequest) {
+        MyDiet myDiet = MyDiet.builder()
+                .id(myDietRequest.getMyDietId())
+                .user(user)
+                .dietName(myDietRequest.getDietName())
+                .build();
+        return myDiet;
+    }
+
+    public void putDietInfo(DietInfo dietInfo) {
+        this.dietInfoList.add(dietInfo);
     }
 
 }

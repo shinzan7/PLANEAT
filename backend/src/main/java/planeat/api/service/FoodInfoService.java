@@ -11,8 +11,8 @@ package planeat.api.service;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
-import planeat.api.dto.foodInfo.FoodInfoRequest;
-import planeat.api.dto.foodInfo.FoodInfoResponse;
+import planeat.api.dto.foodinfo.FoodInfoRequest;
+import planeat.api.dto.foodinfo.FoodInfoResponse;
 import planeat.database.entity.FoodInfo;
 import planeat.database.repository.FoodInfoRepository;
 import planeat.exception.CustomException;
@@ -80,7 +80,7 @@ public class FoodInfoService {
 
 
     /**
-     * 이름으로 식품 정보 조회
+     * 식품 이름으로 식품 정보 조회
      *
      * @param userId 유저 번호 1:관리자
      * @param name 검색 이름
@@ -131,7 +131,7 @@ public class FoodInfoService {
 
     private FoodInfo getFoodInfo(Long foodInfoId) {
         return foodInfoRepository.findById(foodInfoId)
-                .orElseThrow(() -> new CustomException(CustomExceptionList.FOODINFO_NOT_FOUND));
+                .orElseThrow(() -> new CustomException(CustomExceptionList.FOODINFO_NOT_FOUND_ERROR));
     }
 
 }
