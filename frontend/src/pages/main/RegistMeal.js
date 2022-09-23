@@ -22,10 +22,10 @@ export default function RegistMeal(props) {
             <Grid container id="container" xs={ 12} direction="row">
                 <Grid container id="mealDate" xs={ 12} > {month}월 {day}일 식사 등록하기</Grid>
                 <Grid container id="btnGroup" xs={12} zeroMinWidth direction="row" justifyContent="space-evenly">
-                    <BtnCircle type="아침"></BtnCircle>
-                    <BtnCircle type="점심"></BtnCircle>
-                    <BtnCircle type="저녁"></BtnCircle>
-                    <BtnCircle type="간식"></BtnCircle>
+                    <BtnCircle type="아침" amount={props.breakfastAmount}></BtnCircle>
+                    <BtnCircle type="점심" amount={props.lunchAmount}></BtnCircle>
+                    <BtnCircle type="저녁" amount={props.dinnerAmount}></BtnCircle>
+                    <BtnCircle type="간식" amount={props.snackAmount}></BtnCircle>
                     <BtnCircle type="영양제"></BtnCircle>
                 </Grid>
             </Grid>
@@ -42,6 +42,7 @@ const StyledWrapper = styled.div`
     border-radius: 15px;
     width: 90%;
     margin: auto;
+    margin-top: 2vw;
 }
 
 #mealDate {

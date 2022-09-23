@@ -1,17 +1,19 @@
 .react-calendar {
-    width: 500px;
+    width: 80%;
     color: #222;
     background-color: white;
     line-height: 1.125em;
     border: 1px solid rgb(228, 225, 225);
     border-radius: 15px;
     padding: 10px;
-    box-shadow: 1px 3px 5px rgb(209, 215, 216);
+    box-shadow: 1px 2px 5px #c7c7c7;
     margin: auto;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
   }
 
 .react-calendar__month-view__days {
-    height: 350px;
+    height: 50vh;
 }
 
   .react-calendar--doubleView {

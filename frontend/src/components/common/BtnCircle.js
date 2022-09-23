@@ -1,5 +1,6 @@
 /*
 식사 기록페이지 등록 버튼
+속성: type(아/점/저/간), amount(칼로리)
 @author 여예원
 @since 2022.09.22
 */
@@ -30,6 +31,7 @@ export default function BtnCircle(props) {
         transform: scale(1.1);
         height: 64px !important;
         box-shadow: 1px 2px 5px #c7c7c7;
+        text-transform: none;
     }
 
     &:hover {
@@ -44,12 +46,22 @@ export default function BtnCircle(props) {
     }
 `;
     
+    function onClick(e) {
+        console.log(e.target.id);
+    }
+    
     return (
-        <Grid items xs={2} style={{textAlign: "center"}}>
-            <BtnCircle>
-                <AddIcon/>
+        <Grid items id={props.type} xs={2} style={{ textAlign: "center" }} onClick={ (e)=>onClick(e)}> 
+            <BtnCircle id={props.type} >
+                {props.amount == null ?
+                    <Typography id={props.type}>+</Typography>
+                    :
+                    <Typography id={props.type} >
+                        {props.amount}<br />kcal
+                    </Typography>
+                }
             </BtnCircle>
-            <Typography style={{marginTop: "1.5vw"}} >
+            <Typography id={props.type} style={{marginTop: "1.5vw"}} >
                 { props.type }
             </Typography>
         </Grid>
