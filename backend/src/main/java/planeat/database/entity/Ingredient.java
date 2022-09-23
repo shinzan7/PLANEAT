@@ -27,22 +27,27 @@ public class Ingredient {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ingredient_id")
-    private Long id;
+    private Integer id;
 
     private String ingredientName;
 
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "ingredient")
     List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
 
-    @JsonIgnore
+//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "ingredient")
     List<Category> categoryList = new ArrayList<>();
 
     @Builder
-    public Ingredient(Long id, String ingredientName) {
+    public Ingredient(Integer id, String ingredientName) {
         this.id = id;
         this.ingredientName = ingredientName;
     }
+
+    public void putCategory(Category category){
+        this.categoryList.add(category);
+    }
+
 }
