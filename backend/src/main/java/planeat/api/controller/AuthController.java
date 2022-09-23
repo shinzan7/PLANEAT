@@ -6,6 +6,9 @@ package planeat.api.controller;
  *
  @author 박윤하
  @since 2022-09-16
+ *
+ * 스웨거 접속 url
+ * http://localhost:9000/api/swagger-ui/#/
 */
 
 import lombok.RequiredArgsConstructor;
