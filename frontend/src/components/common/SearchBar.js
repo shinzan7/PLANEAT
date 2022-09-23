@@ -8,6 +8,7 @@
 import React from "react";
 import { IconButton, Paper, InputBase} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
+import {Link} from 'react-router-dom';
 
 function SearchBar() {
   return (
@@ -17,9 +18,11 @@ function SearchBar() {
         <InputBase
           sx={{ ml: 1, flex: 1}}
           />
-        <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
-          <SearchIcon />
-        </IconButton>
+        <Link to='/result'>
+          <IconButton type="button" sx={{ p: '10px' }} aria-label="search">
+            <SearchIcon />
+          </IconButton>
+        </Link>
       </Paper>
     </div>
   )

@@ -136,8 +136,7 @@ function SearchByNutrient() {
                 </Grid>
                 
                 <Grid item xs={4}>
-                  <SearchBar />
-      
+                  <p>원하는 성분을 포함한 영양제를 확인해보세요</p>
                 </Grid>
                 <Grid item xs={5}>
                   
@@ -155,7 +154,7 @@ function SearchByNutrient() {
                 <Grid item xs={8}>
                   <Grid container>
                     {nuterientTags.map((data, i) => (  
-                      <Link to="/searchresult" style={{textDecoration:'none', color:'black'}}>           
+                      <Link to="/nutrientresult" style={{textDecoration:'none', color:'black'}}>           
                         <TagNute
                         key={i}
                         tag={data.title}

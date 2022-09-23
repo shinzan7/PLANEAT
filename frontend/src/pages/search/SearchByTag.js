@@ -166,7 +166,7 @@ function SearchByTag() {
                 </Grid>
                 
                 <Grid item xs={4}>
-                  <SearchBar />
+                  <p>내 건강 고민에 맞는 제품을 찾아보세요</p>
                 </Grid>
                 <Grid item xs={5}>
                   
@@ -185,7 +185,7 @@ function SearchByTag() {
                 <Grid container>
                   
                     {userTags.map((data, i) => (   
-                      <Link to="/searchresult" style={{textDecoration:'none', color:'black'}}>          
+                      <Link to="/tagresult" style={{textDecoration:'none', color:'black'}}>          
                         <TagMain
                         key={i}
                         src={data.src}

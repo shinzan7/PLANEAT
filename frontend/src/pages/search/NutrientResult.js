@@ -1,5 +1,5 @@
 /*
-영양제 검색 페이지 > 검색 결과(이름, 성분, 건강고민)
+영양제 검색 페이지 > 검색 결과(성분)
 @author 전상현
 @since 2022.09.22
 */
@@ -8,11 +8,10 @@ import CardNutrient from "components/common/CardNutrient";
 import { Grid } from "@mui/material";
 import Header from 'components/nav/Header';
 import SideBar from "components/common/SideBar";
-import SearchBar from "components/common/SearchBar";
 import {Link} from 'react-router-dom';
 
 
-function SearchReseult() {
+function NutrientResult() {
   const data = {
     img: "",
     nutrient_name: "락토핏 생유산균 화이버",
@@ -42,8 +41,7 @@ function SearchReseult() {
                 </Grid>
                 
                 <Grid item xs={4}>
-                  <SearchBar />
-      
+                  <p>(성분)을 포함한 제품을 만나보세요</p>
                 </Grid>
                 <Grid item xs={5}>
                   
@@ -87,4 +85,4 @@ function SearchReseult() {
   );
 }
 
-export default SearchReseult;
+export default NutrientResult;
