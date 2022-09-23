@@ -1,6 +1,15 @@
-FROM node:alpine
-WORKDIR /usr/src/app
-COPY ./package* /usr/src/app/
-RUN npm install --save --legacy-peer-deps
-COPY ./ /usr/src/app/
-CMD ["npm","run","start"]
+FROM node:latest
+
+WORKDIR /frontend
+
+COPY ./package*.json /frontend
+
+RUN npm install
+
+COPY / /frontend
+
+RUN npm run build
+
+CMD ["npx", "serve", "-s", "build"]
+
+EXPOSE 3000
