@@ -17,8 +17,3 @@
     display: inline-block;
 }
 
-#wrapper{
-    height: auto;
-    min-height: 100%;
-    padding-bottom: 110px;
-}

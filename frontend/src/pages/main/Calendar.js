@@ -1,24 +1,46 @@
-// 식사 기록 페이지 > 달력
+/*
+캘린더
+@author 여예원
+@since 2022.09.21
+*/
 
 import React, { useState} from 'react';
 import Calendar from 'react-calendar';
 import './Calendar.css';
 import moment from 'moment';
 
-function MainCalendar() {
+function MainCalendar(props) {
 
-    const [value, onChange] = useState(new Date());
+    const [value, setValue] = useState(new Date());
     let today = new Date();
 
     const mark = ["2022-09-01", "2022-09-03", "2022-09-10", "2022-09-17", "2022-09-21"]; // 플래닛 지수 날짜 담을 배열
     // todo: 플래닛 지수 별 배열 만들기
     // todo: 날짜 클릭시 우측 영역 보여주기 함수
 
+    const onChange = function (e) { 
+        setValue(e);
+        const year = e.getFullYear();
+        let month = e.getMonth() + 1;
+        let day = e.getDate();
+    
+        if (month < 10) { 
+            month = "0" + month;
+        }   
+        if (day < 10) { 
+            day = "0" + day;
+        }
+        let date = year + "-" + month + "-" + day;
+        props.setClickDate(date);
+    }
+
     return (
         <div>
             <Calendar
-                onChange={onChange} // 클릭시 우측에 해당 식단 기록 보여주기
-                value={value}
+                onChange={(e) => {
+                    onChange(e);
+                }} // 클릭시 우측에 해당 식단 기록 보여주기
+                value={value} // 클릭하는 날짜
                 defaultValue={today}
                 calendarType="Hebrew" // 일요일시작
                 showNeighboringMonth={false} // 이전, 다음 달 없애는 코드
