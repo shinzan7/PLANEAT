@@ -81,22 +81,6 @@ function Welcome() {
     setOpen(false);
   };
 
-  // 다음 버튼 클릭 시
-  const handleNext = () => {
-    // 약관동의 화면
-    if (activeStep == 0) {
-      // 약관동의 체크 되어있으면 다음 스텝으로 이동, 체크 안되어있으면 alert
-      if (checked) {
-        setActiveStep(activeStep + 1);
-      } else {
-        setOpen(true);
-      }
-    } else {
-      setActiveStep(activeStep + 1);
-    }
-  };
-
-  // 이전 버튼 클릭 시
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
