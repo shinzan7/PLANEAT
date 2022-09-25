@@ -14,9 +14,10 @@ const BtnMain = styled(Button)`
         background-color: #9DA6F8;
         color: white;
         border-radius: 24px;
-        width: ${props => props.size};
+        width: ${props => props.width};
         height: 37px;
     }
+    
 `;
   
 export default BtnMain;

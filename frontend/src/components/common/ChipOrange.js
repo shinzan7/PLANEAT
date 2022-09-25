@@ -14,8 +14,6 @@ const ChipOrange = styled(Chip)`
         color: #969696;
         label: ${props => props.label};
         width: ${props => props.width};
-        onClick
-        onDelete
     }
 `;
 
