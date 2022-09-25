@@ -1,18 +1,17 @@
 /*
-영양제 검색 페이지 > 영양제 상세정보
+영양제 검색 페이지 > 검색 결과(건강고민)
 @author 전상현
 @since 2022.09.22
 */
-
 import React from "react";
 import CardNutrient from "components/common/CardNutrient";
-import Header from 'components/nav/Header';
 import { Grid } from "@mui/material";
+import Header from 'components/nav/Header';
 import SideBar from "components/common/SideBar";
-import SearchBar from "components/common/SearchBar";
+import {Link} from 'react-router-dom';
 
 
-function SearchDetail() {
+function TagResult() {
   const data = {
     img: "",
     nutrient_name: "락토핏 생유산균 화이버",
@@ -21,13 +20,11 @@ function SearchDetail() {
     ingredient_name: ["차전자피식이섬유"],
   }
 
-  const section = {marginTop:'80px'}
-  const bold = {fontWeight:'bold'}
-  const text = {textAlign:'left'}
+  const section = { marginTop:'80px' }
   const section1 = { marginTop:'25vh', textAlign:'center'}
   const section2 = { marginTop:'5vh', textAlign:'center'}
-  const section3 = { marginTop:'10vh'}
-  const section4 = { marginTop:'5vh'}
+  const section3 = { marginTop:'10vh' }
+  const card = { textAlign:'left' }
 
   return (
       <div style={section}>
@@ -44,8 +41,7 @@ function SearchDetail() {
                 </Grid>
                 
                 <Grid item xs={4}>
-                  <SearchBar />
-      
+                  <p>(건강 고민)개선에 도움이 되는 영양제들이에요.</p>
                 </Grid>
                 <Grid item xs={5}>
                   
@@ -55,34 +51,38 @@ function SearchDetail() {
               <div style={section3}>
                 
               </div>
-
-              <Grid container>
+              
+              <Grid container> 
                 <Grid item xs={1}>
-          
+
                 </Grid>
-                <Grid item xs={8} style={text}>
-                  <CardNutrient pill={data} />
-                  <div>
-                    <div style={section4}>
-                      <p style={bold}>상세정보</p>
-                      <p>종근당 락토핏 생유산균 화이버</p>
-                    </div>
-                    <div style={section4}>
-                      <p style={bold}>섭취방법</p>
-                      <p>1일 2회</p>
-                    </div>
-                  </div>
+                <Grid item xs={8}>
+                  <Grid container style={card}>
+                    <Link to='/searchdetail' style={{textDecoration:'none'}}>
+                      <CardNutrient pill={data}/>
+                    </Link>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                    <CardNutrient pill={data}/>
+                  </Grid>
                 </Grid>
                 <Grid item xs={3}>
-                  
-                </Grid>
+
+                </Grid>  
               </Grid>
-              
+
             </Grid>
           </Grid>
-      
       </div>
   );
 }
 
-export default SearchDetail;
+export default TagResult;
