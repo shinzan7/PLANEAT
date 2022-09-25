@@ -44,4 +44,18 @@ public class NutrientIngredient {
         this.ingredientAmount = ingredientAmount;
     }
 
+    /**
+     * @param nutrient 영양제 객체
+     * @param ingredient 영양성분 객체
+     * @param ingredientAmount 영양성분 함량
+     * @return
+     */
+    public NutrientIngredient createNutrientIngredient(Nutrient nutrient, Ingredient ingredient, Float ingredientAmount){
+        return NutrientIngredient.builder()
+                .nutrient(nutrient)
+                .ingredient(ingredient)
+                .ingredientAmount(ingredientAmount)
+                .build();
+    }
+
 }
