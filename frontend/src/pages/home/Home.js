@@ -155,7 +155,7 @@ function Home() {
                 </svg>
 
               </Grid>
-            
+            </Grid>
 
             <div href="#" className="login">
               <span></span>
