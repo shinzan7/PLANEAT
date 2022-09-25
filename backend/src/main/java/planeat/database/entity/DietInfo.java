@@ -13,7 +13,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-import planeat.api.dto.mydiet.MyDietRequest;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -34,7 +33,7 @@ public class DietInfo {
     @JoinColumn(name = "my_diet_id")
     private MyDiet myDiet;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_info_id")
     private FoodInfo foodInfo;
 

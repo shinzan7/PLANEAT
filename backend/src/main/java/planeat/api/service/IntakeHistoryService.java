@@ -55,6 +55,7 @@ public class IntakeHistoryService {
         for (int i = 0; i < intakeHistoryRequest.getIntakeFoodsList().size(); i++) {
             IntakeFood intakeFood = IntakeFood.createIntakeFood(getFoodInfo(intakeHistoryRequest.getIntakeFoodsList().get(i).getFoodInfoId()), intakeHistoryRequest.getIntakeFoodsList().get(i).getAmount(), getIntakeHistory(intakeHistoryId));
             intakeFoodRepository.save(intakeFood);
+            intakeFood.getIntakeHistory().getIntakeFoodList().add(intakeFood);
         }
 
         return userId;
@@ -74,7 +75,7 @@ public class IntakeHistoryService {
 
         for (IntakeHistory intakeHistory : intakeHistories) {
             List<IntakeHistoryResponse.IntakeFoods> intakeFoods = new ArrayList<>();
-            List<IntakeFood> intakeFoodList = intakeFoodRepository.findByIntakeHistoryId(intakeHistory.getId());
+            List<IntakeFood> intakeFoodList = intakeHistory.getIntakeFoodList();
 
             for (IntakeFood intakeFood : intakeFoodList) {
                 FoodInfo foodInfo = intakeFood.getFoodInfo();
