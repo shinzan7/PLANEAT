@@ -31,7 +31,7 @@ export default function BtnCircle(props) {
         transform: scale(1.1);
         height: 64px !important;
         box-shadow: 1px 2px 5px #c7c7c7;
-        text-transform: none;
+        text-transform: none; // 버튼 내용 소문자로
     }
 
     &:hover {
@@ -47,7 +47,13 @@ export default function BtnCircle(props) {
 `;
     
     function onClick(e) {
-        console.log(e.target.id);
+        console.log(e.target.id); // 아/점/저/간/영
+
+        if (e.target.id == "영양제") {
+            //영양제 모달
+        } else { 
+            // 식단 모달
+        }
     }
     
     return (
