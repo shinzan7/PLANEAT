@@ -85,6 +85,11 @@ function Welcome() {
     setOpen(false);
   };
 
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+
+
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
