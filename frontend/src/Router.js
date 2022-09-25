@@ -5,7 +5,7 @@ import Welcome from "./pages/home/Welcome";
 import Analysis from "./pages/analysis/Analysis";
 import Search from "./pages/search/Search";
 import MyPage from "./pages/myPage/MyPage";
-import Logincheck from "pages/home/Logincheck";
+import LoginCheck from "pages/home/LoginCheck";
 
 function Router() {
     return (
@@ -17,8 +17,9 @@ function Router() {
                     <Route path="/analysis" element={<Analysis />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/mypage" element={<MyPage />} />
-                    <Route path="/logincheck/:accessToken/:refreshToken/:accessTokenExpiration/
-                    :refreshTokenExpiration/:userId/:name/:birthYear/:gender" element={<Logincheck />} />
+                    <Route path="/logincheck" element={<LoginCheck />} />
+                    {/* <Route path="/logincheck/:accessToken/:refreshToken/:accessTokenExpiration/
+                    :refreshTokenExpiration/:userId/:name/:birthYear/:gender" element={<Logincheck />} /> */}
                 </Routes>
             </BrowserRouter>
         
