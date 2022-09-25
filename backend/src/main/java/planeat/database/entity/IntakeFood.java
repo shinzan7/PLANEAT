@@ -1,7 +1,7 @@
 package planeat.database.entity;
 
 /*
- *
+ * 섭취 음식 엔티티
  * IntakeFood - intake_food table entity
  *
  @author 박윤하
