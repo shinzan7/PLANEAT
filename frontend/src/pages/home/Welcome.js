@@ -69,13 +69,6 @@ function Welcome() {
     setActiveStep(activeStep + 1);
   };
 
-  // 변경 필요
-  const agreeHandler = () => {
-    // 약관동의 화면일 때 동의 체크 되어있으면 다음 스텝으로 이동, 체크 안되어있으면 alert
-    if (activeStep == 0) {
-    }
-  };
-
   const handleBack = () => {
     setActiveStep(activeStep - 1);
   };
