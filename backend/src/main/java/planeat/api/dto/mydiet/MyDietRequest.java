@@ -13,7 +13,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import planeat.database.entity.FoodInfo;
 
 import java.math.BigDecimal;
 import java.util.List;

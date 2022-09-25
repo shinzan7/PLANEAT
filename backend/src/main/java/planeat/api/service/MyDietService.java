@@ -123,11 +123,12 @@ public class MyDietService {
         Long createUser = myDietRequest.getUserId();
         if(userId.equals(createUser)) {
             User user = userRepository.findById(userId)
-                    .orElseThrow(() -> new CustomException(CustomExceptionList.MYDIET_NOT_FOUND_ERROR));
+                    .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
             MyDiet myDiet = MyDiet.updateMyDiet(user, myDietRequest);
             myDietRepository.save(myDiet);
             List<DietInfo> dietInfoList = dietInfoRepository.findByMyDietId(myDiet.getId());
             dietInfoRepository.deleteAll(dietInfoList);
+
             for (int i = 0; i < myDietRequest.getDietInfosList().size(); i++) {
                 DietInfo dietInfo = DietInfo.createDietInfo(getFoodInfo(myDietRequest.getDietInfosList().get(i).getFoodInfoId()), myDietRequest.getDietInfosList().get(i).getAmount(), myDiet);
                 dietInfoRepository.save(dietInfo);
@@ -141,7 +142,7 @@ public class MyDietService {
      * 내 식단 삭제
      *
      * @param userId 유저 번호
-     * @param myDietRequest 삭제될 내 식단 정보가 담긴 DTO
+     * @param myDietRequest 삭제할 내 식단 정보가 담긴 DTO
      * @return userId
      */
     public Long deleteMyDiet(Long userId, MyDietRequest myDietRequest) {

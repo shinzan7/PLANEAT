@@ -33,7 +33,7 @@ public class IntakeFood {
     @JoinColumn(name = "intake_history_id")
     private IntakeHistory intakeHistory;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "food_info_id")
     private FoodInfo foodInfo;
 
@@ -49,11 +49,13 @@ public class IntakeFood {
         this.amount = amount;
     }
 
-//    public void setAmount(BigDecimal amount) { this.amount = amount; }
 
-    public IntakeFood update(BigDecimal amount) {
-        this.amount = amount;
-        return this;
+    public static IntakeFood createIntakeFood(FoodInfo foodInfo, BigDecimal amount, IntakeHistory intakeHistory) {
+        return IntakeFood.builder()
+                .intakeHistory(intakeHistory)
+                .foodInfo(foodInfo)
+                .amount(amount)
+                .build();
     }
 
 }

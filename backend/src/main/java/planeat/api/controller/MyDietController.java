@@ -88,7 +88,7 @@ public class MyDietController {
     /**
      * 내 식단 삭제
      *
-     * @param userId 내 식단 번호
+     * @param userId 유저 번호
      * @return SUCCCESS, userId, HttpStatus.CREATED(200)
      */
     @DeleteMapping("/{userId}")

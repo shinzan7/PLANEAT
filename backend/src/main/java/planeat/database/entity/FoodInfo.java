@@ -151,18 +151,6 @@ public class FoodInfo {
     private Float vitaminB2;
 
 
-
-//    @JsonIgnore
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "diet_info_id")
-//    DietInfo dietInfo;
-//
-//    @JsonIgnore
-//    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-//    @JoinColumn(name = "intake_food_id")
-//    IntakeFood intakeFood;
-
-
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "foodInfo")
     List<DietInfo> dietInfoList = new ArrayList<>();
@@ -220,7 +208,6 @@ public class FoodInfo {
 
     public static FoodInfo createFoodInfo(Long userId, FoodInfoRequest foodInfoRequest) {
         FoodInfo foodInfo = FoodInfo.builder()
-                //.id(foodInfoRequest.getFoodInfoId())
                 .foodUser(userId)
                 .foodType(foodInfoRequest.getFoodType())
                 .name(foodInfoRequest.getName())

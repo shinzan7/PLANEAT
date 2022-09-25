@@ -20,8 +20,8 @@ public enum CustomExceptionList {
     USER_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E002", "존재하지 않는 회원입니다."),
     ACCESS_TOKEN_ERROR(HttpStatus.UNAUTHORIZED, "E003", "엑세스 토큰 오류입니다."),
     FOODINFO_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E004", "존재하지 않는 식품 정보입니다."),
-    MYDIET_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E005", "존재하지 않는 내 식단입니다.");
-
+    MYDIET_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E005", "존재하지 않는 내 식단입니다."),
+    INTAKEHISTORY_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E006", "존재하지 않는 섭취 기록입니다.");
 
     private final HttpStatus status;
     private final String code;
