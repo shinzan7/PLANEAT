@@ -69,8 +69,4 @@ public class MyDiet {
         return myDiet;
     }
 
-    public void putDietInfo(DietInfo dietInfo) {
-        this.dietInfoList.add(dietInfo);
-    }
-
 }

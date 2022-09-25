@@ -34,11 +34,7 @@ public class DietInfo {
     @JoinColumn(name = "my_diet_id")
     private MyDiet myDiet;
 
-//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "dietInfo")
-//    @JoinColumn(name = "food_info_id")
-//    private FoodInfo foodInfo;
-
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "food_info_id")
     private FoodInfo foodInfo;
 
@@ -62,12 +58,5 @@ public class DietInfo {
                 .amount(amount)
                 .build();
     }
-
-
-    public DietInfo update(BigDecimal amount) {
-        this.amount = amount;
-        return this;
-    }
-
 
 }
