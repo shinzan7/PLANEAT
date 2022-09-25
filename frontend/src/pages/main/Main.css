@@ -24,3 +24,7 @@
         background-position: 0 50%;
     }
 } */
+
+.css-6s1xft-MuiGrid-root>.MuiGrid-item {
+    padding: 0;
+}

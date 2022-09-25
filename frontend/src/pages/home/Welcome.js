@@ -6,7 +6,7 @@
 import * as React from "react";
 
 import styled from "styled-components";
-
+import { useState } from "react";
 import CssBaseline from "@mui/material/CssBaseline";
 import Box from "@mui/material/Box";
 import Container from "@mui/material/Container";
@@ -27,6 +27,12 @@ import Header from "components/nav/Header";
 import Footer from "components/nav/Footer";
 import BtnMain from "components/common/BtnMain";
 import TagMain from "components/common/TagMain";
+
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
 
 const steps = ["이용약관 동의", "개인정보 입력", "건강고민 선택"];
 
@@ -52,7 +58,7 @@ function CelebrateLine() {
 function getStepContent(step) {
   switch (step) {
     case 0:
-      return <TermsOfService />; // 이용약관 화면
+      return <TermsOfService></TermsOfService>; // 이용약관 화면
     case 1:
       return <MoreInfoForm />; // 추가정보 기입 화면
     case 2:
@@ -63,10 +69,16 @@ function getStepContent(step) {
 }
 
 function Welcome() {
-  const [activeStep, setActiveStep] = React.useState(0);
+  const [activeStep, setActiveStep] = useState(0);
 
-  const handleNext = () => {
-    setActiveStep(activeStep + 1);
+  // 약관동의 컴포넌트 체크 여부
+  const [checked, setChecked] = useState(false);
+
+  // 약관동의 alert 모달
+  const [open, setOpen] = React.useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
   };
 
   const handleBack = () => {
@@ -100,6 +112,7 @@ function Welcome() {
     <div>
       <CssBaseline />
       <Header />
+
       <Container component="main" maxWidth="md" sx={{ mb: 4, marginTop: "100px" }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
           <CelebrateLine></CelebrateLine>
@@ -176,7 +189,12 @@ function Welcome() {
               </React.Fragment>
             ) : (
               <React.Fragment>
-                {getStepContent(activeStep)}
+                {/* {getStepContent(activeStep)} */}
+                {activeStep == 0 && (
+                  <TermsOfService setChecked={setChecked} checked={checked}></TermsOfService>
+                )}
+                {activeStep == 1 && <MoreInfoForm></MoreInfoForm>}
+                {activeStep == 2 && <UserTagForm></UserTagForm>}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>
                   {/* 이전버튼 */}
                   {activeStep !== 0 && (
@@ -250,6 +268,30 @@ function Welcome() {
         </Paper>
       </Container>
       <Footer />
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText sx={{ textAlign: "center" }} id="alert-dialog-description">
+            <img
+              src="assets/planeat_logo_top.png"
+              width="150"
+              style={{ marginBottom: "15px" }}
+            ></img>
+            <br />
+            이용약관에 동의해 주세요.😉 <br />
+            이용약관에 동의하지 않으면 서비스를 이용하실 수 없습니다.
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <BtnMain onClick={handleClose} autoFocus>
+            확인
+          </BtnMain>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }
