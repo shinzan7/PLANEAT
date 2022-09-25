@@ -77,6 +77,10 @@ function Welcome() {
   // 약관동의 alert 모달
   const [open, setOpen] = React.useState(false);
 
+  const handleNext = () => {
+    setActiveStep(activeStep + 1);
+  };
+  
   const handleClose = () => {
     setOpen(false);
   };

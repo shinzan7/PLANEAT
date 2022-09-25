@@ -76,7 +76,7 @@ const ResponsiveAppBar = () => {
           <StyledLink to="/main">
             <Box
               component="img"
-              src="assets/planeat_logo.png"
+              src="assets/longlogo.png"
               sx={{ display: { xs: "none", md: "flex" }, width: "200px" }}
             ></Box>
           </StyledLink>
