@@ -47,8 +47,7 @@ function Logincheck() {
       localStorage.setItem("gender", gender)
 
       // console.log(name, accessToken, refreshToken)
-      NewUser(true)
-      // window.location.replace("/welcome")
+      window.location.replace("/welcome")
       
     }
 
@@ -62,7 +61,7 @@ function Logincheck() {
       localStorage.setItem("birthYear", birthYear)
       localStorage.setItem("gender", gender)
       // setNewUser(true)
-      // window.location.replace("/main")
+      window.location.replace("/main")
     }
   }, [])
 
