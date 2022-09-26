@@ -88,7 +88,7 @@ function ShowIntakeCharts() {
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="radialBar" width={350} />
+          <Chart options={options} series={series} type="radialBar" width={650} height={350} />
         </div>
       </div>
     </div>
@@ -104,6 +104,11 @@ function ShowWeightIntakeCharts() {
       data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160],
     },
     {
+      name: "권장 섭취량",
+      type: "column",
+      data: [1000, 1020, 1000, 1000, 1200, 1200, 1200, 1200, 1300, 1300, 1300, 1100],
+    },
+    {
       name: "몸무게",
       type: "line",
       data: [48, 47, 49, 52, 51, 49, 47, 48, 48, 50, 49, 47],
@@ -111,35 +116,21 @@ function ShowWeightIntakeCharts() {
   ];
 
   const options = {
-    colors: ["#F7BF87", "#9DA6F8"],
+    colors: ["#F7BF87", "#FFEFC9", "#9DA6F8"],
     chart: {
       height: 350,
       type: "line",
+      stacked: false,
     },
     stroke: {
-      width: [0, 4],
+      width: [1, 1, 4],
     },
 
     dataLabels: {
-      enabled: true,
-      enabledOnSeries: [1],
+      enabled: false,
     },
-    labels: [
-      "01 Jan 2001",
-      "02 Jan 2001",
-      "03 Jan 2001",
-      "04 Jan 2001",
-      "05 Jan 2001",
-      "06 Jan 2001",
-      "07 Jan 2001",
-      "08 Jan 2001",
-      "09 Jan 2001",
-      "10 Jan 2001",
-      "11 Jan 2001",
-      "12 Jan 2001",
-    ],
     xaxis: {
-      type: "datetime",
+      categories: [220908, 220909, 220910, 220911, 220912, 220913, 220914, 220915, 220916, 220917],
     },
     yaxis: [
       {
@@ -160,7 +151,7 @@ function ShowWeightIntakeCharts() {
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="line" width={500} />
+          <Chart options={options} series={series} type="line" width={650} height={350} />
         </div>
       </div>
     </div>
@@ -179,12 +170,25 @@ export default function FootStat({ value }) {
   return (
     <Paper
       sx={{
-        maxHeight: 500,
-        borderColor: "purple.main",
+        maxHeight: 600,
+        borderWidth: "3px",
+        borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
+        scrollbarWidth: "thin",
+        "&::-webkit-scrollbar": {
+          width: "0.4em",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "#f1f1f1",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#F7BF87",
+        },
+        "&::-webkit-scrollbar-thumb:hover": {
+          background: "#FFB973",
+        },
       }}
-      variant="outlined"
     >
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
       {/* {value} */}

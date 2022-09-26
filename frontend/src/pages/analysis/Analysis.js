@@ -66,8 +66,8 @@ function Analysis() {
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
-            textColor="primary"
-            indicatorColor="primary"
+            textColor="secondary"
+            indicatorColor="secondary"
           >
             <Tab label="최근 7일" {...a11yProps(0)} />
             <Tab label="최근 30일" {...a11yProps(1)} />

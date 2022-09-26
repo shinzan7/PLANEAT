@@ -37,7 +37,7 @@ import DialogTitle from "@mui/material/DialogTitle";
 const steps = ["이용약관 동의", "개인정보 입력", "건강고민 선택"];
 
 const userInfo = {
-  name: "김싸피",
+  name: "조혜안",
 };
 
 // 가입축하문구
