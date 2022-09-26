@@ -45,11 +45,19 @@ public class UserNutrient {
 
 
     @Builder
-    public UserNutrient(Long id, User user, Nutrient nutrient, Integer intakeRecommend) {
+    private UserNutrient(Long id, User user, Nutrient nutrient, Integer intakeRecommend) {
         this.id = id;
         this.user = user;
         this.nutrient = nutrient;
         this.intakeRecommend = intakeRecommend;
+    }
+
+    public static UserNutrient createUserNutrient(User user, Nutrient nutrient, Integer intakeRecommend){
+        return UserNutrient.builder()
+                .user(user)
+                .nutrient(nutrient)
+                .intakeRecommend(intakeRecommend)
+                .build();
     }
 
     public UserNutrient update(User user, Nutrient nutrient, Integer intakeRecommend) {
