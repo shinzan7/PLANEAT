@@ -48,6 +48,8 @@ function Logincheck() {
 
       // console.log(name, accessToken, refreshToken)
       NewUser(true)
+      window.location.replace("/welcome")
+      
     }
 
     if (accessToken && birthYear!="" && gender!="") {
@@ -60,6 +62,7 @@ function Logincheck() {
       localStorage.setItem("birthYear", birthYear)
       localStorage.setItem("gender", gender)
       setNewUser(true)
+      window.location.replace("/main")
     }
   }, [])
 
