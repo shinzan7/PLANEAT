@@ -1,7 +1,7 @@
 package planeat.database.entity;
 
 /*
- *
+ * 유저 권장 섭취량 엔티티
  * UserRecIntake - user_rec_intake table entity
  *
  @author 박윤하

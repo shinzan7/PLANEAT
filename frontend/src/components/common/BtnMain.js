@@ -15,8 +15,7 @@ const BtnMain = styled(Button)`
         color: white;
         border-radius: 24px;
         width: ${props => props.width};
-        
-        
+        height: 37px;
     }
     
 `;

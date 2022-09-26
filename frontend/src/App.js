@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "./Router";
-import "./App.css"
+import "./App.css";
 
 import { createTheme, ThemeProvider } from "@mui/material";
 
@@ -14,6 +14,9 @@ const theme = createTheme({
     },
     orange: {
       main: "#F7BF87",
+    },
+    primary: {
+      main: "#9DA6F8",
     },
   },
 });

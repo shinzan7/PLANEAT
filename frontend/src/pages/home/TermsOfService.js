@@ -12,6 +12,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { Paper } from "@mui/material";
 
 import styled from "styled-components";
+import { useEffect } from "react";
 
 const Pre = styled.pre`
   font-size: 13px;
@@ -20,11 +21,14 @@ const Pre = styled.pre`
   padding: 10px;
 `;
 
-export default function TermsOfService() {
-  const [checked, setChecked] = React.useState(false);
+const TermsOfService = ({ checked, setChecked }) => {
+  //   const [checked, setChecked] = React.useState(false);
 
   const handleChange = (e) => {
     setChecked(e.target.checked);
+    console.log("=============자식에서 데이터 확인=======");
+    console.log(e.target.checked);
+    console.log(checked);
   };
 
   return (
@@ -253,4 +257,6 @@ export default function TermsOfService() {
       </Grid>
     </React.Fragment>
   );
-}
+};
+
+export default TermsOfService;
