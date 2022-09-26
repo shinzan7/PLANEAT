@@ -35,7 +35,7 @@ function Logincheck() {
   
 
     if (accessToken && birthYear == "" && gender == "") {
-      // 처음 소셜 로그인한 유저가 생년, 성별 동의를 하고 들어온다면?
+      // 이름과 이메일만 기본으로 들고옴
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
       localStorage.setItem("accessTokenExpiration", accessTokenExpiration)
@@ -46,7 +46,7 @@ function Logincheck() {
       localStorage.setItem("gender", gender)
 
       console.log(name, accessToken, refreshToken)
-      window.location.replace("/")
+      // window.location.replace("/")
     }
 
     if (accessToken && birthYear && gender) {
