@@ -7,7 +7,7 @@ function Logincheck() {
   // const accessToken = location.state.accessToken
   // const accessToken = new URLSearchParams(location.accessToken)
 
-  const [NewUser, setNewUser] = useState(false)
+  // const [NewUser, setNewUser] = useState(false)
   // 신규유저 / 기존유저
   let accessToken,
     refreshToken,
@@ -67,7 +67,7 @@ function Logincheck() {
 
   return (
     <div>
-      {NewUser ? <Welcome /> : <Main />}
+      {/* {NewUser ? <Welcome /> : <Main />} */}
     </div>
   )
 }
