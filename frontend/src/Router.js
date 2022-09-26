@@ -5,7 +5,7 @@ import Welcome from "./pages/home/Welcome";
 import Analysis from "./pages/analysis/Analysis";
 import Search from "pages/search/Search";
 import MyPage from "./pages/myPage/MyPage";
-import LoginCheck from "pages/home/LoginCheck";
+import Logincheck from "pages/home/Logincheck";
 import SearchByTag from "pages/search/SearchByTag";
 import SearchByNutrient from "pages/search/SearchByNutrient";
 import SearchDetail from "pages/search/SearchDetail";
@@ -29,7 +29,7 @@ function Router() {
                     <Route path="/result" element={<NameResult />} />
                     <Route path="/nutrientresult" element={<NutrientResult />} />
                     <Route path="/mypage" element={<MyPage />} />
-                    <Route path="/logincheck" element={<LoginCheck />} />
+                    <Route path="/logincheck" element={<Logincheck />} />
                     {/* <Route path="/logincheck/:accessToken/:refreshToken/:accessTokenExpiration/
                     :refreshTokenExpiration/:userId/:name/:birthYear/:gender" element={<Logincheck />} /> */}
                 </Routes>
