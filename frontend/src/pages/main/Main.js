@@ -48,9 +48,9 @@ function Main() {
     const today = year + "-" + month + "-" + day;
 
     const [clickDate, setClickDate] = useState(today); // 딜력에서 선택된 날짜
-    const [goodDays, setGoodDays] = useState([]); // 플래닛 지수 좋음
-    const [normalDays, setNormalDays] = useState([]); // 플래닛 지수 보통
-    const [badDays, setBadDays] = useState([]); // 플래닛 지수 나쁨
+    const [goodDays, setGoodDays] = useState(["2022-09-01", "2022-09-03", "2022-09-10", "2022-09-17", "2022-09-21"]); // 플래닛 지수 좋음
+    const [normalDays, setNormalDays] = useState(["2022-09-30", "2022-09-14"]); // 플래닛 지수 보통
+    const [badDays, setBadDays] = useState(["2022-09-02", "2022-09-04"]); // 플래닛 지수 나쁨
     const [breakfastAmount, setBreakfastAmount] = useState("350"); // 아침 칼로리
     const [lunchAmount, setLunchAmount] = useState("200"); // 점심 칼로리
     const [dinnerAmount, setDinnerAmount] = useState("500"); // 저녁 칼로리
@@ -86,7 +86,7 @@ function Main() {
                                 setsnackAmount={setsnackAmount}
                             ></RegistMeal>
                             <DailyMeal
-                                clickDate={ clickDate}
+                                clickDate={clickDate}
                             ></DailyMeal>
                         </Grid>
                     </Grid>

@@ -14,7 +14,7 @@ function SearchBar() {
   return (
     <div>
       <p style={{ fontWeight:'bold'}}>제품명으로 영양제를 검색해보세요.</p>
-      <Paper component="form" sx={{display: 'flex', alignItems: 'center', borderRadius:100, backgroundColor:'#F5F5F5'}}>
+      <Paper component="form" sx={{ display: 'flex', alignItems: 'center', borderRadius: "24px", backgroundColor: '#F5F5F5' }} elevation="0">
         <InputBase
           sx={{ ml: 1, flex: 1}}
           />

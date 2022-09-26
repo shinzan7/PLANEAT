@@ -156,7 +156,27 @@
     display: none;
   }
 
-  .dot {
+  .goodDot {
+    height: 10px;
+    width: 10px;
+    background-color: #A9D5C7;
+    border-radius: 50%;
+    display: flex;
+    margin: auto;
+    margin-top: 6px;
+  }
+
+  .normalDot {
+    height: 10px;
+    width: 10px;
+    background-color: #FFEFC9;
+    border-radius: 50%;
+    display: flex;
+    margin: auto;
+    margin-top: 6px;
+  }
+
+  .badDot {
     height: 10px;
     width: 10px;
     background-color: #f87171;
@@ -169,7 +189,7 @@
   .unDot {
     height: 10px;
     width: 10px;
-    background-color: #f8e871;
+    background-color: white;
     border-radius: 50%;
     display: flex;
     margin: auto;
