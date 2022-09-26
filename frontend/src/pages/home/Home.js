@@ -12,7 +12,7 @@ import BtnMain from 'components/common/BtnMain';
 import SimpleTestModal from 'components/modal/home/SimpleTestModal';
 import Google from './Google';
 import Kakao from './Kakao';
-import { Link } from "react-router-dom";
+import Naver from './Naver';
 
 
 function Home() {
@@ -65,17 +65,8 @@ function Home() {
               <span></span>
               <span></span>
               <span></span>
-
-                    {/* &nbsp;&nbsp;&nbsp;
-                  
-                    <svg width="84" height="84" viewBox="0 0 84 84" fill="none" xmlns="http://www.w3.org/2000/svg" style={button}>
-                      <circle cx="42" cy="42.1411" r="41.2258" fill="#1BE43B"/>
-                      <path d="M23.9636 25.8225V58.4596H36.5206V42.131L47.4476 58.4596H60.0247V25.8225H47.4476V42.131L36.5206 25.8225H23.9636Z" fill="white"/>
-                    </svg>
-                    &nbsp;&nbsp;&nbsp;
-                    
-                    {/* <Google /> */}
               <Google />
+              <Naver />
               <Kakao />
             </div>
               
