@@ -11,6 +11,7 @@ import { Card } from '@mui/material';
 import BtnMain from 'components/common/BtnMain';
 import SimpleTestModal from 'components/modal/home/SimpleTestModal';
 import Google from './Google';
+import { Link } from "react-router-dom";
 
 
 function Home() {
@@ -85,6 +86,11 @@ function Home() {
                     </svg> */}
                     {/* <Google /> */}
                     <Google />
+                    <Link to='/welcome'>
+                      <button>
+                        welcome 임시 버튼
+                      </button>
+                    </Link>
                   </div>
               
             </Grid>
