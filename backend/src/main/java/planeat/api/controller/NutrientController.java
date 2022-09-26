@@ -50,17 +50,6 @@ public class NutrientController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , "hi"), HttpStatus.CREATED);
     }
 
-//    @GetMapping
-//    public ResponseEntity<BasicResponse<ExerciseMemberHistoryResponse>> exerciseMemberHistory(@ModelAttribute ExerciseMemberHistoryRequest request) {
-//        Long memberId = request.getMemberId();
-//        int year = request.getYear();
-//        int month = request.getMonth();
-//
-//        ExerciseMemberHistoryResponse response = exerciseService.memberHistoryByYearAndMonth(memberId, year, month);
-//
-//        return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
-//    }
-
     /**
      * 기본 Response 형식 DTO
      *

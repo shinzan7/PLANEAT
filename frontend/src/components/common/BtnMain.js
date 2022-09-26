@@ -19,5 +19,5 @@ const BtnMain = styled(Button)`
     }
     
 `;
-  
+
 export default BtnMain;
