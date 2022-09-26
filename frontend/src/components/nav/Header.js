@@ -201,7 +201,8 @@ const ResponsiveAppBar = () => {
                   onClick={() => {
                     localStorage.removeItem('accessToken')
                     localStorage.removeItem('refreshToken')
-                    return <Navigate to='/' />
+                    console.log('로그아웃')
+                    return <Navigate replace to='/' />
                   }}
                 >
                   로그아웃
