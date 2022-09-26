@@ -7,7 +7,8 @@ function Logincheck() {
   // const accessToken = location.state.accessToken
   // const accessToken = new URLSearchParams(location.accessToken)
 
-  const [NewUser, User] = useState(false)
+  const [NewUser, setNewUser] = useState(false)
+  // 신규유저 / 기존유저
   let accessToken,
     refreshToken,
     accessTokenExpiration,
@@ -45,11 +46,11 @@ function Logincheck() {
       localStorage.setItem("birthYear", birthYear)
       localStorage.setItem("gender", gender)
 
-      console.log(name, accessToken, refreshToken)
-      // window.location.replace("/")
+      // console.log(name, accessToken, refreshToken)
+      NewUser(true)
     }
 
-    if (accessToken && birthYear && gender) {
+    if (accessToken && birthYear!="" && gender!="") {
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
       localStorage.setItem("accessTokenExpiration", accessTokenExpiration)
@@ -58,7 +59,7 @@ function Logincheck() {
       localStorage.setItem("name", name)
       localStorage.setItem("birthYear", birthYear)
       localStorage.setItem("gender", gender)
-      User(true)
+      setNewUser(true)
     }
   }, [])
 
