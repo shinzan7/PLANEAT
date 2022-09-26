@@ -26,14 +26,13 @@ import styled from "styled-components";
 const pages = ["식사 기록", "영양제 검색", "내 영양분석"];
 
 const ResponsiveAppBar = () => {
-
   const location = useLocation();
 
   // const mounted = useRef(false);
   // useEffect(() => {
   //   if (!mounted.current) {
   //     mounted.current = true;
-  //   } else { 
+  //   } else {
   //   console.log(location.pathname);
   //   }
   // }, [location.pathname]);
@@ -58,8 +57,8 @@ const ResponsiveAppBar = () => {
 
   const StyledLink = styled(Link)`
     text-decoration: none;
-    font-weight: ${props => props.current? "bold" : " "};
-    color: ${props => props.current? "#9da6f8" : "black"};
+    font-weight: ${(props) => (props.current ? "bold" : " ")};
+    color: ${(props) => (props.current ? "#9da6f8" : "black")};
 
     &:hover {
       font-weight: bold;
@@ -120,8 +119,8 @@ const ResponsiveAppBar = () => {
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
                     {page == "식사 기록" && <StyledLink to="/main">{page}</StyledLink>}
-                    {page == "영양제 검색" && <StyledLink  to="/search">{page}</StyledLink>}
-                    {page == "내 영양분석" && <StyledLink  to="/analysis">{page}</StyledLink>}
+                    {page == "영양제 검색" && <StyledLink to="/search">{page}</StyledLink>}
+                    {page == "내 영양분석" && <StyledLink to="/analysis">{page}</StyledLink>}
                   </Typography>
                 </MenuItem>
               ))}
@@ -154,9 +153,21 @@ const ResponsiveAppBar = () => {
                 sx={{ my: 2, ml: "10%", color: "black", display: "block" }}
                 color="inherit"
               >
-                {page == "식사 기록" && <StyledLink to="/main" current={location.pathname == "/main"}>{page}</StyledLink>}
-                {page == "영양제 검색" && <StyledLink to="/search" current={location.pathname == "/search"}>{page}</StyledLink>}
-                {page == "내 영양분석" && <StyledLink to="/analysis" current={location.pathname == "/analysis"}>{page}</StyledLink>}
+                {page == "식사 기록" && (
+                  <StyledLink to="/main" current={location.pathname == "/main"}>
+                    {page}
+                  </StyledLink>
+                )}
+                {page == "영양제 검색" && (
+                  <StyledLink to="/search" current={location.pathname == "/search"}>
+                    {page}
+                  </StyledLink>
+                )}
+                {page == "내 영양분석" && (
+                  <StyledLink to="/analysis" current={location.pathname == "/analysis"}>
+                    {page}
+                  </StyledLink>
+                )}
               </Typography>
             ))}
           </Box>
