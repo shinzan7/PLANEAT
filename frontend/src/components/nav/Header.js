@@ -199,10 +199,9 @@ const ResponsiveAppBar = () => {
                 <Typography
                   textAlign="center"
                   onClick={() => {
-                    localStorage.removeItem('accessToken')
-                    localStorage.removeItem('refreshToken')
+                    localStorage.clear()
+                    window.location.replace("/")
                     console.log('로그아웃')
-                    return <Navigate replace to='/' />
                   }}
                 >
                   로그아웃
