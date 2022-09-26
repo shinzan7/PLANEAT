@@ -51,10 +51,12 @@ public class FoodInfo {
     @Column(name = "category_detail")
     private String categoryDetail;
 
-    @Column(name = "serving_size", nullable = false)
+//    @Column(name = "serving_size", nullable = false)
+    @Column(name = "serving_size")
     private Integer servingSize;
 
-    @Column(name = "serving_unit", nullable = false)
+//    @Column(name = "serving_unit", nullable = false)
+    @Column(name = "serving_unit")
     private String servingUnit;
 
     @Column(name = "capacity_g")
@@ -81,7 +83,7 @@ public class FoodInfo {
     @Column(name = "dietary_fiber")
     private Float dietary_fiber;
 
-    @Column(name = "calcuim")
+    @Column(name = "calcium")
     private Float calcium;
 
     @Column(name = "iron")
