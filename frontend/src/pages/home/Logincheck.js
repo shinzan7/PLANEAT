@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Welcome from "./Welcome";
 import Main from "pages/main/Main";
 
-function LoginCheck() {
+function Logincheck() {
 
   // const accessToken = location.state.accessToken
   // const accessToken = new URLSearchParams(location.accessToken)
@@ -69,4 +69,4 @@ function LoginCheck() {
   )
 }
 
-export default LoginCheck;
+export default Logincheck;
