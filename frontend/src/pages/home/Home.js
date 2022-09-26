@@ -86,11 +86,6 @@ function Home() {
                     </svg> */}
                     {/* <Google /> */}
               <Google />
-              <Link to='/welcome'>
-                <button>
-                  welcome 임시 버튼
-                </button>
-              </Link>
             </div>
               
             <div style={chip}>
