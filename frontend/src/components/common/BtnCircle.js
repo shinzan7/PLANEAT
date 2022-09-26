@@ -1,6 +1,6 @@
 /*
 식사 기록페이지 등록 버튼
-속성: type(아/점/저/간), amount(칼로리)
+속성: type(아/점/저/간), amount(칼로리), setMealModalOpen(등록모달 오픈 관리 변수), setMealType(등록모달 식사타입 고나리 변수)
 @author 여예원
 @since 2022.09.22
 */
@@ -47,12 +47,13 @@ export default function BtnCircle(props) {
 `;
     
     function onClick(e) {
-        console.log(e.target.id); // 아/점/저/간/영
+        // console.log(e.target.id); // 아/점/저/간/영
+        props.setMealType(e.target.id);
 
         if (e.target.id == "영양제") {
             //영양제 모달
         } else { 
-            // 식단 모달
+            props.setMealModalOpen(true);
         }
     }
     

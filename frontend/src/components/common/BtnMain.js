@@ -18,6 +18,10 @@ const BtnMain = styled(Button)`
         height: 37px;
     }
     
+    &:hover {
+        background-color: #9DA6F8 !important;
+        transform: scale(1.1);
+    }
 `;
 
 export default BtnMain;
