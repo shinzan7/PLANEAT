@@ -5,9 +5,13 @@ package planeat.api.service;
  @since 2022-09-15
 */
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.nutrient.NutrientRequest;
 import planeat.api.dto.nutrient.NutrientResponse;
+import planeat.config.image.S3Uploader;
 import planeat.database.entity.Category;
 import planeat.database.entity.Ingredient;
 import planeat.database.entity.Nutrient;
@@ -31,6 +35,7 @@ public class NutrientService {
     private final IngredientRepository ingredientRepository;
     private final NutrientIngredientRespository nutrientIngredientRespository;
     private final CategoryRepository categoryRepository;
+    private final S3Uploader s3Uploader;
 
 
     /**
@@ -89,13 +94,22 @@ public class NutrientService {
      * @param nutrientRequest 영양제 등록 요청 DTO
      * @return 등록된 영양제의 id
      */
-    public void createNutrientAndIngredients(NutrientRequest nutrientRequest){
+    public void createNutrientAndIngredients(NutrientRequest nutrientRequest, MultipartFile multipartFile){
+        //이미지 업로드 후 경로 받아오기
+        String imageUrl = "noImage";
+        try {
+            //imageUrl 사진경로
+            imageUrl = s3Uploader.uploadFiles(multipartFile, "static");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         //영양제
         Nutrient nutrient = Nutrient.builder()
                 .nutrientName(nutrientRequest.getNutrientName())
                 .company(nutrientRequest.getCompany())
                 .description(nutrientRequest.getDescription())
-                .imagePath(nutrientRequest.getImagePath())
+                .imagePath(imageUrl)
                 .build();
 
         List<NutrientRequest.NutriIngredient> ingredientList = nutrientRequest.getNutriIngredientList();

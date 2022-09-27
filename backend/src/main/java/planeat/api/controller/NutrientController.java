@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.common.BasicResponse;
 import planeat.api.dto.nutrient.NutrientRequest;
 import planeat.api.dto.nutrient.NutrientResponse;
@@ -118,9 +119,9 @@ public class NutrientController {
 
 
     @PostMapping
-    @ApiOperation(value = "영양제 등록", notes = "영양제 정보를 받아 Table[영양제, 영양제 성분, 영양성분, 카테고리]에 등록한다")
-    public ResponseEntity<BasicResponse<String>> createNutrient(NutrientRequest nutrientRequest){
-        nutrientService.createNutrientAndIngredients(nutrientRequest);
+    @ApiOperation(value = "영양제 등록", notes = "영양제 정보를 받아 이미지를 업로드하고 Table[영양제, 영양제 성분, 영양성분, 카테고리]에 등록한다")
+    public ResponseEntity<BasicResponse<String>> createNutrient(NutrientRequest nutrientRequest, MultipartFile multipartFile){
+        nutrientService.createNutrientAndIngredients(nutrientRequest, multipartFile);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , " "), HttpStatus.CREATED);
     }
 
