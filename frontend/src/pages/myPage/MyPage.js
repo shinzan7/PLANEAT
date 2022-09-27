@@ -66,6 +66,8 @@ function MyPage() {
             orientation="vertical"
             variant="scrollable"
             value={value}
+            textColor="secondary"
+            indicatorColor="secondary"
             onChange={handleChange}
             aria-label="Vertical tabs example"
             sx={{ borderRight: 1, borderColor: "divider" }}

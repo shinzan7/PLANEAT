@@ -115,7 +115,7 @@ export default function UserInfo() {
         </div>
 
         <ToggleButton
-          color="primary"
+          color="secondary"
           size="medium"
           value="check"
           selected={selected}
@@ -137,7 +137,7 @@ export default function UserInfo() {
             내 영양제 등록
           </Grid>
           <Grid item xs={7}>
-            <AddCircleOutlineIcon color="primary" onClick={showModal}></AddCircleOutlineIcon>
+            <AddCircleOutlineIcon color="secondary" onClick={showModal}></AddCircleOutlineIcon>
           </Grid>
         </Grid>
         {/* 등록한 영양제 리스트 */}
