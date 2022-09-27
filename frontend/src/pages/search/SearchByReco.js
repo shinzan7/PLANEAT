@@ -76,15 +76,76 @@ function SearchByReco() {
           <Grid item xs={9.8}>
             <div style={section1}>
               <p><span style={bold}>조혜안</span> 님을 위한 영양제 추천</p>
+              <p>&nbsp;&nbsp;<span style={bold}>식단 기반 추천</span> 영양제 문구</p>
+            </div>
+
+            <div style={card}>
+              <Slider {...settings}>
+                <div>
+                  <Link to="/searchdetail/1" style={{textDecoration:'none'}}>
+                    <CardNutrient pill={data}/>
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/searchdetail/2" style={{textDecoration:'none'}}>
+                    <CardNutrient pill={data}/>
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/searchdetail/3" style={{textDecoration:'none'}}>
+                    <CardNutrient pill={data}/>
+                  </Link>
+                </div>
+                <div>
+                  <Link to="/searchdetail/4" style={{textDecoration:'none'}}>
+                    <CardNutrient pill={data}/>
+                  </Link>
+                </div>
+
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+                <div>
+                  <CardNutrient pill={data}/>
+                </div>
+              </Slider>
+            </div>
+          </Grid>
+          <Grid item xs={1.7}>
+
+          </Grid>
+
+          <Grid item xs={0.5}>
+
+          </Grid>
+          <Grid item xs={9.8}>
+            <div style={section1}>
               <p>&nbsp;&nbsp;<span style={bold}>20대 여성</span>이 많이 먹고 있어요</p>
             </div>
 
             <div style={card}>
               <Slider {...settings}>
                 <div>
-                  <Link to="/searchdetail" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
-                  </Link>
+                  <CardNutrient pill={data}/>
                 </div>
                 <div>
                   <CardNutrient pill={data}/>
@@ -127,7 +188,6 @@ function SearchByReco() {
           <Grid item xs={1.7}>
 
           </Grid>
-
           <Grid item xs={0.5}>
 
           </Grid>

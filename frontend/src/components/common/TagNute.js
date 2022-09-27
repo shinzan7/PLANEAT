@@ -41,15 +41,15 @@ const TagNute = ({ tag, clickedItems, clickedItemHandler, src }) => {
           backgroundColor: "#EAEBF8",
           boxShadow: "1px 3px 5px rgb(209, 215, 216)",
           margin: "15px",
+          display:'flex',
+          alignItems:'center',
+          justifyContent:'center',
         }}
         onClick={(e) => {
           onCheck(e);
         }}
       >
         <div className={tag} style={{ fontWeight: "bold", fontSize: "15px"}}>
-          <br></br>
-          <br></br>
-          <br></br>
           {tag}
         </div>
       </div>
