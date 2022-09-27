@@ -92,7 +92,6 @@ let soso_per =
   ) + "%";
 
 // 영양제 섭취 차트
-
 function ShowNutrientCharts({ nutrientName, realReco }) {
   const series = [
     {
@@ -123,7 +122,7 @@ function ShowNutrientCharts({ nutrientName, realReco }) {
   return (
     <div className="app">
       <div>
-        <Chart options={options} series={series} type="bar" width={680} height={110} />
+        <Chart options={options} series={series} type="bar" width={670} height={110} />
       </div>
     </div>
   );
@@ -200,6 +199,7 @@ export default function NutrientState({ value }) {
             </Grid>
           </Grid>
         </Grid>
+        {/* 영양제 체크 차트 */}
         <h3>영양제 Check</h3>
         {userNutrientInfo.map((data, i) => (
           <div>

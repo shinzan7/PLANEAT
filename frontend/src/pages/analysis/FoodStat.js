@@ -8,6 +8,8 @@ import { ExpandMore, ExpandLess } from "@mui/icons-material";
 import { React, useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
+// const name = localStorage.getItem("name");
+
 const userInfo = {
   name: "김싸피",
 };
@@ -130,21 +132,92 @@ function ShowWeightIntakeCharts() {
       enabled: false,
     },
     xaxis: {
-      categories: [220908, 220909, 220910, 220911, 220912, 220913, 220914, 220915, 220916, 220917],
+      categories: [
+        220908, 220909, 220910, 220911, 220912, 220913, 220914, 220915, 220916, 220917, 220918,
+        220919,
+      ],
     },
     yaxis: [
       {
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#F7BF87",
+        },
+        labels: {
+          style: {
+            colors: "#F7BF87",
+          },
+        },
         title: {
           text: "총 섭취량",
+          style: {
+            color: "#F7BF87",
+          },
+        },
+        tooltip: {
+          enabled: true,
         },
       },
       {
+        seriesName: "Income",
         opposite: true,
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#FFE6AA",
+        },
+        labels: {
+          style: {
+            colors: "#FFE6AA",
+          },
+        },
+        title: {
+          text: "권장 섭취량",
+          style: {
+            color: "#FFE6AA",
+          },
+        },
+      },
+      {
+        seriesName: "Revenue",
+        opposite: true,
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#9DA6F8",
+        },
+        labels: {
+          style: {
+            colors: "#9DA6F8",
+          },
+        },
         title: {
           text: "몸무게",
+          style: {
+            color: "#9DA6F8",
+          },
         },
       },
     ],
+    tooltip: {
+      fixed: {
+        enabled: true,
+        position: "topLeft", // topRight, topLeft, bottomRight, bottomLeft
+        offsetY: 30,
+        offsetX: 60,
+      },
+    },
+    legend: {
+      horizontalAlign: "left",
+      offsetX: 40,
+    },
   };
 
   return (
@@ -274,10 +347,19 @@ export default function FootStat({ value }) {
             </List>
           </Collapse>
         </List>
-        <h3>{userInfo.name} 님의 변화기록</h3>
-        <br />
-        <ShowWeightIntakeCharts></ShowWeightIntakeCharts>
-        <br />
+        {value === 0 ? (
+          <div>
+            <h3>{userInfo.name} 님의 최근 7일 섭취 피드백</h3>
+            <div>최근 7일동안 단백질을 부족하게 섭취했어요.</div>
+            <div></div>
+          </div>
+        ) : (
+          <div>
+            <h3>{userInfo.name} 님의 변화기록</h3>
+
+            <ShowWeightIntakeCharts></ShowWeightIntakeCharts>
+          </div>
+        )}
       </div>
     </Paper>
   );
