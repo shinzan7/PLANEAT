@@ -153,13 +153,12 @@ function SearchByNutrient() {
                 </Grid>
                 <Grid item xs={8}>
                   <Grid container>
-                    {nuterientTags.map((data, i) => (  
-                      <Link to="/nutrientresult" style={{textDecoration:'none', color:'black'}}>           
+                    {nuterientTags.map((data, i) => (           
                         <TagNute
                         key={i}
                         tag={data.title}
+                        index={i+1}
                       />
-                      </Link>
                     ))}
                   </Grid>
                 </Grid>
