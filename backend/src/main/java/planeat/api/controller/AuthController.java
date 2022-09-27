@@ -6,6 +6,9 @@ package planeat.api.controller;
  *
  @author 박윤하
  @since 2022-09-16
+ *
+ * 스웨거 접속 url
+ * http://localhost:9000/api/swagger-ui/#/
 */
 
 import lombok.RequiredArgsConstructor;
@@ -17,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.util.UriComponentsBuilder;
-import planeat.api.dto.auth.AuthResponse;
 import planeat.config.jwt.Jwt;
 import planeat.config.jwt.JwtService;
 import planeat.database.entity.User;
@@ -40,8 +42,16 @@ public class AuthController {
     private final JwtService jwtService;
     private final UserRepository userRepository;
 
+
+    /**
+     * AccessToken, RefreshToken 발급
+     *
+     * @param response FrontEnd 페이지로 리다이렉트할 때 담을 정보들
+     * @param authentication 유저 정보
+     * @throws IOException
+     */
     @GetMapping("/info")
-    public ResponseEntity<AuthResponse> createToken(HttpServletResponse response, Authentication authentication) throws IOException {
+    public void createToken(HttpServletResponse response, Authentication authentication) throws IOException {
         OAuth2User oAuth2User = (OAuth2User) authentication.getPrincipal();
         Map<String, Object> attributes = oAuth2User.getAttributes();
 
@@ -55,20 +65,32 @@ public class AuthController {
         String accessTokenExpiration = jwtService.dateToString(token.getAccessToken());
         String refreshTokenExpiration = jwtService.dateToString(token.getRefreshToken());
 
-        AuthResponse res = new AuthResponse();
-        res.setStatusCode(200);
-        res.setMessage("Success");
-        res.setAccessToken(token.getAccessToken());
-        res.setRefeshToken(token.getRefreshToken());
-        res.setAccessTokenExpiration(accessTokenExpiration);
-        res.setRefreshTokenExpiration(refreshTokenExpiration);
-        res.setUserId(user.getId());
-        res.setName(user.getName());
+        String birthYear = user.getBirthyear() == null ? "" : user.getBirthyear().toString();
+        String gender = user.getGender() == null ? "" : user.getGender().toString();
 
-        return ResponseEntity.ok(res);
+        response.sendRedirect(UriComponentsBuilder.fromUriString("http://j7a701.p.ssafy.io/logincheck")
+                .queryParam("accessToken", token.getAccessToken())
+                .queryParam("refreshToken", token.getRefreshToken())
+                .queryParam("accessTokenExpiration", accessTokenExpiration)
+                .queryParam("refreshTokenExpiration", refreshTokenExpiration)
+                .queryParam("userId", user.getId().toString())
+                .queryParam("name", user.getName())
+                .queryParam("birthYear", birthYear)
+                .queryParam("gender", gender)
+                .build()
+                .encode(StandardCharsets.UTF_8)
+                .toUriString());
 
     }
 
+
+    /**
+     * AccessToken 만료 시 재발급
+     *
+     * @param request RefreshToken 정보
+     * @param response
+     * @return 재발급된 AccessToken 반환
+     */
     @GetMapping("/refresh")
     public ResponseEntity<Map<String, String>> checkRefreshToken(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = request.getHeader("refreshToken");

@@ -1,7 +1,7 @@
 package planeat.database.entity;
 
 /*
- *
+ * 식단 정보 엔티티
  * DietInfo - diet_info table entity
  *
  @author 박윤하
@@ -13,6 +13,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import planeat.api.dto.mydiet.MyDietRequest;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -33,6 +34,10 @@ public class DietInfo {
     @JoinColumn(name = "my_diet_id")
     private MyDiet myDiet;
 
+//    @OneToOne(fetch = FetchType.LAZY, mappedBy = "dietInfo")
+//    @JoinColumn(name = "food_info_id")
+//    private FoodInfo foodInfo;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_info_id")
     private FoodInfo foodInfo;
@@ -49,7 +54,15 @@ public class DietInfo {
         this.amount = amount;
     }
 
-//    public void setAmount(BigDecimal amount) { this.amount = amount; }
+
+    public static DietInfo createDietInfo(FoodInfo foodInfo, BigDecimal amount, MyDiet myDiet) {
+        return DietInfo.builder()
+                .myDiet(myDiet)
+                .foodInfo(foodInfo)
+                .amount(amount)
+                .build();
+    }
+
 
     public DietInfo update(BigDecimal amount) {
         this.amount = amount;

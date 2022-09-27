@@ -1,7 +1,7 @@
 package planeat.database.entity;
 
 /*
- *
+ * 필수 영양소 엔티티(권장섭취량)
  * Nutrition - nutrition table entity
  *
  @author 박윤하
@@ -11,7 +11,6 @@ package planeat.database.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.DynamicUpdate;
 import planeat.enums.Gender;
 
 import javax.persistence.*;

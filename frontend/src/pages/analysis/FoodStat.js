@@ -8,6 +8,8 @@ import { ExpandMore, ExpandLess } from "@mui/icons-material";
 import { React, useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
+// const name = localStorage.getItem("name");
+
 const userInfo = {
   name: "김싸피",
 };
@@ -88,7 +90,7 @@ function ShowIntakeCharts() {
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="radialBar" width={350} />
+          <Chart options={options} series={series} type="radialBar" width={650} height={350} />
         </div>
       </div>
     </div>
@@ -104,6 +106,11 @@ function ShowWeightIntakeCharts() {
       data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160],
     },
     {
+      name: "권장 섭취량",
+      type: "column",
+      data: [1000, 1020, 1000, 1000, 1200, 1200, 1200, 1200, 1300, 1300, 1300, 1100],
+    },
+    {
       name: "몸무게",
       type: "line",
       data: [48, 47, 49, 52, 51, 49, 47, 48, 48, 50, 49, 47],
@@ -111,56 +118,113 @@ function ShowWeightIntakeCharts() {
   ];
 
   const options = {
-    colors: ["#F7BF87", "#9DA6F8"],
+    colors: ["#F7BF87", "#FFEFC9", "#9DA6F8"],
     chart: {
       height: 350,
       type: "line",
+      stacked: false,
     },
     stroke: {
-      width: [0, 4],
+      width: [1, 1, 4],
     },
 
     dataLabels: {
-      enabled: true,
-      enabledOnSeries: [1],
+      enabled: false,
     },
-    labels: [
-      "01 Jan 2001",
-      "02 Jan 2001",
-      "03 Jan 2001",
-      "04 Jan 2001",
-      "05 Jan 2001",
-      "06 Jan 2001",
-      "07 Jan 2001",
-      "08 Jan 2001",
-      "09 Jan 2001",
-      "10 Jan 2001",
-      "11 Jan 2001",
-      "12 Jan 2001",
-    ],
     xaxis: {
-      type: "datetime",
+      categories: [
+        220908, 220909, 220910, 220911, 220912, 220913, 220914, 220915, 220916, 220917, 220918,
+        220919,
+      ],
     },
     yaxis: [
       {
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#F7BF87",
+        },
+        labels: {
+          style: {
+            colors: "#F7BF87",
+          },
+        },
         title: {
           text: "총 섭취량",
+          style: {
+            color: "#F7BF87",
+          },
+        },
+        tooltip: {
+          enabled: true,
         },
       },
       {
+        seriesName: "Income",
         opposite: true,
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#FFE6AA",
+        },
+        labels: {
+          style: {
+            colors: "#FFE6AA",
+          },
+        },
+        title: {
+          text: "권장 섭취량",
+          style: {
+            color: "#FFE6AA",
+          },
+        },
+      },
+      {
+        seriesName: "Revenue",
+        opposite: true,
+        axisTicks: {
+          show: true,
+        },
+        axisBorder: {
+          show: true,
+          color: "#9DA6F8",
+        },
+        labels: {
+          style: {
+            colors: "#9DA6F8",
+          },
+        },
         title: {
           text: "몸무게",
+          style: {
+            color: "#9DA6F8",
+          },
         },
       },
     ],
+    tooltip: {
+      fixed: {
+        enabled: true,
+        position: "topLeft", // topRight, topLeft, bottomRight, bottomLeft
+        offsetY: 30,
+        offsetX: 60,
+      },
+    },
+    legend: {
+      horizontalAlign: "left",
+      offsetX: 40,
+    },
   };
 
   return (
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="line" width={500} />
+          <Chart options={options} series={series} type="line" width={650} height={350} />
         </div>
       </div>
     </div>
@@ -179,12 +243,25 @@ export default function FootStat({ value }) {
   return (
     <Paper
       sx={{
-        maxHeight: 500,
-        borderColor: "purple.main",
+        maxHeight: 600,
+        borderWidth: "3px",
+        borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
+        scrollbarWidth: "thin",
+        "&::-webkit-scrollbar": {
+          width: "0.4em",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "#f1f1f1",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#F7BF87",
+        },
+        "&::-webkit-scrollbar-thumb:hover": {
+          background: "#FFB973",
+        },
       }}
-      variant="outlined"
     >
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
       {/* {value} */}
@@ -270,10 +347,19 @@ export default function FootStat({ value }) {
             </List>
           </Collapse>
         </List>
-        <h3>{userInfo.name} 님의 변화기록</h3>
-        <br />
-        <ShowWeightIntakeCharts></ShowWeightIntakeCharts>
-        <br />
+        {value === 0 ? (
+          <div>
+            <h3>{userInfo.name} 님의 최근 7일 섭취 피드백</h3>
+            <div>최근 7일동안 단백질을 부족하게 섭취했어요.</div>
+            <div></div>
+          </div>
+        ) : (
+          <div>
+            <h3>{userInfo.name} 님의 변화기록</h3>
+
+            <ShowWeightIntakeCharts></ShowWeightIntakeCharts>
+          </div>
+        )}
       </div>
     </Paper>
   );

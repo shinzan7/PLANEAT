@@ -1,7 +1,7 @@
 package planeat.database.entity;
 
 /*
- *
+ * 유저 엔티티
  * User - user table entity
  *
  @author 박윤하

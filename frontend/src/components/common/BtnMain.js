@@ -23,5 +23,5 @@ const BtnMain = styled(Button)`
         transform: scale(1.1);
     }
 `;
-  
+
 export default BtnMain;

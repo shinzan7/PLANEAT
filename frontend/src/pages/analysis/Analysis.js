@@ -63,11 +63,12 @@ function Analysis() {
       <Box sx={{ width: "100%", marginTop: "100px" }}>
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
+            sx={{ marginRight: "25px", marginLeft: "25px" }}
             value={value}
             onChange={handleChange}
             aria-label="basic tabs example"
-            textColor="primary"
-            indicatorColor="primary"
+            textColor="secondary"
+            indicatorColor="secondary"
           >
             <Tab label="최근 7일" {...a11yProps(0)} />
             <Tab label="최근 30일" {...a11yProps(1)} />

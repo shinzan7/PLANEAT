@@ -34,7 +34,7 @@ public class SecurityConfig {
                 .logout().logoutSuccessUrl("/")
                 .and()
                 .oauth2Login()
-                .defaultSuccessUrl("/oauth/info", true)
+                .defaultSuccessUrl("/api/oauth/info", true)
                 .userInfoEndpoint()
                 .userService(AuthService);
 
