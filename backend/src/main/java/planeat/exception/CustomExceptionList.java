@@ -25,7 +25,9 @@ public enum CustomExceptionList {
 
     NUTRIENT_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E007", "존재하지 않는 영양제입니다."),
 
-    USER_NUTRIENT_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E008", "존재하지 않는 유저 영양제입니다.");
+    USER_NUTRIENT_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E008", "존재하지 않는 유저 영양제입니다."),
+
+    NUTRIENT_HISTORY_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E009", "존재하지 않는 영양제 섭취기록입니다.");
 
     private final HttpStatus status;
     private final String code;
