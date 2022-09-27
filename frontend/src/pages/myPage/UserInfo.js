@@ -78,9 +78,9 @@ export default function UserInfo() {
                   control={
                     <Radio
                       sx={{
-                        color: "purple.main",
+                        color: "orange.main",
                         "&.Mui-checked": {
-                          color: "purple.main",
+                          color: "orange.main",
                         },
                       }}
                     />
@@ -92,9 +92,9 @@ export default function UserInfo() {
                   control={
                     <Radio
                       sx={{
-                        color: "purple.main",
+                        color: "orange.main",
                         "&.Mui-checked": {
-                          color: "purple.main",
+                          color: "orange.main",
                         },
                       }}
                     />
@@ -154,9 +154,9 @@ export default function UserInfo() {
                   control={
                     <Radio
                       sx={{
-                        color: "purple.main",
+                        color: "orange.main",
                         "&.Mui-checked": {
-                          color: "purple.main",
+                          color: "orange.main",
                         },
                       }}
                     />
@@ -168,9 +168,9 @@ export default function UserInfo() {
                   control={
                     <Radio
                       sx={{
-                        color: "purple.main",
+                        color: "orange.main",
                         "&.Mui-checked": {
-                          color: "purple.main",
+                          color: "orange.main",
                         },
                       }}
                     />
@@ -182,9 +182,9 @@ export default function UserInfo() {
                   control={
                     <Radio
                       sx={{
-                        color: "purple.main",
+                        color: "orange.main",
                         "&.Mui-checked": {
-                          color: "purple.main",
+                          color: "orange.main",
                         },
                       }}
                     />
@@ -196,9 +196,9 @@ export default function UserInfo() {
                   control={
                     <Radio
                       sx={{
-                        color: "purple.main",
+                        color: "orange.main",
                         "&.Mui-checked": {
-                          color: "purple.main",
+                          color: "orange.main",
                         },
                       }}
                     />
