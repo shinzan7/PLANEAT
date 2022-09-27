@@ -18,6 +18,7 @@ import { Typography, Grid, TextField, Paper, InputBase, IconButton } from '@mui/
 import BtnMain from 'components/common/BtnMain';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import { useState } from 'react';
 
 export default function MaxWidthDialog(props) {
@@ -32,8 +33,13 @@ export default function MaxWidthDialog(props) {
     props.setMealModalOpen(false);
     };
     
-    const [searchValue, setSearchValue] = useState();
+    const [searchKeyWord, setSearchKeyWord] = useState();
+    const searchInput = React.useRef(null);
 
+    const search = (e) => { 
+        e.preventDefault();
+        console.log(searchKeyWord);
+    }
 
   return (
       <Dialog
@@ -71,15 +77,24 @@ export default function MaxWidthDialog(props) {
                     <InputBase
                           sx={{ ml: 2, flex: 1 }}
                           placeholder="음식명으로 검색하세요"
-                          onChange={(e) => { setSearchValue(e.target.value) }}
+                          onChange={(e) => { setSearchKeyWord(e.target.value) }}
+                          id="searchValue"
+                          inputRef={searchInput} // input 객체를 반환
+                          onKeyPress={(e) => { search(e) }}
+                          type="text"
                       />
                     { // 검색어 삭제 버튼
-                          (searchValue == null || searchValue == "") ? null :
-                          (<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => { setSearchValue(null) }}>
-                          <ClearIcon />
+                          (searchKeyWord == null || searchKeyWord == "") ? null :
+                              (<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => {
+                                  searchInput.current.value = null; // input 객체의 값을 비운다.
+                                  setSearchKeyWord(null)
+                              }}>
+                          <HighlightOffIcon />
                           </IconButton>)
                     }
-                      <IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => { console.log("click돋보기") }}>
+                      <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2 }} aria-label="search" onClick={(e) => {
+                          search(e)
+                      }}>
                         <SearchIcon />
                     </IconButton>
                     </Paper>
@@ -88,9 +103,38 @@ export default function MaxWidthDialog(props) {
               </Grid>
              { /* 음식 선택 영역 */}
               <Grid container direction="row" style={{padding: "2vw"}} alignItems="center">
-              내용{ searchValue}
+              { /* 음식 선택 영역: 왼쪽 */}
+                <Grid item xs={6}>
+                    <StyledWrapper>
+                        <Grid container id="container" xs={ 12} direction="row">
+                            왼쪽
+                        </Grid>
+                    </StyledWrapper>
+              </Grid>
+              { /* 음식 선택 영역: 오른쪽 */}
+                <Grid item xs={6}>
+                <StyledWrapper>
+                        <Grid container id="container" xs={ 12} direction="row">
+                            오른쪽
+                        </Grid>
+                    </StyledWrapper>
+                </Grid>
               </Grid>
       </Dialog>
   );
 }
+
+const StyledWrapper = styled.div`
+    
+#container {
+    background-color: white;
+    box-shadow: 1px 2px 5px #c7c7c7;
+    padding: 2vw;
+    border-radius: 15px;
+    width: 90%;
+    margin: auto;
+    margin-top: 2vw;
+}
+
+`;
 
