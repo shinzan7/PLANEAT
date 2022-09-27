@@ -7,7 +7,7 @@
 import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
 import {
   AppBar,
@@ -210,7 +210,9 @@ const ResponsiveAppBar = () => {
                 <Typography
                   textAlign="center"
                   onClick={() => {
-                    console.log("마이페이지");
+                    localStorage.clear()
+                    window.location.replace("/")
+                    console.log('로그아웃')
                   }}
                 >
                   로그아웃
