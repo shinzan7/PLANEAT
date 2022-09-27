@@ -6,7 +6,6 @@ package planeat.api.dto.usernutrient;
  @author 신지한
  @since 2022-09-26
 */
-import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,18 +17,18 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class NutrientHistoryRequest {
+public class NutrientHistoryResponse {
 
     Long userNutrientId;
-
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     LocalDate intakeDate;
     Integer intakeReal;
 
     @Builder
-    public void createNutrientHistoryRequest(Long userNutrientId, LocalDate intakeDate, Integer intakeReal) {
+    public NutrientHistoryResponse(Long userNutrientId, LocalDate intakeDate, Integer intakeReal) {
         this.userNutrientId = userNutrientId;
         this.intakeDate = intakeDate;
         this.intakeReal = intakeReal;
     }
+
 }

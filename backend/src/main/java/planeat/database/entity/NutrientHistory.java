@@ -11,6 +11,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -29,7 +30,6 @@ public class NutrientHistory {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_nutrient_id")
     private UserNutrient userNutrient;
-
     private LocalDate intakeDate;
     private Integer intakeReal;
 
