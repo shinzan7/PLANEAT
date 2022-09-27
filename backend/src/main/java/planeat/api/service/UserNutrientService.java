@@ -38,10 +38,10 @@ public class UserNutrientService {
     private final NutrientRepository nutrientRepository;
 
     /**
+     * 해당 유저영양제id의 유저영양제 조회
      * @param id 유저영양제 id
      * @return 해당 id의 영양제와 각 섭취기록
      */
-    //해당 유저영양제id의 유저영양제 조회
     public UserNutrientResponse readUserNutrientById(Long id){
         UserNutrientResponse userNutrientResponse = new UserNutrientResponse();
 
@@ -77,6 +77,7 @@ public class UserNutrientService {
     }
 
     /**
+     * 유저id로 모든 유저 영양제를 조회
      * @param userId 유저 영양제를 조회할 유저id
      * @return 유저 영양제리스트와 각 영양제 섭취기록 반환
      */
@@ -116,6 +117,7 @@ public class UserNutrientService {
 
 
     /**
+     * 유저 영양제 등록
      * @param request 등록할 영양제 dto
      */
     public void createUserNutrient(UserNutrientRequest request){
@@ -141,6 +143,7 @@ public class UserNutrientService {
 
 
     /**
+     * 영양제 섭취기록 등록
      * @param request 등록할 영양제 섭취기록 dto
      */
     public void createNutrientHistory(NutrientHistoryRequest request){

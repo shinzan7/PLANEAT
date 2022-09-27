@@ -34,6 +34,7 @@ public class NutrientService {
 
 
     /**
+     * 영양제와 연관테이블 조회
      * @param id 조회할 영양제 id
      * @return 영양제 + 영양제 성분 + 영양성분 + 카테고리
      */
@@ -84,6 +85,7 @@ public class NutrientService {
     }
 
     /**
+     * 영양제와 연관테이블 등록
      * @param nutrientRequest 영양제 등록 요청 DTO
      * @return 등록된 영양제의 id
      */
