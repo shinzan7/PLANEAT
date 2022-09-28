@@ -3,32 +3,27 @@
 @author 조혜안
 @since 2022.09.27
 */
-import React, { useState } from "react";
-import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
-import DialogTitle from "@mui/material/DialogTitle";
-import Typography from "@mui/material/Typography";
-import Grid from "@mui/material/Grid";
-import TextField from "@mui/material/TextField";
-import FormControlLabel from "@mui/material/FormControlLabel";
-import Container from "@mui/material/Container";
-import { FormControl, FormLabel, RadioGroup, Radio, Divider, Paper } from "@mui/material";
+import React, { useState, useEffect, useRef } from "react";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+} from "@mui/material";
+import { Typography, Grid, TextField, Container, FormControl } from "@mui/material";
 import BtnMain from "components/common/BtnMain";
 import ToggleButton from "@mui/material/ToggleButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
-import MedicationIcon from "@mui/icons-material/Medication";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import FormHelperText from "@mui/material/FormHelperText";
 import Select from "@mui/material/Select";
 import Autocomplete from "@mui/material/Autocomplete";
 import IconButton from "@mui/material/IconButton";
 import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
 import { styled } from "@mui/material/styles";
+import { http } from "api/http";
 
 // 영양제 목록
 const nutrients = [
@@ -45,7 +40,7 @@ const nutrients = [
 ];
 
 // 내 영양제 목록
-const myNutrients = [
+const myNutrients0 = [
   { user_nutrient_id: 1, nutrient_name: "내영양제 1" },
   { user_nutrient_id: 2, nutrient_name: "내영양제 2" },
   { user_nutrient_id: 3, nutrient_name: "내영양제 3" },
@@ -65,13 +60,35 @@ export default function UserInfo() {
     setIntakeCnt(event.target.value);
   };
 
-  // 내 영양제 이름
+  // 등록한 내 영양제 이름
   const [myNutrientName, setMyNutrientName] = useState("");
+
+  // 유저 영양제 목록
+  const [myNutrients, setMyNutrients] = useState([]);
+
+  useEffect(() => {
+    // 맨 처음 유저의 영양제 목록 불러오기
+    async function getUserNutrients() {
+      // 8 -> 로그인한 유저의 id로 변경 필요
+      const response = await http.get(`/nutrient/user/list/8`);
+      if (response.data.message === "success") {
+        console.log(response.data.data);
+        // const newMyNutrients = [...response.data.data];
+        // console.log(newMyNutrients);
+        setMyNutrients((myNutrients0) => [
+          ...myNutrients0,
+          { user_nutrient_id: 5, nutrient_name: "내영양제 5" },
+        ]);
+        console.log(myNutrients[0]);
+      }
+    }
+    getUserNutrients();
+  }, []);
 
   // 내 영양제 등록 함수
   const RegistMyNutrient = (event) => {
-    console.log(intakeCnt);
-    console.log(myNutrientName);
+    // console.log(intakeCnt);
+    // console.log(myNutrientName);
     setOpen(false);
   };
 
@@ -104,7 +121,6 @@ export default function UserInfo() {
         </Typography>
         <Typography variant="subtitle">복용 중인 영양제를 관리할 수 있습니다!</Typography>
         {/* 영양제 알림 서비스 */}
-
         <div style={{ marginTop: "20px", marginBottom: "10px" }}>
           영양제 알림 서비스
           <BootstrapTooltip title="서비스 준비중입니다. 조금만 기다려주세요">
@@ -113,7 +129,6 @@ export default function UserInfo() {
             </IconButton>
           </BootstrapTooltip>
         </div>
-
         <ToggleButton
           color="secondary"
           size="medium"
@@ -125,7 +140,6 @@ export default function UserInfo() {
         >
           {selected ? "구독중" : "구독하기"}
         </ToggleButton>
-
         {/* 영양제 등록 */}
         <Grid
           container
@@ -141,7 +155,8 @@ export default function UserInfo() {
           </Grid>
         </Grid>
         {/* 등록한 영양제 리스트 */}
-        {myNutrientName}
+        aa
+        {/* {myNutrients[0]} */}
       </React.Fragment>
 
       <Dialog open={open} onClose={handleClose} fullWidth>
