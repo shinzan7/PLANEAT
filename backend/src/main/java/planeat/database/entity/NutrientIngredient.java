@@ -1,5 +1,8 @@
 package planeat.database.entity;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,6 +22,8 @@ import javax.persistence.*;
 @Getter
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class)
+@JsonIdentityReference(alwaysAsId = true)
 @Table(name = "nutrient_ingredient")
 public class NutrientIngredient {
     @Id

@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.common.BasicResponse;
+import planeat.api.dto.nutrient.NutrientDto;
 import planeat.api.dto.nutrient.NutrientRequest;
 import planeat.api.dto.nutrient.NutrientResponse;
 import planeat.api.dto.usernutrient.NutrientHistoryRequest;
@@ -44,6 +45,20 @@ public class NutrientController {
 
 
     static final String SUCCESS = "success";
+
+    @GetMapping("/all/name")
+    @ApiOperation(value = "영양제 이름 전체조회", notes = "[영양제]테이블의 모든 영양제id, 영양제이름을 반환한다")
+    public ResponseEntity<BasicResponse<List<NutrientDto>>> readAllNutrientIdAndName(){
+        List<NutrientDto> dtoList = nutrientService.readAllNutrientDto();
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, dtoList), HttpStatus.OK);
+    }
+
+    @GetMapping("/all")
+    @ApiOperation(value = "영양제 전체조회", notes = "모든 Table[영양제, 영양제 성분, 영양성분, 카테고리]을 조회한다")
+    public ResponseEntity<BasicResponse<List<Nutrient>>> readAllNutrient(){
+        List<Nutrient> nutrientList = nutrientService.readAllNutrient();
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, nutrientList), HttpStatus.OK);
+    }
 
     /**
      * 영양제 섭취기록을 등록한다
@@ -107,6 +122,7 @@ public class NutrientController {
         userNutrientService.createNutrientHistory(request);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, " "), HttpStatus.CREATED);
     }
+
 
     @GetMapping
     @ApiOperation(value = "영양제 조회", notes = "영양제 id를 받아 Table[영양제, 영양제 성분, 영양성분, 카테고리]을 조회한다")

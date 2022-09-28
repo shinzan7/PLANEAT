@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import planeat.api.dto.nutrient.NutrientDto;
 import planeat.api.dto.nutrient.NutrientRequest;
 import planeat.api.dto.nutrient.NutrientResponse;
 import planeat.config.image.S3Uploader;
@@ -20,6 +21,8 @@ import planeat.database.repository.CategoryRepository;
 import planeat.database.repository.IngredientRepository;
 import planeat.database.repository.NutrientIngredientRespository;
 import planeat.database.repository.NutrientRepository;
+import planeat.exception.CustomException;
+import planeat.exception.CustomExceptionList;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -37,6 +40,26 @@ public class NutrientService {
     private final CategoryRepository categoryRepository;
     private final S3Uploader s3Uploader;
 
+
+    /**
+     * 모든 영양제의 아이디와 이름 조회
+     * @return dto 리스트
+     */
+    public List<NutrientDto> readAllNutrientDto(){
+        List<Nutrient> nutrientList = nutrientRepository.findAll();
+
+        List<NutrientDto> dtoList = new ArrayList<>();
+        for (Nutrient n : nutrientList){
+            dtoList.add(new NutrientDto(n.getId(), n.getNutrientName()));
+        }
+        return dtoList;
+    }
+
+    public List<Nutrient> readAllNutrient(){
+        List<Nutrient> nutrientList = nutrientRepository.findAllNutrient();
+
+        return nutrientList;
+    }
 
     /**
      * 영양제와 연관테이블 조회
@@ -96,12 +119,12 @@ public class NutrientService {
      */
     public void createNutrientAndIngredients(NutrientRequest nutrientRequest, MultipartFile multipartFile){
         //이미지 업로드 후 경로 받아오기
-        String imageUrl = "noImage";
+        String imageUrl = null;
         try {
             //imageUrl 사진경로
             imageUrl = s3Uploader.uploadFiles(multipartFile, "static");
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new CustomException(CustomExceptionList.UPLOAD_ERROR);
         }
 
         //영양제
