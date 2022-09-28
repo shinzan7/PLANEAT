@@ -100,8 +100,7 @@ public class IntakeHistoryService {
         if(userId.equals((createUser))) {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-            LocalDate date = getIntakeHistory(intakeHistoryRequest.getIntakeHistoryId()).getDate();
-            IntakeHistory intakeHistory = IntakeHistory.updateIntakeHistory(user, date, intakeHistoryRequest);
+            IntakeHistory intakeHistory = IntakeHistory.updateIntakeHistory(user, intakeHistoryRequest);
             intakeHistoryRepository.save(intakeHistory);
             List<IntakeFood> intakeFoodList = intakeFoodRepository.findByIntakeHistoryId(intakeHistory.getId());
             intakeFoodRepository.deleteAll(intakeFoodList);

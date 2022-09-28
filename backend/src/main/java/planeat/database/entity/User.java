@@ -14,7 +14,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-import planeat.api.dto.user.UserResponse;
+import planeat.api.dto.user.UserInfoRequest;
 import planeat.enums.Gender;
 
 import javax.persistence.*;
@@ -54,9 +54,9 @@ public class User {
     private String refreshToken;
 
 
-     @JsonIgnore
-     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
-     List<UserRecIntake> userRecIntakeList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<UserRecIntake> userRecIntakeList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
@@ -69,6 +69,10 @@ public class User {
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
     List<AnalysisHistory> analysisHistoryList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<UserCategory> userCategoryList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
@@ -86,12 +90,9 @@ public class User {
     }
 
 
-//    public void setName(String name) { this.name = name; }
-//    public void setEmail(String email) { this.email = email; }
-//    public void setProvider(String provider) { this.provider = provider; }
-//    public void setBirthyear(Integer birthyear) { this.birthyear = birthyear; }
-//    public void setGender(Gender gender) { this.gender = gender; }
-    public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
 
 
     public User update(String name, String email) {
@@ -101,13 +102,13 @@ public class User {
     }
 
 
-    public UserResponse toUserResponse() {
-        UserResponse userResponse = new UserResponse();
-        userResponse.setProvider(this.getProvider());
-        userResponse.setName(this.getName());
-        userResponse.setEmail(this.getEmail());
-
-        return userResponse;
+    public static User updateUser(Long userId, UserInfoRequest userInfoRequest) {
+        User user = User.builder()
+                .id(userId)
+                .birthyear(userInfoRequest.getBirthyear())
+                .gender(userInfoRequest.getGender())
+                .build();
+        return user;
     }
 
 }

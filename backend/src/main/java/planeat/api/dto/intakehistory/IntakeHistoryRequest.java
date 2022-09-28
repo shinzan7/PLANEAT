@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import planeat.enums.MealType;
 
 import javax.persistence.EnumType;
@@ -27,6 +28,7 @@ public class IntakeHistoryRequest {
 
     private Long intakeHistoryId;
     private Long userId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     @Enumerated(EnumType.STRING)
     private MealType mealType;

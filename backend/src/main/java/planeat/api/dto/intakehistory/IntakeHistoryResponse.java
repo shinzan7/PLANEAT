@@ -10,6 +10,7 @@ package planeat.api.dto.intakehistory;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.format.annotation.DateTimeFormat;
 import planeat.database.entity.FoodInfo;
 import planeat.enums.FoodType;
 
@@ -21,6 +22,7 @@ import java.util.List;
 public class IntakeHistoryResponse {
 
     private Long intakeHistoryId;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate date;
     private String mealType;
     private List<IntakeFoods> intakeFoodsList;
