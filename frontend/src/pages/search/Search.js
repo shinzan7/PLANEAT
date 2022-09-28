@@ -4,12 +4,10 @@
 @since 2022.09.19
 */
 import React from "react";
-import Header from 'components/nav/Header';
 import { Grid } from '@mui/material';
 import SearchByReco from "../../pages/search/SearchByReco";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
-import Footer from "components/nav/Footer";
 
 const section = { marginTop:'80px' }
 const section1 = { marginTop:'25vh', textAlign:'center'}
@@ -20,7 +18,6 @@ function Search() {
 
     return (
         <div style={ section }>
-          <Header />
           <Grid container> 
             {/* 좌측 사이드바 */}
             <Grid item xs={1.5} style={section1}>
@@ -49,7 +46,6 @@ function Search() {
 
             </Grid>
         </Grid>
-        <Footer/>
         </div>
         
     );

@@ -6,7 +6,6 @@
 import React from "react";
 import CardNutrient from "components/common/CardNutrient";
 import { Grid } from "@mui/material";
-import Header from 'components/nav/Header';
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 
@@ -28,7 +27,6 @@ function NameResult() {
 
   return (
       <div style={section}>
-        <Header />
           <Grid container> 
             <Grid item xs={1.5} style={section1}>
               <SideBar />

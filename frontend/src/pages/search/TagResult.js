@@ -6,7 +6,6 @@
 import React from "react";
 import CardNutrient from "components/common/CardNutrient";
 import { Grid } from "@mui/material";
-import Header from 'components/nav/Header';
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 
@@ -28,7 +27,6 @@ function TagResult() {
 
   return (
       <div style={section}>
-        <Header />
           <Grid container> 
             {/* 좌측 사이드바 */}
             <Grid item xs={1.5} style={section1}>
@@ -59,7 +57,7 @@ function TagResult() {
                 </Grid>
                 <Grid item xs={8}>
                   <Grid container style={card}>
-                    <Link to='/searchdetail' style={{textDecoration:'none'}}>
+                    <Link to='/searchdetail/10' style={{textDecoration:'none'}}>
                       <CardNutrient pill={data}/>
                     </Link>
                     <CardNutrient pill={data}/>
