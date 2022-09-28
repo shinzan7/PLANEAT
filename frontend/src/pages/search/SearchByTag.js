@@ -4,7 +4,6 @@
 @since 2022.09.22
 */
 import React from "react";
-import Header from 'components/nav/Header';
 import TagMain from "components/common/TagMain";
 import { Grid } from "@mui/material";
 import {Link} from 'react-router-dom';
@@ -152,7 +151,6 @@ function SearchByTag() {
 
   return (
       <div style={section}>
-        <Header />
         <Grid container> 
             {/* 좌측 사이드바 */}
             <Grid item xs={1.5} style={section1}>

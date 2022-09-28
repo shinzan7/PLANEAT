@@ -12,11 +12,14 @@ import SearchDetail from "pages/search/SearchDetail";
 import TagResult from "pages/search/TagResult";
 import NameResult from "pages/search/NameResult";
 import NutrientResult from "pages/search/NutrientResult";
+import Header from 'components/nav/Header'
+import Footer from 'components/nav/Footer'
 
 function Router() {
 
     return (
             <BrowserRouter>
+                <Header />
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/main" element={<Main />} />
@@ -35,9 +38,8 @@ function Router() {
                     <Route path="/nutrientresult/:id" element={<NutrientResult />} />
                     <Route path="/mypage" element={<MyPage />} />
                     <Route path="/logincheck" element={<Logincheck />} />
-                    {/* <Route path="/logincheck/:accessToken/:refreshToken/:accessTokenExpiration/
-                    :refreshTokenExpiration/:userId/:name/:birthYear/:gender" element={<Logincheck />} /> */}
                 </Routes>
+                <Footer />
             </BrowserRouter>
         
     )
