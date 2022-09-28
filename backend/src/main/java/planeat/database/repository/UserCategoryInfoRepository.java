@@ -11,5 +11,6 @@ package planeat.database.repository;
 import org.springframework.data.jpa.repository.JpaRepository;
 import planeat.database.entity.UserCategoryInfo;
 
-public interface UserCategoryInfoRepository extends JpaRepository<UserCategoryInfo, Long> {
+public interface UserCategoryInfoRepository extends JpaRepository<UserCategoryInfo, Integer> {
+
 }

@@ -20,6 +20,6 @@ public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Lo
     Optional<UserRecIntake> findByUpdateDate(LocalDate updateDate);
 
     @Query("select u from UserRecIntake u where u.user.id = :userId and u.updateDate = :date")
-    UserRecIntake findByUserIdAndDate(Long userId, LocalDate date);
+    Optional<UserRecIntake> findByUserIdAndDate(Long userId, LocalDate date);
 
 }

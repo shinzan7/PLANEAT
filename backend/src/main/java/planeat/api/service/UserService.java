@@ -47,14 +47,18 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
         userRepository.save(User.updateUser(userId, userInfoRequest));
-
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate())
-                .orElse(UserRecIntake.createUserRecIntake(user, userInfoRequest));
-        UserRecIntake.updateUserRecIntake(user, userInfoRequest);
+        UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest);
         userRecIntakeRepository.save(userRecIntake);
+//        if(userInfoRequest.getRecInfo().getUserRecIntakeId() != null) {
+//            UserRecIntake.updateUserRecIntake(user, userInfoRequest);
+//            userRecIntakeRepository.save(userRecIntake);
+//        } else {
+//            UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest);
+//            userRecIntakeRepository.save(userRecIntake);
+//        }
 
         for (int i = 0; i < userInfoRequest.getCategoriesList().size(); i++) {
-            UserCategoryInfo userCategoryInfo = getUserCategoryInfo(userInfoRequest.getCategoriesList().get(i).getUserCategoryId());
+            UserCategoryInfo userCategoryInfo = getUserCategoryInfo(userInfoRequest.getCategoriesList().get(i).getUserCategoryInfoId());
             UserCategory userCategory = UserCategory.createUserCategory(user, userCategoryInfo);
             userCategoryRepository.save(userCategory);
             userCategory.getUser().getUserCategoryList().add(userCategory);
@@ -75,9 +79,10 @@ public class UserService {
     public UserInfoResponse readInfoByUserId(Long userId, LocalDate date) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date);
+        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date)
+                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
         Integer nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
-        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender().toString(), nowYear - user.getBirthyear());
+        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender(), nowYear - user.getBirthyear());
 
         List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
         List<String> categoriesList = new ArrayList<>();
@@ -115,9 +120,11 @@ public class UserService {
      */
     public UserRecIntakeResponse readRecIntakesByUserIdAndDate(Long userId, LocalDate date) {
         User user = getUser(userId);
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date);
+        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date)
+                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
         Integer nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
-        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender().toString(), nowYear - user.getBirthyear());
+        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender(), nowYear - user.getBirthyear());
+        System.out.println(nutritionList);
         return new UserRecIntakeResponse(userRecIntake, nutritionList);
     }
 
@@ -142,7 +149,7 @@ public class UserService {
         List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
         userCategoryRepository.deleteAll(userCategoryList);
         for (int i = 0; i < userInfoRequest.getCategoriesList().size(); i++) {
-            UserCategoryInfo userCategoryInfo = getUserCategoryInfo(userInfoRequest.getCategoriesList().get(i).getUserCategoryId());
+            UserCategoryInfo userCategoryInfo = getUserCategoryInfo(userInfoRequest.getCategoriesList().get(i).getUserCategoryInfoId());
             UserCategory userCategory = UserCategory.createUserCategory(user, userCategoryInfo);
             userCategoryRepository.save(userCategory);
             userCategory.getUser().getUserCategoryList().add(userCategory);
@@ -157,7 +164,7 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
     }
 
-    private UserCategoryInfo getUserCategoryInfo(Long userCategoryId) {
+    private UserCategoryInfo getUserCategoryInfo(Integer userCategoryId) {
         return userCategoryInfoRepository.findById(userCategoryId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_CATEGORY_INFO_NOT_FOUND_ERROR));
     }

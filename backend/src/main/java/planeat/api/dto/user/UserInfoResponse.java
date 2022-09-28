@@ -12,6 +12,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 import planeat.database.entity.Nutrition;
 import planeat.database.entity.User;
 import planeat.database.entity.UserRecIntake;
@@ -39,6 +40,7 @@ public class UserInfoResponse {
     @NoArgsConstructor
     static public class RecInfo {
         Long userRecIntakeId;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate updateDate;
         BigDecimal height;
         BigDecimal weight;

@@ -9,6 +9,7 @@ package planeat.api.dto.user;
 */
 
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 import planeat.enums.Gender;
 
 import javax.persistence.EnumType;
@@ -24,6 +25,8 @@ public class UserInfoRequest {
 
     private Long userId;
     private String name;
+    private String email;
+    private String provider;
     private Integer birthyear;
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -35,6 +38,7 @@ public class UserInfoRequest {
     @NoArgsConstructor
     static public class RecInfo {
         Long userRecIntakeId;
+        @DateTimeFormat(pattern = "yyyy-MM-dd")
         LocalDate updateDate;
         BigDecimal height;
         BigDecimal weight;
@@ -64,18 +68,20 @@ public class UserInfoRequest {
     @NoArgsConstructor
     static public class Categories {
         Long userId;
-        Long userCategoryId;
+        Integer userCategoryInfoId;
 
-        public Categories(Long userId, Long userCategoryId) {
+        public Categories(Long userId, Integer userCategoryInfoId) {
             this.userId = userId;
-            this.userCategoryId = userCategoryId;
+            this.userCategoryInfoId = userCategoryInfoId;
         }
     }
 
     @Builder
-    public UserInfoRequest(Long userId, String name, Integer birthyear, Gender gender, RecInfo recInfo, List<Categories> categoriesList) {
+    public UserInfoRequest(Long userId, String name, String email, String provider, Integer birthyear, Gender gender, RecInfo recInfo, List<Categories> categoriesList) {
         this.userId = userId;
         this.name = name;
+        this.email = email;
+        this.provider = provider;
         this.birthyear = birthyear;
         this.gender = gender;
         this.recInfo = recInfo;

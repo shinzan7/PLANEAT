@@ -15,6 +15,7 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
 import planeat.api.dto.user.UserInfoRequest;
 
 import javax.persistence.*;
@@ -24,7 +25,6 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @DynamicUpdate
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_rec_intake")
 public class UserRecIntake {
@@ -38,7 +38,7 @@ public class UserRecIntake {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @CreatedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "update_date", nullable = false)
     private LocalDate updateDate;
 
