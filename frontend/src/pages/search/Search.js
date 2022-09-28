@@ -26,6 +26,7 @@ function Search() {
 
     const userInfo = useRecoilValue(userState)
     console.log(userInfo)
+    console.log(userInfo[5])
 
     return (
         <div style={ section }>
@@ -52,7 +53,8 @@ function Search() {
               </Grid>
               
               <div style={section3}>
-                {userInfo[5]}
+                {/* {userInfo[5]}
+                {userInfo.name} */}
               </div>
               
               <SearchByReco />
