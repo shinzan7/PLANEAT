@@ -61,19 +61,19 @@ function Analysis() {
     <div>
       <Header />
       <Box sx={{ width: "100%", marginTop: "100px" }}>
-        <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-          <Tabs
-            value={value}
-            onChange={handleChange}
-            aria-label="basic tabs example"
-            textColor="secondary"
-            indicatorColor="secondary"
-          >
-            <Tab label="최근 7일" {...a11yProps(0)} />
-            <Tab label="최근 30일" {...a11yProps(1)} />
-            <Tab label="전체 기간" {...a11yProps(2)} />
-          </Tabs>
-        </Box>
+        <Tabs
+          sx={{ marginRight: "25px", marginLeft: "25px" }}
+          value={value}
+          onChange={handleChange}
+          aria-label="basic tabs example"
+          textColor="secondary"
+          indicatorColor="secondary"
+        >
+          <Tab label="최근 7일" {...a11yProps(0)} />
+          <Tab label="최근 30일" {...a11yProps(1)} />
+          <Tab label="전체 기간" {...a11yProps(2)} />
+        </Tabs>
+
         {/* 최근 7일 */}
         <TabPanel value={value} index={0}>
           <Grid container spacing={2}>
