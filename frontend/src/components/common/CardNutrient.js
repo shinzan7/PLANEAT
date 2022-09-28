@@ -13,7 +13,8 @@ import ChipOrange from './ChipOrange';
 import Typography from '@mui/material/Typography';
 
 const CardNutrient = function MediaCard(props) {
-    let imgUrl = props.pill.img; // props의 이미지 url
+    console.log(props)
+    let imgUrl = props.pill.imagePath; // props의 이미지 url
 
   return (
       <Card sx={{ width: {xs:'250px'}, height: 300, borderRadius: 5, margin: 1}}>
@@ -34,21 +35,21 @@ const CardNutrient = function MediaCard(props) {
             </Typography>
             {/* 영양제 이름 */}
             <Typography sx={{ fontWeight: "bold"} } variant="body1">
-                { props.pill.nutrient_name} 
+                { props.pill.nutrientName} 
             </Typography>
           </CardContent>
           <CardActions sx={{ padding: 0, marginLeft: 2, marginBottom: 1 }} >
           {/* 영양제 기능 태그 */}
-              {props.pill.category_tag == 0 ? null :
-                  <ChipBlue label={ props.pill.category_tag[0]}></ChipBlue>      
-            }
+              {/* {props.pill.nutriIngredientList.categoryTagList == 0 ? null :
+                  <ChipBlue label={ props.pill.nutriIngredientList.categoryTagList[0]}></ChipBlue>      
+            } */}
               
           </CardActions>
           <CardActions sx={{padding: 0, marginLeft: 2} }>
-            {props.pill.ingredient_name == 0 ? null :
-                  <ChipOrange label={ props.pill.ingredient_name[0]}>
+            {/* {props.pill.nutriIngredientList.ingrdientName == 0 ? null :
+                  <ChipOrange label={ props.pill.nutriIngredientList.ingrdientName[0]}>
                   </ChipOrange>
-            }
+            } */}
         </CardActions>
     </Card>
   );

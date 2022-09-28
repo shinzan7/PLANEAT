@@ -82,22 +82,22 @@ function SearchByReco() {
             <div style={card}>
               <Slider {...settings}>
                 <div>
-                  <Link to="/searchdetail/1" style={{textDecoration:'none'}}>
+                  <Link to="/searchdetail/10" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
                 </div>
                 <div>
-                  <Link to="/searchdetail/2" style={{textDecoration:'none'}}>
+                  <Link to="/searchdetail/11" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
                 </div>
                 <div>
-                  <Link to="/searchdetail/3" style={{textDecoration:'none'}}>
+                  <Link to="/searchdetail/12" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
                 </div>
                 <div>
-                  <Link to="/searchdetail/4" style={{textDecoration:'none'}}>
+                  <Link to="/searchdetail/13" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
                 </div>

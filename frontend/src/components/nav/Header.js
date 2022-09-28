@@ -22,6 +22,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+// import img from 'assets/longlogo.png'
 
 const pages = ["식사 기록", "영양제 검색", "내 영양분석"];
 
