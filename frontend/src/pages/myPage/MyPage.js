@@ -59,7 +59,6 @@ function MyPage() {
 
   return (
     <React.Fragment>
-      <Header />
       <Box sx={{ width: "100%", marginLeft: "40px", marginTop: "100px", marginBottom: "20px" }}>
         <Box sx={{ flexGrow: 1, bgcolor: "background.paper", display: "flex" }}>
           <Tabs
@@ -83,7 +82,6 @@ function MyPage() {
           </TabPanel>
         </Box>
       </Box>
-      <Footer />
     </React.Fragment>
   );
 }

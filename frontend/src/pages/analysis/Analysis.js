@@ -59,7 +59,6 @@ function Analysis() {
 
   return (
     <div>
-      <Header />
       <Box sx={{ width: "100%", marginTop: "100px" }}>
         <Tabs
           sx={{ marginRight: "25px", marginLeft: "25px" }}
@@ -108,7 +107,6 @@ function Analysis() {
           </Grid>
         </TabPanel>
       </Box>
-      <Footer />
     </div>
   );
 }
