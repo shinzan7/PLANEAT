@@ -18,7 +18,7 @@ export default function RegistMeal(props) {
     let month = date.getMonth() + 1;
     let day = date.getDate();
 
-    const [mealModalOpen, setMealModalOpen] = useState(true); // 식사 등록 모달
+    const [mealModalOpen, setMealModalOpen] = useState(false); // 식사 등록 모달
     const [mealType, setMealType] = useState("아침");
 
     return (
@@ -35,7 +35,7 @@ export default function RegistMeal(props) {
             </Grid>
 
             {
-                mealModalOpen == true ? <MealModal mealModalOpen={mealModalOpen} setMealModalOpen={setMealModalOpen} month={month} day={day} mealType={mealType} / > : null
+                mealModalOpen == true ? <MealModal mealModalOpen={mealModalOpen} setMealModalOpen={setMealModalOpen} month={month} day={day} mealType={mealType} close={ ()=> setMealModalOpen(false)} / > : null
             }
         </StyledWrapper>
     )
