@@ -24,7 +24,8 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
-import DietModal from 'components/modal/main/DietModal'
+import DietModal from 'components/modal/main/DietModal';
+import FoodModal from 'components/modal/main/FoodModal';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -61,13 +62,13 @@ function TabPanel(props) {
 
 export default function MaxWidthDialog(props) {
 
-  // 모달 여는 함수
-  const handleClickOpen = () => {
+    // 모달 여는 함수
+    const handleClickOpen = () => {
     props.setMealModalOpen(true);
-  };
+    };
 
-  // 모달 닫는 함수
-  const handleClose = () => {
+    // 모달 닫는 함수
+    const handleClose = () => {
     props.setMealModalOpen(false);
     };
     
@@ -90,18 +91,26 @@ export default function MaxWidthDialog(props) {
         setValue(newValue);
     };
 
-    // 식단 관리 모달
-    const [dietModalOpen, setDietModalOpen] = useState(true);
+    // 식단 관리 모달 관리 변수
+    const [dietModalOpen, setDietModalOpen] = useState(false);
+
+    // 음식 직접입력 모달 관리 뱐수
+    const [foodModalOpen, setFoodModalOpen] = useState(false);
     
     return (
-
-        <Dialog
-            fullWidth={fullWidth}
-            maxWidth="lg"
-            open={props.mealModalOpen}
-            onClose={handleClose}
-            id="mealModal"
-        >
+        <div>
+            { /* 식단으로 추가 모달 */}
+            <DietModal open={dietModalOpen} close={() => setDietModalOpen(false)} />
+            <FoodModal open={foodModalOpen} close={() => setFoodModalOpen(false)}/>
+            <Dialog
+                style={{ zIndex: 1700 }}
+                keepMounted
+                fullWidth={fullWidth}
+                maxWidth="lg"
+                open={props.mealModalOpen}
+                onClose={props.close}
+                id="mealModal"
+            >
               { /* 모달 타이틀 */}
             <Grid container direction="row" style={{padding: "2vw", fontSize: "18px", color: "#9DA6F8", fontWeight: "bold"}} alignItems="center">
                 <Grid container xs={7}>
@@ -110,7 +119,7 @@ export default function MaxWidthDialog(props) {
                 <Grid container xs={5}>
                     { /* 내 식단으로 추가 */}
                     <Grid items xs = {6}>
-                        <BtnMain width="80%" onClick={() => { console.log("click")}}> 내 식단으로 추가</BtnMain>
+                        <BtnMain width="80%" onClick={() => { setDietModalOpen(true)}}> 내 식단으로 추가</BtnMain>
                     </Grid>
                     { /* 식사 등록 */}
                     <Grid items xs={6}>
@@ -247,16 +256,13 @@ export default function MaxWidthDialog(props) {
                 </Grid>
                 <Grid container xs={12} justifyContent="center">
                     <Grid items xs={4}>
-                        <BtnMain width="100%">음식 정보 직접 입력</BtnMain>
+                        <BtnMain width="100%" onClick={() => {setFoodModalOpen(true)}}>음식 정보 직접 입력</BtnMain>
                     </Grid>
                 </Grid>    
             </Grid>
-            </TabPanel>
-
-        {
-            dietModalOpen == true ? <DietModal DietModalOpen={dietModalOpen} setDietModalOpen={setDietModalOpen}/> : null
-        }   
-        </Dialog>
+            </TabPanel>   
+            </Dialog>
+            </div>
         
   );
 }

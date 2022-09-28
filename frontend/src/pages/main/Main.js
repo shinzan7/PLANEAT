@@ -58,7 +58,6 @@ function Main() {
 
     return (
         <div>
-            <Header></Header>
                 <div id="wrap">   
                 <Grid container spacing={2} justifyContent="center" alignItems="center" style={{padding: "0px"}}>
                     { /* 왼쪽 영역 */}
@@ -92,7 +91,6 @@ function Main() {
                     </Grid>
                 </Grid>
                 </div>
-            <Footer></Footer>
         </div>
     );
 }
