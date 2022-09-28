@@ -38,7 +38,7 @@ public enum AuthAttributes {
     NAVER("naver", (attributes) -> {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
         UserProfile userProfile = new UserProfile();
-        userProfile.setName((String) response.get("nickname"));
+        userProfile.setName((String) response.get("name"));
         userProfile.setEmail(((String) response.get("email")));
         return userProfile;
     });

@@ -33,7 +33,7 @@ public class IntakeFood {
     @JoinColumn(name = "intake_history_id")
     private IntakeHistory intakeHistory;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "food_info_id")
     private FoodInfo foodInfo;
 

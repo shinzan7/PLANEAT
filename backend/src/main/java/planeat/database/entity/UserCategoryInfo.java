@@ -37,7 +37,7 @@ public class UserCategoryInfo {
     }
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userCategory")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userCategoryInfo")
     List<UserCategory> userCategoryList = new ArrayList<>();
 
 }

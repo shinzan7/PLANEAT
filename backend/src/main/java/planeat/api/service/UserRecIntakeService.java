@@ -8,7 +8,7 @@ package planeat.api.service;
  @since 2022-09-23
 */
 
-public class UserRecIntake {
+public class UserRecIntakeService {
 
 
 
