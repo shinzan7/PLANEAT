@@ -43,10 +43,10 @@ public class Nutrition {
     @Column(name = "nutri_unit", nullable = false)
     private String nutri_unit;
 
-    @Column(name = "intake_rec", nullable = false)
+    @Column(name = "intake_rec")
     private BigDecimal intake_rec;
 
-    @Column(name = "intake_max", nullable = false)
+    @Column(name = "intake_max")
     private BigDecimal intake_max;
 
 }
