@@ -25,6 +25,10 @@ const userNutrientInfo = [
         intake_date: "220910",
         real_reco: "2",
       },
+      {
+        intake_date: "220911",
+        real_reco: "2",
+      },
     ],
   },
   {
@@ -122,7 +126,7 @@ function ShowNutrientCharts({ nutrientName, realReco }) {
   return (
     <div className="app">
       <div>
-        <Chart options={options} series={series} type="bar" width={670} height={110} />
+        <Chart options={options} series={series} type="bar" width={660} height={110} />
       </div>
     </div>
   );
