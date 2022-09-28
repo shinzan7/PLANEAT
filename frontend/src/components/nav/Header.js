@@ -7,6 +7,8 @@
 import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Navigate, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import {
   AppBar,
   Box,
@@ -20,10 +22,22 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+// import img from 'assets/longlogo.png'
 
 const pages = ["식사 기록", "영양제 검색", "내 영양분석"];
 
 const ResponsiveAppBar = () => {
+  const location = useLocation();
+
+  // const mounted = useRef(false);
+  // useEffect(() => {
+  //   if (!mounted.current) {
+  //     mounted.current = true;
+  //   } else {
+  //   console.log(location.pathname);
+  //   }
+  // }, [location.pathname]);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -44,18 +58,10 @@ const ResponsiveAppBar = () => {
 
   const StyledLink = styled(Link)`
     text-decoration: none;
-
-    color: black;
+    font-weight: ${(props) => (props.current ? "bold" : " ")};
+    color: ${(props) => (props.current ? "#9da6f8" : "black")};
 
     &:hover {
-      font-weight: bold;
-      color: #9da6f8;
-    }
-    &:focus {
-      font-weight: bold;
-      color: #9da6f8;
-    }
-    &:active {
       font-weight: bold;
       color: #9da6f8;
     }
@@ -142,16 +148,28 @@ const ResponsiveAppBar = () => {
           {/* 중앙 메뉴 영역 (기본 사이즈) */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: "200px" }}>
             {pages.map((page) => (
-              <Button
+              <Typography
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, ml: "10%", color: "black", display: "block" }}
                 color="inherit"
               >
-                {page == "식사 기록" && <StyledLink to="/main">{page}</StyledLink>}
-                {page == "영양제 검색" && <StyledLink to="/search">{page}</StyledLink>}
-                {page == "내 영양분석" && <StyledLink to="/analysis">{page}</StyledLink>}
-              </Button>
+                {page == "식사 기록" && (
+                  <StyledLink to="/main" current={location.pathname == "/main"}>
+                    {page}
+                  </StyledLink>
+                )}
+                {page == "영양제 검색" && (
+                  <StyledLink to="/search" current={location.pathname == "/search"}>
+                    {page}
+                  </StyledLink>
+                )}
+                {page == "내 영양분석" && (
+                  <StyledLink to="/analysis" current={location.pathname == "/analysis"}>
+                    {page}
+                  </StyledLink>
+                )}
+              </Typography>
             ))}
           </Box>
           {/* 우측 아이콘 영역(기본 사이즈) */}
@@ -193,7 +211,9 @@ const ResponsiveAppBar = () => {
                 <Typography
                   textAlign="center"
                   onClick={() => {
-                    console.log("마이페이지");
+                    localStorage.clear()
+                    window.location.replace("/")
+                    console.log('로그아웃')
                   }}
                 >
                   로그아웃

@@ -4,12 +4,10 @@
 @since 2022.09.22
 */
 import React from "react";
-import Header from 'components/nav/Header';
 import TagMain from "components/common/TagMain";
 import { Grid } from "@mui/material";
 import {Link} from 'react-router-dom';
 import SideBar from "components/common/SideBar";
-import SearchBar from "components/common/SearchBar";
 
 
 function SearchByTag() {
@@ -153,8 +151,8 @@ function SearchByTag() {
 
   return (
       <div style={section}>
-        <Header />
         <Grid container> 
+            {/* 좌측 사이드바 */}
             <Grid item xs={1.5} style={section1}>
               <SideBar />
             </Grid>
@@ -164,7 +162,7 @@ function SearchByTag() {
                 <Grid item xs={3}>
 
                 </Grid>
-                
+                {/* 중앙 상단 문구 */}
                 <Grid item xs={4}>
                   <p>내 건강 고민에 맞는 제품을 찾아보세요</p>
                 </Grid>
@@ -185,7 +183,7 @@ function SearchByTag() {
                 <Grid container>
                   
                     {userTags.map((data, i) => (   
-                      <Link to="/tagresult" style={{textDecoration:'none', color:'black'}}>          
+                      <Link to={`/tagresult/${data.title}`} style={{textDecoration:'none', color:'black'}}>          
                         <TagMain
                         key={i}
                         src={data.src}

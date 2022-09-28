@@ -6,9 +6,7 @@
 import React from "react";
 import TagNute from "components/common/TagNute";
 import { Grid } from "@mui/material";
-import Header from 'components/nav/Header';
 import SideBar from "components/common/SideBar";
-import SearchBar from "components/common/SearchBar";
 import {Link} from 'react-router-dom';
 
 function SearchByNutrient() {
@@ -123,7 +121,6 @@ function SearchByNutrient() {
 
   return (
       <div style={section}>
-        <Header />
           <Grid container> 
             <Grid item xs={1.5} style={section1}>
               <SideBar />
@@ -153,13 +150,12 @@ function SearchByNutrient() {
                 </Grid>
                 <Grid item xs={8}>
                   <Grid container>
-                    {nuterientTags.map((data, i) => (  
-                      <Link to="/nutrientresult" style={{textDecoration:'none', color:'black'}}>           
+                    {nuterientTags.map((data, i) => (           
                         <TagNute
                         key={i}
                         tag={data.title}
+                        index={i+1}
                       />
-                      </Link>
                     ))}
                   </Grid>
                 </Grid>

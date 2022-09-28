@@ -36,6 +36,8 @@ import DialogTitle from "@mui/material/DialogTitle";
 
 const steps = ["이용약관 동의", "개인정보 입력", "건강고민 선택"];
 
+// const name = localStorage.getItem("name");
+
 const userInfo = {
   name: "김싸피",
 };
@@ -78,9 +80,19 @@ function Welcome() {
   const [open, setOpen] = React.useState(false);
 
   const handleNext = () => {
-    setActiveStep(activeStep + 1);
+    // 약관동의 화면
+    if (activeStep == 0) {
+      // 약관동의 체크 되어있으면 다음 스텝으로 이동, 체크 안되어있으면 alert
+      if (checked) {
+        setActiveStep(activeStep + 1);
+      } else {
+        setOpen(true);
+      }
+    } else {
+      setActiveStep(activeStep + 1);
+    }
   };
-  
+
   const handleClose = () => {
     setOpen(false);
   };

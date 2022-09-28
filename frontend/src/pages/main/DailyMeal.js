@@ -19,17 +19,38 @@ export default function DailyMeal(props) {
 
     return (
         <StyledWrapper>
-            <Grid container id="container" xs={ 12} direction="row" alignItems="center">
+            <Grid container id="container" direction="row" alignItems="center">
                 {
-                    data == null ?
+                    data != null ?
                         // 기록이 없는 경우
                         (<Grid items id="noRecord" xs={12} >
-                            {month}월 {day}일의 식사기록이 없어요🥲<br />
+                            {month}월 {day}일의 식사기록이 없어요😥<br />
                             식사를 등록해주세요!
                         </Grid>)
                         :
                         // 기록이 있는 경우
-                        (<Grid items id="dateTitle" xs={12}>{month}월 {day}일의 식사</Grid>)
+                        (
+                        <div>
+                            <Grid items id="dateTitle" xs={12}>
+                                {month}월 {day}일의 식사
+                            </Grid>
+                            <Grid items id="totalIntake" xs={12}>
+                                총 섭취량
+                            </Grid>
+                            <Grid items xs={12}>
+                                식사 상세 정보
+                            </Grid>  
+                            <Grid items xs={12}>
+                                탄단지 요약
+                            </Grid>
+                            <Grid items xs={12}>
+                                영양상세정보
+                            </Grid>   
+                            <Grid items xs={12}>
+                            섭취량 권고
+                            </Grid>
+                        </div>
+                        )
                 }
             </Grid>
         </StyledWrapper>
@@ -54,6 +75,14 @@ const StyledWrapper = styled.div`
         font-size: 1vw;
     }
 
+    #dateTitle {
+        color: black;
+        font-weight: bold;
+    }
+
+    #totalIntake {
+        text-align: center;
+    }
 
 
 `;
