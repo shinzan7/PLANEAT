@@ -12,35 +12,37 @@ import SearchDetail from "pages/search/SearchDetail";
 import TagResult from "pages/search/TagResult";
 import NameResult from "pages/search/NameResult";
 import NutrientResult from "pages/search/NutrientResult";
+import Header from "components/nav/Header";
+import Footer from "components/nav/Footer";
 
 function Router() {
-
-    return (
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/main" element={<Main />} />
-                    <Route path="/welcome" element={<Welcome />} />
-                    <Route path="/analysis" element={<Analysis />} />
-                    <Route path="/search" element={<Search />} />
-                    <Route path="/searchtag" element={<SearchByTag />} />
-                    <Route path="/searchnutrient" element={<SearchByNutrient />} />
-                    <Route path="/searchdetail/*" element={<SearchDetail />} />
-                    <Route path="/searchdetail/:nutrientId" element={<SearchDetail />} />
-                    {/* <Route path="/tagresult" element={<TagResult />} /> */}
-                    <Route path="/tagresult/:id" element={<TagResult />} />
-                    <Route path="/result" element={<NameResult />} />
-                    <Route path="/result/:id" element={<NameResult />} />
-                    <Route path="/nutrientresult" element={<NutrientResult />} />
-                    <Route path="/nutrientresult/:id" element={<NutrientResult />} />
-                    <Route path="/mypage" element={<MyPage />} />
-                    <Route path="/logincheck" element={<Logincheck />} />
-                    {/* <Route path="/logincheck/:accessToken/:refreshToken/:accessTokenExpiration/
+  return (
+    <BrowserRouter>
+      <Header></Header>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/main" element={<Main />} />
+        <Route path="/welcome" element={<Welcome />} />
+        <Route path="/analysis" element={<Analysis />} />
+        <Route path="/search" element={<Search />} />
+        <Route path="/searchtag" element={<SearchByTag />} />
+        <Route path="/searchnutrient" element={<SearchByNutrient />} />
+        <Route path="/searchdetail/*" element={<SearchDetail />} />
+        <Route path="/searchdetail/:nutrientId" element={<SearchDetail />} />
+        {/* <Route path="/tagresult" element={<TagResult />} /> */}
+        <Route path="/tagresult/:id" element={<TagResult />} />
+        <Route path="/result" element={<NameResult />} />
+        <Route path="/result/:id" element={<NameResult />} />
+        <Route path="/nutrientresult" element={<NutrientResult />} />
+        <Route path="/nutrientresult/:id" element={<NutrientResult />} />
+        <Route path="/mypage" element={<MyPage />} />
+        <Route path="/logincheck" element={<Logincheck />} />
+        {/* <Route path="/logincheck/:accessToken/:refreshToken/:accessTokenExpiration/
                     :refreshTokenExpiration/:userId/:name/:birthYear/:gender" element={<Logincheck />} /> */}
-                </Routes>
-            </BrowserRouter>
-        
-    )
+      </Routes>
+      <Footer></Footer>
+    </BrowserRouter>
+  );
 }
 
 export default Router;
