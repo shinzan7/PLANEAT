@@ -9,6 +9,7 @@ import { Grid } from '@mui/material';
 import SearchByReco from "../../pages/search/SearchByReco";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
+import Footer from "components/nav/Footer";
 
 const section = { marginTop:'80px' }
 const section1 = { marginTop:'25vh', textAlign:'center'}
@@ -47,7 +48,8 @@ function Search() {
               <SearchByReco />
 
             </Grid>
-          </Grid>
+        </Grid>
+        <Footer/>
         </div>
         
     );
