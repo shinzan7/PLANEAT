@@ -25,6 +25,7 @@ function Search() {
     };
 
     const userInfo = useRecoilValue(userState)
+    console.log(userInfo)
 
     return (
         <div style={ section }>
