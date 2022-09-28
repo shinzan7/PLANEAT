@@ -52,7 +52,7 @@ function Search() {
               </Grid>
               
               <div style={section3}>
-                {userInfo.name}
+                {userInfo[5]}
               </div>
               
               <SearchByReco />
