@@ -30,6 +30,7 @@ function TagResult() {
       <div style={section}>
         <Header />
           <Grid container> 
+            {/* 좌측 사이드바 */}
             <Grid item xs={1.5} style={section1}>
               <SideBar />
             </Grid>
@@ -39,7 +40,7 @@ function TagResult() {
                 <Grid item xs={3}>
 
                 </Grid>
-                
+                {/* 중앙 상단 문구 */}
                 <Grid item xs={4}>
                   <p>(건강 고민)개선에 도움이 되는 영양제들이에요.</p>
                 </Grid>

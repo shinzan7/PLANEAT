@@ -22,6 +22,7 @@ function Search() {
         <div style={ section }>
           <Header />
           <Grid container> 
+            {/* 좌측 사이드바 */}
             <Grid item xs={1.5} style={section1}>
               <SideBar />
             </Grid>
@@ -31,10 +32,9 @@ function Search() {
                 <Grid item xs={3}>
 
                 </Grid>
-                
+                {/* 검색창 */}
                 <Grid item xs={4}>
                   <SearchBar />
-      
                 </Grid>
                 <Grid item xs={5}>
                   
@@ -44,6 +44,7 @@ function Search() {
               <div style={section3}>
                 
               </div>
+              
               <SearchByReco />
 
             </Grid>
