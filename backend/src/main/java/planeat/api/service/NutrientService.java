@@ -118,6 +118,7 @@ public class NutrientService {
             //영양성분
             Ingredient ingredient = Ingredient.builder()
                     .ingredientName(dto.getIngredientName())
+                    .unit(dto.getUnit())
                     .build();
 
             //영양제 성분
