@@ -29,7 +29,10 @@ public class Ingredient {
     @Column(name = "ingredient_id")
     private Integer id;
 
+    @Column(nullable = false)
     private String ingredientName;
+    @Column(nullable = false)
+    private String unit;
 
 
 //    @JsonIgnore
@@ -41,9 +44,10 @@ public class Ingredient {
     List<Category> categoryList = new ArrayList<>();
 
     @Builder
-    public Ingredient(Integer id, String ingredientName) {
+    public Ingredient(Integer id, String ingredientName, String unit) {
         this.id = id;
         this.ingredientName = ingredientName;
+        this.unit = unit;
     }
 
     public void putCategory(Category category){

@@ -27,6 +27,7 @@ public class NutrientRequest {
     @Getter @Setter
     public static class NutriIngredient{
         String ingredientName;
+        String unit;
         Float ingredientAmount;
         List<String> categoryTagList;
     }
