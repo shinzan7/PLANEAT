@@ -12,6 +12,6 @@ import { atom } from 'recoil';
 export const userState = atom({
   key: 'user',
   default: [ {accessToken}, {refreshToken}, {accessTokenExpiration}, {refreshTokenExpiration}, 
-  {userId}, {name}, {birthYear}, {gender} ],
+  {userId}, name, {birthYear}, {gender} ],
   
 }) 
