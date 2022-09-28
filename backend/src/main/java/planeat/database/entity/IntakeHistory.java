@@ -29,7 +29,6 @@ import java.util.List;
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "intake_history")
-@EntityListeners(AuditingEntityListener.class)
 public class IntakeHistory {
 
     @Id
@@ -41,7 +40,6 @@ public class IntakeHistory {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @CreatedDate
     @Column(name = "date", nullable = false)
     private LocalDate date;
 
@@ -66,16 +64,17 @@ public class IntakeHistory {
     public static IntakeHistory createIntakeHistory(User user, IntakeHistoryRequest intakeHistoryRequest) {
         IntakeHistory intakeHistory = IntakeHistory.builder()
                 .user(user)
+                .date(intakeHistoryRequest.getDate())
                 .mealType(intakeHistoryRequest.getMealType())
                 .build();
         return intakeHistory;
     }
 
 
-    public static IntakeHistory updateIntakeHistory(User user, LocalDate date, IntakeHistoryRequest intakeHistoryRequest) {
+    public static IntakeHistory updateIntakeHistory(User user, IntakeHistoryRequest intakeHistoryRequest) {
         IntakeHistory intakeHistory = IntakeHistory.builder()
                 .id(intakeHistoryRequest.getIntakeHistoryId())
-                .date(date)
+                .date(intakeHistoryRequest.getDate())
                 .user(user)
                 .mealType(intakeHistoryRequest.getMealType())
                 .build();

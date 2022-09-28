@@ -55,6 +55,7 @@ public class MyDietService {
         for (int i = 0; i < myDietRequest.getDietInfosList().size(); i++) {
             DietInfo dietInfo = DietInfo.createDietInfo(getFoodInfo(myDietRequest.getDietInfosList().get(i).getFoodInfoId()), myDietRequest.getDietInfosList().get(i).getAmount(), getMyDiet(myDietId));
             dietInfoRepository.save(dietInfo);
+            dietInfo.getMyDiet().getDietInfoList().add(dietInfo);
         }
 
         return userId;

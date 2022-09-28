@@ -55,6 +55,7 @@ public class IntakeHistoryService {
         for (int i = 0; i < intakeHistoryRequest.getIntakeFoodsList().size(); i++) {
             IntakeFood intakeFood = IntakeFood.createIntakeFood(getFoodInfo(intakeHistoryRequest.getIntakeFoodsList().get(i).getFoodInfoId()), intakeHistoryRequest.getIntakeFoodsList().get(i).getAmount(), getIntakeHistory(intakeHistoryId));
             intakeFoodRepository.save(intakeFood);
+            intakeFood.getIntakeHistory().getIntakeFoodList().add(intakeFood);
         }
 
         return userId;
@@ -74,7 +75,7 @@ public class IntakeHistoryService {
 
         for (IntakeHistory intakeHistory : intakeHistories) {
             List<IntakeHistoryResponse.IntakeFoods> intakeFoods = new ArrayList<>();
-            List<IntakeFood> intakeFoodList = intakeFoodRepository.findByIntakeHistoryId(intakeHistory.getId());
+            List<IntakeFood> intakeFoodList = intakeHistory.getIntakeFoodList();
 
             for (IntakeFood intakeFood : intakeFoodList) {
                 FoodInfo foodInfo = intakeFood.getFoodInfo();
@@ -99,8 +100,7 @@ public class IntakeHistoryService {
         if(userId.equals((createUser))) {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-            LocalDate date = getIntakeHistory(intakeHistoryRequest.getIntakeHistoryId()).getDate();
-            IntakeHistory intakeHistory = IntakeHistory.updateIntakeHistory(user, date, intakeHistoryRequest);
+            IntakeHistory intakeHistory = IntakeHistory.updateIntakeHistory(user, intakeHistoryRequest);
             intakeHistoryRepository.save(intakeHistory);
             List<IntakeFood> intakeFoodList = intakeFoodRepository.findByIntakeHistoryId(intakeHistory.getId());
             intakeFoodRepository.deleteAll(intakeFoodList);

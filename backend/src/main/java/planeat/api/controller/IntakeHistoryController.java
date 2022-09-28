@@ -58,7 +58,6 @@ public class IntakeHistoryController {
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         List<IntakeHistoryResponse> responses = intakeHistoryService.readByDateIntakeHistory(userId, localDate);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
-
     }
 
     /*
