@@ -45,8 +45,7 @@ function SearchDetail() {
     nutrient_name: info.nutrientName,
     company: info.company ,
     category_tag: [info.nutriIngredientList[0].categoryTagList[0]],
-    ingredient_name: [info.nutriIngredientList[0].ingredientName]
-    ,
+    ingredient_name: [info.nutriIngredientList[0].ingredientName],
   }
 
   // const data = {
