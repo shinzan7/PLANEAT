@@ -17,9 +17,12 @@ import Footer from 'components/nav/Footer'
 
 function Router() {
 
+    const url = window.location.href
+
     return (
             <BrowserRouter>
-                <Header />
+            { url === 'http://localhost:3000/' ? 
+                null : <Header />}
                 <Routes>
                     <Route path="/" element={<Home />} />
                     <Route path="/main" element={<Main />} />
