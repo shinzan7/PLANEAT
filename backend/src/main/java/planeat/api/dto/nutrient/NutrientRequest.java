@@ -21,7 +21,6 @@ public class NutrientRequest {
     String nutrientName;
     String company;
     String description;
-    String imagePath;
     List<NutriIngredient> nutriIngredientList;
 
     @Getter @Setter
@@ -33,11 +32,10 @@ public class NutrientRequest {
     }
 
     @Builder
-    public void createNutrientRequest(String nutrientName, String company, String description, String imagePath, List<NutriIngredient> nutriIngredientList) {
+    public void createNutrientRequest(String nutrientName, String company, String description, List<NutriIngredient> nutriIngredientList) {
         this.nutrientName = nutrientName;
         this.company = company;
         this.description = description;
-        this.imagePath = imagePath;
         this.nutriIngredientList = nutriIngredientList;
     }
 }
