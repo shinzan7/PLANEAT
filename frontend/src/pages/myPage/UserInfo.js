@@ -14,7 +14,7 @@ import BtnMain from "components/common/BtnMain";
 
 export default function UserInfo() {
   return (
-    <Container component="main" sx={{ mb: 4, width: "100%", height: "700px" }}>
+    <Container component="main" sx={{ mb: 4, width: "650px", height: "700px" }}>
       <React.Fragment>
         <Typography variant="h5" gutterBottom>
           회원정보 수정
