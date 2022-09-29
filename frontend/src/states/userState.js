@@ -28,6 +28,6 @@ const response = http.get(`/nutrient/user/list/${userId}`)
 export const userState = atom({
   key: 'user',
   default: [ accessToken, refreshToken, accessTokenExpiration, refreshTokenExpiration, 
-  userId, name, birthYear, gender, response],
+  userId, name, birthYear, gender, response.data ],
   
 }) 
