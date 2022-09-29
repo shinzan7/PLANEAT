@@ -21,11 +21,10 @@ public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
 //            "left join fetch n.nutrientIngredientList as ni " +
 //            "left join fetch ni.ingredient as i " +
 //            "left join fetch i.categoryList")
-
 //@Query("select n from Nutrient n " +
-//        "left join fetch n.nutrientIngredientList")
-
-//@Query("select n from Nutrient n " +
-//        "left join fetch n.nutrientIngredientList")
-//    List<Nutrient> findAllNutrient();
+//        "left join fetch n.nutrientIngredientList as ni " +
+//        "left join fetch ni.ingredient as i ")
+@Query("select distinct n from Nutrient n " +
+        "left join fetch n.nutrientIngredientList")
+    List<Nutrient> findAllNutrient();
 }

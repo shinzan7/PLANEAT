@@ -120,14 +120,10 @@ public class NutrientService {
         return takeAllTable(nutrient);
     }
 
-    public List<NutrientResponse> readAllNutrient(){
-        List<NutrientResponse> resultList = new LinkedList<>();
-        List<Nutrient> nutrientList = nutrientRepository.findAll();
-        for (Nutrient n : nutrientList){
-            resultList.add(takeAllTable(n));
-        }
+    public List<Nutrient> readAllNutrient(){
+        List<Nutrient> nutrientList = nutrientRepository.findAllNutrient();
 
-        return resultList;
+        return nutrientList;
     }
 
     /**

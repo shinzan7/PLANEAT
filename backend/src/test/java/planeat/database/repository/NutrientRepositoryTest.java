@@ -17,20 +17,20 @@
 //    @Autowired
 //    private NutrientRepository nutrientRepository;
 //
-////    @Test
-////    void getTest(){
-////        List<Nutrient> allNutrient = nutrientRepository.findAllNutrient();
-////        for (int i=0; i<allNutrient.size(); i++){
-////            Nutrient nutrient = allNutrient.get(i);
-////            System.out.println(i + "번 영양제================");
-////            System.out.println(nutrient.getNutrientName());
-////
-////            System.out.println(nutrient.getNutrientIngredientList().get(0).getIngredientAmount());
+//    @Test
+//    void getTest(){
+//        List<Nutrient> allNutrient = nutrientRepository.findAllNutrient();
+//        for (int i=0, j=0; i<allNutrient.size(); i++){
+//            Nutrient nutrient = allNutrient.get(i);
+//            System.out.println(i + "번 영양제================");
+//            System.out.println(nutrient.getNutrientName());
+//
+//            System.out.println(nutrient.getNutrientIngredientList().get(j++).getIngredientAmount());
 ////            System.out.println(nutrient.getNutrientIngredientList().get(0).getIngredient().getIngredientName());
 ////            System.out.println(nutrient.getNutrientIngredientList().get(0).getIngredient().getCategoryList().get(0).getCategoryTag());
-////
-////        }
-////    }
+//
+//        }
+//    }
 //
 ////    @Test
 ////    void getTest1(){
