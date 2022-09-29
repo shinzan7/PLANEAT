@@ -26,8 +26,7 @@ function SearchByReco() {
     dots: true,
     infinite: true,
     arrows: true,
-    // prevArrow : "<button type='button' class='slick-prev'>Previous</button>",	
-	  // nextArrow : "<button type='button' class='slick-next'>Next</button>",
+
     speed: 500,
     slidesToShow: 5,
     slidesToScroll: 5,
@@ -77,6 +76,7 @@ function SearchByReco() {
           </Grid>
           <Grid item xs={9.8}>
             <div style={section1}>
+              {/* 유저 식단 기반 분석에서 부족한 영양소 성분 기반 추천 */}
               <p><span style={bold}>{name}</span> 님을 위한 영양제 추천</p>
               <p>&nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게 추천해요</p>
             </div>
@@ -89,7 +89,7 @@ function SearchByReco() {
                   </Link>
                 </div>
                 <div>
-                  <Link to="/searchdetail/11" style={{textDecoration:'none'}}>
+                  <Link to="/searchdetail/7" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
                 </div>
@@ -141,6 +141,7 @@ function SearchByReco() {
           </Grid>
           <Grid item xs={9.8}>
             <div style={section1}>
+              {/* 유저 동일 성별/나이대에서 많이 등록된 영양소 순서 대로 추천 */}
               <p>&nbsp;&nbsp;<span style={bold}>20대 여성</span>이 많이 먹고 있어요</p>
             </div>
 
@@ -195,6 +196,7 @@ function SearchByReco() {
           </Grid>
           <Grid item xs={9.8}>
             <div style={section1}>
+              {/* 유저가 설정한 건강 고민 태그 기반 추천 */}
               <p>&nbsp;&nbsp;<span style={bold}>장건강</span>에 좋아요</p>
             </div>
 

@@ -40,16 +40,11 @@ const CardNutrient = function MediaCard(props) {
           </CardContent>
           <CardActions sx={{ padding: 0, marginLeft: 2, marginBottom: 1 }} >
           {/* 영양제 기능 태그 */}
-              {/* {props.pill.nutriIngredientList.categoryTagList == 0 ? null :
-                  <ChipBlue label={ props.pill.nutriIngredientList.categoryTagList[0]}></ChipBlue>      
-            } */}
-              
+            {/* <ChipBlue label={ props.pill.nutriIngredientList[0].categoryTagList[0]}></ChipBlue>                     */}
           </CardActions>
-          <CardActions sx={{padding: 0, marginLeft: 2} }>
-            {/* {props.pill.nutriIngredientList.ingrdientName == 0 ? null :
-                  <ChipOrange label={ props.pill.nutriIngredientList.ingrdientName[0]}>
-                  </ChipOrange>
-            } */}
+        <CardActions sx={{padding: 0, marginLeft: 2} }>
+           {/* 영양제 성분 태그 */}
+          {/* <ChipOrange label={ props.pill.nutriIngredientList[0].ingredientName}></ChipOrange> */}
         </CardActions>
     </Card>
   );

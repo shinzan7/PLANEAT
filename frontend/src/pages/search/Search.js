@@ -9,7 +9,6 @@ import SearchByReco from "../../pages/search/SearchByReco";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
 import { useRecoilState, useRecoilValue } from 'recoil';
-import { userState } from 'states/userState'
 import { nutrient } from 'states/nutrient'
 
 const section = { marginTop:'80px' }
@@ -18,11 +17,8 @@ const section2 = { marginTop:'5vh', textAlign:'center'}
 const section3 = { marginTop:'10vh'}
 
 function Search() {
-    const userInfo = useRecoilValue(userState)
-    console.log(userInfo)
-    
-    const nutrientInfo = useRecoilValue(nutrient)
-    console.log(nutrientInfo)
+    // const nutrientInfo = useRecoilValue(nutrient)
+    // console.log(nutrientInfo)
 
     return (
         <div style={ section }>
@@ -47,8 +43,7 @@ function Search() {
               </Grid>
               
               <div style={section3}>
-                {userInfo[5]}
-                {nutrientInfo.nutrientName}
+                {/* {nutrientInfo.nutrientName} */}
               </div>
               
               <SearchByReco />
