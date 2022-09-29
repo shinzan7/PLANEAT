@@ -7,7 +7,6 @@ recoil userState
 */
 
 import { atom } from 'recoil';
-import { http } from "api/http";
 
 const accessToken = localStorage.getItem('accessToken')
 const refreshToken = localStorage.getItem('refreshToken')
@@ -17,15 +16,6 @@ const userId = localStorage.getItem('userId')
 const name = localStorage.getItem('name')
 const birthYear = localStorage.getItem('birthYear')
 const gender = localStorage.getItem('gender')
-
-
-
-
-http.get('/nutrient?id=10')
-.then(response => {
-  console.log(response.data.data)
-})
-
 
 
 export const userState = atom({
