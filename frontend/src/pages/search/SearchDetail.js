@@ -45,22 +45,6 @@ function SearchDetail() {
       setInfo(response.data.data)
     })
   }, [])
-
-  // const data = {
-  //   img: info.imagePath,
-  //   nutrient_name: info.nutrientName,
-  //   company: info.company ,
-  //   category_tag: [info.nutriIngredientList[0].categoryTagList[0]],
-  //   ingredient_name: [info.nutriIngredientList[0].ingredientName],
-  // }
-
-  // const data = {
-  //   img: "",
-  //   nutrient_name: "락토핏 생유산균 화이버",
-  //   company: "종근당",
-  //   category_tag: ["장건강"],
-  //   ingredient_name: ["차전자피식이섬유"],
-  // }
   
   return (
       <div style={section}>
@@ -108,8 +92,8 @@ function SearchDetail() {
                         <div style={section4}>
                           <p style={bold}>상세정보</p>
                           <p>{info.description}</p> 
-                          <p>{info.nutriIngredientList}</p>
-                          {/* <p>{info.nutriIngredientList.categoryTagList}</p>         */}
+                          <p>{info.nutriIngredientList.ingredientName}</p>
+                          <p>{info.nutriIngredientList.categoryTagList}</p>        
                         </div>
                       </div>
                     </Grid>
