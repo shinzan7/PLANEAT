@@ -13,6 +13,7 @@ import SimpleTestModal from 'components/modal/home/SimpleTestModal';
 import Google from './Google';
 import Kakao from './Kakao';
 import Naver from './Naver';
+import longlogo from 'assets/longlogo.png'
 
 
 function Home() {
@@ -53,7 +54,7 @@ function Home() {
             </Grid>
 
             <Grid item xs={7}>
-              <img src="assets/longlogo.png" alt='' style={logo}/>
+              <img src={longlogo} alt='' style={logo}/>
             </Grid>
 
             <Grid item xs={4}>
