@@ -102,16 +102,15 @@ public class User {
     }
 
 
-    public static User updateUser(Long userId, UserInfoRequest userInfoRequest) {
-        User user = User.builder()
-                .id(userId)
-                .name(userInfoRequest.getName())
-                .email(userInfoRequest.getEmail())
-                .provider(userInfoRequest.getProvider())
+    public static User updateUser(User user, UserInfoRequest userInfoRequest) {
+        return User.builder()
+                .id(user.getId())
+                .name(user.getName())
+                .email(user.getEmail())
+                .provider(user.getProvider())
                 .birthyear(userInfoRequest.getBirthyear())
                 .gender(userInfoRequest.getGender())
                 .build();
-        return user;
     }
 
 }

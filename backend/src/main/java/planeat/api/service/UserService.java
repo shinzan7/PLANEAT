@@ -46,7 +46,7 @@ public class UserService {
     public Long createUserInfo(Long userId, UserInfoRequest userInfoRequest) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-        User updateUser = User.updateUser(user.getId(), userInfoRequest);
+        User updateUser = User.updateUser(user, userInfoRequest);
         updateUser.setRefreshToken(user.getRefreshToken());
         userRepository.save(updateUser);
         UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest);
@@ -145,8 +145,7 @@ public class UserService {
     public Long updateUserInfo(Long userId, UserInfoRequest userInfoRequest) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-        User.updateUser(user.getId(), userInfoRequest);
-        User updateUser = User.updateUser(user.getId(), userInfoRequest);
+        User updateUser = User.updateUser(user, userInfoRequest);
         updateUser.setRefreshToken(user.getRefreshToken());
         userRepository.save(updateUser);
         UserRecIntake userRecIntake = userRecIntakeRepository.findByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate())
