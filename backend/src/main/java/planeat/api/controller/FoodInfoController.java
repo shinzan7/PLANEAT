@@ -42,32 +42,31 @@ public class FoodInfoController {
     }
 
 
+//    /**
+//     * 전체 식품 정보 조회 - 가나다 순 100개
+//     * food_user 칼럼의 값이 1(관리자 번호)와 일치하는 식품 리스트 반환
+//     *
+//     * @return SUCCCESS, List<FoodInfoResponse>, HttpStatus.OK(200)
+//     */
+//    @GetMapping("/all/{userId}")
+//    public ResponseEntity<BasicResponse<List<FoodInfoResponse>>> readAllFoodInfos(@PathVariable("userId") Long userId) {
+//        List<FoodInfoResponse> responses = foodInfoService.readAllFoodInfos(userId);
+//        return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
+//    }
+
+
     /**
-     * 전체 식품 정보 조회 - 가나다 순 100개
-     * food_user 칼럼의 값이 1(관리자 번호)와 일치하는 식품 리스트 반환
+     * 유저가 등록한 식품 정보 조회 - 최대 100개
      *
+     * @param userId 유저 번호
      * @return SUCCCESS, List<FoodInfoResponse>, HttpStatus.OK(200)
      */
     @GetMapping("/{userId}")
-    public ResponseEntity<BasicResponse<List<FoodInfoResponse>>> readAllFoodInfos(@PathVariable("userId") Long userId) {
-        //List<FoodInfoResponse> responses = foodInfoService.readAllFoodInfos(userId);
+    public ResponseEntity<BasicResponse<List<FoodInfoResponse>>> readUserFoodInfos(@PathVariable("userId") Long userId) {
         List<FoodInfoResponse> responses = foodInfoService.readFoodInfo(userId);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
+
     }
-
-
-//    /**
-//     * 특정 유저가 등록한 식품 정보 조회
-//     *
-//     * @param userId 유저 번호
-//     * @return SUCCCESS, List<FoodInfoResponse>, HttpStatus.OK(200)
-//     */
-//    @GetMapping("/{userId}")
-//    public ResponseEntity<BasicResponse<List<FoodInfoResponse>>> readUserFoodInfos(@PathVariable("userId") Long userId) {
-//        List<FoodInfoResponse> responses = foodInfoService.readFoodInfo(userId);
-//        return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
-//
-//    }
 
     /**
      * 이름으로 식품 정보 조회
