@@ -14,19 +14,20 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import DialogTitle from '@mui/material/DialogTitle';
 import styled from 'styled-components';
-import { Typography, Grid, TextField, Paper, InputBase, IconButton } from '@mui/material';
+import { Typography, Grid, TextField, Paper, InputBase, IconButton, List, ListItem } from '@mui/material';
 import BtnMain from 'components/common/BtnMain';
 import SearchIcon from '@mui/icons-material/Search';
 import ClearIcon from '@mui/icons-material/Clear';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import DietModal from 'components/modal/main/DietModal';
 import FoodModal from 'components/modal/main/FoodModal';
-import NutrientModal from 'components/modal/main/NutrientModal';
+import { http } from 'api/http';
+
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -67,15 +68,12 @@ export default function MaxWidthDialog(props) {
 
     // 맨 처음 음식 전체 데이터 가져오기
     async function getAllFood() {
-          console.log("click");
-        const response = await http.get(`/nutrient/user/list/11`);
+        console.log("click");
+        const response = await http.get(`/food-infos/1`);
         if (response.data.message === "success") {
-          setMyNutrients(response.data.data);
-            console.log(response.data.data);
-    
-            
+            setAllFood(response.data.data);
         }
-        }
+    }
     
     const mounted = useRef(false);
       useEffect(() => {
@@ -121,6 +119,7 @@ export default function MaxWidthDialog(props) {
     // 음식 직접입력 모달 관리 변수
     const [foodModalOpen, setFoodModalOpen] = useState(false);
 
+    const[clickedFood, setClickedFood] = useState(null);
     
     return (
         <div>
@@ -205,58 +204,50 @@ export default function MaxWidthDialog(props) {
             </Tabs>
             { /* 전체 탭 내용*/}
             <TabPanel value={value} index={0}>
-            <Grid container direction="row" alignItems="center">
+            <Grid container direction="row" alignItems="center" justifyContent="center">
                 { /* 음식 선택 영역: 왼쪽 */}
                     <Grid items xs={6} >
                     <StyledWrapper>
-                        <Paper id="container" elevation={0} sx={{
-                        }}>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                            <div>왼쪽</div>
-                        </Paper>
+                        <Grid container id="container" elevation={0} sx={{
+                                }}>
+                                    <List>
+                                    {allFood.map(function (food, i) { 
+                                        return (
+                                            <ListItem>
+                                                <Grid items xs={12} key={i}>
+                                                {food.name}
+                                                </Grid>
+                                            </ListItem>
+                                        );
+                                    })}
+                                        </List>
+                        </Grid>
                     </StyledWrapper>
                 </Grid>
                 { /* 음식 선택 영역: 오른쪽 */}
                 <Grid items xs={6}>
                     <StyledWrapper>
-                        <Paper id="container" elevation={0} sx={{
-                            }}>
+                            <Grid container id="container" justifyContent="center" alignItems="center">
+                                {
+                                            clickedFood == null ?
+                                                (<Grid id="noClickedFood">
+                                                <Grid items xs={12} sx={ {mb: 2}}>
+                                                    <img src="assets/planet.png" id="planet"/>
+                                                    </Grid>
+                                                    <Grid items xs={12}>
+                                                        음식을 클릭하면 영양성분을 확인할 수 있어요
+                                                    </Grid>
+                                                </Grid>) : (
+                                                    <>
+                                                    <div>
+                                                        클릭한 음식 있음
+                                                    </div>
+                                                </>
+                                                )
+                                }       
+                            </Grid>
                             
-                            <div id="content">
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>
-                                <div>오른쪽</div>        
-                            </div>
-                            
-                        </Paper>
+                        
                     </StyledWrapper>
                 </Grid>
             </Grid>
@@ -294,15 +285,15 @@ export default function MaxWidthDialog(props) {
 }
 
 const StyledWrapper = styled.div`
-    
+
 && #container {
     background-color: white;
     padding: 2vw;
+    margin: 1vw;
     border: 2px solid #E6E8FD;
     border-radius: 15px;
-    margin: 0.3vw;
-    max-width: 100%;
-    max-Height: 400px;
+    width: 95%;
+    height: 400px;
     overflow: auto;
     scrollbar-width: thin;
 }
@@ -323,6 +314,17 @@ const StyledWrapper = styled.div`
     background-color: #BABABA;
     border-radius: 100px;
 }
+
+&& #noClickedFood{
+    font-weight: bold;
+    text-align: center;
+
+}
+
+&& #planet:hover {
+    transform: scale(1.1);
+}
+
 
 `;
 
