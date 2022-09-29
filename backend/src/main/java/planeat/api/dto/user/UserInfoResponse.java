@@ -22,6 +22,7 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @Getter
@@ -78,6 +79,7 @@ public class UserInfoResponse {
             this.carbohydrate = userRecIntake.getCarbohydrate();
             this.protein = userRecIntake.getProtein();
             this.fat = userRecIntake.getFat();
+            this.nutritionsList = new ArrayList<>();
             for (Nutrition nutrition : nutritionList) {
                 Nutritions nutritions = new Nutritions(nutrition);
                 this.nutritionsList.add(nutritions);
