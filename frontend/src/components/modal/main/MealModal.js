@@ -128,7 +128,7 @@ export default function MaxWidthDialog(props) {
                 </Grid>
             </Grid>
             { /* 선택 음식 칩 영역 */}
-             <Grid container  direction="row" style={{paddingLeft: "2vw"}} alignItems="center">
+            <Grid container  direction="row" style={{paddingLeft: "2vw"}} alignItems="center">
                 선택 음식 칩영역
             </Grid>
             { /* 검색바 영역 */}

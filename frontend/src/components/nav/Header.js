@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-// import img from 'assets/longlogo.png'
+import longlogo from 'assets/longlogo.png'
 
 const pages = ["식사 기록", "영양제 검색", "내 영양분석"];
 
@@ -82,7 +82,7 @@ const ResponsiveAppBar = () => {
           <StyledLink to="/main">
             <Box
               component="img"
-              src="assets/longlogo.png"
+              src={longlogo}
               sx={{ display: { xs: "none", md: "flex" }, width: "200px" }}
             ></Box>
           </StyledLink>
