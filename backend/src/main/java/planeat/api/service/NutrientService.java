@@ -49,12 +49,7 @@ public class NutrientService {
      * @return dto 리스트
      */
     public List<NutrientDto> readAllNutrientDto() {
-        List<Nutrient> nutrientList = nutrientRepository.findAll();
-
-        List<NutrientDto> dtoList = new ArrayList<>();
-        for (Nutrient n : nutrientList) {
-            dtoList.add(new NutrientDto(n.getId(), n.getNutrientName()));
-        }
+        List<NutrientDto> dtoList = nutrientRepository.findAllName();
         return dtoList;
     }
 
@@ -120,14 +115,10 @@ public class NutrientService {
         return takeAllTable(nutrient);
     }
 
-    public List<NutrientResponse> readAllNutrient(){
-        List<NutrientResponse> resultList = new LinkedList<>();
-        List<Nutrient> nutrientList = nutrientRepository.findAll();
-        for (Nutrient n : nutrientList){
-            resultList.add(takeAllTable(n));
-        }
+    public List<Nutrient> readAllNutrient(){
+        List<Nutrient> nutrientList = nutrientRepository.findAllNutrient();
 
-        return resultList;
+        return nutrientList;
     }
 
     /**
