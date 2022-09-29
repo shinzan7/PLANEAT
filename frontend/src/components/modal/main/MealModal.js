@@ -24,6 +24,8 @@ import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
+import DietModal from 'components/modal/main/DietModal';
+import FoodModal from 'components/modal/main/FoodModal';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -58,17 +60,15 @@ function TabPanel(props) {
     };
 };
 
-
-
 export default function MaxWidthDialog(props) {
 
-  // 모달 여는 함수
-  const handleClickOpen = () => {
+    // 모달 여는 함수
+    const handleClickOpen = () => {
     props.setMealModalOpen(true);
-  };
+    };
 
-  // 모달 닫는 함수
-  const handleClose = () => {
+    // 모달 닫는 함수
+    const handleClose = () => {
     props.setMealModalOpen(false);
     };
     
@@ -91,15 +91,26 @@ export default function MaxWidthDialog(props) {
         setValue(newValue);
     };
 
+    // 식단 관리 모달 관리 변수
+    const [dietModalOpen, setDietModalOpen] = useState(false);
+
+    // 음식 직접입력 모달 관리 뱐수
+    const [foodModalOpen, setFoodModalOpen] = useState(false);
     
     return (
-        <Dialog
-            fullWidth={fullWidth}
-            maxWidth="lg"
-            open={props.mealModalOpen}
-            onClose={handleClose}
-            id="mealModal"
-      >
+        <div>
+            { /* 식단으로 추가 모달 */}
+            <DietModal open={dietModalOpen} close={() => setDietModalOpen(false)} />
+            <FoodModal open={foodModalOpen} close={() => setFoodModalOpen(false)}/>
+            <Dialog
+                style={{ zIndex: 1700 }}
+                keepMounted
+                fullWidth={fullWidth}
+                maxWidth="lg"
+                open={props.mealModalOpen}
+                onClose={props.close}
+                id="mealModal"
+            >
               { /* 모달 타이틀 */}
             <Grid container direction="row" style={{padding: "2vw", fontSize: "18px", color: "#9DA6F8", fontWeight: "bold"}} alignItems="center">
                 <Grid container xs={7}>
@@ -108,7 +119,7 @@ export default function MaxWidthDialog(props) {
                 <Grid container xs={5}>
                     { /* 내 식단으로 추가 */}
                     <Grid items xs = {6}>
-                        <BtnMain width="80%" onClick={() => { console.log("click")}}> 내 식단으로 추가</BtnMain>
+                        <BtnMain width="80%" onClick={() => { setDietModalOpen(true)}}> 내 식단으로 추가</BtnMain>
                     </Grid>
                     { /* 식사 등록 */}
                     <Grid items xs={6}>
@@ -117,7 +128,7 @@ export default function MaxWidthDialog(props) {
                 </Grid>
             </Grid>
             { /* 선택 음식 칩 영역 */}
-             <Grid container  direction="row" style={{paddingLeft: "2vw"}} alignItems="center">
+            <Grid container  direction="row" style={{paddingLeft: "2vw"}} alignItems="center">
                 선택 음식 칩영역
             </Grid>
             { /* 검색바 영역 */}
@@ -156,7 +167,7 @@ export default function MaxWidthDialog(props) {
             { /* 음식 선택 영역 */}
             <Tabs 
                 indicatorColor="primary"
-                textColor="black"
+                textColor="inherit"
                 value={value}
                 sx={{ ml: "3vw", mr: "3vw" }}
                 onChange={handleChange}
@@ -168,28 +179,65 @@ export default function MaxWidthDialog(props) {
             </Tabs>
             { /* 전체 탭 내용*/}
             <TabPanel value={value} index={0}>
-            <Grid container direction="row" style={{padding: "2vw"}} alignItems="center">
+            <Grid container direction="row" alignItems="center">
                 { /* 음식 선택 영역: 왼쪽 */}
-                <Grid items xs={6}>
+                    <Grid items xs={6} >
                     <StyledWrapper>
-                        <div id="container">
-                            왼쪽1  
-                        </div>
+                        <Paper id="container" elevation={0} sx={{
+                        }}>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                            <div>왼쪽</div>
+                        </Paper>
                     </StyledWrapper>
                 </Grid>
                 { /* 음식 선택 영역: 오른쪽 */}
                 <Grid items xs={6}>
                     <StyledWrapper>
-                        <div id="container">
-                            오른쪽1 
-                        </div>
+                        <Paper id="container" elevation={0} sx={{
+                            }}>
+                            
+                            <div id="content">
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>
+                                <div>오른쪽</div>        
+                            </div>
+                            
+                        </Paper>
                     </StyledWrapper>
                 </Grid>
             </Grid>
             </TabPanel>
             { /* MY 탭 내용*/}
             <TabPanel value={value} index={1}>
-            <Grid container direction="row" style={{padding: "2vw"}} alignItems="center">
+            <Grid container direction="row" alignItems="center">
             { /* 음식 선택 영역: 왼쪽 */}
                 <Grid items xs={6}>
                     <StyledWrapper>
@@ -208,12 +256,14 @@ export default function MaxWidthDialog(props) {
                 </Grid>
                 <Grid container xs={12} justifyContent="center">
                     <Grid items xs={4}>
-                        <BtnMain width="100%">음식 정보 직접 입력</BtnMain>
+                        <BtnMain width="100%" onClick={() => {setFoodModalOpen(true)}}>음식 정보 직접 입력</BtnMain>
                     </Grid>
                 </Grid>    
             </Grid>
-            </TabPanel>
-      </Dialog>
+            </TabPanel>   
+            </Dialog>
+            </div>
+        
   );
 }
 
@@ -226,7 +276,28 @@ const StyledWrapper = styled.div`
     border-radius: 15px;
     margin: 0.3vw;
     max-width: 100%;
+    max-Height: 400px;
+    overflow: auto;
+    scrollbar-width: thin;
 }
+&& #container::-webkit-scrollbar{
+    width: 5px;
+    height: 5px;
+    border-radius: 100px;
+}
+
+/* 스크롤바 뒷 배경 */
+&& #container::-webkit-scrollbar-track{
+    background: #f1f1f1;
+    border-radius: 100px;
+}
+
+/* 스크롤바 막대 */
+&& #container::-webkit-scrollbar-thumb{
+    background-color: #BABABA;
+    border-radius: 100px;
+}
+
 
 `;
 

@@ -17,6 +17,7 @@ import Naver from "./Naver";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CountUp from "react-countup";
+import longlogo from "assets/longlogo.png";
 
 import {
   Paper,
@@ -72,7 +73,7 @@ function Home() {
 
             <Grid item xs={8}>
               <img
-                src="assets/longlogo.png"
+                src={longlogo}
                 data-aos="fade-right"
                 data-aos-duration="3000"
                 alt=""
