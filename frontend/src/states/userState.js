@@ -20,12 +20,17 @@ const gender = localStorage.getItem('gender')
 
 
 
-const nutrient = http.get('/nutrient?id=10')
+
+http.get('/nutrient?id=10')
+.then(response => {
+  console.log(response.data.data)
+})
+
 
 
 export const userState = atom({
   key: 'user',
   default: [ accessToken, refreshToken, accessTokenExpiration, refreshTokenExpiration, 
-  userId, name, birthYear, gender, nutrient],
+  userId, name, birthYear, gender],
   
 }) 

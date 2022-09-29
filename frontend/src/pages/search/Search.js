@@ -44,7 +44,7 @@ function Search() {
               
               <div style={section3}>
                 {userInfo[5]}
-                {userInfo[8]}
+                {/* {userInfo[8]} */}
               </div>
               
               <SearchByReco />
