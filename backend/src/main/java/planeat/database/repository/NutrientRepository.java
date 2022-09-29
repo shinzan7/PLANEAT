@@ -17,6 +17,15 @@ public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
     List<Nutrient> findAllByNutrientNameContains(String searchWord);
     List<Nutrient> findAll();
 
-    @Query("select n from Nutrient n left join n.nutrientIngredientList as nu left join nu.ingredient as i left join i.categoryList")
-    List<Nutrient> findAllNutrient();
+//    @Query("select n from Nutrient n " +
+//            "left join fetch n.nutrientIngredientList as ni " +
+//            "left join fetch ni.ingredient as i " +
+//            "left join fetch i.categoryList")
+
+//@Query("select n from Nutrient n " +
+//        "left join fetch n.nutrientIngredientList")
+
+//@Query("select n from Nutrient n " +
+//        "left join fetch n.nutrientIngredientList")
+//    List<Nutrient> findAllNutrient();
 }

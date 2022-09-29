@@ -4,6 +4,7 @@ package planeat.api.service;
  @author 신지한
  @since 2022-09-15
 */
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ import planeat.exception.CustomExceptionList;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,37 +45,30 @@ public class NutrientService {
 
     /**
      * 모든 영양제의 아이디와 이름 조회
+     *
      * @return dto 리스트
      */
-    public List<NutrientDto> readAllNutrientDto(){
+    public List<NutrientDto> readAllNutrientDto() {
         List<Nutrient> nutrientList = nutrientRepository.findAll();
 
         List<NutrientDto> dtoList = new ArrayList<>();
-        for (Nutrient n : nutrientList){
+        for (Nutrient n : nutrientList) {
             dtoList.add(new NutrientDto(n.getId(), n.getNutrientName()));
         }
         return dtoList;
     }
 
-    public List<Nutrient> readAllNutrient(){
-        List<Nutrient> nutrientList = nutrientRepository.findAllNutrient();
 
-        return nutrientList;
-    }
 
     /**
-     * 영양제와 연관테이블 조회
-     * @param id 조회할 영양제 id
-     * @return 영양제 + 영양제 성분 + 영양성분 + 카테고리
+     * nutrient객체를 받아 연관데이터를 response에 담아 반환한다
+     * @param nutrient
+     * @return 영양제관련 response Dto
      */
-    public NutrientResponse readNutrientById(Long id){
-        Optional<Nutrient> nutrientOptional = nutrientRepository.findById(id);
+    private NutrientResponse takeAllTable(Nutrient nutrient){
 
         NutrientResponse nutrientResponse = new NutrientResponse();
 
-        //영양제 존재하면
-        if(nutrientOptional.isPresent()){
-            Nutrient nutrient = nutrientOptional.get();
             //영양제 정보 response에 저장
             nutrientResponse = NutrientResponse.builder()
                     .nutrientId(nutrient.getId())
@@ -90,41 +85,67 @@ public class NutrientService {
             List<NutrientResponse.NutriIngredient> responseList = new ArrayList<>();
 
             //영양제 성분id로 영양성분 가져오기
-            for (NutrientIngredient ni : nutrientIngredientList){
+            for (NutrientIngredient ni : nutrientIngredientList) {
                 Ingredient ingredient = ingredientRepository.findById(ni.getIngredient().getId()).get();
 
                 List<Category> categoryList = categoryRepository.findAllByIngredientId(ingredient.getId());
                 List<String> tagList = new ArrayList<>();
-                for (Category c : categoryList){
+                for (Category c : categoryList) {
                     tagList.add(c.getCategoryTag());
                 }
 
                 // responseList에 영양성분 이름, 영양성분 함량, 카테고리 list 넣어주기
                 responseList.add(
-                        new NutrientResponse.NutriIngredient(ingredient.getIngredientName(),ni.getIngredientAmount(),tagList)
+                        new NutrientResponse.NutriIngredient(ingredient.getIngredientName(), ni.getIngredientAmount(), tagList)
                 );
 
             }
             nutrientResponse.setNutriIngredientList(responseList);
 
-        }
 
         return nutrientResponse;
     }
 
     /**
+     * 영양제와 연관테이블 조회
+     *
+     * @param id 조회할 영양제 id
+     * @return 영양제 + 영양제 성분 + 영양성분 + 카테고리
+     */
+    public NutrientResponse readNutrientById(Long id) {
+        Nutrient nutrient = nutrientRepository.findById(id).orElseThrow(
+                () -> new CustomException(CustomExceptionList.FOODINFO_NOT_FOUND_ERROR)
+        );
+
+        return takeAllTable(nutrient);
+    }
+
+    public List<NutrientResponse> readAllNutrient(){
+        List<NutrientResponse> resultList = new LinkedList<>();
+        List<Nutrient> nutrientList = nutrientRepository.findAll();
+        for (Nutrient n : nutrientList){
+            resultList.add(takeAllTable(n));
+        }
+
+        return resultList;
+    }
+
+    /**
      * 영양제와 연관테이블 등록
+     *
      * @param nutrientRequest 영양제 등록 요청 DTO
      * @return 등록된 영양제의 id
      */
-    public void createNutrientAndIngredients(NutrientRequest nutrientRequest, MultipartFile multipartFile){
+    public void createNutrientAndIngredients(NutrientRequest nutrientRequest, MultipartFile multipartFile) {
         //이미지 업로드 후 경로 받아오기
         String imageUrl = null;
-        try {
-            //imageUrl 사진경로
-            imageUrl = s3Uploader.uploadFiles(multipartFile, "static");
-        } catch (Exception e) {
-            throw new CustomException(CustomExceptionList.UPLOAD_ERROR);
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            try {
+                //imageUrl 사진경로
+                imageUrl = s3Uploader.uploadFiles(multipartFile, "static");
+            } catch (Exception e) {
+                throw new CustomException(CustomExceptionList.UPLOAD_ERROR);
+            }
         }
 
         //영양제
@@ -137,7 +158,7 @@ public class NutrientService {
 
         List<NutrientRequest.NutriIngredient> ingredientList = nutrientRequest.getNutriIngredientList();
 
-        for (NutrientRequest.NutriIngredient dto : ingredientList){
+        for (NutrientRequest.NutriIngredient dto : ingredientList) {
             //영양성분
             Ingredient ingredient = Ingredient.builder()
                     .ingredientName(dto.getIngredientName())
@@ -154,7 +175,7 @@ public class NutrientService {
             nutrientIngredientRespository.save(nutrientIngredient);
 
             //카테고리
-            for (String categoryTag : dto.getCategoryTagList()){
+            for (String categoryTag : dto.getCategoryTagList()) {
                 Category category = Category.builder()
                         .categoryTag(categoryTag)
                         .ingredient(ingredient)

@@ -25,8 +25,6 @@ import java.util.List;
 @Getter
 @DynamicUpdate
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class)
-@JsonIdentityReference(alwaysAsId = true)
 @Table(name = "nutrient")
 public class Nutrient {
 

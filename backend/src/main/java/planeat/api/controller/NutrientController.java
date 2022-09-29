@@ -55,8 +55,8 @@ public class NutrientController {
 
     @GetMapping("/all")
     @ApiOperation(value = "영양제 전체조회", notes = "모든 Table[영양제, 영양제 성분, 영양성분, 카테고리]을 조회한다")
-    public ResponseEntity<BasicResponse<List<Nutrient>>> readAllNutrient(){
-        List<Nutrient> nutrientList = nutrientService.readAllNutrient();
+    public ResponseEntity<BasicResponse<List<NutrientResponse>>> readAllNutrient(){
+        List<NutrientResponse> nutrientList = nutrientService.readAllNutrient();
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, nutrientList), HttpStatus.OK);
     }
 
