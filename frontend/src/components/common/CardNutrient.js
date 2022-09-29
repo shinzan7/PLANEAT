@@ -13,7 +13,6 @@ import ChipOrange from './ChipOrange';
 import Typography from '@mui/material/Typography';
 
 const CardNutrient = function MediaCard(props) {
-    console.log(props)
     let imgUrl = props.pill.imagePath; // props의 이미지 url
 
   return (
@@ -42,7 +41,7 @@ const CardNutrient = function MediaCard(props) {
           {/* 영양제 기능 태그 */}
             {/* <ChipBlue label={ props.pill.nutriIngredientList[0].categoryTagList[0]}></ChipBlue>                     */}
           </CardActions>
-        <CardActions sx={{padding: 0, marginLeft: 2} }>
+          <CardActions sx={{padding: 0, marginLeft: 2} }>
            {/* 영양제 성분 태그 */}
           {/* <ChipOrange label={ props.pill.nutriIngredientList[0].ingredientName}></ChipOrange> */}
         </CardActions>

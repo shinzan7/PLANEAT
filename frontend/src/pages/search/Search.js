@@ -8,8 +8,8 @@ import { Grid } from '@mui/material';
 import SearchByReco from "../../pages/search/SearchByReco";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { nutrient } from 'states/nutrient'
+// import { useRecoilState, useRecoilValue } from 'recoil';
+// import { userNutrient } from 'states/userNutrient'
 
 const section = { marginTop:'80px' }
 const section1 = { marginTop:'25vh', textAlign:'center'}
@@ -17,7 +17,7 @@ const section2 = { marginTop:'5vh', textAlign:'center'}
 const section3 = { marginTop:'10vh'}
 
 function Search() {
-    // const nutrientInfo = useRecoilValue(nutrient)
+    // const nutrientInfo = useRecoilValue(userNutrient)
     // console.log(nutrientInfo)
 
     return (
