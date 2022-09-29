@@ -1,7 +1,7 @@
 plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
-	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" //querydsl 추가
+//	id "com.ewerk.gradle.plugins.querydsl" version "1.0.10" //querydsl 추가
 	id 'org.asciidoctor.convert' version '1.5.8'
 	id 'java'
 }
@@ -34,8 +34,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE' // aws S3 서버
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0' // swagger
 
-	implementation 'com.querydsl:querydsl-jpa:5.0.0' //querydsl 추가
-	implementation 'com.querydsl:querydsl-apt:5.0.0' //querydsl 추가
+//	implementation 'com.querydsl:querydsl-jpa:5.0.0' //querydsl 추가
+//	implementation 'com.querydsl:querydsl-apt:5.0.0' //querydsl 추가
 
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -61,22 +61,22 @@ jar{
 	enabled=false
 }
 
-//querydsl 추가 시작
-def querydslDir = "$buildDir/generated/querydsl"
-querydsl {
-	jpa = true
-	querydslSourcesDir = querydslDir
-}
-sourceSets {
-	main.java.srcDir querydslDir
-}
-configurations {
-	compileOnly{
-		extendsFrom annotationProcessor
-	}
-	querydsl.extendsFrom compileClasspath
-}
-compileQuerydsl {
-	options.annotationProcessorPath = configurations.querydsl
-}
-//querydsl 추가 끝
+////querydsl 추가 시작
+//def querydslDir = "$buildDir/generated/querydsl"
+//querydsl {
+//	jpa = true
+//	querydslSourcesDir = querydslDir
+//}
+//sourceSets {
+//	main.java.srcDir querydslDir
+//}
+//configurations {
+//	compileOnly{
+//		extendsFrom annotationProcessor
+//	}
+//	querydsl.extendsFrom compileClasspath
+//}
+//compileQuerydsl {
+//	options.annotationProcessorPath = configurations.querydsl
+//}
+////querydsl 추가 끝
