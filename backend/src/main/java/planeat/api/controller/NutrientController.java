@@ -65,7 +65,7 @@ public class NutrientController {
      * @param request 영양제 섭취기록 dto
      * @return
      */
-    @PostMapping("/history/{nutrientHistoryId}")
+    @PostMapping("/history")
     @ApiOperation(value = "영양제 섭취기록 등록", notes = "유저 영양제 정보를 받아 Table[유저 영양제]에 등록한다")
     public ResponseEntity<BasicResponse<String>> createNutrientHistory(NutrientHistoryRequest request){
         userNutrientService.createNutrientHistory(request);
@@ -94,7 +94,7 @@ public class NutrientController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, userNutrientResponseList), HttpStatus.OK);
     }
 
-    @PostMapping("/user/{userNutrientId}")
+    @PostMapping("/user")
     @ApiOperation(value = "유저 영양제 등록", notes = "유저 영양제 정보를 받아 Table[유저 영양제]에 등록한다")
     public ResponseEntity<BasicResponse<String>> createUserNutrient(UserNutrientRequest userNutrientRequest){
         userNutrientService.createUserNutrient(userNutrientRequest);
@@ -115,15 +115,6 @@ public class NutrientController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , userNutrientId), HttpStatus.OK);
     }
 
-
-    @PostMapping("/user/history/{nutrientId}")
-    @ApiOperation(value = "유저의 영양제 목록 조회", notes = "영양제 섭취기록 request를 받아 Table[영양제 섭취기록]에 등록한다")
-    public ResponseEntity<BasicResponse<String>> createNutrientHistory(@PathVariable("nutrientId") Long nutrientId ,NutrientHistoryRequest request){
-        userNutrientService.createNutrientHistory(request);
-        return new ResponseEntity<>(makeBasicResponse(SUCCESS, " "), HttpStatus.CREATED);
-    }
-
-
     @GetMapping
     @ApiOperation(value = "영양제 조회", notes = "영양제 id를 받아 Table[영양제, 영양제 성분, 영양성분, 카테고리]을 조회한다")
     public ResponseEntity<BasicResponse<NutrientResponse>> readNutrient(Long id){
@@ -132,6 +123,10 @@ public class NutrientController {
 
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , nutrientResponse), HttpStatus.OK);
     }
+
+    //태그로 영양제 검색
+
+    //이름으로 영양제 검색
 
 
     @PostMapping

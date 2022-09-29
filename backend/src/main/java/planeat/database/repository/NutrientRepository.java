@@ -17,6 +17,9 @@ public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
     List<Nutrient> findAllByNutrientNameContains(String searchWord);
     List<Nutrient> findAll();
 
+    @Query("select new planeat.api.dto.nutrient.NutrientDto(n.id, n.nutrientName) from Nutrient n")
+    List<NutrientDto> findAllName();
+
 //    @Query("select n from Nutrient n " +
 //            "left join fetch n.nutrientIngredientList as ni " +
 //            "left join fetch ni.ingredient as i " +
