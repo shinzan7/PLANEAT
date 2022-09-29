@@ -50,7 +50,8 @@ public class FoodInfoController {
      */
     @GetMapping("/{userId}")
     public ResponseEntity<BasicResponse<List<FoodInfoResponse>>> readAllFoodInfos(@PathVariable("userId") Long userId) {
-        List<FoodInfoResponse> responses = foodInfoService.readAllFoodInfos(userId);
+        //List<FoodInfoResponse> responses = foodInfoService.readAllFoodInfos(userId);
+        List<FoodInfoResponse> responses = foodInfoService.readFoodInfo(userId);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
     }
 
