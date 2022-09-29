@@ -57,7 +57,7 @@ public class UserNutrientService {
             for (NutrientHistory n : nutrientHistoryList){
                 UserNutrientResponse.NutriHistory history = new UserNutrientResponse.NutriHistory(
                         n.getId(),
-                        n.getIntakeDate(),
+                        n.getIntakeDate().toString(),
                         n.getIntakeReal()
                 );
                 nutriHistoryList.add(history);
@@ -94,7 +94,7 @@ public class UserNutrientService {
             for (NutrientHistory n : nutrientHistoryList){
                 UserNutrientResponse.NutriHistory history = new UserNutrientResponse.NutriHistory(
                         n.getId(),
-                        n.getIntakeDate(),
+                        n.getIntakeDate().toString(),
                         n.getIntakeReal()
                 );
                 nutriHistoryList.add(history);

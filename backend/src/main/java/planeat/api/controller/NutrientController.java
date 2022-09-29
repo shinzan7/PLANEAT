@@ -65,14 +65,14 @@ public class NutrientController {
     }
 
     @PutMapping("/history/{nutrientHistoryId}")
-    @ApiOperation(value = "영양제 섭취기록 수정", notes = "유저 영양제 정보를 받아 Table[유저 영양제]을 수정한다")
+    @ApiOperation(value = "영양제 섭취기록 수정", notes = "영양제 섭취기록 정보를 받아 Table[영양제 섭취기록]을 수정한다")
     public ResponseEntity<BasicResponse<String>> updateNutrientHistory(@PathVariable("nutrientHistoryId") Long nutrientHistoryId,NutrientHistoryRequest request){
         userNutrientService.updateNutrientHistory(nutrientHistoryId, request);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , " "), HttpStatus.OK);
     }
 
     @DeleteMapping("/history/{nutrientHistoryId}")
-    @ApiOperation(value = "영양제 섭취기록 삭제", notes = "유저 영양제 id를 받아 Table[유저 영양제]에서 삭제한다")
+    @ApiOperation(value = "영양제 섭취기록 삭제", notes = "영양제 섭취기록 id를 받아 Table[영양제 섭취기록]에서 삭제한다")
     public ResponseEntity<BasicResponse<String>> deleteNutrientHistory(@PathVariable("nutrientHistoryId") Long nutrientHistoryId){
         userNutrientService.deleteNutrientHistory(nutrientHistoryId);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , " "), HttpStatus.OK);
