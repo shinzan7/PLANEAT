@@ -26,6 +26,7 @@ import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import DietModal from 'components/modal/main/DietModal';
 import FoodModal from 'components/modal/main/FoodModal';
+import NutrientModal from 'components/modal/main/NutrientModal';
 
 function TabPanel(props) {
     const { children, value, index, ...other } = props;
@@ -62,6 +63,29 @@ function TabPanel(props) {
 
 export default function MaxWidthDialog(props) {
 
+    const [allFood, setAllFood] = useState([]);
+
+    // 맨 처음 음식 전체 데이터 가져오기
+    async function getAllFood() {
+          console.log("click");
+        const response = await http.get(`/nutrient/user/list/11`);
+        if (response.data.message === "success") {
+          setMyNutrients(response.data.data);
+            console.log(response.data.data);
+    
+            
+        }
+        }
+    
+    const mounted = useRef(false);
+      useEffect(() => {
+        if (!mounted.current) {
+          mounted.current = true;
+        } else {
+            getAllFood();
+        }
+      }, []);
+
     // 모달 여는 함수
     const handleClickOpen = () => {
     props.setMealModalOpen(true);
@@ -73,7 +97,7 @@ export default function MaxWidthDialog(props) {
     };
     
     const [searchKeyWord, setSearchKeyWord] = useState();
-    const searchInput = React.useRef(null);
+    const searchInput = React.useRef(null); // 검색바 input 객체
     const [fullWidth, setFullWidth] = useState(true);
 
     // 검색하는 함수
@@ -94,14 +118,16 @@ export default function MaxWidthDialog(props) {
     // 식단 관리 모달 관리 변수
     const [dietModalOpen, setDietModalOpen] = useState(false);
 
-    // 음식 직접입력 모달 관리 뱐수
+    // 음식 직접입력 모달 관리 변수
     const [foodModalOpen, setFoodModalOpen] = useState(false);
+
     
     return (
         <div>
             { /* 식단으로 추가 모달 */}
             <DietModal open={dietModalOpen} close={() => setDietModalOpen(false)} />
-            <FoodModal open={foodModalOpen} close={() => setFoodModalOpen(false)}/>
+            { /* 내음식 추가 모달 */}
+            <FoodModal open={foodModalOpen} close={() => setFoodModalOpen(false)} />
             <Dialog
                 style={{ zIndex: 1700 }}
                 keepMounted
@@ -109,7 +135,7 @@ export default function MaxWidthDialog(props) {
                 maxWidth="lg"
                 open={props.mealModalOpen}
                 onClose={props.close}
-                id="mealModal"
+                id="container"
             >
               { /* 모달 타이틀 */}
             <Grid container direction="row" style={{padding: "2vw", fontSize: "18px", color: "#9DA6F8", fontWeight: "bold"}} alignItems="center">
@@ -297,7 +323,6 @@ const StyledWrapper = styled.div`
     background-color: #BABABA;
     border-radius: 100px;
 }
-
 
 `;
 
