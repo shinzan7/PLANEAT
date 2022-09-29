@@ -13,7 +13,6 @@ import ChipOrange from './ChipOrange';
 import Typography from '@mui/material/Typography';
 
 const CardNutrient = function MediaCard(props) {
-    console.log(props)
     let imgUrl = props.pill.imagePath; // props의 이미지 url
 
   return (

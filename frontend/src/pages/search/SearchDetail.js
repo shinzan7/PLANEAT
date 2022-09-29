@@ -13,12 +13,10 @@ import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
 import { http } from "api/http";
 
-
-
 function SearchDetail() {
 
   const { nutrientId }  = useParams();
-  console.log('params', nutrientId)
+  // console.log('params', nutrientId)
 
   const section = {marginTop:'80px'}
   const bold = {fontWeight:'bold'}
@@ -35,6 +33,7 @@ function SearchDetail() {
     description: '',
     nutriIngredientList: [],
   })
+
 
   useEffect(() => {
     // const url = `https://j7a701.p.ssafy.io/api/nutrient?id=1` 

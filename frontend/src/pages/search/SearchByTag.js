@@ -93,52 +93,52 @@ function SearchByTag() {
       title: "장 건강",
     },
     {
-      id: "17",
+      id: "18",
       src: "assets/concerns/체액농도밸런스.png",
       title: "체액 농도 밸런스",
     },
     {
-      id: "18",
+      id: "19",
       src: "assets/concerns/체지방감소.png",
       title: "체지방 감소",
     },
     {
-      id: "19",
+      id: "20",
       src: "assets/concerns/칼슘흡수촉진.png",
       title: "칼슘 흡수 촉진",
     },
     {
-      id: "20",
+      id: "21",
       src: "assets/concerns/피로감.png",
       title: "피로감",
     },
     {
-      id: "21",
+      id: "22",
       src: "assets/concerns/피부건강.png",
       title: "피부 건강",
     },
     {
-      id: "22",
+      id: "23",
       src: "assets/concerns/항산화.png",
       title: "항산화",
     },
     {
-      id: "23",
+      id: "24",
       src: "assets/concerns/혈관&혈액순환.png",
       title: "혈관 & 혈액순환",
     },
     {
-      id: "24",
+      id: "25",
       src: "assets/concerns/혈당.png",
       title: "혈당",
     },
     {
-      id: "25",
+      id: "26",
       src: "assets/concerns/혈압.png",
       title: "혈압",
     },
     {
-      id: "26",
+      id: "27",
       src: "assets/concerns/혈중콜레스테롤.png",
       title: "혈중 콜레스테롤",
     },
@@ -183,7 +183,7 @@ function SearchByTag() {
                 <Grid container>
                   
                     {userTags.map((data, i) => (   
-                      <Link to={`/tagresult/${data.title}`} style={{textDecoration:'none', color:'black'}}>          
+                      <Link to={`/tagresult/${data.id}`} style={{textDecoration:'none', color:'black'}}>          
                         <TagMain
                         key={i}
                         src={data.src}
