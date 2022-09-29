@@ -65,11 +65,11 @@ public class NutrientController {
      * @param request 영양제 섭취기록 dto
      * @return
      */
-    @PostMapping("/history/{nutrientHistoryId}")
-    @ApiOperation(value = "영양제 섭취기록 등록", notes = "유저 영양제 정보를 받아 Table[유저 영양제]에 등록한다")
-    public ResponseEntity<BasicResponse<String>> createNutrientHistory(NutrientHistoryRequest request){
-        userNutrientService.createNutrientHistory(request);
-        return new ResponseEntity<>(makeBasicResponse(SUCCESS , " "), HttpStatus.CREATED);
+    @PostMapping("/history")
+    @ApiOperation(value = "영양제 섭취기록 등록", notes = "유저 영양제 정보를 받아 Table[유저 영양제]에 등록한다. 등록된 id를 반환한다")
+    public ResponseEntity<BasicResponse<Long>> createNutrientHistory(NutrientHistoryRequest request){
+        Long nutrientHistoryId = userNutrientService.createNutrientHistory(request);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS , nutrientHistoryId), HttpStatus.CREATED);
     }
 
     @PutMapping("/history/{nutrientHistoryId}")
