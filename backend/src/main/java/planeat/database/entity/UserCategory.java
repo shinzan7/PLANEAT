@@ -38,7 +38,8 @@ public class UserCategory {
 
 
     @Builder
-    public UserCategory(User user, UserCategoryInfo userCategoryInfo) {
+    public UserCategory(Long id, User user, UserCategoryInfo userCategoryInfo) {
+        this.id = id;
         this.user = user;
         this.userCategoryInfo = userCategoryInfo;
     }
