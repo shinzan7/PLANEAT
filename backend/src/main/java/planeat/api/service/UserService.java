@@ -46,7 +46,9 @@ public class UserService {
     public Long createUserInfo(Long userId, UserInfoRequest userInfoRequest) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-        userRepository.save(User.updateUser(userId, userInfoRequest));
+        User updateUser = User.updateUser(user.getId(), userInfoRequest);
+        updateUser.setRefreshToken(user.getRefreshToken());
+        userRepository.save(updateUser);
         UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest);
         userRecIntakeRepository.save(userRecIntake);
 //        if(userInfoRequest.getRecInfo().getUserRecIntakeId() != null) {
@@ -81,9 +83,10 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
         UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
-        Integer nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
-        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender(), nowYear - user.getBirthyear());
-
+        int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
+        int birthYear = user.getBirthyear();
+        Integer age = nowYear - birthYear;
+        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender(), age);
         List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
         List<String> categoriesList = new ArrayList<>();
         for (UserCategory userCategory : userCategoryList) {
@@ -122,8 +125,11 @@ public class UserService {
         User user = getUser(userId);
         UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
-        Integer nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
-        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender(), nowYear - user.getBirthyear());
+        int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
+        int birthYear = user.getBirthyear();
+        Integer age = nowYear - birthYear;
+
+        List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender(), age);
         System.out.println(nutritionList);
         return new UserRecIntakeResponse(userRecIntake, nutritionList);
     }
@@ -140,7 +146,9 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
         User.updateUser(user.getId(), userInfoRequest);
-
+        User updateUser = User.updateUser(user.getId(), userInfoRequest);
+        updateUser.setRefreshToken(user.getRefreshToken());
+        userRepository.save(updateUser);
         UserRecIntake userRecIntake = userRecIntakeRepository.findByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate())
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
         UserRecIntake.updateUserRecIntake(user, userInfoRequest);

@@ -12,26 +12,34 @@
 //
 //
 //@SpringBootTest
-//@Transactional
+////@Transactional
 //class NutrientRepositoryTest {
 //    @Autowired
 //    private NutrientRepository nutrientRepository;
 //
-//    @Test
-//    void getTest(){
-////        Nutrient nutrient1 = new Nutrient(1L, "나우푸드 비타민A", "나우푸드", "눈 건강에 조와용", "image1.png");
-////        Nutrient nutrient2 = new Nutrient(2L, "라이프익스텐션 멀티비타민", "라이프", "여러 비타민을 포함합니다", "image2.jpg");
-////        Nutrient saveNutrient1 = nutrientRepository.save(nutrient1);
-////        Nutrient saveNutrient2 = nutrientRepository.save(nutrient2);
+////    @Test
+////    void getTest(){
+////        List<Nutrient> allNutrient = nutrientRepository.findAllNutrient();
+////        for (int i=0; i<allNutrient.size(); i++){
+////            Nutrient nutrient = allNutrient.get(i);
+////            System.out.println(i + "번 영양제================");
+////            System.out.println(nutrient.getNutrientName());
 ////
-////        Nutrient findNutrient = nutrientRepository.findById(saveNutrient1.getId()).get();
-////        System.out.println(saveNutrient1);
+////            System.out.println(nutrient.getNutrientIngredientList().get(0).getIngredientAmount());
+////            System.out.println(nutrient.getNutrientIngredientList().get(0).getIngredient().getIngredientName());
+////            System.out.println(nutrient.getNutrientIngredientList().get(0).getIngredient().getCategoryList().get(0).getCategoryTag());
 ////
-////        List<Nutrient> nutrients = nutrientRepository.findAllByNutrientNameContains("나우푸드");
-////        System.out.println("하위요");
-////        System.out.println(nutrients.get(0).getNutrientName());
-////
-////        Assertions.assertThat(findNutrient.getId()).isEqualTo(nutrient1.getId());
+////        }
+////    }
 //
-//    }
+////    @Test
+////    void getTest1(){
+////
+////        for (long i=4L; i<15L; i++){
+////            Nutrient nutrient1 = new Nutrient(i, "나우푸드 비타민A", "나우푸드", "눈 건강에 조와용", "image1.png");
+////            nutrientRepository.save(nutrient1);
+////        }
+////
+////
+////    }
 //}

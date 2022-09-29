@@ -122,16 +122,16 @@ public class UserNutrientService {
      */
     public void createUserNutrient(UserNutrientRequest request){
         //연결할 user와 nutrient 찾기
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findById(request.getUserId()).orElseThrow(
+        User user = userRepository.findById(request.getUserId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
-        ));
-        Optional<Nutrient> optionalNutrient = Optional.ofNullable(nutrientRepository.findById(request.getNutrientId()).orElseThrow(
+        );
+        Nutrient nutrient = nutrientRepository.findById(request.getNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.NUTRIENT_NOT_FOUND_ERROR)
-        ));
+        );
 
         UserNutrient userNutrient = UserNutrient.builder()
-                    .user(optionalUser.get())
-                    .nutrient(optionalNutrient.get())
+                    .user(user)
+                    .nutrient(nutrient)
                     .intakeRecommend(request.getIntakeRecommend())
                     .build();
             userNutrientRepository.save(userNutrient);
@@ -169,18 +169,19 @@ public class UserNutrientService {
      * 영양제 섭취기록 등록
      * @param request 등록할 영양제 섭취기록 dto
      */
-    public void createNutrientHistory(NutrientHistoryRequest request){
+    public Long createNutrientHistory(NutrientHistoryRequest request){
         //연결할 유저 영양제 찾기
-        Optional<UserNutrient> optionalUserNutrient = Optional.ofNullable(userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
+        UserNutrient userNutrient = userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NUTRIENT_NOT_FOUND_ERROR)
-        ));
+        );
 
         NutrientHistory nutrientHistory = NutrientHistory.createUserNutrientHistory(
-                optionalUserNutrient.get(),
+                userNutrient,
                 request.getIntakeDate(),
                 request.getIntakeReal()
         );
-        nutrientHistoryRepository.save(nutrientHistory);
+        NutrientHistory save = nutrientHistoryRepository.save(nutrientHistory);
+        return save.getId();
     }
 
     /**
