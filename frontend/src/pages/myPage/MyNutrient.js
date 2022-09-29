@@ -10,6 +10,7 @@ import {
   DialogContent,
   DialogContentText,
   DialogTitle,
+  Box,
 } from "@mui/material";
 import { Typography, Grid, TextField, Container, FormControl } from "@mui/material";
 import BtnMain from "components/common/BtnMain";
@@ -26,28 +27,6 @@ import { styled } from "@mui/material/styles";
 import { http } from "api/http";
 import ChipDeletable from "components/common/ChipDeletable";
 
-// 영양제 목록
-const nutrients = [
-  { nutrient_id: "1", nutrient_name: "영양제 1" },
-  { nutrient_id: "2", nutrient_name: "영양제 2" },
-  { nutrient_id: "3", nutrient_name: "영양제 3" },
-  { nutrient_id: "4", nutrient_name: "영양제 4" },
-  { nutrient_id: "5", nutrient_name: "영양제 5" },
-  { nutrient_id: "6", nutrient_name: "영양제 6" },
-  { nutrient_id: "7", nutrient_name: "영양제 7" },
-  { nutrient_id: "8", nutrient_name: "영양제 8" },
-  { nutrient_id: "9", nutrient_name: "영양제 9" },
-  { nutrient_id: "10", nutrient_name: "영양제 10" },
-];
-
-// 내 영양제 목록
-const myNutrients0 = [
-  { user_nutrient_id: 1, nutrient_name: "내영양제 1" },
-  { user_nutrient_id: 2, nutrient_name: "내영양제 2" },
-  { user_nutrient_id: 3, nutrient_name: "내영양제 3" },
-  { user_nutrient_id: 4, nutrient_name: "내영양제 4" },
-];
-
 export default function UserInfo() {
   // 영양제 알림 구독 토글버튼 (구독하기 / 구독중)
   const [selected, setSelected] = useState(false);
@@ -61,11 +40,14 @@ export default function UserInfo() {
     setIntakeCnt(event.target.value);
   };
 
-  // 등록한 내 영양제 이름
-  const [myNutrientName, setMyNutrientName] = useState("");
+  // 등록한 내 영양제 아이디
+  const [myNutrientId, setMyNutrientId] = useState("");
 
   // 유저 영양제 목록
   const [myNutrients, setMyNutrients] = useState([]);
+
+  // 전체 영양제 목록
+  const [nutrients, setNutrients] = useState([]);
 
   // 맨 처음 유저의 영양제 목록 불러오기
   async function getUserNutrients() {
@@ -91,16 +73,36 @@ export default function UserInfo() {
   }, [myNutrients]);
 
   // 내 영양제 등록 함수
-  const registMyNutrient = (event) => {
+  async function registMyNutrient() {
     // console.log(intakeCnt);
-    // console.log(myNutrientName);
+    // console.log(myNutrientId);
+
+    // https://j7a701.p.ssafy.io/api/nutrient/user
+    // ?intakeRecommend = 2 & nutrientId=42 & userId=8
+
+    // post 오류 수정 필요!!!!!!!!
+    // const response = await http.post(`/nutrient/user`, {
+    //   intakeRecommend: intakeCnt,
+    //   nutrientId: myNutrientId,
+    //   userId: 8,
+    // });
+    // console.log("이얍");
+    // console.log(response.data);
+
     setOpen(false);
-  };
+  }
 
   // 모달 열기
-  const showModal = () => {
+  async function showModal() {
     setOpen(true);
-  };
+
+    // 영양제 전체 목록 가져오기
+    const response = await http.get(`/nutrient/all/name`);
+    // console.log(response.data);
+    if (response.data.message === "success") {
+      setNutrients(response.data.data);
+    }
+  }
 
   // 모달 닫기
   const handleClose = () => {
@@ -128,11 +130,11 @@ export default function UserInfo() {
         {/* 영양제 알림 서비스 */}
         <div style={{ marginTop: "20px", marginBottom: "10px" }}>
           영양제 알림 서비스
-          <BootstrapTooltip title="서비스 준비중입니다. 조금만 기다려주세요">
+          <Tooltip title="서비스 준비중입니다. 조금만 기다려주세요">
             <IconButton>
               <InfoOutlinedIcon />
             </IconButton>
-          </BootstrapTooltip>
+          </Tooltip>
         </div>
         <ToggleButton
           color="secondary"
@@ -183,11 +185,21 @@ export default function UserInfo() {
         <DialogContent>
           <DialogContentText sx={{ marginBottom: "20px" }}>영양제 이름</DialogContentText>
           <Autocomplete
-            onChange={(event, value) => setMyNutrientName(value)}
+            onChange={(event, newValue) => {
+              // 등록한 내 영양제 아이디 받아오기
+              // console.log(JSON.stringify(newValue.id, null, " "));
+              setMyNutrientId(JSON.stringify(newValue.id, null, " "));
+            }}
             freeSolo
             id="free-solo-2-demo"
             disableClearable
-            options={nutrients.map((option) => option.nutrient_name)}
+            getOptionLabel={(option) => option.nutrientName}
+            // renderOption={(props, option) => (
+            //   <Box component="li" {...props}>
+            //     {option.nutrientName}
+            //   </Box>
+            // )}
+            options={nutrients}
             renderInput={(params) => (
               <TextField
                 {...params}
