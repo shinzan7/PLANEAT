@@ -171,12 +171,12 @@ public class UserNutrientService {
      */
     public Long createNutrientHistory(NutrientHistoryRequest request){
         //연결할 유저 영양제 찾기
-        Optional<UserNutrient> optionalUserNutrient = Optional.ofNullable(userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
+        UserNutrient userNutrient = userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NUTRIENT_NOT_FOUND_ERROR)
-        ));
+        );
 
         NutrientHistory nutrientHistory = NutrientHistory.createUserNutrientHistory(
-                optionalUserNutrient.get(),
+                userNutrient,
                 request.getIntakeDate(),
                 request.getIntakeReal()
         );
