@@ -122,16 +122,16 @@ public class UserNutrientService {
      */
     public void createUserNutrient(UserNutrientRequest request){
         //연결할 user와 nutrient 찾기
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findById(request.getUserId()).orElseThrow(
+        User user = userRepository.findById(request.getUserId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
-        ));
-        Optional<Nutrient> optionalNutrient = Optional.ofNullable(nutrientRepository.findById(request.getNutrientId()).orElseThrow(
+        );
+        Nutrient nutrient = nutrientRepository.findById(request.getNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.NUTRIENT_NOT_FOUND_ERROR)
-        ));
+        );
 
         UserNutrient userNutrient = UserNutrient.builder()
-                    .user(optionalUser.get())
-                    .nutrient(optionalNutrient.get())
+                    .user(user)
+                    .nutrient(nutrient)
                     .intakeRecommend(request.getIntakeRecommend())
                     .build();
             userNutrientRepository.save(userNutrient);
