@@ -20,6 +20,8 @@ function SearchByReco() {
     ingredient_name: ["차전자피식이섬유"],
   }
 
+  const name = localStorage.getItem('name')
+
   const settings = {
     dots: true,
     infinite: true,
@@ -75,8 +77,8 @@ function SearchByReco() {
           </Grid>
           <Grid item xs={9.8}>
             <div style={section1}>
-              <p><span style={bold}>조혜안</span> 님을 위한 영양제 추천</p>
-              <p>&nbsp;&nbsp;<span style={bold}>식단 기반 추천</span> 영양제 문구</p>
+              <p><span style={bold}>{name}</span> 님을 위한 영양제 추천</p>
+              <p>&nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게 추천해요</p>
             </div>
 
             <div style={card}>
