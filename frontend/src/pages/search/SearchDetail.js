@@ -20,7 +20,7 @@ function SearchDetail() {
   const { nutrientId }  = useParams();
   // console.log('params', nutrientId)
   const userInfo = useRecoilValue(userState)
-  console.log(userInfo[8])
+  console.log('userInfo', userInfo[8])
 
   const section = {marginTop:'80px'}
   const bold = {fontWeight:'bold'}
