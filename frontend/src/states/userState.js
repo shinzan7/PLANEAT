@@ -20,7 +20,8 @@ const gender = localStorage.getItem('gender')
 
 
 const response = http.get(`/nutrient/user/list/${userId}`)
-              
+// console.log(response.data)
+// console.log(response.data.data)
 
 
 
