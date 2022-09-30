@@ -26,6 +26,7 @@ import planeat.database.entity.User;
 import planeat.database.repository.UserRepository;
 import planeat.exception.CustomException;
 import planeat.exception.CustomExceptionList;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +35,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+@ApiIgnore
 @Controller
 @RequestMapping("/oauth")
 @RequiredArgsConstructor
