@@ -7,6 +7,7 @@ package planeat.api.dto.nutrient;
  @since 2022-09-21
 */
 import lombok.*;
+import planeat.database.entity.NutrientReview;
 
 import java.util.List;
 
@@ -20,6 +21,7 @@ public class NutrientResponse {
     String description;
     String imagePath;
     List<NutriIngredient> nutriIngredientList;
+    List<NutrientReview> nutrientReviewList;
 
     @Getter @Setter
     @AllArgsConstructor
@@ -29,13 +31,21 @@ public class NutrientResponse {
         List<String> categoryTagList;
     }
 
+    @Getter @Setter
+    @AllArgsConstructor
+    public static class NutrientReview{
+        String keyword;
+        Integer count;
+    }
+
     @Builder
-    public NutrientResponse(Long nutrientId, String nutrientName, String company, String description, String imagePath, List<NutriIngredient> nutriIngredientList) {
+    public NutrientResponse(Long nutrientId, String nutrientName, String company, String description, String imagePath, List<NutriIngredient> nutriIngredientList, List<NutrientReview> nutrientReviewList) {
         this.nutrientId = nutrientId;
         this.nutrientName = nutrientName;
         this.company = company;
         this.description = description;
         this.imagePath = imagePath;
         this.nutriIngredientList = nutriIngredientList;
+        this.nutrientReviewList = nutrientReviewList;
     }
 }
