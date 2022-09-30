@@ -310,37 +310,37 @@ export default function FootStat({ value }) {
           <Collapse in={open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="총 식이섬유" />
+                <ListItemText secondary="콜레스테롤" />
                 <ListItemText sx={listItemStyle} secondary={intake.dietary_fiber} />
               </ListItem>
               <Divider light />
               <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="칼슘" />
+                <ListItemText secondary="칼륨" />
                 <ListItemText sx={listItemStyle} secondary={intake.calcium} />
               </ListItem>
               <Divider light />
               <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="철" />
+                <ListItemText secondary="식이섬유" />
                 <ListItemText sx={listItemStyle} secondary={intake.iron} />
               </ListItem>
               <Divider light />
               <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="마그네슘" />
+                <ListItemText secondary="비타민A" />
                 <ListItemText sx={listItemStyle} secondary={intake.magnesium} />
               </ListItem>
               <Divider light />
               <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="인" />
+                <ListItemText secondary="비타민C" />
                 <ListItemText sx={listItemStyle} secondary={intake.phosphorus} />
               </ListItem>
               <Divider light />
               <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="칼륨" />
+                <ListItemText secondary="칼슘" />
                 <ListItemText sx={listItemStyle} secondary={intake.potassium} />
               </ListItem>
               <Divider light />
               <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="나트륨" />
+                <ListItemText secondary="철" />
                 <ListItemText sx={listItemStyle} secondary={intake.sodium} />
               </ListItem>
               <Divider light />
