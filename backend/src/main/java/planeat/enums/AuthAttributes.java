@@ -30,7 +30,7 @@ public enum AuthAttributes {
         Map<String, Object> kakaoProfile = (Map<String, Object>)kakaoAccount.get("profile");
 
         UserProfile userProfile = new UserProfile();
-        userProfile.setName((String) kakaoProfile.get("name"));
+        userProfile.setName((String) kakaoProfile.get("nickname"));
         userProfile.setEmail((String) kakaoAccount.get("email"));
         return userProfile;
     }),
