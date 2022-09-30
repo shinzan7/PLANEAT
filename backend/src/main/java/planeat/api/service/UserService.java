@@ -9,7 +9,6 @@ package planeat.api.service;
 */
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import planeat.api.dto.user.UserInfoRequest;
 import planeat.api.dto.user.UserInfoResponse;
@@ -20,6 +19,7 @@ import planeat.exception.CustomException;
 import planeat.exception.CustomExceptionList;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -48,18 +48,14 @@ public class UserService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
         User updateUser = User.updateUser(user, userInfoRequest);
-        updateUser.setRefreshToken(user.getRefreshToken());
         userRepository.save(updateUser);
-        UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest);
-        userRecIntakeRepository.save(userRecIntake);
-//        if(userInfoRequest.getRecInfo().getUserRecIntakeId() != null) {
-//            UserRecIntake.updateUserRecIntake(user, userInfoRequest);
-//            userRecIntakeRepository.save(userRecIntake);
-//        } else {
-//            UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest);
-//            userRecIntakeRepository.save(userRecIntake);
-//        }
 
+        userRecIntakeRepository.deleteAll();
+        UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
+        userRecIntakeRepository.save(userRecIntake);
+        userRecIntake.getUser().getUserRecIntakeList().add(userRecIntake);
+
+        userCategoryRepository.deleteAll();
         for (int i = 0; i < userInfoRequest.getCategoriesList().size(); i++) {
             UserCategoryInfo userCategoryInfo = getUserCategoryInfo(userInfoRequest.getCategoriesList().get(i).getUserCategoryInfoId());
             UserCategory userCategory = UserCategory.createUserCategory(user, userCategoryInfo);
@@ -84,7 +80,6 @@ public class UserService {
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
         List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.findByUserIdAndDate(userId, date);
         UserRecIntake userRecIntake = userRecIntakeList.get(0);
-
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
         int birthYear = user.getBirthyear();
         Integer age = nowYear - birthYear;
@@ -125,7 +120,6 @@ public class UserService {
      */
     public UserRecIntakeResponse readRecIntakesByUserIdAndDate(Long userId, LocalDate date) {
         User user = getUser(userId);
-        PageRequest pageRequest = PageRequest.of(0,1);
         List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.findByUserIdAndDate(userId, date);
         UserRecIntake userRecIntake = userRecIntakeList.get(0);
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
@@ -151,10 +145,35 @@ public class UserService {
         User updateUser = User.updateUser(user, userInfoRequest);
         updateUser.setRefreshToken(user.getRefreshToken());
         userRepository.save(updateUser);
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate())
-                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
-        UserRecIntake.updateUserRecIntake(user, userInfoRequest);
+
+        List<UserRecIntake> userRecIntakes = userRecIntakeRepository.findByUserId(userId);
+
+
+        List<UserRecIntake> userRecIntakeList = userRecIntakes;
+
+        userRecIntakeRepository.deleteAll(userRecIntakes);
+
+        UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
         userRecIntakeRepository.save(userRecIntake);
+        userRecIntake.getUser().getUserRecIntakeList().add(userRecIntake);
+
+        for (int i = 0; i < userRecIntakeList.size(); i++) {
+            UserInfoRequest uir = userInfoRequest;
+            uir.getRecInfo().setUserRecIntakeId(userRecIntakeList.get(i).getId());
+            uir.getRecInfo().setUpdateDate(userRecIntakeList.get(i).getUpdateDate());
+            uir.getRecInfo().setHeight(userRecIntakeList.get(i).getHeight());
+            uir.getRecInfo().setWeight(userRecIntakeList.get(i).getWeight());
+            uir.getRecInfo().setBmi(userRecIntakeList.get(i).getBmi());
+            uir.getRecInfo().setActive(userRecIntakeList.get(i).getActive());
+            uir.getRecInfo().setCalorie(userRecIntakeList.get(i).getCalorie());
+            uir.getRecInfo().setProtein(userRecIntakeList.get(i).getProtein());
+            uir.getRecInfo().setCarbohydrate(userRecIntakeList.get(i).getCarbohydrate());
+            uir.getRecInfo().setFat(userRecIntakeList.get(i).getFat());
+
+            UserRecIntake uri = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
+            userRecIntakeRepository.save(uri);
+            uri.getUser().getUserRecIntakeList().add(uri);
+        }
 
         List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
         userCategoryRepository.deleteAll(userCategoryList);
@@ -167,6 +186,11 @@ public class UserService {
         }
 
         return userId;
+    }
+
+    private UserRecIntake getUserRecIntake(Long userRecIntakeId) {
+        return userRecIntakeRepository.findById(userRecIntakeId)
+                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
     }
 
     private User getUser(Long userId) {

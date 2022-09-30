@@ -10,6 +10,7 @@ package planeat.database.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import planeat.database.entity.UserCategory;
 
 import java.util.List;
@@ -17,6 +18,6 @@ import java.util.List;
 public interface UserCategoryRepository extends JpaRepository<UserCategory, Long> {
 
     @Query("select u from UserCategory u where u.user.id = :userId")
-    List<UserCategory> findAllByUserId(Long userId);
+    List<UserCategory> findAllByUserId(@Param("userId") Long userId);
 
 }

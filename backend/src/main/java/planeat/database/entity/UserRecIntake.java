@@ -82,18 +82,18 @@ public class UserRecIntake {
         this.fat = fat;
     }
 
-    public static UserRecIntake createUserRecIntake(User user, UserInfoRequest userInfoRequest) {
+    public static UserRecIntake createUserRecIntake(User user, UserInfoRequest.RecInfo recInfo) {
         UserRecIntake userRecIntake = UserRecIntake.builder()
                 .user(user)
-                .updateDate(userInfoRequest.getRecInfo().getUpdateDate())
-                .height(userInfoRequest.getRecInfo().getHeight())
-                .weight(userInfoRequest.getRecInfo().getWeight())
-                .bmi(userInfoRequest.getRecInfo().getBmi())
-                .active(userInfoRequest.getRecInfo().getActive())
-                .calorie(userInfoRequest.getRecInfo().getCalorie())
-                .carbohydrate(userInfoRequest.getRecInfo().getCarbohydrate())
-                .protein(userInfoRequest.getRecInfo().getProtein())
-                .fat(userInfoRequest.getRecInfo().getFat())
+                .updateDate(recInfo.getUpdateDate())
+                .height(recInfo.getHeight())
+                .weight(recInfo.getWeight())
+                .bmi(recInfo.getBmi())
+                .active(recInfo.getActive())
+                .calorie(recInfo.getCalorie())
+                .carbohydrate(recInfo.getCarbohydrate())
+                .protein(recInfo.getProtein())
+                .fat(recInfo.getFat())
                 .build();
         return userRecIntake;
     }
