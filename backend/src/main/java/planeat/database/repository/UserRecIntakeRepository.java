@@ -14,6 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import planeat.database.entity.UserRecIntake;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Long> {
@@ -21,6 +22,6 @@ public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Lo
     Optional<UserRecIntake> findByUpdateDate(LocalDate updateDate);
 
     @Query("select u from UserRecIntake u where u.user.id = :userId and u.updateDate <= :date order by u.updateDate DESC")
-    Optional<UserRecIntake> findByUserIdAndDate(Long userId, LocalDate date, Pageable pageable);
+    List<UserRecIntake> findByUserIdAndDate(Long userId, LocalDate date);
 
 }

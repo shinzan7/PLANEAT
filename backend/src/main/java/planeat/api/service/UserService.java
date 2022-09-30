@@ -82,9 +82,9 @@ public class UserService {
     public UserInfoResponse readInfoByUserId(Long userId, LocalDate date) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-        PageRequest pageRequest = PageRequest.of(0,1);
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date, pageRequest)
-                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+        List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.findByUserIdAndDate(userId, date);
+        UserRecIntake userRecIntake = userRecIntakeList.get(0);
+
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
         int birthYear = user.getBirthyear();
         Integer age = nowYear - birthYear;
@@ -126,8 +126,8 @@ public class UserService {
     public UserRecIntakeResponse readRecIntakesByUserIdAndDate(Long userId, LocalDate date) {
         User user = getUser(userId);
         PageRequest pageRequest = PageRequest.of(0,1);
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date, pageRequest)
-                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+        List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.findByUserIdAndDate(userId, date);
+        UserRecIntake userRecIntake = userRecIntakeList.get(0);
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
         int birthYear = user.getBirthyear();
         Integer age = nowYear - birthYear;
