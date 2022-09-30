@@ -51,7 +51,7 @@ export default function BtnCircle(props) {
         props.setMealType(e.target.id);
 
         if (e.target.id == "영양제") {
-            //영양제 모달
+            props.setNutrientModalOpen(true);
         } else { 
             props.setMealModalOpen(true);
         }
