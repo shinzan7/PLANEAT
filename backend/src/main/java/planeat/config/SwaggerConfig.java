@@ -20,7 +20,7 @@ public class SwaggerConfig {
 
     private ApiInfo swaggerInfo() {
         return new ApiInfoBuilder().title("PlanEat API")
-                .description("IoT API Docs").build();
+                .description("PlanEat API 명세서").build();
     }
 
     @Bean
