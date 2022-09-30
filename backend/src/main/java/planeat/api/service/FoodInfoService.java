@@ -70,16 +70,13 @@ public class FoodInfoService {
      * @return List<FoodInfoResponse>
      */
     public List<FoodInfoResponse> readFoodInfo(Long userId) {
-        if(!userId.equals(1L)) {
-            List<FoodInfoResponse> foodInfoList = new ArrayList<>();
-            List<FoodInfo> foodInfos = foodInfoRepository.findByUserIdFoodInfo(userId);
-            for (FoodInfo foodInfo : foodInfos) {
-                foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
-            }
-            return foodInfoList;
-        } else {
-            return readAllFoodInfos(userId);
+        List<FoodInfoResponse> foodInfoList = new ArrayList<>();
+        PageRequest pageRequest = PageRequest.of(0,100);
+        List<FoodInfo> foodInfos = foodInfoRepository.findByUserIdFoodInfo(userId, pageRequest);
+        for (FoodInfo foodInfo : foodInfos) {
+            foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
         }
+        return foodInfoList;
     }
 
 
@@ -92,7 +89,8 @@ public class FoodInfoService {
      */
     public List<FoodInfoResponse> readByNameFoodInfo(Long userId, String name) {
         List<FoodInfoResponse> foodInfoList = new ArrayList<>();
-        List<FoodInfo> foodInfos = foodInfoRepository.findByNameAndUserIdFoodInfo(name, userId);
+        PageRequest pageRequest = PageRequest.of(0,500);
+        List<FoodInfo> foodInfos = foodInfoRepository.findByNameAndUserIdFoodInfo(name, userId, pageRequest);
         for (FoodInfo foodInfo : foodInfos) {
             foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
         }

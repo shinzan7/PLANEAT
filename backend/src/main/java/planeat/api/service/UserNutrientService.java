@@ -8,9 +8,7 @@ package planeat.api.service;
 */
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import planeat.api.dto.usernutrient.NutrientHistoryRequest;
-import planeat.api.dto.usernutrient.UserNutrientRequest;
-import planeat.api.dto.usernutrient.UserNutrientResponse;
+import planeat.api.dto.usernutrient.*;
 import planeat.database.entity.Nutrient;
 import planeat.database.entity.NutrientHistory;
 import planeat.database.entity.User;
@@ -23,9 +21,11 @@ import planeat.exception.CustomException;
 import planeat.exception.CustomExceptionList;
 
 import javax.transaction.Transactional;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -38,43 +38,71 @@ public class UserNutrientService {
     private final NutrientRepository nutrientRepository;
 
     /**
-     * 해당 유저영양제id의 유저영양제 조회
-     * @param id 유저영양제 id
-     * @return 해당 id의 영양제와 각 섭취기록
+     * 해당 유저의 섭취날짜로 섭취기록 조회
+     * @param userId 유저id
+     * @param intakeDateString 섭취날짜
+     * @return 유저영양제id, 권장섭취횟수, 섭취날짜, 실제섭취횟수
      */
-    public UserNutrientResponse readUserNutrientById(Long id){
-        UserNutrientResponse userNutrientResponse = new UserNutrientResponse();
+    public List<NutrientHistoryDateResponse> readNutrientHistoryByDate(Long userId, String intakeDateString){
+        LocalDate intakeDate = LocalDate.parse(intakeDateString, DateTimeFormatter.ISO_DATE);
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
+        );
+        List<UserNutrient> userNutrientList = userNutrientRepository.findByUser(user);
+        List<NutrientHistoryDateResponse> responseList = new ArrayList<>();
 
-        Optional<UserNutrient> userNutrientOptional = userNutrientRepository.findById(id);
-
-        //영양제 존재하면
-        if(userNutrientOptional.isPresent()){
-            UserNutrient userNutrient = userNutrientOptional.get();
-
-            //영양제 섭취기록 list로 가져오기
-            List<NutrientHistory> nutrientHistoryList = nutrientHistoryRepository.findAllByUserNutrientId(userNutrient.getId());
-            List<UserNutrientResponse.NutriHistory> nutriHistoryList = new LinkedList<>();
-            for (NutrientHistory n : nutrientHistoryList){
-                UserNutrientResponse.NutriHistory history = new UserNutrientResponse.NutriHistory(
-                        n.getId(),
-                        n.getIntakeDate(),
-                        n.getIntakeReal()
-                );
-                nutriHistoryList.add(history);
-            }
-
-            //영양제 정보 response에 저장
-            userNutrientResponse = UserNutrientResponse.builder()
-                    .userNutrientId(userNutrient.getId())
-                    .userId(userNutrient.getUser().getId())
-                    .nutrientName(userNutrient.getNutrient().getNutrientName())
-                    .intakeRecommend(userNutrient.getIntakeRecommend())
-                    .nutriHistoryList(nutriHistoryList)
-                    .build();
+        for (UserNutrient u : userNutrientList){
+            NutrientHistory nutrientHistory = nutrientHistoryRepository.findByUserNutrientAndIntakeDate(u, intakeDate);
+            responseList.add(
+                    NutrientHistoryDateResponse.builder()
+                            .userNutrientId(u.getId())
+                            .intakeRecommend(u.getIntakeRecommend())
+                            .intakeDate(intakeDateString)
+                            .intakeReal(nutrientHistory.getIntakeReal())
+                            .build()
+            );
         }
 
-        return userNutrientResponse;
+        return responseList;
     }
+//    /**
+//     * 해당 유저영양제id의 유저영양제 조회
+//     * @param id 유저영양제 id
+//     * @return 해당 id의 영양제와 각 섭취기록
+//     */
+//    public UserNutrientResponse readUserNutrientById(Long id){
+//        UserNutrientResponse userNutrientResponse = new UserNutrientResponse();
+//
+//        Optional<UserNutrient> userNutrientOptional = userNutrientRepository.findById(id);
+//
+//        //영양제 존재하면
+//        if(userNutrientOptional.isPresent()){
+//            UserNutrient userNutrient = userNutrientOptional.get();
+//
+//            //영양제 섭취기록 list로 가져오기
+//            List<NutrientHistory> nutrientHistoryList = nutrientHistoryRepository.findAllByUserNutrientId(userNutrient.getId());
+//            List<UserNutrientResponse.NutriHistory> nutriHistoryList = new LinkedList<>();
+//            for (NutrientHistory n : nutrientHistoryList){
+//                UserNutrientResponse.NutriHistory history = new UserNutrientResponse.NutriHistory(
+//                        n.getId(),
+//                        n.getIntakeDate().toString(),
+//                        n.getIntakeReal()
+//                );
+//                nutriHistoryList.add(history);
+//            }
+//
+//            //영양제 정보 response에 저장
+//            userNutrientResponse = UserNutrientResponse.builder()
+//                    .userNutrientId(userNutrient.getId())
+//                    .userId(userNutrient.getUser().getId())
+//                    .nutrientName(userNutrient.getNutrient().getNutrientName())
+//                    .intakeRecommend(userNutrient.getIntakeRecommend())
+//                    .nutriHistoryList(nutriHistoryList)
+//                    .build();
+//        }
+//
+//        return userNutrientResponse;
+//    }
 
     /**
      * 유저id로 모든 유저 영양제를 조회
@@ -94,7 +122,7 @@ public class UserNutrientService {
             for (NutrientHistory n : nutrientHistoryList){
                 UserNutrientResponse.NutriHistory history = new UserNutrientResponse.NutriHistory(
                         n.getId(),
-                        n.getIntakeDate(),
+                        n.getIntakeDate().toString(),
                         n.getIntakeReal()
                 );
                 nutriHistoryList.add(history);
@@ -122,16 +150,16 @@ public class UserNutrientService {
      */
     public void createUserNutrient(UserNutrientRequest request){
         //연결할 user와 nutrient 찾기
-        Optional<User> optionalUser = Optional.ofNullable(userRepository.findById(request.getUserId()).orElseThrow(
+        User user = userRepository.findById(request.getUserId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
-        ));
-        Optional<Nutrient> optionalNutrient = Optional.ofNullable(nutrientRepository.findById(request.getNutrientId()).orElseThrow(
+        );
+        Nutrient nutrient = nutrientRepository.findById(request.getNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.NUTRIENT_NOT_FOUND_ERROR)
-        ));
+        );
 
         UserNutrient userNutrient = UserNutrient.builder()
-                    .user(optionalUser.get())
-                    .nutrient(optionalNutrient.get())
+                    .user(user)
+                    .nutrient(nutrient)
                     .intakeRecommend(request.getIntakeRecommend())
                     .build();
             userNutrientRepository.save(userNutrient);
@@ -169,30 +197,37 @@ public class UserNutrientService {
      * 영양제 섭취기록 등록
      * @param request 등록할 영양제 섭취기록 dto
      */
-    public void createNutrientHistory(NutrientHistoryRequest request){
+    public Long createNutrientHistory(NutrientHistoryRequest request){
         //연결할 유저 영양제 찾기
-        Optional<UserNutrient> optionalUserNutrient = Optional.ofNullable(userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
+        UserNutrient userNutrient = userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NUTRIENT_NOT_FOUND_ERROR)
-        ));
+        );
 
         NutrientHistory nutrientHistory = NutrientHistory.createUserNutrientHistory(
-                optionalUserNutrient.get(),
+                userNutrient,
                 request.getIntakeDate(),
                 request.getIntakeReal()
         );
-        nutrientHistoryRepository.save(nutrientHistory);
+        NutrientHistory save = nutrientHistoryRepository.save(nutrientHistory);
+        return save.getId();
     }
 
     /**
-     * 영양제 섭취기록 수정
-     * @param nutrientHistoryId 수정하는 영양제 섭취기록 id
+     * 영양제 섭취기록 수정 (날짜와 영양제id로 조회)
      * @param request 수정하는 영양제 섭취기록 dto
      */
-    public void updateNutrientHistory(Long nutrientHistoryId ,NutrientHistoryRequest request){
-        NutrientHistory nutrientHistory = nutrientHistoryRepository.findById(nutrientHistoryId).orElseThrow(
-                () -> new CustomException(CustomExceptionList.NUTRIENT_HISTORY_NOT_FOUND_ERROR)
+    public List<String> updateNutrientHistory(NutrientHistoryRequest request){
+        UserNutrient userNutrient = userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
+                () -> new CustomException(CustomExceptionList.USER_NUTRIENT_NOT_FOUND_ERROR)
         );
-        nutrientHistory.update(nutrientHistory.getUserNutrient(), request.getIntakeDate(), request.getIntakeReal());
+
+        NutrientHistory nutrientHistory = nutrientHistoryRepository.findByIntakeDateAndUserNutrient(request.getIntakeDate(), userNutrient);
+        nutrientHistory.update(userNutrient, request.getIntakeDate(), request.getIntakeReal());
+        List<String> list = new ArrayList<>();
+        list.add(userNutrient.getId().toString());
+        list.add(nutrientHistory.getIntakeDate().toString());
+        list.add(nutrientHistory.getIntakeReal().toString());
+        return list;
     }
 
     /**

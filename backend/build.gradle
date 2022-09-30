@@ -33,6 +33,8 @@ dependencies {
 	implementation 'org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE' // aws S3 서버
 	implementation group: 'io.springfox', name: 'springfox-boot-starter', version: '3.0.0' // swagger
 
+	implementation group: 'org.qlrm', name: 'qlrm', version: '3.0.4' //QLRM : 네이티브 쿼리를 DTO에 매핑
+
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'mysql:mysql-connector-java'

@@ -7,6 +7,7 @@ package planeat.api.dto.usernutrient;
  @since 2022-09-26
 */
 import lombok.*;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -25,7 +26,7 @@ public class UserNutrientResponse {
     @AllArgsConstructor
     public static class NutriHistory{
         Long nutrientHistoryId;
-        LocalDate intakeDate;
+        String intakeDate;
         Integer intakeReal;
     }
 
