@@ -9,6 +9,7 @@ package planeat.api.service;
 */
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import planeat.api.dto.user.UserInfoRequest;
 import planeat.api.dto.user.UserInfoResponse;
@@ -81,7 +82,8 @@ public class UserService {
     public UserInfoResponse readInfoByUserId(Long userId, LocalDate date) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date)
+        PageRequest pageRequest = PageRequest.of(0,1);
+        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date, pageRequest)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
         int birthYear = user.getBirthyear();
@@ -123,7 +125,8 @@ public class UserService {
      */
     public UserRecIntakeResponse readRecIntakesByUserIdAndDate(Long userId, LocalDate date) {
         User user = getUser(userId);
-        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date)
+        PageRequest pageRequest = PageRequest.of(0,1);
+        UserRecIntake userRecIntake = userRecIntakeRepository.findByUserIdAndDate(userId, date, pageRequest)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
         int birthYear = user.getBirthyear();

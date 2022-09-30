@@ -8,6 +8,7 @@ package planeat.database.repository;
  @since 2022-09-23
 */
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import planeat.database.entity.UserRecIntake;
@@ -19,7 +20,7 @@ public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Lo
 
     Optional<UserRecIntake> findByUpdateDate(LocalDate updateDate);
 
-    @Query("select u from UserRecIntake u where u.user.id = :userId and u.updateDate = :date")
-    Optional<UserRecIntake> findByUserIdAndDate(Long userId, LocalDate date);
+    @Query("select u from UserRecIntake u where u.user.id = :userId and u.updateDate <= :date order by u.updateDate DESC")
+    Optional<UserRecIntake> findByUserIdAndDate(Long userId, LocalDate date, Pageable pageable);
 
 }
