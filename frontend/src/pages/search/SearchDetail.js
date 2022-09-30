@@ -12,7 +12,8 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
 import { http } from "api/http";
-import { userState } from 'states/userState'
+import { userState, nutrient } from 'states/userState'
+import { userNutrient } from "states/userNutrient";
 import { useRecoilValue } from 'recoil'
 
 function SearchDetail() {
@@ -20,7 +21,11 @@ function SearchDetail() {
   const { nutrientId }  = useParams();
   // console.log('params', nutrientId)
   const userInfo = useRecoilValue(userState)
-  console.log(userInfo[8])
+  const userNutrientInfo = useRecoilValue(userNutrient)
+  const nutrientInfo = useRecoilValue(nutrient)
+  // console.log('userInfo', userInfo)
+  console.log('userNutrientInfo', userNutrientInfo)
+  console.log('nutrientInfo', nutrientInfo)
 
   const section = {marginTop:'80px'}
   const bold = {fontWeight:'bold'}
