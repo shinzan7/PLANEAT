@@ -108,17 +108,39 @@ public class AnalysisHistory {
         this.vitaminB2 = vitaminB2;
     }
 
-    public AnalysisHistory update(Long id, User user, LocalDate date, Integer analysis_type, String analysis_score, Float calorie, Float protein, Float fat, Float carbohydrate, Float sugar, Float dietary_fiber, Float calcium, Float iron, Float magnesium, Float phosphorus, Float potassium, Float sodium, Float zinc, Float copper, Float manganese, Float selenium, Float vitaminA, Float vitaminD, Float vitaminB6, Float folate, Float vitaminB12, Float vitaminC, Float cholesterol, Float fattyAcid, Float linoleicAcid, Float alphaLinoleicAcid, Float transFattyAcid, Float vitaminB1, Float vitaminB2) {
-        this.id = id;
-        this.user = user;
-        this.date = date;
-        this.analysis_type = analysis_type;
+    /**
+     * 엔티티 에너지 탄단지 수정
+     */
+    public AnalysisHistory updateScore(String analysis_score) {
         this.analysis_score = analysis_score;
+        return this;
+    }
+    /**
+     * 엔티티 에너지 탄단지 수정
+     */
+    public AnalysisHistory updateRecIntake(Float calorie, Float carbohydrate, Float protein, Float fat) {
         this.calorie = calorie;
+        this.carbohydrate = carbohydrate;
         this.protein = protein;
         this.fat = fat;
-        this.carbohydrate = carbohydrate;
+        return this;
+    }
+
+    /**
+     * 엔티티 당, 콜레스테롤, 포화지방, 트랜스지방 수정
+     */
+    public AnalysisHistory updateSugarFat(Float sugar, Float cholesterol, Float fattyAcid, Float transFattyAcid) {
         this.sugar = sugar;
+        this.cholesterol = cholesterol;
+        this.fattyAcid = fattyAcid;
+        this.transFattyAcid = transFattyAcid;
+        return this;
+    }
+
+    /**
+     * 비타민 및 무기질 수정
+     */
+    public AnalysisHistory updateVitamin(Float dietary_fiber, Float calcium, Float iron, Float magnesium, Float phosphorus, Float potassium, Float sodium, Float zinc, Float copper, Float manganese, Float selenium, Float vitaminA, Float vitaminD, Float folate, Float vitaminB12, Float vitaminC, Float linoleicAcid, Float alphaLinoleicAcid, Float vitaminB1, Float vitaminB2) {
         this.dietary_fiber = dietary_fiber;
         this.calcium = calcium;
         this.iron = iron;
@@ -132,15 +154,11 @@ public class AnalysisHistory {
         this.selenium = selenium;
         this.vitaminA = vitaminA;
         this.vitaminD = vitaminD;
-        this.vitaminB6 = vitaminB6;
         this.folate = folate;
         this.vitaminB12 = vitaminB12;
         this.vitaminC = vitaminC;
-        this.cholesterol = cholesterol;
-        this.fattyAcid = fattyAcid;
         this.linoleicAcid = linoleicAcid;
         this.alphaLinoleicAcid = alphaLinoleicAcid;
-        this.transFattyAcid = transFattyAcid;
         this.vitaminB1 = vitaminB1;
         this.vitaminB2 = vitaminB2;
         return this;

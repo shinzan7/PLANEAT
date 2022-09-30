@@ -10,6 +10,7 @@ package planeat.database.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import planeat.database.entity.User;
 import planeat.database.entity.UserRecIntake;
 
 import java.time.LocalDate;
@@ -22,4 +23,5 @@ public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Lo
     @Query("select u from UserRecIntake u where u.user.id = :userId and u.updateDate = :date")
     Optional<UserRecIntake> findByUserIdAndDate(Long userId, LocalDate date);
 
+    UserRecIntake findFirstByUserAndUpdateDateBeforeOrderByUpdateDateDesc(User user, LocalDate updateDate);
 }
