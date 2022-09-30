@@ -12,5 +12,5 @@ public interface NutrientReviewRepository extends JpaRepository<NutrientReview, 
     
     @EntityGraph(attributePaths = {"nutrient"})
     @Query("select r from NutrientReview r where r.nutrient.id = :nutrientId")
-    List<NutrientReview> findAllByNutrientId (@Param("nutrientId") Integer nutrientId);
+    List<NutrientReview> findAllByNutrientId (@Param("nutrientId") Long nutrientId);
 }

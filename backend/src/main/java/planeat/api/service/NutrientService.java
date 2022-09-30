@@ -12,14 +12,8 @@ import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.nutrient.NutrientRequest;
 import planeat.api.dto.nutrient.NutrientResponse;
 import planeat.config.image.S3Uploader;
-import planeat.database.entity.Category;
-import planeat.database.entity.Ingredient;
-import planeat.database.entity.Nutrient;
-import planeat.database.entity.NutrientIngredient;
-import planeat.database.repository.CategoryRepository;
-import planeat.database.repository.IngredientRepository;
-import planeat.database.repository.NutrientIngredientRespository;
-import planeat.database.repository.NutrientRepository;
+import planeat.database.entity.*;
+import planeat.database.repository.*;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -33,6 +27,7 @@ public class NutrientService {
 
     private final NutrientRepository nutrientRepository;
     private final IngredientRepository ingredientRepository;
+    private final NutrientReviewRepository nutrientReviewRepository;
     private final NutrientIngredientRespository nutrientIngredientRespository;
     private final CategoryRepository categoryRepository;
     private final S3Uploader s3Uploader;
@@ -63,8 +58,14 @@ public class NutrientService {
             //영양제id로 영양제 성분들 가져오기
             List<NutrientIngredient> nutrientIngredientList = nutrientIngredientRespository.findAllByNutrientId(nutrient.getId());
 
-            // response에 추가할 list
-            List<NutrientResponse.NutriIngredient> responseList = new ArrayList<>();
+            //영양제id로 영양제 리뷰들 가져오기
+            List<NutrientReview> nutrientReviewList = nutrientReviewRepository.findAllByNutrientId(nutrient.getId());
+
+            // response에 추가할 영양제 성분 list
+            List<NutrientResponse.NutriIngredient> ingredientList = new ArrayList<>();
+
+            // response에 추가할 영양제 리뷰 list
+            List<NutrientResponse.NutrientReview> reviewList = new ArrayList<>();
 
             //영양제 성분id로 영양성분 가져오기
             for (NutrientIngredient ni : nutrientIngredientList){
@@ -77,12 +78,19 @@ public class NutrientService {
                 }
 
                 // responseList에 영양성분 이름, 영양성분 함량, 카테고리 list 넣어주기
-                responseList.add(
+                ingredientList.add(
                         new NutrientResponse.NutriIngredient(ingredient.getIngredientName(),ni.getIngredientAmount(),tagList)
                 );
 
             }
-            nutrientResponse.setNutriIngredientList(responseList);
+            nutrientResponse.setNutriIngredientList(ingredientList);
+
+            //영양제 성분id로 리뷰 가져오기
+            for (NutrientReview nr : nutrientReviewList) {
+                reviewList.add(new NutrientResponse.NutrientReview(nr.getKeyword(), nr.getCount()));
+            }
+
+            nutrientResponse.setNutrientReviewList(reviewList);
 
         }
 

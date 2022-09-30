@@ -113,7 +113,6 @@ public class NutrientController {
     public ResponseEntity<BasicResponse<NutrientResponse>> readNutrient(Long id){
 
         NutrientResponse nutrientResponse = nutrientService.readNutrientById(id);
-
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , nutrientResponse), HttpStatus.OK);
     }
 
