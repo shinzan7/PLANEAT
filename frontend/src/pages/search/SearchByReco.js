@@ -15,27 +15,11 @@ import { http } from "api/http";
 function SearchByReco() {
   const data = {
     img: "",
-    nutrient_name: "락토핏 생유산균 화이버",
+    nutrientName: "락토핏 생유산균 화이버",
     company: "종근당",
-    category_tag: ["장건강"],
-    ingredient_name: ["차전자피식이섬유"],
+    categoryTag: ["장건강"],
+    ingredientName: ["차전자피식이섬유"],
   }
-
-  // const [info, setInfo] = useState({
-  //   imagePath: '',
-  //   nutrientName: '',
-  //   company: '',
-  //   description: '',
-  //   nutriIngredientList: [],
-  // })
-
-  // useEffect(() => {
-  //   http.get('/nutrient/all')
-  //   .then(response => {
-  //     console.log('전체', response.data[0])
-  //     // setInfo(response.data.data)
-  //   })
-  // }, [])
 
   const name = localStorage.getItem('name')
 

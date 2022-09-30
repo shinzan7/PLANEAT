@@ -183,7 +183,7 @@ function SearchByTag() {
                 <Grid container>
                   
                     {userTags.map((data, i) => (   
-                      <Link to={`/tagresult/${data.id}`} style={{textDecoration:'none', color:'black'}}>          
+                      <Link to={`/tagresult/${data.title}`} style={{textDecoration:'none', color:'black'}}>          
                         <TagMain
                         key={i}
                         src={data.src}

@@ -5,27 +5,24 @@
 */
 
 import React, { useEffect, useState } from "react";
-import { useParams } from 'react-router-dom'
-import CardNutrient from "components/common/CardNutrient";
+import { json, useParams } from 'react-router-dom'
 import Header from 'components/nav/Header';
 import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
 import { http } from "api/http";
-import { userState, nutrient } from 'states/userState'
-import { userNutrient } from "states/userNutrient";
+import { userState } from 'states/userState'
 import { useRecoilValue } from 'recoil'
+import ChipBlue from "components/common/ChipBlue";
+import ChipOrange from "components/common/ChipOrange";
 
 function SearchDetail() {
 
   const { nutrientId }  = useParams();
   // console.log('params', nutrientId)
   const userInfo = useRecoilValue(userState)
-  const userNutrientInfo = useRecoilValue(userNutrient)
-  const nutrientInfo = useRecoilValue(nutrient)
-  // console.log('userInfo', userInfo)
-  console.log('userNutrientInfo', userNutrientInfo)
-  console.log('nutrientInfo', nutrientInfo)
+  console.log(userInfo)
+
 
   const section = {marginTop:'80px'}
   const bold = {fontWeight:'bold'}
@@ -33,7 +30,6 @@ function SearchDetail() {
   const section1 = { marginTop:'25vh', textAlign:'center'}
   const section2 = { marginTop:'5vh', textAlign:'center'}
   const section3 = { marginTop:'10vh'}
-  const section4 = { marginTop:'5vh'}
 
   const [info, setInfo] = useState({
     imagePath: '',
@@ -53,6 +49,17 @@ function SearchDetail() {
       setInfo(response.data.data)
     })
   }, [])
+
+  const tagArray = []
+
+  for (var i = 0; i < info.nutriIngredientList.length; i++) {
+    for (var j = 0; j < info.nutriIngredientList[i].categoryTagList.length; j++) {
+      tagArray.push(info.nutriIngredientList[i].categoryTagList[j])
+    }
+  }
+
+  const tagSet = new Set(tagArray)
+  const tags = Array.from(tagSet)
   
   return (
       <div style={section}>
@@ -85,38 +92,53 @@ function SearchDetail() {
                 <Grid item xs={1}>
           
                 </Grid>
-                {/* 영양제 정보 카드 */}
-                <Grid item xs={8} style={text}>
+                {/* 영양제 이미지 */}
+                <grid item xs={8} style={text}>
                   <Grid container>
-                    <Grid item xs={4}>
-                      <CardNutrient pill={info} />
+                    <Grid item xs={2.5}>
+                      이미지 들어갈 부분
+                      <br></br>
+                      <br></br>
+                      <p>{info.company}</p>
+                      <p style={bold}>{info.nutrientName} </p> 
                     </Grid>
-                    <Grid item xs={0.5}>
+                    <Grid item xs={0.2}>
+
+                    </Grid>
+                    <Grid item xs={7.3}>
+                      주요기능
+                      <br></br>
+                      <br></br>
+                      {tags.map((data, i) => (
+                        <ChipOrange key={i} label={data} />
+                      ))}
+                      <br></br>
+                      <br></br>
+                      성분
+                      <br></br>
+                      <br></br>
+                      {info.nutriIngredientList.map((data, i) => (
+                        <ChipBlue key={i} label={data.ingredientName} /> 
+                      ))}
+                      <br></br>
+                      <br></br>
+
+                      상세정보
+                      <br></br>
+                      <br></br>
+                      {info.description}
+                    </Grid>
+                    <Grid item xs={2}>
                       
                     </Grid>
-                    {/* 상세 정보 */}
-                    <Grid item xs={7.5}>
-                      <div>
-                        <div style={section4}>
-                          <p style={bold}>상세정보</p>
-                          <p>{info.description}</p> 
-                          <p>{info.nutriIngredientList.ingredientName}</p>
-                          <p>{info.nutriIngredientList.categoryTagList}</p>        
-                        </div>
-                      </div>
-                    </Grid>
                   </Grid>
-                </Grid>
-                <Grid item xs={3}>
-                  
-                </Grid>
-              </Grid>
+                </grid>
               <div style={section3}>
                 
               </div>
             </Grid>
           </Grid>
-          
+        </Grid>
       </div>
   );
 }

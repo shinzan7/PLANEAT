@@ -34,7 +34,7 @@ const CardNutrient = function MediaCard(props) {
             </Typography>
             {/* 영양제 이름 */}
             <Typography sx={{ fontWeight: "bold"} } variant="body1">
-                { props.pill.nutrientName} 
+                {props.pill.nutrientName} 
             </Typography>
           </CardContent>
           <CardActions sx={{ padding: 0, marginLeft: 2, marginBottom: 1 }} >
