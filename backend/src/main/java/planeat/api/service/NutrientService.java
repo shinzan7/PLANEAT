@@ -59,7 +59,7 @@ public class NutrientService {
             List<NutrientIngredient> nutrientIngredientList = nutrientIngredientRespository.findAllByNutrientId(nutrient.getId());
 
             //영양제id로 영양제 리뷰들 가져오기
-            List<NutrientReview> nutrientReviewList = nutrientReviewRepository.findAllByNutrientId(nutrient.getId());
+            List<NutrientReview> nutrientReviewList = nutrientReviewRepository.findByNutrient(nutrient);
 
             // response에 추가할 영양제 성분 list
             List<NutrientResponse.NutriIngredient> ingredientList = new ArrayList<>();
