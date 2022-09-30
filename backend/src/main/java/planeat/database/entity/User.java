@@ -90,10 +90,41 @@ public class User {
     }
 
 
+    public void setBirthyear(Integer birthyear) {
+        this.birthyear = birthyear;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
     public void setRefreshToken(String refreshToken) {
         this.refreshToken = refreshToken;
     }
 
+    public void setUserRecIntakeList(List<UserRecIntake> userRecIntakeList) {
+        this.userRecIntakeList = userRecIntakeList;
+    }
+
+    public void setMyDietList(List<MyDiet> myDietList) {
+        this.myDietList = myDietList;
+    }
+
+    public void setIntakeHistoryList(List<IntakeHistory> intakeHistoryList) {
+        this.intakeHistoryList = intakeHistoryList;
+    }
+
+    public void setAnalysisHistoryList(List<AnalysisHistory> analysisHistoryList) {
+        this.analysisHistoryList = analysisHistoryList;
+    }
+
+    public void setUserCategoryList(List<UserCategory> userCategoryList) {
+        this.userCategoryList = userCategoryList;
+    }
+
+    public void setUserNutrientList(List<UserNutrient> userNutrientList) {
+        this.userNutrientList = userNutrientList;
+    }
 
     public User update(String name, String email) {
         this.name = name;
@@ -103,14 +134,15 @@ public class User {
 
 
     public static User updateUser(User user, UserInfoRequest userInfoRequest) {
-        return User.builder()
-                .id(user.getId())
-                .name(user.getName())
-                .email(user.getEmail())
-                .provider(user.getProvider())
-                .birthyear(userInfoRequest.getBirthyear())
-                .gender(userInfoRequest.getGender())
-                .build();
+        User newUser = user;
+        newUser.setRefreshToken(user.getRefreshToken());
+        newUser.setUserCategoryList(user.getUserCategoryList());
+        newUser.setUserNutrientList(user.getUserNutrientList());
+        newUser.setUserRecIntakeList(user.getUserRecIntakeList());
+        newUser.setMyDietList(user.getMyDietList());
+        newUser.setGender(userInfoRequest.getGender());
+        newUser.setBirthyear(userInfoRequest.getBirthyear());
+        return newUser;
     }
 
 }
