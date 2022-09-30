@@ -24,8 +24,8 @@ public interface FoodInfoRepository extends JpaRepository<FoodInfo, Long> {
     @Query("select f from FoodInfo f where f.foodUser = :userId")
     List<FoodInfo> findByUserIdFoodInfo(Long userId, Pageable pageable);
 
-    @Query("select f from FoodInfo f where f.name like concat('%', :name, '%') and f.foodUser = :userId or f.foodUser = 1")
-    List<FoodInfo> findByNameAndUserIdFoodInfo(String name, Long userId);
+    @Query("select f from FoodInfo f where f.name like concat('%', :name, '%') and (f.foodUser = :userId or f.foodUser = 1)")
+    List<FoodInfo> findByNameAndUserIdFoodInfo(String name, Long userId, Pageable pageable);
 
     Optional<FoodInfo> findById(Long foodInfoId);
 }

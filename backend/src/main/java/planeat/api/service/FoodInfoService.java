@@ -89,7 +89,8 @@ public class FoodInfoService {
      */
     public List<FoodInfoResponse> readByNameFoodInfo(Long userId, String name) {
         List<FoodInfoResponse> foodInfoList = new ArrayList<>();
-        List<FoodInfo> foodInfos = foodInfoRepository.findByNameAndUserIdFoodInfo(name, userId);
+        PageRequest pageRequest = PageRequest.of(0,500);
+        List<FoodInfo> foodInfos = foodInfoRepository.findByNameAndUserIdFoodInfo(name, userId, pageRequest);
         for (FoodInfo foodInfo : foodInfos) {
             foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
         }
