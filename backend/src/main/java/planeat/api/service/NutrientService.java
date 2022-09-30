@@ -6,13 +6,13 @@ package planeat.api.service;
 */
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.qlrm.mapper.JpaResultMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.nutrient.NutrientDto;
 import planeat.api.dto.nutrient.NutrientRequest;
 import planeat.api.dto.nutrient.NutrientResponse;
+import planeat.api.dto.nutrient.NutrientSearchResponse;
 import planeat.config.image.S3Uploader;
 import planeat.database.entity.Category;
 import planeat.database.entity.Ingredient;
@@ -25,6 +25,8 @@ import planeat.database.repository.NutrientRepository;
 import planeat.exception.CustomException;
 import planeat.exception.CustomExceptionList;
 
+import javax.persistence.EntityManager;
+import javax.persistence.Query;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -41,7 +43,38 @@ public class NutrientService {
     private final NutrientIngredientRespository nutrientIngredientRespository;
     private final CategoryRepository categoryRepository;
     private final S3Uploader s3Uploader;
+    private final EntityManager em;
 
+    /**
+     * 태그를 포함하는 영양제를 모두 검색
+     * @param categoryTag 검색할 태그
+     * @return 검색결과 영양제 dto 리스트
+     */
+    public List<NutrientSearchResponse> readAllNutrientByCategoryTag(String categoryTag){
+        JpaResultMapper jpaResultMapper = new JpaResultMapper();
+        String query = "select * from nutrient where nutrient_id in " +
+                "(select nutrient_id from nutrient_ingredient where ingredient_id in " +
+                "(select ingredient_id from category where category_tag like '"+ categoryTag +"'))";
+        Query q = em.createNativeQuery(query);
+
+        List<NutrientSearchResponse> responseList = jpaResultMapper.list(q, NutrientSearchResponse.class);
+        return responseList;
+    }
+
+    /**
+     * 영양성분을 포함하는 영양제를 모두 검색
+     * @param ingredientId 검색할 영양성분 id
+     * @return 검색결과 영양제 dto 리스트
+     */
+    public List<NutrientSearchResponse> readAllNutrientByIngredientId(Integer ingredientId){
+        JpaResultMapper jpaResultMapper = new JpaResultMapper();
+        String query = "select * from nutrient where nutrient_id in " +
+                "(select nutrient_id from nutrient_ingredient where ingredient_id ="+ ingredientId + ")";
+        Query q = em.createNativeQuery(query);
+
+        List<NutrientSearchResponse> responseList = jpaResultMapper.list(q, NutrientSearchResponse.class);
+        return responseList;
+    }
 
     /**
      * 모든 영양제의 아이디와 이름 조회

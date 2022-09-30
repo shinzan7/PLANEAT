@@ -11,6 +11,7 @@ import planeat.api.dto.common.BasicResponse;
 import planeat.api.dto.nutrient.NutrientDto;
 import planeat.api.dto.nutrient.NutrientRequest;
 import planeat.api.dto.nutrient.NutrientResponse;
+import planeat.api.dto.nutrient.NutrientSearchResponse;
 import planeat.api.dto.usernutrient.*;
 import planeat.api.service.NutrientService;
 import planeat.api.service.UserNutrientService;
@@ -39,6 +40,18 @@ public class NutrientController {
 
     static final String SUCCESS = "success";
 
+    @GetMapping("/tag/{categoryTag}")
+    @ApiOperation(value = "영양제 카테고리 태그명으로 검색", notes = "영양제id, 영양제이름, 제조회사, 상세설명, 이미지경로를 반환한다")
+    public ResponseEntity<BasicResponse<List<NutrientSearchResponse>>> readAllNutrientByCategoryTag(@PathVariable("categoryTag") String categoryTag){
+        List<NutrientSearchResponse> responseList = nutrientService.readAllNutrientByCategoryTag(categoryTag);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, responseList), HttpStatus.OK);
+    }
+    @GetMapping("/ingredient/{ingredientId}")
+    @ApiOperation(value = "영양제 영양성분으로 검색", notes = "영양제id, 영양제이름, 제조회사, 상세설명, 이미지경로를 반환한다")
+    public ResponseEntity<BasicResponse<List<NutrientSearchResponse>>> readAllNutrientByIngredientId(@PathVariable("ingredientId") Integer ingredientId){
+        List<NutrientSearchResponse> responseList = nutrientService.readAllNutrientByIngredientId(ingredientId);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, responseList), HttpStatus.OK);
+    }
     @GetMapping("/all/name")
     @ApiOperation(value = "영양제 이름 전체조회", notes = "[영양제]테이블의 모든 영양제id, 영양제이름을 반환한다")
     public ResponseEntity<BasicResponse<List<NutrientDto>>> readAllNutrientIdAndName(){
