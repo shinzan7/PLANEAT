@@ -19,16 +19,18 @@ const birthYear = localStorage.getItem('birthYear')
 const gender = localStorage.getItem('gender')
 
 
-const response = http.get(`/nutrient/user/list/${userId}`)
-// console.log(response.data)
-// console.log(response.data.data)
-
-
-
-
 export const userState = atom({
   key: 'user',
   default: [ accessToken, refreshToken, accessTokenExpiration, refreshTokenExpiration, 
-  userId, name, birthYear, gender, response.data ],
-  
+  userId, name, birthYear, gender ],
 }) 
+
+export const nutrient = selector({
+  key:'nutrient',
+  get: async({get}) => {
+    // const userDATA = []
+    const response = await http.get('/nutrient?id=1')
+    return response.data
+    // userDATA.append(response.data)
+  }
+})
