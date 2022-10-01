@@ -252,8 +252,6 @@ public class FoodInfo {
                 .name(foodInfoRequest.getName())
                 .servingSize(foodInfoRequest.getServingSize())
                 .servingUnit(foodInfoRequest.getServingUnit())
-                .capacityG(foodInfoRequest.getCapacityG())
-                .capacityMl(foodInfoRequest.getCapacityMl())
                 .calorie(foodInfoRequest.getCalorie())
                 .protein(foodInfoRequest.getProtein())
                 .fat(foodInfoRequest.getFat())
@@ -278,8 +276,6 @@ public class FoodInfo {
             foodInfo.setName(foodInfoRequest.getName());
             foodInfo.setServingSize(foodInfoRequest.getServingSize());
             foodInfo.setServingUnit(foodInfoRequest.getServingUnit());
-            foodInfo.setCapacityG(foodInfoRequest.getCapacityG());
-            foodInfo.setCapacityMl(foodInfoRequest.getCapacityMl());
             foodInfo.setCalorie(foodInfoRequest.getCalorie());
             foodInfo.setProtein(foodInfoRequest.getProtein());
             foodInfo.setFat(foodInfoRequest.getFat());
