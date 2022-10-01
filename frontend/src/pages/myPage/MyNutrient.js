@@ -77,16 +77,13 @@ export default function UserInfo() {
     // console.log(intakeCnt);
     // console.log(myNutrientId);
 
-    // https://j7a701.p.ssafy.io/api/nutrient/user
-    // ?intakeRecommend = 2 & nutrientId=42 & userId=8
-
-    // post 오류 수정 필요!!!!!!!!
-    // const response = await http.post(`/nutrient/user`, {
-    //   intakeRecommend: intakeCnt,
-    //   nutrientId: myNutrientId,
-    //   userId: 8,
-    // });
-    // console.log("이얍");
+    const response = await http.post(`/nutrient/user`, null, {
+      params: {
+        intakeRecommend: intakeCnt,
+        nutrientId: myNutrientId,
+        userId: 8,
+      },
+    });
     // console.log(response.data);
 
     setOpen(false);

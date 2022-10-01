@@ -4,6 +4,7 @@
 @since 2022.09.15
 */
 import * as React from "react";
+import { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
@@ -11,21 +12,36 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
 import Container from "@mui/material/Container";
 import { FormControl, FormLabel, RadioGroup, Radio } from "@mui/material";
+import { http } from "api/http";
 
-export default function MoreInfoForm() {
-  const [gender, setGender] = React.useState({
-    male: true,
-    female: false,
-  });
-
-  const handleChange = (event) => {
-    setGender({
-      ...gender,
-      [event.target.name]: event.target.checked,
-    });
+export default function MoreInfoForm(props) {
+  // 성별
+  const handleGender = (event) => {
+    props.setGender(event.target.value);
+  };
+  // 나이
+  const handleAge = (event) => {
+    props.setAge(event.target.value);
+  };
+  // 키
+  const handleHeight = (event) => {
+    props.setHeight(event.target.value);
+  };
+  // 몸무게
+  const handleWeight = (event) => {
+    props.setWeight(event.target.value);
+  };
+  // 활동량
+  const handleActive = (event) => {
+    props.setActive(event.target.value);
   };
 
-  const { male, female } = gender;
+  // 숫자만 입력받게 하는 validation
+  const validation = (val) => {
+    let check = /^[0-9]+$/;
+    // 숫자면 true, 그 외는 false 반환
+    return !val || check.test(val);
+  };
 
   return (
     <React.Fragment>
@@ -51,11 +67,12 @@ export default function MoreInfoForm() {
           <RadioGroup
             row
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="male"
+            defaultValue="M"
             name="radio-buttons-group"
+            onChange={handleGender}
           >
             <FormControlLabel
-              value="male"
+              value="M"
               control={
                 <Radio
                   sx={{
@@ -69,7 +86,7 @@ export default function MoreInfoForm() {
               label="남"
             />
             <FormControlLabel
-              value="female"
+              value="F"
               control={
                 <Radio
                   sx={{
@@ -86,43 +103,82 @@ export default function MoreInfoForm() {
         </FormControl>
       </Grid>
       {/* 나이 */}
-      <Grid sx={{ mb: 2 }} item xs={12} md={6}>
-        <TextField
-          required
-          id="userAge"
-          label="나이"
-          helperText="숫자로 입력해주세요 (ex.27)"
-          fullWidth
-          autoComplete="cc-number"
-          variant="standard"
-          color="purple"
-        />
+      <Grid sx={{ mt: 1, mb: 2 }} item xs={12} md={6}>
+        <FormControl>
+          <FormLabel
+            sx={{
+              "&&": {
+                color: "rgba(0, 0, 0, 0.6)",
+              },
+            }}
+            id="demo-radio-buttons-group-label"
+          >
+            나이
+          </FormLabel>
+          <TextField
+            value={props.age}
+            onChange={handleAge}
+            required
+            id="userAge"
+            variant="standard"
+            color="purple"
+            placeholder="ex) 27"
+            error={!validation(props.age)}
+            helperText={!validation(props.age) ? "숫자만 입력해주세요!" : ""}
+          />
+        </FormControl>
       </Grid>
       {/* 키 */}
       <Grid sx={{ mb: 2 }} item xs={12} md={6}>
-        <TextField
-          required
-          id="userHeight"
-          label="키"
-          helperText="숫자로 입력해주세요 (ex.166)"
-          fullWidth
-          autoComplete="cc-exp"
-          variant="standard"
-          color="purple"
-        />
+        <FormControl>
+          <FormLabel
+            sx={{
+              "&&": {
+                color: "rgba(0, 0, 0, 0.6)",
+              },
+            }}
+            id="demo-radio-buttons-group-label"
+          >
+            키
+          </FormLabel>
+          <TextField
+            value={props.height}
+            onChange={handleHeight}
+            required
+            id="userHeight"
+            placeholder="ex) 166"
+            variant="standard"
+            color="purple"
+            error={!validation(props.height)}
+            helperText={!validation(props.height) ? "숫자만 입력해주세요!" : ""}
+          />
+        </FormControl>
       </Grid>
       {/* 몸무게 */}
       <Grid sx={{ mb: 2 }} item xs={12} md={6}>
-        <TextField
-          required
-          id="userWeight"
-          label="몸무게"
-          helperText="숫자로 입력해주세요 (ex.48)"
-          fullWidth
-          autoComplete="cc-csc"
-          variant="standard"
-          color="purple"
-        />
+        <FormControl>
+          <FormLabel
+            sx={{
+              "&&": {
+                color: "rgba(0, 0, 0, 0.6)",
+              },
+            }}
+            id="demo-radio-buttons-group-label"
+          >
+            몸무게
+          </FormLabel>
+          <TextField
+            value={props.weight}
+            onChange={handleWeight}
+            required
+            id="userWeight"
+            placeholder="ex) 48"
+            variant="standard"
+            color="purple"
+            error={!validation(props.weight)}
+            helperText={!validation(props.weight) ? "숫자만 입력해주세요!" : ""}
+          />
+        </FormControl>
       </Grid>
       {/* 활동량 */}
       <Grid sx={{ mt: 3 }} item xs={12} md={6}>
@@ -140,11 +196,12 @@ export default function MoreInfoForm() {
           <RadioGroup
             row
             aria-labelledby="demo-radio-buttons-group-label"
-            defaultValue="notActive"
+            defaultValue="notactive"
             name="radio-buttons-group"
+            onChange={handleActive}
           >
             <FormControlLabel
-              value="notActive"
+              value="notactive"
               control={
                 <Radio
                   sx={{
@@ -158,7 +215,7 @@ export default function MoreInfoForm() {
               label="비활동적"
             />
             <FormControlLabel
-              value="lessActive"
+              value="lessactive"
               control={
                 <Radio
                   sx={{
@@ -172,7 +229,7 @@ export default function MoreInfoForm() {
               label="저활동적"
             />
             <FormControlLabel
-              value="Active"
+              value="active"
               control={
                 <Radio
                   sx={{
@@ -186,7 +243,7 @@ export default function MoreInfoForm() {
               label="활동적"
             />
             <FormControlLabel
-              value="veryActive"
+              value="veryactive"
               control={
                 <Radio
                   sx={{
@@ -202,30 +259,6 @@ export default function MoreInfoForm() {
           </RadioGroup>
         </FormControl>
       </Grid>
-      {/* <Grid container spacing={3}>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="userBMI"
-            label="BMI"
-            helperText="키, 몸무게, 활동량 입력 시 자동 입력"
-            fullWidth
-            autoComplete="cc-name"
-            variant="standard"
-          />
-        </Grid>
-        <Grid item xs={12} sm={6}>
-          <TextField
-            required
-            id="userRecoIntake"
-            label="권장섭취량"
-            helperText="키, 몸무게, 활동량 입력 시 자동 입력"
-            fullWidth
-            autoComplete="cc-name"
-            variant="standard"
-          />
-        </Grid>
-      </Grid> */}
     </React.Fragment>
   );
 }
