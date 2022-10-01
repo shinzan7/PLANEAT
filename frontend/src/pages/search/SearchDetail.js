@@ -12,13 +12,20 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
 import { http } from "api/http";
-
-
+import { userState, nutrient } from 'states/userState'
+import { userNutrient } from "states/userNutrient";
+import { useRecoilValue } from 'recoil'
 
 function SearchDetail() {
 
   const { nutrientId }  = useParams();
-  console.log('params', nutrientId)
+  // console.log('params', nutrientId)
+  const userInfo = useRecoilValue(userState)
+  const userNutrientInfo = useRecoilValue(userNutrient)
+  const nutrientInfo = useRecoilValue(nutrient)
+  // console.log('userInfo', userInfo)
+  console.log('userNutrientInfo', userNutrientInfo)
+  console.log('nutrientInfo', nutrientInfo)
 
   const section = {marginTop:'80px'}
   const bold = {fontWeight:'bold'}
@@ -35,6 +42,7 @@ function SearchDetail() {
     description: '',
     nutriIngredientList: [],
   })
+
 
   useEffect(() => {
     // const url = `https://j7a701.p.ssafy.io/api/nutrient?id=1` 

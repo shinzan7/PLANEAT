@@ -6,7 +6,8 @@ recoil userState
 @since 2022.09.28
 */
 
-import { atom } from 'recoil';
+import { atom, selector } from 'recoil';
+import { http } from 'api/http'
 
 const accessToken = localStorage.getItem('accessToken')
 const refreshToken = localStorage.getItem('refreshToken')
@@ -21,6 +22,15 @@ const gender = localStorage.getItem('gender')
 export const userState = atom({
   key: 'user',
   default: [ accessToken, refreshToken, accessTokenExpiration, refreshTokenExpiration, 
-  userId, name, birthYear, gender],
-  
+  userId, name, birthYear, gender ],
 }) 
+
+export const nutrient = selector({
+  key:'nutrient',
+  get: async({get}) => {
+    // const userDATA = []
+    const response = await http.get('/nutrient?id=1')
+    return response.data
+    // userDATA.append(response.data)
+  }
+})

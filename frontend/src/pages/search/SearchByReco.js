@@ -3,13 +3,14 @@
 @author 전상현
 @since 2022.09.19
 */
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import CardNutrient from 'components/common/CardNutrient';
 import { Grid } from "@mui/material";
 import Slider from "react-slick";
 import "./slick.css";
 import "./slick-theme.css";
 import {Link} from 'react-router-dom';
+import { http } from "api/http";
 
 function SearchByReco() {
   const data = {
@@ -19,6 +20,22 @@ function SearchByReco() {
     category_tag: ["장건강"],
     ingredient_name: ["차전자피식이섬유"],
   }
+
+  // const [info, setInfo] = useState({
+  //   imagePath: '',
+  //   nutrientName: '',
+  //   company: '',
+  //   description: '',
+  //   nutriIngredientList: [],
+  // })
+
+  // useEffect(() => {
+  //   http.get('/nutrient/all')
+  //   .then(response => {
+  //     console.log('전체', response.data[0])
+  //     // setInfo(response.data.data)
+  //   })
+  // }, [])
 
   const name = localStorage.getItem('name')
 
