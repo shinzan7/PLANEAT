@@ -10,11 +10,13 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
+import Info from "./Info";
+import Pagination from "components/common/Pagination"
+import { TrendingFlatOutlined } from "@mui/icons-material";
 
 
 function TagResult() {
   const tagname = useParams()
-
 
   const section = { marginTop:'80px' }
   const section1 = { marginTop:'25vh', textAlign:'center'}
@@ -32,6 +34,18 @@ function TagResult() {
       setInfo(response.data.data)
     })
   }, [])
+  
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postPerPage] = useState(20)
+
+  // 여기 20개씩 아니면 안나오니까 고쳐야함
+  const indexOfLastPost = currentPage * postPerPage
+  const indexOfFirstPost = indexOfLastPost - postPerPage
+  const currentPosts = info.slice(indexOfFirstPost, indexOfLastPost)
+
+  const paginate = pageNum => setCurrentPage(pageNum)
+
+
 
   return (
       <div style={section}>
@@ -66,14 +80,21 @@ function TagResult() {
                 <Grid item xs={9}>
                   {/* 태그 검색 결과  */}
                   <Grid container style={card}>
-                    {info.map(function(data, i) { 
+                    {/* {info.map(function(data, i) { 
                       return (
                       <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
                         <CardNutrient key={i} pill={data} />
                       </Link>
                       )
-                    })}
+                    })} */}
                   </Grid>
+                  
+                  <Info info={currentPosts} />
+                  <Pagination 
+                  postPerPage={postPerPage}
+                  totalPosts={info.length}
+                  paginate={paginate}
+                  />
                 </Grid>
                 <Grid item xs={2}>
 
