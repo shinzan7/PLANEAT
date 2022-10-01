@@ -18,14 +18,11 @@ import java.util.Optional;
 
 public interface FoodInfoRepository extends JpaRepository<FoodInfo, Long> {
 
-    @Query("select f from FoodInfo f where f.foodUser = :userId or f.foodUser = 1 order by f.id asc")
-    List<FoodInfo> findAllFoodInfo(Long userId, Pageable pageable);
+    Optional<FoodInfo> findById(Long foodInfoId);
 
-    @Query("select f from FoodInfo f where f.foodUser = :userId")
-    List<FoodInfo> findByUserIdFoodInfo(Long userId, Pageable pageable);
+    List<FoodInfo> findByFoodUser(Long foodUser, Pageable pageable);
 
     @Query("select f from FoodInfo f where f.name like concat('%', :name, '%') and (f.foodUser = :userId or f.foodUser = 1) order by length(f.name) asc")
-    List<FoodInfo> findByNameAndUserIdFoodInfo(String name, Long userId, Pageable pageable);
+    List<FoodInfo> findByNameAndFoodUser(String name, Long userId, Pageable pageable);
 
-    Optional<FoodInfo> findById(Long foodInfoId);
 }
