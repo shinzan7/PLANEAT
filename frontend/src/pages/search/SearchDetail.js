@@ -96,7 +96,7 @@ function SearchDetail() {
                 <grid item xs={8} style={text}>
                   <Grid container>
                     <Grid item xs={2.5}>
-                      이미지 들어갈 부분
+                      <img src={info.imagePath} alt='' />
                       <br></br>
                       <br></br>
                       <p>{info.company}</p>

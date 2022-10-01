@@ -78,7 +78,7 @@ function SearchByReco() {
           <Grid item xs={9.8}>
             <div style={section1}>
               {/* 유저 식단 기반 분석에서 부족한 영양소 성분 기반 추천 */}
-              <p><span style={bold}>{name}</span> 님을 위한 영양제 추천</p>
+              {/* <p><span style={bold}>{name}</span> 님을 위한 영양제 추천</p> */}
               <p>&nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게 추천해요</p>
             </div>
 

@@ -42,7 +42,8 @@ function Router() {
                     <Route path="/mypage" element={<MyPage />} />
                     <Route path="/logincheck" element={<Logincheck />} />
                 </Routes>
-                <Footer />
+                { url === 'http://localhost:3000/' ? 
+                null : <Footer />}
             </BrowserRouter>
         
     )

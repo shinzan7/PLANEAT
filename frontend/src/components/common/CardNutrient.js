@@ -16,7 +16,7 @@ const CardNutrient = function MediaCard(props) {
     let imgUrl = props.pill.imagePath; // props의 이미지 url
 
   return (
-      <Card sx={{ width: {xs:'250px'}, height: 300, borderRadius: 5, margin: 1}}>
+      <Card sx={{ width: {xs:'250px'}, height: 250, borderRadius: 5, margin: 1}}>
           <CardContent>
           <p style={{textAlign: "center", marginTop:20}}>
               <img
@@ -37,14 +37,14 @@ const CardNutrient = function MediaCard(props) {
                 {props.pill.nutrientName} 
             </Typography>
           </CardContent>
-          <CardActions sx={{ padding: 0, marginLeft: 2, marginBottom: 1 }} >
-          {/* 영양제 기능 태그 */}
-            {/* <ChipBlue label={ props.pill.nutriIngredientList[0].categoryTagList[0]}></ChipBlue>                     */}
+          {/* <CardActions sx={{ padding: 0, marginLeft: 2, marginBottom: 1 }} >
+            영양제 기능 태그
+            <ChipBlue label={ props.pill.nutriIngredientList[0].categoryTagList[0]}></ChipBlue>                    
           </CardActions>
           <CardActions sx={{padding: 0, marginLeft: 2} }>
-           {/* 영양제 성분 태그 */}
-          {/* <ChipOrange label={ props.pill.nutriIngredientList[0].ingredientName}></ChipOrange> */}
-        </CardActions>
+            영양제 성분 태그
+          <ChipOrange label={ props.pill.nutriIngredientList[0].ingredientName}></ChipOrange>
+        </CardActions> */}
     </Card>
   );
 }

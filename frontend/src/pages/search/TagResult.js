@@ -13,15 +13,8 @@ import { http } from "api/http";
 
 
 function TagResult() {
-  // const data = {
-  //   img: "",
-  //   nutrient_name: "락토핏 생유산균 화이버",
-  //   company: "종근당",
-  //   category_tag: ["장건강"],
-  //   ingredient_name: ["차전자피식이섬유"],
-  // }
-
   const tagname = useParams()
+
 
   const section = { marginTop:'80px' }
   const section1 = { marginTop:'25vh', textAlign:'center'}
@@ -30,13 +23,7 @@ function TagResult() {
   const card = { textAlign:'left' }
   const bold = {fontWeight:'bold'}
 
-  const [info, setInfo] = useState({
-    imagePath: '',
-    nutrientName: '',
-    company: '',
-    description: '',
-    nutrientId: 0,
-  })
+  const [info, setInfo] = useState([])
 
   useEffect(() => {
     http.get(`/nutrient/tag/${tagname.id}`)
@@ -45,13 +32,6 @@ function TagResult() {
       setInfo(response.data.data)
     })
   }, [])
-  
-  const info2 = []
-  for (var i = 0; i < info.length; i++) {
-    info2.push(info[i])
-  }
-
-
 
   return (
       <div style={section}>
@@ -83,21 +63,19 @@ function TagResult() {
                 <Grid item xs={1}>
 
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={9}>
+                  {/* 태그 검색 결과  */}
                   <Grid container style={card}>
-                    {/* {info.map((data, i) => {
-                      <Link to='/searchdetail/${data.nutrientId}' style={{textDecoration:'none'}}>
+                    {info.map(function(data, i) { 
+                      return (
+                      <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
                         <CardNutrient key={i} pill={data} />
                       </Link>
-                    })} */}
-
-                    
-                    <Link to='/searchdetail/7' style={{textDecoration:'none'}}>
-                      <CardNutrient pill={info[0]} />
-                    </Link>
+                      )
+                    })}
                   </Grid>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
 
                 </Grid>  
               </Grid>
