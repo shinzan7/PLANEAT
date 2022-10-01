@@ -7,7 +7,7 @@ package planeat.database.entity;
  @since 2022-09-15
 */
 import lombok.*;
-import net.bytebuddy.implementation.bind.annotation.Super;
+import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -24,6 +24,7 @@ public class AnalysisHistory {
     @Column(name = "analysis_history_id")
     private Long id;
 
+    @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -33,16 +34,16 @@ public class AnalysisHistory {
     private LocalDate date;
 
     @Column(nullable = false)
-    private Integer analysis_type;
+    private Integer analysisType;
     @Column(nullable = false)
-    private String analysis_score;
+    private String analysisScore;
 
     private Float calorie;
     private Float protein;
     private Float fat;
     private Float carbohydrate;
     private Float sugar;
-    private Float dietary_fiber;
+    private Float dietaryFiber;
     private Float calcium;
     private Float iron;
     private Float magnesium;
@@ -71,18 +72,18 @@ public class AnalysisHistory {
     private Float vitaminB2;
 
     @Builder
-    public AnalysisHistory(Long id, User user, LocalDate date, Integer analysis_type, String analysis_score, Float calorie, Float protein, Float fat, Float carbohydrate, Float sugar, Float dietary_fiber, Float calcium, Float iron, Float magnesium, Float phosphorus, Float potassium, Float sodium, Float zinc, Float copper, Float manganese, Float selenium, Float vitaminA, Float vitaminD, Float vitaminB6, Float folate, Float vitaminB12, Float vitaminC, Float cholesterol, Float fattyAcid, Float linoleicAcid, Float alphaLinoleicAcid, Float transFattyAcid, Float vitaminB1, Float vitaminB2) {
+    public AnalysisHistory(Long id, User user, LocalDate date, Integer analysisType, String analysisScore, Float calorie, Float protein, Float fat, Float carbohydrate, Float sugar, Float dietaryFiber, Float calcium, Float iron, Float magnesium, Float phosphorus, Float potassium, Float sodium, Float zinc, Float copper, Float manganese, Float selenium, Float vitaminA, Float vitaminD, Float vitaminB6, Float folate, Float vitaminB12, Float vitaminC, Float cholesterol, Float fattyAcid, Float linoleicAcid, Float alphaLinoleicAcid, Float transFattyAcid, Float vitaminB1, Float vitaminB2) {
         this.id = id;
         this.user = user;
         this.date = date;
-        this.analysis_type = analysis_type;
-        this.analysis_score = analysis_score;
+        this.analysisType = analysisType;
+        this.analysisScore = analysisScore;
         this.calorie = calorie;
         this.protein = protein;
         this.fat = fat;
         this.carbohydrate = carbohydrate;
         this.sugar = sugar;
-        this.dietary_fiber = dietary_fiber;
+        this.dietaryFiber = dietaryFiber;
         this.calcium = calcium;
         this.iron = iron;
         this.magnesium = magnesium;
@@ -112,14 +113,14 @@ public class AnalysisHistory {
         this.id = id;
         this.user = user;
         this.date = date;
-        this.analysis_type = analysis_type;
-        this.analysis_score = analysis_score;
+        this.analysisType = analysis_type;
+        this.analysisScore = analysis_score;
         this.calorie = calorie;
         this.protein = protein;
         this.fat = fat;
         this.carbohydrate = carbohydrate;
         this.sugar = sugar;
-        this.dietary_fiber = dietary_fiber;
+        this.dietaryFiber = dietary_fiber;
         this.calcium = calcium;
         this.iron = iron;
         this.magnesium = magnesium;
