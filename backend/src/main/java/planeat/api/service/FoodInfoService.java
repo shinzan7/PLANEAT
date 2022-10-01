@@ -45,24 +45,6 @@ public class FoodInfoService {
 
 
     /**
-     * 전체 식품 정보 조회 (다른 유저가 등록한 음식 제외)
-     * 가나다 순 100개
-     *
-     * @param userId 유저 번호 1:관리자
-     * @return List<FoodInfoResponse>
-     */
-    public List<FoodInfoResponse> readAllFoodInfos(Long userId) {
-        List<FoodInfoResponse> foodInfoList = new ArrayList<>();
-        PageRequest pageRequest = PageRequest.of(0,100);
-        List<FoodInfo> foodInfos = foodInfoRepository.findAllFoodInfo(userId, pageRequest);
-        for (FoodInfo foodInfo : foodInfos) {
-            foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
-        }
-        return foodInfoList;
-    }
-
-
-    /**
      * 유저 번호로 식품 정보 조회
      *
      *
@@ -72,7 +54,7 @@ public class FoodInfoService {
     public List<FoodInfoResponse> readFoodInfo(Long userId) {
         List<FoodInfoResponse> foodInfoList = new ArrayList<>();
         PageRequest pageRequest = PageRequest.of(0,100);
-        List<FoodInfo> foodInfos = foodInfoRepository.findByUserIdFoodInfo(userId, pageRequest);
+        List<FoodInfo> foodInfos = foodInfoRepository.findByFoodUser(userId, pageRequest);
         for (FoodInfo foodInfo : foodInfos) {
             foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
         }
@@ -90,7 +72,7 @@ public class FoodInfoService {
     public List<FoodInfoResponse> readByNameFoodInfo(Long userId, String name) {
         List<FoodInfoResponse> foodInfoList = new ArrayList<>();
         PageRequest pageRequest = PageRequest.of(0,500);
-        List<FoodInfo> foodInfos = foodInfoRepository.findByNameAndUserIdFoodInfo(name, userId, pageRequest);
+        List<FoodInfo> foodInfos = foodInfoRepository.findByNameAndFoodUser(name, userId, pageRequest);
         for (FoodInfo foodInfo : foodInfos) {
             foodInfoList.add(FoodInfoResponse.createFoodInfoResponse(foodInfo));
         }
@@ -106,6 +88,7 @@ public class FoodInfoService {
      * @return userId
      */
     public Long updateFoodInfo(Long userId, FoodInfoRequest foodInfoRequest) {
+        // 음식 번호에 해당하는 유저 번호와 현재 유저 번호가 같은지 확인
         Long createUser = foodInfoRequest.getFoodUser();
         if(userId.equals(createUser)) {
             FoodInfo foodInfo = FoodInfo.updateFoodInfo(userId, foodInfoRequest);
