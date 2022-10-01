@@ -35,14 +35,15 @@ function Router() {
                     <Route path="/searchdetail/:nutrientId" element={<SearchDetail />} />
                     {/* <Route path="/tagresult" element={<TagResult />} /> */}
                     <Route path="/tagresult/:id" element={<TagResult />} />
-                    <Route path="/result" element={<NameResult />} />
+                    {/* <Route path="/result" element={<NameResult />} /> */}
                     <Route path="/result/:id" element={<NameResult />} />
-                    <Route path="/nutrientresult" element={<NutrientResult />} />
+                    {/* <Route path="/nutrientresult" element={<NutrientResult />} /> */}
                     <Route path="/nutrientresult/:id" element={<NutrientResult />} />
                     <Route path="/mypage" element={<MyPage />} />
                     <Route path="/logincheck" element={<Logincheck />} />
                 </Routes>
-                <Footer />
+                { url === 'http://localhost:3000/' ? 
+                null : <Footer />}
             </BrowserRouter>
         
     )

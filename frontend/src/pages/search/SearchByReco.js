@@ -15,27 +15,11 @@ import { http } from "api/http";
 function SearchByReco() {
   const data = {
     img: "",
-    nutrient_name: "락토핏 생유산균 화이버",
+    nutrientName: "락토핏 생유산균 화이버",
     company: "종근당",
-    category_tag: ["장건강"],
-    ingredient_name: ["차전자피식이섬유"],
+    categoryTag: ["장건강"],
+    ingredientName: ["차전자피식이섬유"],
   }
-
-  // const [info, setInfo] = useState({
-  //   imagePath: '',
-  //   nutrientName: '',
-  //   company: '',
-  //   description: '',
-  //   nutriIngredientList: [],
-  // })
-
-  // useEffect(() => {
-  //   http.get('/nutrient/all')
-  //   .then(response => {
-  //     console.log('전체', response.data[0])
-  //     // setInfo(response.data.data)
-  //   })
-  // }, [])
 
   const name = localStorage.getItem('name')
 
@@ -94,7 +78,7 @@ function SearchByReco() {
           <Grid item xs={9.8}>
             <div style={section1}>
               {/* 유저 식단 기반 분석에서 부족한 영양소 성분 기반 추천 */}
-              <p><span style={bold}>{name}</span> 님을 위한 영양제 추천</p>
+              {/* <p><span style={bold}>{name}</span> 님을 위한 영양제 추천</p> */}
               <p>&nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게 추천해요</p>
             </div>
 

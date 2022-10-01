@@ -9,12 +9,16 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
-import { Paper, Grid } from "@mui/material";
+import { Paper, Grid, Container } from "@mui/material";
 
 import Header from "components/nav/Header";
 import Footer from "components/nav/Footer";
+import TimelineStat from "./TimelineStat";
+import WeightStat from "./WeightStat";
 import FoodStat from "./FoodStat";
-import NutrientState from "./NutrientStat";
+import PlaneatStat from "./PlaneatStat";
+import FeedbackStat from "./FeedbackStat";
+import NutrientStat from "./NutrientStat";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -59,7 +63,7 @@ function Analysis() {
 
   return (
     <div>
-      <Box sx={{ width: "100%", marginTop: "100px" }}>
+      <Container sx={{ width: "100%", marginTop: "100px" }}>
         <Tabs
           sx={{ marginRight: "25px", marginLeft: "25px" }}
           value={value}
@@ -75,38 +79,83 @@ function Analysis() {
 
         {/* 최근 7일 */}
         <TabPanel value={value} index={0}>
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <FoodStat value={value}></FoodStat>
+              {/* 타임라인 */}
+              <TimelineStat value={value}></TimelineStat>
             </Grid>
             <Grid item xs={12} md={6}>
-              <NutrientState value={value}></NutrientState>
+              {/* 플래닛지수 */}
+              <PlaneatStat value={value}></PlaneatStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 피드백*/}
+              <FeedbackStat value={value}></FeedbackStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 섭취량 */}
+              <FoodStat value={value}></FoodStat>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              {/* 영양제 */}
+              <NutrientStat value={value}></NutrientStat>
             </Grid>
           </Grid>
         </TabPanel>
         {/* 최근 30일 */}
         <TabPanel value={value} index={1}>
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <FoodStat value={value}></FoodStat>
+              {/* 변화기록 */}
+              <WeightStat value={value}></WeightStat>
             </Grid>
             <Grid item xs={12} md={6}>
-              <NutrientState value={value}></NutrientState>
+              {/* 플래닛지수 */}
+              <PlaneatStat value={value}></PlaneatStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 피드백*/}
+              <FeedbackStat value={value}></FeedbackStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 섭취량 */}
+              <FoodStat value={value}></FoodStat>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              {/* 영양제 */}
+              <NutrientStat value={value}></NutrientStat>
             </Grid>
           </Grid>
         </TabPanel>
         {/* 전체 기간 */}
         <TabPanel value={value} index={2}>
-          <Grid container spacing={2}>
+          <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
-              <FoodStat value={value}></FoodStat>
+              {/* 변화기록 */}
+              <WeightStat value={value}></WeightStat>
             </Grid>
             <Grid item xs={12} md={6}>
-              <NutrientState value={value}></NutrientState>
+              {/* 플래닛지수 */}
+              <PlaneatStat value={value}></PlaneatStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 피드백*/}
+              <FeedbackStat value={value}></FeedbackStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 섭취량 */}
+              <FoodStat value={value}></FoodStat>
+            </Grid>
+
+            <Grid item xs={12} md={12}>
+              {/* 영양제 */}
+              <NutrientStat value={value}></NutrientStat>
             </Grid>
           </Grid>
         </TabPanel>
-      </Box>
+      </Container>
     </div>
   );
 }

@@ -1,16 +1,14 @@
 /*
-내 영양 분석 페이지 > 플래닛 지수 및 영양제 섭취 스탯
+피드백 스탯
 @author 조혜안
-@since 2022.09.22
+@since 2022.10.01
 */
 import { Paper, Grid } from "@mui/material";
-import { useEffect } from "react";
 import Chart from "react-apexcharts";
 
-// 유저가 등록한 영양제
 const userNutrientInfo = [
   {
-    nutrient_name: "광동 마그네슘",
+    nutrient_name: "탄수화물",
     intake_reco: "2",
     user_nutrient_info: [
       {
@@ -32,7 +30,7 @@ const userNutrientInfo = [
     ],
   },
   {
-    nutrient_name: "큰상인 홍삼정 스틱",
+    nutrient_name: "단백질",
     intake_reco: "1",
     user_nutrient_info: [
       {
@@ -50,7 +48,7 @@ const userNutrientInfo = [
     ],
   },
   {
-    nutrient_name: "데일리코어 비타민C",
+    nutrient_name: "지방",
     intake_reco: "2",
     user_nutrient_info: [
       {
@@ -68,8 +66,6 @@ const userNutrientInfo = [
     ],
   },
 ];
-
-// for (let i = 0; i < userNutrientInfo.length; i++) {}
 
 // 영양제 섭취 차트
 function ShowNutrientCharts({ nutrientName, realReco }) {
@@ -97,8 +93,8 @@ function ShowNutrientCharts({ nutrientName, realReco }) {
     xaxis: {
       categories: [nutrientName],
       min: 0, // start date
-      max: 7, // end date
-      tickAmount: 7, // interval you want
+      max: 10, // end date
+      tickAmount: 2, // interval you want
     },
   };
 
@@ -111,7 +107,7 @@ function ShowNutrientCharts({ nutrientName, realReco }) {
   );
 }
 
-export default function NutrientStat({ value }) {
+export default function FeedbackStat({ value }) {
   return (
     <Paper
       elevation={3}
@@ -124,22 +120,25 @@ export default function NutrientStat({ value }) {
     >
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
       {/* {value} */}
-      <div style={{ margin: 20 }}>
-        {/* 영양제 분석 차트 */}
-        <h3>영양제 분석</h3>
-        {userNutrientInfo.map((data, i) => (
-          <div>
-            <ShowNutrientCharts
-              nutrientName={data.nutrient_name}
-              realReco={data.user_nutrient_info}
-            ></ShowNutrientCharts>
-            <p style={{ marginLeft: "3px", marginBottom: "0px", marginTop: "0px" }}>
-              <b style={{ color: "#F7BF87" }}>{data.nutrient_name}</b>을 ~~일 중에{" "}
-              <b style={{ color: "#F7BF87" }}>{data.user_nutrient_info.length}</b> 일 섭취했어요.
-            </p>
-          </div>
-        ))}
-      </div>
+      <Grid Container style={{ margin: 20 }}>
+        <Grid item>
+          <h3>분석 피드백</h3>
+        </Grid>
+        <Grid item>
+          {userNutrientInfo.map((data, i) => (
+            <div>
+              <ShowNutrientCharts
+                nutrientName={data.nutrient_name}
+                realReco={data.user_nutrient_info}
+              ></ShowNutrientCharts>
+              <p style={{ marginLeft: "3px", marginBottom: "0px", marginTop: "0px" }}>
+                <b style={{ color: "#F7BF87" }}>{data.nutrient_name}</b>을 ~~g 중에{" "}
+                <b style={{ color: "#F7BF87" }}>{data.user_nutrient_info.length}</b>g 섭취했어요.
+              </p>
+            </div>
+          ))}
+        </Grid>
+      </Grid>
     </Paper>
   );
 }

@@ -16,9 +16,8 @@ const TagNute = ({ tag, index }) => {
   const onCheck = ({ target }) => {
     console.log("=====onCheck=====");
     console.log(target.id); // 영양성분의 아이디 (1,2,3, ... )
-    navigate("/nutrientresult"); // 이동
   };
- 
+
   return (
     <>
       <div
