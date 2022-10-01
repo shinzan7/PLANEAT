@@ -61,6 +61,23 @@ export default function FoodModal(props) {
 
     if (foodInfo.name == "") {
       alert("음식 이름을 입력해주세요");
+    } else if (
+      isNaN(foodInfo.calorie) ||
+      isNaN(foodInfo.serving_size) ||
+      isNaN(foodInfo.carbohydrate) ||
+      isNaN(foodInfo.fat) ||
+      isNaN(foodInfo.protein) ||
+      isNaN(foodInfo.cholesterol) ||
+      isNaN(foodInfo.sodium) ||
+      isNaN(foodInfo.potassium) ||
+      isNaN(foodInfo.dietary_fiber) ||
+      isNaN(foodInfo.sugar) ||
+      isNaN(foodInfo.vitaminA) ||
+      isNaN(foodInfo.vitaminC) ||
+      isNaN(foodInfo.calcium) ||
+      isNaN(foodInfo.iron)
+    ) {
+      alert("올바른 값을 입력해주세요.");
     } else {
       //todo: 로그인한 유저 아이디로 변경 필요
       const response = await http.post(`/food-infos/10`, {
