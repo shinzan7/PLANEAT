@@ -36,6 +36,7 @@ public class UserNutrientService {
     private final NutrientHistoryRepository nutrientHistoryRepository;
     private final UserRepository userRepository;
     private final NutrientRepository nutrientRepository;
+    private final AnalysisHistoryService analysisHistoryService;
 
     /**
      * 해당 유저의 섭취날짜로 섭취기록 조회
@@ -197,11 +198,14 @@ public class UserNutrientService {
      * 영양제 섭취기록 등록
      * @param request 등록할 영양제 섭취기록 dto
      */
-    public Long createNutrientHistory(NutrientHistoryRequest request){
+    public Long createNutrientHistory(Long userId, NutrientHistoryRequest request){
         //연결할 유저 영양제 찾기
         UserNutrient userNutrient = userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NUTRIENT_NOT_FOUND_ERROR)
         );
+
+        //추가된 영양제 함량만큼 해당날짜의 분석기록에 추가
+        analysisHistoryService.addUserNutrientFromAnalysisHistory(userId, request);
 
         NutrientHistory nutrientHistory = NutrientHistory.createUserNutrientHistory(
                 userNutrient,
@@ -216,10 +220,23 @@ public class UserNutrientService {
      * 영양제 섭취기록 수정 (날짜와 영양제id로 조회)
      * @param request 수정하는 영양제 섭취기록 dto
      */
-    public List<String> updateNutrientHistory(NutrientHistoryRequest request){
+    public List<String> updateNutrientHistory(Long userId, NutrientHistoryRequest request){
         UserNutrient userNutrient = userNutrientRepository.findById(request.getUserNutrientId()).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NUTRIENT_NOT_FOUND_ERROR)
         );
+
+        //기존의 영양제 섭취기록 데이터 originDataRequest에 담기
+        NutrientHistory originHistory = nutrientHistoryRepository.findByUserNutrientAndIntakeDate(userNutrient, request.getIntakeDate());
+        NutrientHistoryRequest originDataRequest = NutrientHistoryRequest.builder()
+                .userNutrientId(userNutrient.getId())
+                .intakeDate(originHistory.getIntakeDate())
+                .intakeReal(originHistory.getIntakeReal())
+                .build();
+
+        //제거된 영양제 함량만큼 해당날짜의 분석기록에서 차감
+        analysisHistoryService.minusUserNutrientFromAnalysisHistory(userId, originDataRequest);
+        //업데이트되는 영양제 함량만큼 해당날짜의 분석기록에 추가
+        analysisHistoryService.addUserNutrientFromAnalysisHistory(userId, request);
 
         NutrientHistory nutrientHistory = nutrientHistoryRepository.findByIntakeDateAndUserNutrient(request.getIntakeDate(), userNutrient);
         nutrientHistory.update(userNutrient, request.getIntakeDate(), request.getIntakeReal());

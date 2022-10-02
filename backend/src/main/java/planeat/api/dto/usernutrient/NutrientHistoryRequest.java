@@ -27,9 +27,18 @@ public class NutrientHistoryRequest {
     Integer intakeReal;
 
     @Builder
-    public void createNutrientHistoryRequest(Long userNutrientId, LocalDate intakeDate, Integer intakeReal) {
+    public NutrientHistoryRequest(Long userNutrientId, LocalDate intakeDate, Integer intakeReal) {
         this.userNutrientId = userNutrientId;
         this.intakeDate = intakeDate;
         this.intakeReal = intakeReal;
+    }
+
+    @Override
+    public String toString() {
+        return "NutrientHistoryRequest{" +
+                "userNutrientId=" + userNutrientId +
+                ", intakeDate=" + intakeDate +
+                ", intakeReal=" + intakeReal +
+                '}';
     }
 }

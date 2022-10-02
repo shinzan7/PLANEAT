@@ -22,7 +22,8 @@ public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
     @Query("select new planeat.api.dto.nutrient.NutrientDto(n.id, n.nutrientName) from Nutrient n")
     List<NutrientDto> findAllName();
 
-    @Query("select distinct n from Nutrient n " +
-            "left join fetch n.nutrientIngredientList")
-    List<Nutrient> findAllNutrient();
+    @Query(value = "select * from nutrient where nutrient_id in " +
+            "(select nutrient_id from user_nutrient where user_nutrient_id = :userNutrientId)"
+            , nativeQuery = true)
+    Nutrient findNutrientByUserNutrientId(@Param("userNutrientId") Long userNutrientId);
 }
