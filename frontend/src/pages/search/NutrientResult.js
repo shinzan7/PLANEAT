@@ -10,24 +10,12 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
-import Info from "./Info";
-import Pagination from "components/common/Pagination"
-
-
 
 function NutrientResult() {
 
   const ingredient = useParams()
   const location = useLocation()
   const dataTitle = location.state.data.title
-
-  // const data = {
-  //   img: "",
-  //   nutrient_name: "락토핏 생유산균 화이버",
-  //   company: "종근당",
-  //   category_tag: ["장건강"],
-  //   ingredient_name: ["차전자피식이섬유"],
-  // }
 
   const [info, setInfo] = useState([])
 
@@ -38,16 +26,6 @@ function NutrientResult() {
       setInfo(response.data.data)
     })
   }, [])
-
-  const [currentPage, setCurrentPage] = useState(1)
-  const [postPerPage] = useState(20)
-
-  const indexOfLastPost = currentPage * postPerPage
-  const indexOfFirstPost = indexOfLastPost - postPerPage
-  const currentPosts = info.slice(indexOfFirstPost, indexOfLastPost)
-  console.log(indexOfFirstPost, indexOfLastPost)
-
-  const paginate = pageNum => setCurrentPage(pageNum)
 
   const section = { marginTop:'80px' }
   const section1 = { marginTop:'25vh', textAlign:'center'}

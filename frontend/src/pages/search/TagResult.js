@@ -10,8 +10,9 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
-import Info from "./Info";
-import Pagination from "components/common/Pagination"
+import styled from "styled-components";
+import Pagination from "components/common/Pagination";
+
 
 
 function TagResult() {
@@ -34,16 +35,18 @@ function TagResult() {
     })
   }, [])
 
-  
-  const [currentPage, setCurrentPage] = useState(1)
-  const [postPerPage] = useState(20)
+  const [limit, setLimit] = useState(20)
+  const [page, setPage] = useState(1)
+  const offset = (page-1)*limit
+  // const [currentPage, setCurrentPage] = useState(1)
+  // const [postPerPage] = useState(20)
 
-  const indexOfLastPost = currentPage * postPerPage
-  const indexOfFirstPost = indexOfLastPost - postPerPage
-  const currentPosts = info.slice(indexOfFirstPost, indexOfLastPost)
-  console.log(indexOfFirstPost, indexOfLastPost)
+  // const indexOfLastPost = currentPage * postPerPage
+  // const indexOfFirstPost = indexOfLastPost - postPerPage
+  // const currentPosts = info.slice(indexOfFirstPost, indexOfLastPost)
+  // console.log(indexOfFirstPost, indexOfLastPost)
 
-  const paginate = pageNum => setCurrentPage(pageNum)
+  // const paginate = pageNum => setCurrentPage(pageNum)
 
 
 
@@ -80,23 +83,43 @@ function TagResult() {
                  {/* 태그 검색 결과  */}
                 <Grid item xs={9}>
                   <Grid container>
-                    {info.map(function(data, i) { 
+                    {/* {info.map(function(data, i) { 
                       return (
                       <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
                         <CardNutrient key={i} pill={data} />
                       </Link>
                       )
-                    })}                  
-                  </Grid>
+                    })}       */}
 
+                    {info.slice(offset, offset+limit).map(function(data, i) {
+                      return (
+                        <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
+                          <CardNutrient key={i} pill={data} />
+                        </Link>
+                      )})}
 
-                  {/* <Info info={currentPosts} />   
-                  <Pagination 
-                    postPerPage={postPerPage}
-                    totalPosts={info.length}
-                    paginate={paginate}
-                  /> */}
+                    <br></br>
+
+                    <Grid container>
+                      <Grid item xs={3}>
+
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Pagination
+                        total={info.length}
+                        limit={limit}
+                        page={page}
+                        setPage={setPage}
+                      />
+                      </Grid>
+                      <Grid item xs={3}>
                 
+                      </Grid>
+                    </Grid>
+
+                    <br></br>
+
+                  </Grid>
                 </Grid>
                 <Grid item xs={2}>
 
