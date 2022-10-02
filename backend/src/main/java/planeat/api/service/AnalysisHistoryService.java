@@ -2,11 +2,10 @@ package planeat.api.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import planeat.api.dto.analysishistory.IngredientInfoDto;
+import planeat.api.dto.usernutrient.NutrientHistoryRequest;
 import planeat.database.entity.*;
-import planeat.database.repository.AnalysisHistoryRepository;
-import planeat.database.repository.NutritionRepository;
-import planeat.database.repository.UserRecIntakeRepository;
-import planeat.database.repository.UserRepository;
+import planeat.database.repository.*;
 import planeat.exception.CustomException;
 import planeat.exception.CustomExceptionList;
 
@@ -24,6 +23,8 @@ public class AnalysisHistoryService {
     private final UserRepository userRepository;
     private final UserRecIntakeRepository userRecIntakeRepository;
     private final NutritionRepository nutritionRepository;
+    private final NutrientRepository nutrientRepository;
+    private final NutrientIngredientRespository nutrientIngredientRespository;
 
     /**
      * 유저id와 날짜에 해당하는 엔티티 2개를 리스트로 반환한다
@@ -265,7 +266,7 @@ public class AnalysisHistoryService {
      * @param foodInfo
      * @param amount
      */
-    public void addFood(Long userId , LocalDate localDate, FoodInfo foodInfo, BigDecimal amount){
+    public void plusFoodFromAnalysisHistory(Long userId , LocalDate localDate, FoodInfo foodInfo, BigDecimal amount){
         List<AnalysisHistory> historyList = getAnalysisHistory(userId, localDate);
         AnalysisHistory realHistory = historyList.get(0);
         AnalysisHistory rec = historyList.get(1);
@@ -323,7 +324,7 @@ public class AnalysisHistoryService {
      * @param foodInfo
      * @param amount
      */
-    public void removeFood(Long userId , LocalDate localDate, FoodInfo foodInfo, BigDecimal amount){
+    public void minusFoodFromAnalysisHistory(Long userId , LocalDate localDate, FoodInfo foodInfo, BigDecimal amount){
         List<AnalysisHistory> historyList = getAnalysisHistory(userId, localDate);
         AnalysisHistory realHistory = historyList.get(0);
         AnalysisHistory rec = historyList.get(1);
@@ -374,11 +375,137 @@ public class AnalysisHistoryService {
         realHistory.updateScore(scoreString);
     }
 
-    //영양제 섭취기록이 등록되면 섭취날짜에 해당하는 유저의 분석기록에 더한다
+    /**
+     * 영양제 섭취기록이 등록되면 섭취날짜에 해당하는 유저의 분석기록에 더한다
+     * @param userId
+     * @param request 유저영양제id, 섭취날짜, 실제섭취횟수가 담긴 DTO
+     */
+    public void addUserNutrientFromAnalysisHistory(Long userId, NutrientHistoryRequest request){
+        List<AnalysisHistory> historyList = getAnalysisHistory(userId, request.getIntakeDate());
+        AnalysisHistory realHistory = historyList.get(0);
+        AnalysisHistory rec = historyList.get(1);
+        Nutrient nutrient = nutrientRepository.findNutrientByUserNutrientId(request.getUserNutrientId());
+        List<NutrientIngredient> nutrientIngredientList = nutrientIngredientRespository.findAllByNutrientId(nutrient.getId());
 
-    //영양제 섭취기록이 수정되면 섭취날짜에 해당하는 유저의 분석기록에 차이만큼 수정한다
+        //영양성분들을 합친 정보가 담긴 dto
+        IngredientInfoDto infoDto = new IngredientInfoDto();
 
-    //영양제 섭취기록이 등록되면 섭취날짜에 해당하는 유저의 분석기록에서 뺀다
+        //영양제에 담긴 영양제 성분마다 dto에 함량만큼 더한다
+        for (NutrientIngredient n : nutrientIngredientList){
+            Integer ingredientId = n.getIngredient().getId();
+            infoDto.addIngredient(ingredientId, n.getIngredientAmount(), request.getIntakeReal());
+        }
+
+        realHistory.updateRecIntake(
+                realHistory.getCalorie() + infoDto.getCalorie(),
+                realHistory.getCarbohydrate() + infoDto.getCarbohydrate(),
+                realHistory.getProtein() + infoDto.getProtein(),
+                realHistory.getFat() + infoDto.getFat()
+        );
+        realHistory.updateSugarFat(
+                realHistory.getSugar() + infoDto.getSugar(),
+                realHistory.getCholesterol() + infoDto.getCholesterol(),
+                realHistory.getFattyAcid() + infoDto.getFattyAcid(),
+                realHistory.getTransFattyAcid() + infoDto.getFattyAcid()
+        );
+        realHistory.updateVitamin(
+                realHistory.getDietary_fiber() + infoDto.getDietary_fiber(),
+                realHistory.getCalcium() + infoDto.getCalcium(),
+                realHistory.getIron() + infoDto.getIron(),
+                realHistory.getMagnesium() + infoDto.getMagnesium(),
+                realHistory.getPhosphorus() + infoDto.getPhosphorus(),
+                realHistory.getPotassium() + infoDto.getPotassium(),
+                realHistory.getSodium() + infoDto.getSodium(),
+                realHistory.getZinc() + infoDto.getZinc(),
+                realHistory.getCopper() + infoDto.getCopper(),
+                realHistory.getManganese() + infoDto.getManganese(),
+                realHistory.getSelenium() + infoDto.getSelenium(),
+                realHistory.getVitaminA() + infoDto.getVitaminA(),
+                realHistory.getVitaminD() + infoDto.getVitaminD(),
+                realHistory.getFolate() + infoDto.getFolate(),
+                realHistory.getVitaminB12() + infoDto.getVitaminB12(),
+                realHistory.getVitaminC() + infoDto.getVitaminC(),
+                realHistory.getLinoleicAcid() + infoDto.getLinoleicAcid(),
+                realHistory.getAlphaLinoleicAcid() + infoDto.getAlphaLinoleicAcid(),
+                realHistory.getVitaminB1() + infoDto.getVitaminB1(),
+                realHistory.getVitaminB2() + infoDto.getVitaminB2()
+        );
+        //음식 추가 후 점수계산하여 update
+        float score = calculateScore(realHistory, rec);
+        String scoreString = "나쁨";
+        if(score >= 6){
+            scoreString = "좋음";
+        }else if(score >= 3){
+            scoreString = "보통";
+        }
+        realHistory.updateScore(scoreString);
+    }
+
+    /**
+     * 영양제 섭취기록이 수정되거나 삭제되면 섭취날짜에 해당하는 유저의 분석기록에서 뺀다
+     * @param userId
+     * @param request 유저영양제id, 섭취날짜, 실제섭취횟수가 담긴 DTO
+     */
+    public void minusUserNutrientFromAnalysisHistory(Long userId, NutrientHistoryRequest request){
+        List<AnalysisHistory> historyList = getAnalysisHistory(userId, request.getIntakeDate());
+        AnalysisHistory realHistory = historyList.get(0);
+        AnalysisHistory rec = historyList.get(1);
+        Nutrient nutrient = nutrientRepository.findNutrientByUserNutrientId(request.getUserNutrientId());
+        List<NutrientIngredient> nutrientIngredientList = nutrientIngredientRespository.findAllByNutrientId(nutrient.getId());
+
+        //영양성분들을 합친 정보가 담긴 dto
+        IngredientInfoDto infoDto = new IngredientInfoDto();
+
+        //영양제에 담긴 영양제 성분마다 dto에 함량만큼 더한다
+        for (NutrientIngredient n : nutrientIngredientList){
+            Integer ingredientId = n.getIngredient().getId();
+            infoDto.addIngredient(ingredientId, n.getIngredientAmount(), request.getIntakeReal());
+        }
+
+        realHistory.updateRecIntake(
+                realHistory.getCalorie() - infoDto.getCalorie(),
+                realHistory.getCarbohydrate() - infoDto.getCarbohydrate(),
+                realHistory.getProtein() - infoDto.getProtein(),
+                realHistory.getFat() - infoDto.getFat()
+        );
+        realHistory.updateSugarFat(
+                realHistory.getSugar() - infoDto.getSugar(),
+                realHistory.getCholesterol() - infoDto.getCholesterol(),
+                realHistory.getFattyAcid() - infoDto.getFattyAcid(),
+                realHistory.getTransFattyAcid() - infoDto.getFattyAcid()
+        );
+        realHistory.updateVitamin(
+                realHistory.getDietary_fiber() - infoDto.getDietary_fiber(),
+                realHistory.getCalcium() - infoDto.getCalcium(),
+                realHistory.getIron() - infoDto.getIron(),
+                realHistory.getMagnesium() - infoDto.getMagnesium(),
+                realHistory.getPhosphorus() - infoDto.getPhosphorus(),
+                realHistory.getPotassium() - infoDto.getPotassium(),
+                realHistory.getSodium() - infoDto.getSodium(),
+                realHistory.getZinc() - infoDto.getZinc(),
+                realHistory.getCopper() - infoDto.getCopper(),
+                realHistory.getManganese() - infoDto.getManganese(),
+                realHistory.getSelenium() - infoDto.getSelenium(),
+                realHistory.getVitaminA() - infoDto.getVitaminA(),
+                realHistory.getVitaminD() - infoDto.getVitaminD(),
+                realHistory.getFolate() - infoDto.getFolate(),
+                realHistory.getVitaminB12() - infoDto.getVitaminB12(),
+                realHistory.getVitaminC() - infoDto.getVitaminC(),
+                realHistory.getLinoleicAcid() - infoDto.getLinoleicAcid(),
+                realHistory.getAlphaLinoleicAcid() - infoDto.getAlphaLinoleicAcid(),
+                realHistory.getVitaminB1() - infoDto.getVitaminB1(),
+                realHistory.getVitaminB2() - infoDto.getVitaminB2()
+        );
+        //음식 추가 후 점수계산하여 update
+        float score = calculateScore(realHistory, rec);
+        String scoreString = "나쁨";
+        if(score >= 6){
+            scoreString = "좋음";
+        }else if(score >= 3){
+            scoreString = "보통";
+        }
+        realHistory.updateScore(scoreString);
+    }
 
 
 }

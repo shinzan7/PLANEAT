@@ -6,8 +6,6 @@ package planeat.api.service;
 */
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.nutrient.NutrientDto;
@@ -27,9 +25,7 @@ import planeat.exception.CustomExceptionList;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
@@ -42,7 +38,6 @@ public class NutrientService {
     private final CategoryRepository categoryRepository;
     private final S3Uploader s3Uploader;
 
-
     /**
      * 모든 영양제의 아이디와 이름 조회
      *
@@ -52,9 +47,6 @@ public class NutrientService {
         List<NutrientDto> dtoList = nutrientRepository.findAllName();
         return dtoList;
     }
-
-
-
     /**
      * nutrient객체를 받아 연관데이터를 response에 담아 반환한다
      * @param nutrient
@@ -113,12 +105,6 @@ public class NutrientService {
         );
 
         return takeAllTable(nutrient);
-    }
-
-    public List<Nutrient> readAllNutrient(){
-        List<Nutrient> nutrientList = nutrientRepository.findAllNutrient();
-
-        return nutrientList;
     }
 
     /**
