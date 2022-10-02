@@ -10,6 +10,8 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
+import Info from "./Info";
+import Pagination from "components/common/Pagination"
 
 
 
@@ -36,6 +38,16 @@ function NutrientResult() {
       setInfo(response.data.data)
     })
   }, [])
+
+  const [currentPage, setCurrentPage] = useState(1)
+  const [postPerPage] = useState(20)
+
+  const indexOfLastPost = currentPage * postPerPage
+  const indexOfFirstPost = indexOfLastPost - postPerPage
+  const currentPosts = info.slice(indexOfFirstPost, indexOfLastPost)
+  console.log(indexOfFirstPost, indexOfLastPost)
+
+  const paginate = pageNum => setCurrentPage(pageNum)
 
   const section = { marginTop:'80px' }
   const section1 = { marginTop:'25vh', textAlign:'center'}
@@ -76,7 +88,7 @@ function NutrientResult() {
                 </Grid>
                 {/* 카드들 부분 */}
                 <Grid item xs={9}>
-                  <Grid container style={card}>
+                  <Grid container>
                   {info.map(function(data, i) { 
                       return (
                       <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
@@ -84,8 +96,16 @@ function NutrientResult() {
                       </Link>
                       )
                     })}
-
                   </Grid>
+
+                  {/* <Info info={currentPosts} />   
+                  <Pagination 
+                    postPerPage={postPerPage}
+                    totalPosts={info.length}
+                    paginate={paginate}
+                    ingredient={ingredient}
+                  /> */}
+                
                 </Grid>
                 <Grid item xs={2}>
 

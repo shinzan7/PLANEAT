@@ -12,7 +12,6 @@ import {Link} from 'react-router-dom';
 import { http } from "api/http";
 import Info from "./Info";
 import Pagination from "components/common/Pagination"
-import { TrendingFlatOutlined } from "@mui/icons-material";
 
 
 function TagResult() {
@@ -34,14 +33,15 @@ function TagResult() {
       setInfo(response.data.data)
     })
   }, [])
+
   
   const [currentPage, setCurrentPage] = useState(1)
   const [postPerPage] = useState(20)
 
-  // 여기 20개씩 아니면 안나오니까 고쳐야함
   const indexOfLastPost = currentPage * postPerPage
   const indexOfFirstPost = indexOfLastPost - postPerPage
   const currentPosts = info.slice(indexOfFirstPost, indexOfLastPost)
+  console.log(indexOfFirstPost, indexOfLastPost)
 
   const paginate = pageNum => setCurrentPage(pageNum)
 
@@ -77,24 +77,26 @@ function TagResult() {
                 <Grid item xs={1}>
 
                 </Grid>
+                 {/* 태그 검색 결과  */}
                 <Grid item xs={9}>
-                  {/* 태그 검색 결과  */}
-                  <Grid container style={card}>
-                    {/* {info.map(function(data, i) { 
+                  <Grid container>
+                    {info.map(function(data, i) { 
                       return (
                       <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
                         <CardNutrient key={i} pill={data} />
                       </Link>
                       )
-                    })} */}
+                    })}                  
                   </Grid>
-                  
-                  <Info info={currentPosts} />
+
+
+                  {/* <Info info={currentPosts} />   
                   <Pagination 
-                  postPerPage={postPerPage}
-                  totalPosts={info.length}
-                  paginate={paginate}
-                  />
+                    postPerPage={postPerPage}
+                    totalPosts={info.length}
+                    paginate={paginate}
+                  /> */}
+                
                 </Grid>
                 <Grid item xs={2}>
 
