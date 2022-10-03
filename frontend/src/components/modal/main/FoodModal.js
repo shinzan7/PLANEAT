@@ -84,7 +84,7 @@ export default function FoodModal(props) {
       alert("올바른 값을 입력해주세요.");
     } else {
       const response = await http.post(`/food-infos/${userInfo.userId}`, {
-        foodUser: 10, // 유저 아이디
+        foodUser: userInfo.userId, // 유저 아이디
         name: foodInfo.name, // 음식이름
         calorie: foodInfo.calorie, // 1인분당 칼로리
         servingSize: foodInfo.serving_size, //1회 제공량
@@ -107,7 +107,7 @@ export default function FoodModal(props) {
         alert("성공");
         props.close();
         setFoodInfo(myFood);
-        props.setIsChange(true); // 내음식 새로 추가하기 위한 변수
+        props.getMyFood();
       } else {
         alert("입력 값을 확인해주세요.");
         setFoodInfo(myFood);
@@ -124,6 +124,8 @@ export default function FoodModal(props) {
     setFoodInfo(copy);
   };
 
+  const foodNameInput = useRef(null);
+
   return (
     <Dialog
       style={{ zIndex: 1800 }}
@@ -131,7 +133,10 @@ export default function FoodModal(props) {
       fullWidth={fullWidth}
       maxWidth="xs"
       open={props.open}
-      onClose={props.close}
+      onClose={() => {
+        foodInfo.name = "";
+        props.close();
+      }}
     >
       <Grid
         container
@@ -188,6 +193,7 @@ export default function FoodModal(props) {
                 setFoodInfo(copy);
               }}
               value={foodInfo.name}
+              inputRef={foodNameInput}
             />
           </Grid>
         </Grid>
