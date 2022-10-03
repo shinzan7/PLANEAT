@@ -10,6 +10,9 @@ import Typography from "@mui/material/Typography";
 import { Container, Grid } from "@mui/material";
 import TagMain from "components/common/TagMain";
 
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
+
 const userTags = [
   {
     id: "1",
@@ -143,7 +146,10 @@ const userTags = [
   },
 ];
 
-export default function UserTagForm({ userCategory, setUserCategory }) {
+export default function UserTagForm({ userCategory, setUserCategory, categories }) {
+  // userState 유저 정보
+  const userInfo = useRecoilValue(userState);
+
   const [clickedItems, setClickedItems] = useState([]);
 
   const clickedItemHandler = (id) => {
@@ -155,6 +161,7 @@ export default function UserTagForm({ userCategory, setUserCategory }) {
       setClickedItems(copy);
 
       userCategory.splice(index, 1);
+      categories.splice(index, 1);
     }
     // 클릭 안된 태그인 경우
     else {
@@ -166,12 +173,23 @@ export default function UserTagForm({ userCategory, setUserCategory }) {
         copy.push(id);
         setClickedItems(copy);
 
-        // userId 변경 필요!!!!!!!!!!
+        // userCategory에 데이터 넣기
         userCategory.push({
-          userId: 8,
+          userId: userInfo.userId,
           userCategoryInfoId: id,
         });
+
+        // category에 데이터 넣기
+        for (let i = 0; i < userTags.length; i++) {
+          if (userTags[i].id == id) {
+            categories.push({
+              categoryId: id,
+              categoryName: userTags[i].title,
+            });
+          }
+        }
       }
+      // console.log(categories);
     }
   };
 
