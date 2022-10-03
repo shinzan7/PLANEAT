@@ -15,9 +15,10 @@ export const userState = atom({
     // refreshToken: localStorage.getItem("refreshToken"),
     // accessTokenExpiration: localStorage.getItem("accessTokenExpiration"),
     // refreshTokenExpiration: localStorage.getItem("refreshTokenExpiration"),
+
     // userId: localStorage.getItem("userId"),
     // name: localStorage.getItem("name"),
-    userId: 10,
+    userId: 25,
     name: "여예원",
     birthYear: localStorage.getItem("birthYear"),
     gender: localStorage.getItem("gender"),

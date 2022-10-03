@@ -104,7 +104,7 @@ export default function FoodModal(props) {
       });
 
       if (response.data.message == "success") {
-        alert("성공");
+        alert(`${foodInfo.name} 이 등록되었습니다.`);
         props.close();
         setFoodInfo(myFood);
         props.getMyFood();

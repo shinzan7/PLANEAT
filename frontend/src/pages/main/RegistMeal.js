@@ -63,25 +63,21 @@ export default function RegistMeal(props) {
         >
           <BtnCircle
             type="아침"
-            amount={props.breakfastAmount}
             setMealModalOpen={setMealModalOpen}
             setMealType={setMealType}
           ></BtnCircle>
           <BtnCircle
             type="점심"
-            amount={props.lunchAmount}
             setMealModalOpen={setMealModalOpen}
             setMealType={setMealType}
           ></BtnCircle>
           <BtnCircle
             type="저녁"
-            amount={props.dinnerAmount}
             setMealModalOpen={setMealModalOpen}
             setMealType={setMealType}
           ></BtnCircle>
           <BtnCircle
             type="간식"
-            amount={props.snackAmount}
             setMealModalOpen={setMealModalOpen}
             setMealType={setMealType}
           ></BtnCircle>
