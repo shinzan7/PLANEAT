@@ -66,4 +66,13 @@ public class UserNutrient {
         this.intakeRecommend = intakeRecommend;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "UserNutrient{" +
+                "id=" + id +
+                ", user=" + user +
+                ", intakeRecommend=" + intakeRecommend +
+                '}';
+    }
 }

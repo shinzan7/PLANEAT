@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import planeat.api.dto.usernutrient.NutrientHistoryDateResponse;
 import planeat.api.dto.usernutrient.NutrientHistoryResponse;
 import planeat.database.entity.NutrientHistory;
+import planeat.database.entity.User;
 import planeat.database.entity.UserNutrient;
 
 import java.time.LocalDate;
@@ -17,11 +18,7 @@ public interface NutrientHistoryRepository extends JpaRepository<NutrientHistory
     @EntityGraph(attributePaths = {"userNutrient"})
     @Query("select n from NutrientHistory n where n.userNutrient.id = :userNutrientId")
     List<NutrientHistory> findAllByUserNutrientId(@Param("userNutrientId") Long userNutrientId);
-
     NutrientHistory findByIntakeDateAndUserNutrient(LocalDate intakeDate, UserNutrient userNutrient);
-
     NutrientHistory findByUserNutrientAndIntakeDate(UserNutrient userNutrient, LocalDate intakeDate);
-
-
-
+    List<NutrientHistory> findByUserNutrient_UserAndIntakeDateAfterAndIntakeDateBefore(User user, LocalDate startDate, LocalDate endDate);
 }

@@ -39,6 +39,43 @@ public class UserNutrientService {
     private final AnalysisHistoryService analysisHistoryService;
 
     /**
+     * 해당 유저의 유저영양제와 섭취기록을 설정한 날짜 사이에 해당하는 데이터만 가져온다
+     * @param userId
+     * @param startDate 검색날짜 from
+     * @param endDate 검색날짜 to
+     * @return List<유저 영양제 + List<영양제 섭취기록>>
+     */
+    public List<UserNutrientResponse> readUserNutrientListByUserIdAndPeriod(Long userId, LocalDate startDate, LocalDate endDate){
+        List<UserNutrientResponse> responseList = new LinkedList<>();
+        List<UserNutrient> userNutrientList = userNutrientRepository.findAllByUserId(userId);
+        UserNutrientResponse response = new UserNutrientResponse();
+
+        //userId 해당하는 모든 유저 영양제를 가져오기
+        for (UserNutrient u : userNutrientList){
+            response = UserNutrientResponse.builder()
+                    .userNutrientId(u.getId())
+                    .userId(10L)
+                    .nutrientName(u.getNutrient().getNutrientName())
+                    .intakeRecommend(u.getIntakeRecommend())
+                    .nutriHistoryList(new ArrayList<>())
+                    .build();
+            //해당 유저영양제의 섭취기록 리스트 불러오기
+            for (NutrientHistory n : u.getNutrientHistoryList()){
+                //지정날짜 사이에 있으면 response에 추가하기
+                if(n.getIntakeDate().isAfter(startDate) && n.getIntakeDate().isBefore(endDate)){
+                    response.getNutriHistoryList().add(new UserNutrientResponse.NutriHistory(
+                            n.getId(), n.getIntakeDate().toString(), n.getIntakeReal()
+                    ));
+                }
+            }
+            //필터링 끝난 response를 추가하기
+            responseList.add(response);
+        }
+
+        return responseList;
+    }
+
+    /**
      * 해당 유저의 섭취날짜로 섭취기록 조회
      * @param userId 유저id
      * @param intakeDateString 섭취날짜
@@ -104,6 +141,8 @@ public class UserNutrientService {
 //
 //        return userNutrientResponse;
 //    }
+
+
 
     /**
      * 유저id로 모든 유저 영양제를 조회
