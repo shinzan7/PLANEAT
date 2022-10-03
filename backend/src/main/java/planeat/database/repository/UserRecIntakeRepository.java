@@ -20,6 +20,9 @@ import java.util.Optional;
 
 public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Long> {
 
+    @Query("select u from UserRecIntake u where u.user.id = :userId and u.updateDate <= :date order by u.updateDate DESC")
+    List<UserRecIntake> findByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
+
     @Query("select u from UserRecIntake u where u.user.id = :userId order by u.updateDate")
     List<UserRecIntake> findByUserId(@Param("userId") Long userId);
 
