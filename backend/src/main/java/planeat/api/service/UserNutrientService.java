@@ -54,7 +54,7 @@ public class UserNutrientService {
         for (UserNutrient u : userNutrientList){
             response = UserNutrientResponse.builder()
                     .userNutrientId(u.getId())
-                    .userId(10L)
+                    .userId(userId)
                     .nutrientName(u.getNutrient().getNutrientName())
                     .intakeRecommend(u.getIntakeRecommend())
                     .nutriHistoryList(new ArrayList<>())
