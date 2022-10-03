@@ -153,7 +153,7 @@ public class UserNutrientService {
         UserNutrientResponse userNutrientResponse = new UserNutrientResponse();
         List<UserNutrientResponse> resultList = new LinkedList<>();
 
-        List<UserNutrient> userNutrientList = userNutrientRepository.findAllByUserId(userId);
+        List<UserNutrient> userNutrientList = userNutrientRepository.findAllByUserIdFetch(userId);
 
         for (UserNutrient u : userNutrientList){
             //영양제 섭취기록 list로 가져오기
