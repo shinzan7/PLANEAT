@@ -110,7 +110,7 @@ public class NutrientController {
     }
 
     @GetMapping("/user/list/period")
-    @ApiOperation(value = "유저의 영양제 목록 기간 조회", notes = "유저 id와 시작날짜, 종료날짜를 받아 Table[유저 영양제, 영양제 섭취기록]을 조회한다")
+    @ApiOperation(value = "유저의 영양제 목록 기간 조회", notes = "유저 id와 시작날짜(미포함), 종료날짜(미포함)를 받아 Table[유저 영양제, 영양제 섭취기록]을 조회한다")
     public ResponseEntity<BasicResponse<List<UserNutrientResponse>>> readUserNutrientByPeriod
             (@RequestParam("userId") Long userId, @RequestParam("startDate") String startDate, @RequestParam("endDate") String endDate){
 
