@@ -87,9 +87,20 @@ function a11yProps(index) {
 }
 
 export default function MaxWidthDialog(props) {
+  let month = props.month;
+  if (month < 10) {
+    month = "0" + props.month;
+  }
+  let day = props.day;
+  if (day < 10) {
+    day = "0" + props.day;
+  }
+  let curDate = props.year + "-" + month + "-" + day;
+
   const [allFood, setAllFood] = useState([]); // 모든 음식, 왼쪽 영역 음식
   const [myFood, setMyFood] = useState([]); // 내음식
   const [myDiet, setMyDiet] = useState([]); // 내식단
+  const [hasRecord, setHasRecord] = useState(false);
 
   // 맨 처음 음식 전체 데이터 가져오기
   async function getAllFood() {
@@ -121,6 +132,24 @@ export default function MaxWidthDialog(props) {
     }
   }
 
+  // 맨 처음 식사 기록 가져오는 함수
+  async function getMealRecord() {
+    console.log("getMealRecord");
+    console.log(curDate);
+    const response = await http.get(
+      `/intake-histories/${userInfo.userId}/${curDate}`
+    );
+
+    let record = response.data.data;
+
+    for (let i = 0; i < record.length; i++) {
+      if (record[i].mealType == props.mealType) {
+        setHasRecord(true);
+        setClickedFoodList(record[i].intakeFoodsList);
+      }
+    }
+  }
+
   const [isChange, setIsChange] = useState(false);
   const mounted = useRef(false);
   useEffect(() => {
@@ -130,6 +159,7 @@ export default function MaxWidthDialog(props) {
       getAllFood();
       getMyFood();
       getMyDiet();
+      getMealRecord();
     }
   }, [isChange]);
 
@@ -420,19 +450,9 @@ export default function MaxWidthDialog(props) {
     }
   }
 
+  //todo: 오류 확인 필요 (내 음식은 기록이 안됨)
   // 식사 등록 함수
   async function registerMeal() {
-    // 등록 날짜 포맷팅
-    let month = props.month;
-    if (month < 10) {
-      month = "0" + month;
-    }
-    let day = props.day;
-    if (day < 10) {
-      day = "0" + day;
-    }
-    let thisDate = props.year + "-" + month + "-" + day;
-
     // 음식 정보 데이터 변환
     let list = [];
     for (let i = 0; i < clickedFoodList.length; i++) {
@@ -443,7 +463,7 @@ export default function MaxWidthDialog(props) {
     }
 
     const response = await http.post(`/intake-histories/${userInfo.userId}`, {
-      date: thisDate,
+      date: curDate,
       intakeFoodsList: list,
       mealType: props.mealType,
     });
@@ -460,6 +480,39 @@ export default function MaxWidthDialog(props) {
       alert("식사 등록에 실패했습니다.");
     }
 
+    props.close();
+  }
+
+  // 식사 수정 함수
+  //todo: 오류 확인 필요
+  async function modifyMeal() {
+    // 음식 정보 데이터 변환
+    let list = [];
+    for (let i = 0; i < clickedFoodList.length; i++) {
+      list.push({
+        amount: clickedFoodList[i].amount,
+        foodInfoId: clickedFoodList[i].foodInfoId,
+      });
+    }
+
+    const response = await http.put(`/intake-histories/${userInfo.userId}`, {
+      date: curDate,
+      intakeFoodsList: list,
+      mealType: props.mealType,
+    });
+
+    if (response.data.message == "success") {
+      let str = "";
+      if (props.mealType == "간식") {
+        str += "이 수정되었습니다.";
+      } else {
+        str += "식사가 수정되었습니다.";
+      }
+      alert(`${props.month}월 ${props.day}일 ${props.mealType}` + str);
+    } else {
+      alert("식사 수정에 실패했습니다.");
+    }
+    getMealRecord();
     props.close();
   }
 
@@ -571,14 +624,25 @@ export default function MaxWidthDialog(props) {
             </Grid>
             {/* 식사 등록 버튼 */}
             <Grid item xs={6}>
-              <BtnMain
-                width="70%"
-                onClick={() => {
-                  registerMeal();
-                }}
-              >
-                식사 등록
-              </BtnMain>
+              {hasRecord == false ? (
+                <BtnMain
+                  width="70%"
+                  onClick={() => {
+                    registerMeal();
+                  }}
+                >
+                  식사 등록
+                </BtnMain>
+              ) : (
+                <BtnMain
+                  width="70%"
+                  onClick={() => {
+                    modifyMeal();
+                  }}
+                >
+                  식사 수정
+                </BtnMain>
+              )}
             </Grid>
           </Grid>
         </Grid>
@@ -598,9 +662,10 @@ export default function MaxWidthDialog(props) {
                     col="black"
                     label={food.name}
                     onClick={() => {
-                      intakeFoodInput.current.value =
-                        food.servingSize * food.amount;
+                      setClickedFood(food);
                       setModifyFood(food);
+                      intakeFoodInput.current.value =
+                        food.amount * food.servingSize;
                     }}
                     onDelete={() => {
                       let copy = [...clickedFoodList];
@@ -774,8 +839,8 @@ export default function MaxWidthDialog(props) {
                       {/* 음식 양 */}
                       <Grid item xs={12}>
                         <ListItemText
-                          primary={modifyFood.name}
-                          secondary={`${modifyFood.calorie}kcal, ${modifyFood.servingSize}${modifyFood.servingUnit}, (1회 제공량)`}
+                          primary={clickedFood.name}
+                          secondary={`${clickedFood.calorie}kcal, ${clickedFood.servingSize}${clickedFood.servingUnit}, (1회 제공량)`}
                         />
                         <FormControl
                           sx={{ m: 1, width: "25ch" }}
