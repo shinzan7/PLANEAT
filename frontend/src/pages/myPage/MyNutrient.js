@@ -27,7 +27,13 @@ import { styled } from "@mui/material/styles";
 import { http } from "api/http";
 import ChipDeletable from "components/common/ChipDeletable";
 
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
+
 export default function UserInfo() {
+  // userState 유저 정보
+  const userInfo = useRecoilValue(userState);
+
   // 영양제 알림 구독 토글버튼 (구독하기 / 구독중)
   const [selected, setSelected] = useState(false);
 
@@ -51,8 +57,7 @@ export default function UserInfo() {
 
   // 맨 처음 유저의 영양제 목록 불러오기
   async function getUserNutrients() {
-    // 8 -> 로그인한 유저의 id로 변경 필요
-    const response = await http.get(`/nutrient/user/list/8`);
+    const response = await http.get(`/nutrient/user/list/${userInfo.userId}`);
     if (response.data.message === "success") {
       // console.log(response.data.data);
       setMyNutrients(response.data.data);
@@ -77,12 +82,10 @@ export default function UserInfo() {
     // console.log(intakeCnt);
     // console.log(myNutrientId);
 
-    const response = await http.post(`/nutrient/user`, null, {
-      params: {
-        intakeRecommend: intakeCnt,
-        nutrientId: myNutrientId,
-        userId: 8,
-      },
+    const response = await http.post(`/nutrient/user`, {
+      intakeRecommend: intakeCnt,
+      nutrientId: myNutrientId,
+      userId: userInfo.userId,
     });
     // console.log(response.data);
 

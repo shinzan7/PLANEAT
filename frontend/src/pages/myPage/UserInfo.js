@@ -3,7 +3,7 @@
 @author 조혜안
 @since 2022.09.27
 */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Typography from "@mui/material/Typography";
 import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
@@ -12,7 +12,172 @@ import Container from "@mui/material/Container";
 import { FormControl, FormLabel, RadioGroup, Radio } from "@mui/material";
 import BtnMain from "components/common/BtnMain";
 
+import { http } from "api/http";
+
+import { userState } from "states/userState";
+import { userRecIntake } from "states/userRecIntake";
+import { useRecoilValue } from "recoil";
+
 export default function UserInfo() {
+  const userInfo = useRecoilValue(userState);
+  const userRecIntakeInfo = useRecoilValue(userRecIntake);
+
+  const [gender, setGender] = useState(userInfo.gender); // 성별
+  const [age, setAge] = useState(userInfo.age); // 나이
+  const [height, setHeight] = useState(userInfo.height); // 키
+  const [weight, setWeight] = useState(userInfo.weight); // 몸무게
+  const [active, setActive] = useState(""); // 활동량
+  const [bmi, setBMI] = useState(userInfo.bmi); // bmi
+  const [recoIntake, setRecoIntake] = useState(userRecIntakeInfo.kcal); // 권장섭취량
+  const [activeAmount, setActiveAmount] = useState(userInfo.active); // 기준별 활동지수
+  const [birthyear, setBirthYear] = useState(userInfo.birthYear); // 출생년도
+  const [carbo, setCarbo] = useState(userRecIntakeInfo.carbohydrate); // 탄수화물 권장섭취량
+  const [protein, setProtein] = useState(userRecIntakeInfo.protein); // 단백질 권장섭취량
+  const [fat, setFat] = useState(userRecIntakeInfo.fat); // 지방 권장섭취량
+
+  // 성별
+  const handleGender = (event) => {
+    setGender(event.target.value);
+  };
+  // 나이
+  const handleAge = (event) => {
+    setAge(event.target.value);
+  };
+  // 키
+  const handleHeight = (event) => {
+    setHeight(event.target.value);
+  };
+  // 몸무게
+  const handleWeight = (event) => {
+    setWeight(event.target.value);
+  };
+  // 활동량
+  const handleActive = (event) => {
+    setActive(event.target.value);
+  };
+
+  // 유저 건강고민 카테고리 (userId와 카테고리id를 포함한 api연동에 쓰일 데이터)
+  const [userCategory, setUserCategory] = useState([]);
+  // 유저 건강고민 카테고리 (카테고리id와 카테고리name을 포함한 전역상태에 넣어둘 데이터)
+  const [categories, setCategories] = useState(userInfo.categories);
+
+  // 추가정보 설정
+  function changeMoreInfo() {
+    // BMI 설정
+    let calc = weight / (height * 0.01 * height * 0.01);
+    setBMI(calc.toFixed(1));
+
+    // 남자일 때, 활동량 설정
+    if (gender === "M") {
+      if (active === "notactive") {
+        setActiveAmount(1.0);
+      } else if (active === "lessactive") {
+        setActiveAmount(1.11);
+      } else if (active === "active") {
+        setActiveAmount(1.25);
+      } else if (active === "veryactive") {
+        setActiveAmount(1.48);
+      }
+    }
+    // 여자일 때, 활동량 설정
+    else if (gender === "F") {
+      if (active === "notactive") {
+        setActiveAmount(1.0);
+      } else if (active === "lessactive") {
+        setActiveAmount(1.12);
+      } else if (active === "active") {
+        setActiveAmount(1.27);
+      } else if (active === "veryactive") {
+        setActiveAmount(1.45);
+      }
+    }
+
+    // 출생년도 설정
+    let birth = new Date().getFullYear() - age + 1;
+    setBirthYear(birth);
+  }
+
+  // 권장섭취량 설정
+  function changeRecoIntake() {
+    // 남자일 때
+    if (gender === "M") {
+      let score =
+        622 -
+        9.53 * parseFloat(age) +
+        parseFloat(activeAmount) * (15.91 * parseFloat(weight) + 539.6 * parseFloat(height) * 0.01);
+      setRecoIntake(score.toFixed(1));
+    }
+    // 여자일 때
+    else if (gender === "F") {
+      let score =
+        354 -
+        6.91 * parseFloat(age) +
+        parseFloat(activeAmount) * (9.36 * parseFloat(weight) + 726 * parseFloat(height) * 0.01);
+      setRecoIntake(score.toFixed(1));
+    }
+  }
+
+  // 탄단지 권장섭취량 설정
+  function changeCarbProFat() {
+    let carboAmount = recoIntake * 0.6;
+    let proteinAmount = recoIntake * 0.13;
+    let fatAmount = recoIntake * 0.22;
+    setCarbo(carboAmount.toFixed(1));
+    setProtein(proteinAmount.toFixed(1));
+    setFat(fatAmount.toFixed(1));
+  }
+
+  // 오늘 날짜 yyyy-mm-dd 형식으로 받아오기
+  function getToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  useEffect(() => {
+    // 정보 갱신
+    changeMoreInfo();
+    changeRecoIntake();
+    changeCarbProFat();
+  });
+
+  async function updateUserInfo() {
+    // 건강고민 카테고리 변경
+    for (let i = 0; i < categories.length; i++) {
+      userCategory.push({
+        userId: userInfo.userId,
+        userCategoryInfoId: categories[i].categoryId,
+      });
+    }
+    console.log("유저카테고리고리");
+    console.log(userCategory);
+
+    // 정보 수정 api 연동
+    const response = await http.put(`user-infos/${userInfo.userId}`, {
+      userId: userInfo.userId,
+      birthyear: birthyear,
+      gender: gender,
+      name: "이야",
+      recInfo: {
+        updateDate: getToday(),
+        height: height,
+        weight: weight,
+        bmi: bmi,
+        active: activeAmount,
+        calorie: recoIntake,
+        carbohydrate: carbo,
+        protein: protein,
+        fat: fat,
+      },
+      categoriesList: userCategory,
+    });
+
+    console.log(response.data);
+  }
+
   return (
     <Container component="main" sx={{ mb: 4, width: "650px", height: "700px" }}>
       <React.Fragment>
@@ -39,12 +204,13 @@ export default function UserInfo() {
               autoComplete="cc-exp"
               variant="standard"
               color="purple"
+              value={userInfo.name}
             />
           </Grid>
         </Grid>
 
         {/* 이메일 */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        {/* <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={3}>
             이메일
           </Grid>
@@ -58,23 +224,24 @@ export default function UserInfo() {
               color="purple"
             />
           </Grid>
-        </Grid>
+        </Grid> */}
 
         {/* 성별 */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={3}>
-            성별
+            <div style={{ marginTop: "8px" }}>성별</div>
           </Grid>
           <Grid item xs={9}>
             <FormControl>
               <RadioGroup
                 row
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="male"
+                defaultValue={userInfo.gender}
                 name="radio-buttons-group"
+                onChange={handleGender}
               >
                 <FormControlLabel
-                  value="male"
+                  value="M"
                   control={
                     <Radio
                       sx={{
@@ -88,7 +255,7 @@ export default function UserInfo() {
                   label="남"
                 />
                 <FormControlLabel
-                  value="female"
+                  value="F"
                   control={
                     <Radio
                       sx={{
@@ -112,7 +279,15 @@ export default function UserInfo() {
             나이
           </Grid>
           <Grid item xs={9}>
-            <TextField id="userAge" autoComplete="cc-number" variant="standard" color="purple" />
+            <TextField
+              id="userAge"
+              required
+              autoComplete="cc-number"
+              variant="standard"
+              color="purple"
+              defaultValue={userInfo.age}
+              onChange={handleAge}
+            />
           </Grid>
         </Grid>
 
@@ -122,7 +297,15 @@ export default function UserInfo() {
             키
           </Grid>
           <Grid item xs={9}>
-            <TextField id="userHeight" autoComplete="cc-exp" variant="standard" color="purple" />
+            <TextField
+              id="userHeight"
+              autoComplete="cc-exp"
+              variant="standard"
+              color="purple"
+              required
+              defaultValue={userInfo.height}
+              onChange={handleHeight}
+            />
           </Grid>
         </Grid>
 
@@ -132,25 +315,42 @@ export default function UserInfo() {
             몸무게
           </Grid>
           <Grid item xs={9}>
-            <TextField id="userWeight" autoComplete="cc-csc" variant="standard" color="purple" />
+            <TextField
+              id="userWeight"
+              autoComplete="cc-csc"
+              variant="standard"
+              required
+              color="purple"
+              defaultValue={userInfo.weight}
+              onChange={handleWeight}
+            />
           </Grid>
         </Grid>
 
         {/* 활동량 */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={3}>
-            활동량
+            <div style={{ marginTop: "8px" }}>활동량{activeAmount}</div>
           </Grid>
           <Grid item xs={9}>
             <FormControl>
               <RadioGroup
                 row
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue="notActive"
+                defaultValue={
+                  userInfo.active == "1.0"
+                    ? "notactive"
+                    : userInfo.active == "1.11" || userInfo.active == "1.12"
+                    ? "lessactive"
+                    : userInfo.active == "1.25" || userInfo.active == "1.27"
+                    ? "active"
+                    : "veryactive"
+                }
                 name="radio-buttons-group"
+                onChange={handleActive}
               >
                 <FormControlLabel
-                  value="notActive"
+                  value="notactive"
                   control={
                     <Radio
                       sx={{
@@ -164,7 +364,7 @@ export default function UserInfo() {
                   label="비활동적"
                 />
                 <FormControlLabel
-                  value="lessActive"
+                  value="lessactive"
                   control={
                     <Radio
                       sx={{
@@ -178,7 +378,7 @@ export default function UserInfo() {
                   label="저활동적"
                 />
                 <FormControlLabel
-                  value="Active"
+                  value="active"
                   control={
                     <Radio
                       sx={{
@@ -192,7 +392,7 @@ export default function UserInfo() {
                   label="활동적"
                 />
                 <FormControlLabel
-                  value="veryActive"
+                  value="veryactive"
                   control={
                     <Radio
                       sx={{
@@ -212,26 +412,58 @@ export default function UserInfo() {
 
         {/* BMI */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid item xs={3}>
-            BMI
-          </Grid>
-          <Grid item xs={9}>
-            <TextField id="userBMI" autoComplete="cc-name" variant="standard" />
+          <Grid item xs>
+            {userInfo.name}님의 현재 BMI지수는 <b style={{ color: "orange" }}>{userInfo.bmi}</b>
+            입니다.
           </Grid>
         </Grid>
 
         {/* 권장섭취량 */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs>
+            {userInfo.name}님의 현재 권장섭취량은{" "}
+            <b style={{ color: "orange" }}>{userRecIntakeInfo.kcal}kcal</b>
+            입니다.
+          </Grid>
+        </Grid>
+
+        {/* BMI */}
+        {/* <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+          <Grid item xs={3}>
+            BMI
+          </Grid>
+          <Grid item xs={9}>
+            <TextField
+              disabled
+              id="userBMI"
+              autoComplete="cc-name"
+              variant="standard"
+              value={userInfo.bmi}
+            />
+          </Grid>
+        </Grid> */}
+
+        {/* 권장섭취량 */}
+        {/* <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={3}>
             권장섭취량
           </Grid>
           <Grid item xs={9}>
-            <TextField id="userRecoIntake" autoComplete="cc-name" variant="standard" />
+            <TextField
+              disabled
+              id="userRecoIntake"
+              autoComplete="cc-name"
+              variant="standard"
+              value={userRecIntakeInfo.kcal}
+            />
+            kcal
           </Grid>
-        </Grid>
+        </Grid> */}
 
         <Grid style={{ mt: 6, textAlign: "end" }}>
-          <BtnMain width="100px">수정하기</BtnMain>
+          <BtnMain width="100px" onClick={updateUserInfo}>
+            수정하기
+          </BtnMain>
         </Grid>
       </React.Fragment>
     </Container>
