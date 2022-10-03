@@ -11,21 +11,11 @@ import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
 
-
-
 function NutrientResult() {
 
   const ingredient = useParams()
   const location = useLocation()
   const dataTitle = location.state.data.title
-
-  // const data = {
-  //   img: "",
-  //   nutrient_name: "락토핏 생유산균 화이버",
-  //   company: "종근당",
-  //   category_tag: ["장건강"],
-  //   ingredient_name: ["차전자피식이섬유"],
-  // }
 
   const [info, setInfo] = useState([])
 
@@ -76,7 +66,7 @@ function NutrientResult() {
                 </Grid>
                 {/* 카드들 부분 */}
                 <Grid item xs={9}>
-                  <Grid container style={card}>
+                  <Grid container>
                   {info.map(function(data, i) { 
                       return (
                       <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
@@ -84,8 +74,16 @@ function NutrientResult() {
                       </Link>
                       )
                     })}
-
                   </Grid>
+
+                  {/* <Info info={currentPosts} />   
+                  <Pagination 
+                    postPerPage={postPerPage}
+                    totalPosts={info.length}
+                    paginate={paginate}
+                    ingredient={ingredient}
+                  /> */}
+                
                 </Grid>
                 <Grid item xs={2}>
 
