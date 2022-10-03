@@ -11,7 +11,8 @@ import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
 import styled from "styled-components";
-import Pagination from "components/common/Pagination";
+// import Pagination from "components/common/Pagination";
+import Pagination from 'react-js-pagination'
 
 
 
@@ -38,17 +39,10 @@ function TagResult() {
   const [limit, setLimit] = useState(20)
   const [page, setPage] = useState(1)
   const offset = (page-1)*limit
-  // const [currentPage, setCurrentPage] = useState(1)
-  // const [postPerPage] = useState(20)
 
-  // const indexOfLastPost = currentPage * postPerPage
-  // const indexOfFirstPost = indexOfLastPost - postPerPage
-  // const currentPosts = info.slice(indexOfFirstPost, indexOfLastPost)
-  // console.log(indexOfFirstPost, indexOfLastPost)
-
-  // const paginate = pageNum => setCurrentPage(pageNum)
-
-
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
   return (
       <div style={section}>
@@ -105,12 +99,23 @@ function TagResult() {
 
                       </Grid>
                       <Grid item xs={6}>
-                        <Pagination
+                        {/* <Pagination
                         total={info.length}
                         limit={limit}
                         page={page}
                         setPage={setPage}
+                      /> */}
+
+                        <Pagination
+                        activePage={page}
+                        itemsCountPerPage={20}
+                        totalItemsCount={info.length}
+                        pageRangeDisplayed={10}
+                        prevPageText={"‹"}
+                        nextPageText={"›"}
+                        onChange={handlePageChange}
                       />
+
                       </Grid>
                       <Grid item xs={3}>
                 

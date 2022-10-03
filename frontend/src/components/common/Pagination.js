@@ -21,7 +21,7 @@ function Pagination({ total, limit, page, setPage }) {
               {number}
             </Button>
           ))}
-        <Button onClick={() => setPage(page + 1)} disabled={page === Math.ceil(total/ limit)}>
+        <Button onClick={() => setPage(page + 1)} disabled={page === Math.ceil(total / limit)}>
           &gt;
         </Button>
       </Nav>
