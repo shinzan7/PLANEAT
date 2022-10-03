@@ -20,9 +20,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
+
 
 @Service
 @Transactional
@@ -148,9 +149,8 @@ public class AnalysisHistoryService {
                     .build();
 
             //해당날짜의 유저 권장섭취량
-            List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.
-//                    findFirstByUserAndUpdateDateBeforeOrderByUpdateDateDesc(user, localDate);
-        findByUserIdAndDate(user.getId(), localDate);
+            Optional<UserRecIntake> userRecIntake = userRecIntakeRepository.
+                    findFirstByUserAndUpdateDateLessThanEqualOrderByUpdateDateDesc(user, localDate);
 
             //필수영양소
             int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
@@ -202,13 +202,12 @@ public class AnalysisHistoryService {
                     .transFattyAcid(2f)
                     .build();
 
-            if(userRecIntakeList.size() != 0){
-                UserRecIntake userRecIntake = userRecIntakeList.get(0);
+            if(userRecIntake.isPresent()){
                 //칼로리,탄,단,지 -> 유저 권장섭취량으로 update
-                recommend.updateRecIntake(userRecIntake.getCalorie(),
-                        userRecIntake.getCarbohydrate(),
-                        userRecIntake.getProtein(),
-                        userRecIntake.getFat());
+                recommend.updateRecIntake(userRecIntake.get().getCalorie(),
+                        userRecIntake.get().getCarbohydrate(),
+                        userRecIntake.get().getProtein(),
+                        userRecIntake.get().getFat());
             }
 
             analysisHistoryRepository.save(real);

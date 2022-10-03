@@ -9,8 +9,6 @@ package planeat.database.repository;
 */
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import planeat.database.entity.User;
 import planeat.database.entity.UserRecIntake;
 
@@ -20,11 +18,7 @@ import java.util.Optional;
 
 public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Long> {
 
-    @Query("select u from UserRecIntake u where u.user.id = :userId and u.updateDate <= :date order by u.updateDate DESC")
-    List<UserRecIntake> findByUserIdAndDate(@Param("userId") Long userId, @Param("date") LocalDate date);
-
-    @Query("select u from UserRecIntake u where u.user.id = :userId order by u.updateDate")
-    List<UserRecIntake> findByUserId(@Param("userId") Long userId);
+    List<UserRecIntake> findByUserOrderByUpdateDateAsc(User user);
 
     Optional<UserRecIntake> findFirstByUserOrderByUpdateDateAsc(User user);
 
