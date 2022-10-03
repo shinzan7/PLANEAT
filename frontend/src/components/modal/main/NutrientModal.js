@@ -87,7 +87,7 @@ export default function NutrientModal(props) {
 
   // 맨 처음 유저의 영양제 목록 불러오기
   async function getUserNutrients() {
-    const response = await http.get(`/nutrient/user/list/10`);
+    const response = await http.get(`/nutrient/user/list/${userInfo.userId}`);
     if (response.data.message === "success") {
       setMyNutrients(response.data.data);
       // console.log(response.data.data); // 유저 영양제 정보: response.data.data
