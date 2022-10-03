@@ -35,6 +35,58 @@ public class AnalysisHistoryService {
     private final NutrientRepository nutrientRepository;
     private final NutrientIngredientRespository nutrientIngredientRespository;
 
+    public List<AnalysisHistoryResponse> getAllAnalysisHistory(Long userId){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
+        );
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findAll();
+        List<AnalysisHistoryResponse> responseList = new ArrayList<>(historyList.size());
+
+        if(historyList.size()!=0){
+            for (AnalysisHistory h : historyList){
+                AnalysisHistoryResponse response = AnalysisHistoryResponse.builder()
+                        .analysisHistoryId(h.getId())
+                        .date(h.getDate().format(DateTimeFormatter.ISO_DATE))
+                        .analysisType(h.getAnalysisType())
+                        .analysisScore(h.getAnalysisScore())
+                        .calorie(h.getCalorie())
+                        .protein(h.getProtein())
+                        .fat(h.getFat())
+                        .carbohydrate(h.getCarbohydrate())
+                        .sugar(h.getSugar())
+                        .dietaryFiber(h.getDietaryFiber())
+                        .calcium(h.getCalcium())
+                        .iron(h.getIron())
+                        .magnesium(h.getMagnesium())
+                        .phosphorus(h.getPhosphorus())
+                        .potassium(h.getPotassium())
+                        .sodium(h.getSodium())
+                        .zinc(h.getZinc())
+                        .copper(h.getCopper())
+                        .manganese(h.getManganese())
+                        .selenium(h.getSelenium())
+                        .vitaminA(h.getVitaminA())
+                        .vitaminD(h.getVitaminD())
+                        .vitaminB6(h.getVitaminB6())
+                        .folate(h.getFolate())
+                        .vitaminB12(h.getVitaminB12())
+                        .vitaminC(h.getVitaminC())
+                        .cholesterol(h.getCholesterol())
+                        .fattyAcid(h.getFattyAcid())
+                        .linoleicAcid(h.getLinoleicAcid())
+                        .alphaLinoleicAcid(h.getAlphaLinoleicAcid())
+                        .transFattyAcid(h.getTransFattyAcid())
+                        .vitaminB1(h.getVitaminB1())
+                        .vitaminB2(h.getVitaminB2())
+                        .build();
+
+                responseList.add(response);
+            }
+        }
+
+        return responseList;
+    }
+
     /**
      * 유저id와 날짜에 해당하는 엔티티 2개를 리스트로 반환한다
      * (만약 엔티티가 없으면 새로 생성한다 - 실제, 권장 2개)

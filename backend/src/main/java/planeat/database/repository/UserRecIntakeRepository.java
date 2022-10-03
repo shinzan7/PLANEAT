@@ -27,6 +27,4 @@ public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Lo
 
     @Query("select u from UserRecIntake u where u.user.id = :userId order by u.updateDate")
     List<UserRecIntake> findByUserId(@Param("userId") Long userId);
-
-    UserRecIntake findFirstByUserAndUpdateDateBeforeOrderByUpdateDateDesc(User user, LocalDate updateDate);
 }

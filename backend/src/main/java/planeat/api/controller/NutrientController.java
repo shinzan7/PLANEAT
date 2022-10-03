@@ -143,7 +143,7 @@ public class NutrientController {
 
     @GetMapping
     @ApiOperation(value = "영양제 조회", notes = "영양제 id를 받아 Table[영양제, 영양제 성분, 영양성분, 카테고리]을 조회한다")
-    public ResponseEntity<BasicResponse<NutrientResponse>> readNutrient(Long id){
+    public ResponseEntity<BasicResponse<NutrientResponse>> readNutrient(@RequestParam Long id){
 
         NutrientResponse nutrientResponse = nutrientService.readNutrientById(id);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , nutrientResponse), HttpStatus.OK);

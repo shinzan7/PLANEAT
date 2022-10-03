@@ -25,6 +25,12 @@ public class AnalysisHistoryController {
     final AnalysisHistoryService analysisHistoryService;
     static final String SUCCESS = "success";
 
+    @GetMapping("/all")
+    @ApiOperation(value = "분석기록 전체 조회", notes = "유저 아이디를 받아 유저의 모든 분석기록을 반환한다.")
+    public ResponseEntity<BasicResponse<List<AnalysisHistoryResponse>>> readAllAnalysis(@RequestParam Long userId){
+        List<AnalysisHistoryResponse> responseList = analysisHistoryService.getAllAnalysisHistory(userId);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, responseList), HttpStatus.OK);
+    }
     @GetMapping
     @ApiOperation(value = "분석기록 조회", notes = "유저 아이디와 지정날짜를 받아 지정날짜 이후의 모든 분석기록을 반환한다.")
     public ResponseEntity<BasicResponse<List<AnalysisHistoryResponse>>> readAnalysisAfterDate(@RequestParam Long userId, @RequestParam String date){
