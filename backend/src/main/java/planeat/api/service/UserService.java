@@ -19,7 +19,6 @@ import planeat.exception.CustomException;
 import planeat.exception.CustomExceptionList;
 
 import javax.transaction.Transactional;
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -50,12 +49,10 @@ public class UserService {
         User updateUser = User.updateUser(user, userInfoRequest);
         userRepository.save(updateUser);
 
-        userRecIntakeRepository.deleteAll();
         UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
         userRecIntakeRepository.save(userRecIntake);
         userRecIntake.getUser().getUserRecIntakeList().add(userRecIntake);
 
-        userCategoryRepository.deleteAll();
         for (int i = 0; i < userInfoRequest.getCategoriesList().size(); i++) {
             UserCategoryInfo userCategoryInfo = getUserCategoryInfo(userInfoRequest.getCategoriesList().get(i).getUserCategoryInfoId());
             UserCategory userCategory = UserCategory.createUserCategory(user, userCategoryInfo);
@@ -78,8 +75,7 @@ public class UserService {
     public UserInfoResponse readInfoByUserId(Long userId, LocalDate date) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
-        List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.findByUserIdAndDate(userId, date);
-        UserRecIntake userRecIntake = userRecIntakeList.get(0);
+
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
         int birthYear = user.getBirthyear();
         Integer age = nowYear - birthYear;
@@ -90,7 +86,17 @@ public class UserService {
             categoriesList.add(userCategory.getUserCategoryInfo().getUserCategoryName());
         }
 
-        return new UserInfoResponse(user, userRecIntake, nutritionList, categoriesList);
+        if(user.getJoinDate().isAfter(date)) {
+            System.out.println("before");
+            UserRecIntake userRecIntake = userRecIntakeRepository.findFirstByUserOrderByUpdateDateAsc(user)
+                    .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+            return new UserInfoResponse(user, userRecIntake, nutritionList, categoriesList);
+        } else {
+            UserRecIntake userRecIntake = userRecIntakeRepository.findFirstByUserAndUpdateDateLessThanEqualOrderByUpdateDateDesc(user, date)
+                    .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+            return new UserInfoResponse(user, userRecIntake, nutritionList, categoriesList);
+        }
+
     }
 
     /**
@@ -120,15 +126,23 @@ public class UserService {
      */
     public UserRecIntakeResponse readRecIntakesByUserIdAndDate(Long userId, LocalDate date) {
         User user = getUser(userId);
-        List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.findByUserIdAndDate(userId, date);
-        UserRecIntake userRecIntake = userRecIntakeList.get(0);
+
         int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
         int birthYear = user.getBirthyear();
         Integer age = nowYear - birthYear;
 
         List<Nutrition> nutritionList = nutritionRepository.findAllByGenderAndAge(user.getGender(), age);
-        System.out.println(nutritionList);
-        return new UserRecIntakeResponse(userRecIntake, nutritionList);
+
+        if(user.getJoinDate().isAfter(date)) {
+            System.out.println("before");
+            UserRecIntake userRecIntake = userRecIntakeRepository.findFirstByUserOrderByUpdateDateAsc(user)
+                    .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+            return new UserRecIntakeResponse(userRecIntake, nutritionList);
+        } else {
+            UserRecIntake userRecIntake = userRecIntakeRepository.findFirstByUserAndUpdateDateLessThanEqualOrderByUpdateDateDesc(user, date)
+                    .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+            return new UserRecIntakeResponse(userRecIntake, nutritionList);
+        }
     }
 
 
@@ -147,7 +161,6 @@ public class UserService {
         userRepository.save(updateUser);
 
         List<UserRecIntake> userRecIntakes = userRecIntakeRepository.findByUserId(userId);
-
 
         List<UserRecIntake> userRecIntakeList = userRecIntakes;
 
@@ -188,10 +201,6 @@ public class UserService {
         return userId;
     }
 
-    private UserRecIntake getUserRecIntake(Long userRecIntakeId) {
-        return userRecIntakeRepository.findById(userRecIntakeId)
-                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
-    }
 
     private User getUser(Long userId) {
         return userRepository.findById(userId)

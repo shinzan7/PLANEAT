@@ -14,17 +14,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import planeat.api.dto.user.UserInfoRequest;
 import planeat.enums.Gender;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user")
 public class User {
@@ -42,6 +46,10 @@ public class User {
 
     @Column(name = "provider", nullable = false)
     private String provider;
+
+    @CreatedDate
+    @Column(name = "join_date")
+    private LocalDate joinDate;
 
     @Column(name = "birthyear")
     private Integer birthyear;
@@ -80,11 +88,12 @@ public class User {
 
 
     @Builder
-    public User(Long id, String name, String email, String provider, Integer birthyear, Gender gender) {
+    public User(Long id, String name, String email, String provider, LocalDate joinDate, Integer birthyear, Gender gender) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.provider = provider;
+        this.joinDate = joinDate;
         this.birthyear = birthyear;
         this.gender = gender;
     }
@@ -108,14 +117,6 @@ public class User {
 
     public void setMyDietList(List<MyDiet> myDietList) {
         this.myDietList = myDietList;
-    }
-
-    public void setIntakeHistoryList(List<IntakeHistory> intakeHistoryList) {
-        this.intakeHistoryList = intakeHistoryList;
-    }
-
-    public void setAnalysisHistoryList(List<AnalysisHistory> analysisHistoryList) {
-        this.analysisHistoryList = analysisHistoryList;
     }
 
     public void setUserCategoryList(List<UserCategory> userCategoryList) {
