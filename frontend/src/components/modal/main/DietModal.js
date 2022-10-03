@@ -51,11 +51,13 @@ export default function DietModal(props) {
     });
 
     if (response.data.message == "success") {
-      setDietName(null);
       props.close();
       alert("식단 등록에 성공했습니다.");
+      props.getMyDiet();
+      dietNameInput.current.value = null;
     } else {
       alert("식단 등록에 실패했습니다.");
+      dietNameInput.current.value = null;
     }
   }
 
@@ -66,7 +68,10 @@ export default function DietModal(props) {
       fullWidth={fullWidth}
       maxWidth="xs"
       open={props.open}
-      onClose={props.close}
+      onClose={() => {
+        dietNameInput.current.value = null;
+        props.close();
+      }}
       id="mealModal"
     >
       <Grid
