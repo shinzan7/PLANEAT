@@ -3,7 +3,16 @@
 @author 조혜안
 @since 2022.09.22
 */
-import { Divider, Paper, List, ListItem, ListItemText, Collapse, Grid, Box } from "@mui/material";
+import {
+  Divider,
+  Paper,
+  List,
+  ListItem,
+  ListItemText,
+  Collapse,
+  Grid,
+  Box,
+} from "@mui/material";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
 import { React, useEffect, useState } from "react";
 import Chart from "react-apexcharts";
@@ -55,7 +64,13 @@ const intake = {
 // 섭취량 차트
 function ShowIntakeCharts() {
   // 탄수화물, 단백질, 지방, 당, 나트륨 순으로 해당 기간의 섭취량 받아오기
-  const series = [intake.carbohydrate, intake.protein, intake.fat, intake.sugar, intake.sodium];
+  const series = [
+    intake.carbohydrate,
+    intake.protein,
+    intake.fat,
+    intake.sugar,
+    intake.sodium,
+  ];
   const options = {
     //data on the x-axis
     colors: ["#FFB3B3", "#F7BF87", "#FFEFC9", "#A9D5C7", "#9DA6F8"],
@@ -90,7 +105,13 @@ function ShowIntakeCharts() {
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="radialBar" width={500} height={350} />
+          <Chart
+            options={options}
+            series={series}
+            type="radialBar"
+            width={500}
+            height={350}
+          />
         </div>
       </div>
     </div>
@@ -157,7 +178,10 @@ export default function FootStat({ value }) {
               <Divider />
               <ListItem divider>
                 <ListItemText secondary="탄수화물" />
-                <ListItemText sx={listItemStyle} secondary={intake.carbohydrate} />
+                <ListItemText
+                  sx={listItemStyle}
+                  secondary={intake.carbohydrate}
+                />
               </ListItem>
               <ListItem>
                 <ListItemText secondary="단백질" />
@@ -187,12 +211,18 @@ export default function FootStat({ value }) {
                 <List component="div" disablePadding>
                   <ListItem sx={{ pl: 4 }}>
                     <ListItemText secondary="콜레스테롤" />
-                    <ListItemText sx={listItemStyle} secondary={intake.dietary_fiber} />
+                    <ListItemText
+                      sx={listItemStyle}
+                      secondary={intake.dietary_fiber}
+                    />
                   </ListItem>
                   <Divider light />
                   <ListItem sx={{ pl: 4 }}>
                     <ListItemText secondary="칼륨" />
-                    <ListItemText sx={listItemStyle} secondary={intake.calcium} />
+                    <ListItemText
+                      sx={listItemStyle}
+                      secondary={intake.calcium}
+                    />
                   </ListItem>
                   <Divider light />
                   <ListItem sx={{ pl: 4 }}>
@@ -202,22 +232,34 @@ export default function FootStat({ value }) {
                   <Divider light />
                   <ListItem sx={{ pl: 4 }}>
                     <ListItemText secondary="비타민A" />
-                    <ListItemText sx={listItemStyle} secondary={intake.magnesium} />
+                    <ListItemText
+                      sx={listItemStyle}
+                      secondary={intake.magnesium}
+                    />
                   </ListItem>
                   <Divider light />
                   <ListItem sx={{ pl: 4 }}>
                     <ListItemText secondary="비타민C" />
-                    <ListItemText sx={listItemStyle} secondary={intake.phosphorus} />
+                    <ListItemText
+                      sx={listItemStyle}
+                      secondary={intake.phosphorus}
+                    />
                   </ListItem>
                   <Divider light />
                   <ListItem sx={{ pl: 4 }}>
                     <ListItemText secondary="칼슘" />
-                    <ListItemText sx={listItemStyle} secondary={intake.potassium} />
+                    <ListItemText
+                      sx={listItemStyle}
+                      secondary={intake.potassium}
+                    />
                   </ListItem>
                   <Divider light />
                   <ListItem sx={{ pl: 4 }}>
                     <ListItemText secondary="철" />
-                    <ListItemText sx={listItemStyle} secondary={intake.sodium} />
+                    <ListItemText
+                      sx={listItemStyle}
+                      secondary={intake.sodium}
+                    />
                   </ListItem>
                   <Divider light />
                 </List>

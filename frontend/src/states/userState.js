@@ -6,27 +6,28 @@ recoil userState
 @since 2022.09.28
 */
 
-import { atom } from 'recoil';
+import { atom } from "recoil";
 
 export const userState = atom({
-  key: 'user',
-  default: { 
+  key: "user",
+  default: {
     // accessToken: localStorage.getItem("accessToken"),
     // refreshToken: localStorage.getItem("refreshToken"),
     // accessTokenExpiration: localStorage.getItem("accessTokenExpiration"),
     // refreshTokenExpiration: localStorage.getItem("refreshTokenExpiration"),
-    userId: localStorage.getItem("userId"),
-    name: localStorage.getItem("name"),
+    // userId: localStorage.getItem("userId"),
+    // name: localStorage.getItem("name"),
+    userId: 10,
+    name: "여예원",
     birthYear: localStorage.getItem("birthYear"),
     gender: localStorage.getItem("gender"),
-    email: '',
+    email: "",
     height: 0.0,
     weight: 0.0,
     active: 0.0,
     bmi: 0.0,
   },
-}) 
-
+});
 
 // export const myDiet = selector({
 //   key:'diet',

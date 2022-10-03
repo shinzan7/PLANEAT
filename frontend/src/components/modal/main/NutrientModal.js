@@ -28,7 +28,12 @@ import AddIcon from "@mui/icons-material/AddCircle";
 import RemoveIcon from "@mui/icons-material/RemoveCircle";
 import { RepeatOneSharp } from "@mui/icons-material";
 
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
+
 export default function NutrientModal(props) {
+  const userInfo = useRecoilValue(userState);
+
   const [fullWidth, setFullWidth] = useState(true);
 
   let m = props.month;
@@ -45,14 +50,11 @@ export default function NutrientModal(props) {
   // 영양제 섭취기록 등록 함수
   async function registPill(e) {
     e.preventDefault();
-
     for (let i = 0; i < myNutrients.length; i++) {
-      const response = await http.post(`/nutrient/user/history`, null, {
-        params: {
-          intakeDate: date,
-          intakeReal: intakes[i],
-          userNutrientId: myNutrients[i].userNutrientId,
-        },
+      const response = await http.post(`/nutrient/history/${userInfo.userId}`, {
+        intakeDate: date,
+        intakeReal: intakes[i],
+        userNutrientId: myNutrients[i].userNutrientId,
       });
       console.log(response.data);
     }
@@ -62,14 +64,11 @@ export default function NutrientModal(props) {
   // 영양제 섭취 기록 수정 함수
   async function modifyPill(e) {
     e.preventDefault();
-
     for (let i = 0; i < myNutrients.length; i++) {
-      const response = await http.put(`/nutrient/history`, null, {
-        params: {
-          intakeDate: date,
-          intakeReal: intakes[i],
-          userNutrientId: myNutrients[i].userNutrientId,
-        },
+      const response = await http.put(`/nutrient/history/${userInfo.userId}`, {
+        intakeDate: date,
+        intakeReal: intakes[i],
+        userNutrientId: myNutrients[i].userNutrientId,
       });
       console.log(response.data);
     }
@@ -88,7 +87,6 @@ export default function NutrientModal(props) {
 
   // 맨 처음 유저의 영양제 목록 불러오기
   async function getUserNutrients() {
-    // todo: 로그인한 유저의 id로 변경 필요
     const response = await http.get(`/nutrient/user/list/10`);
     if (response.data.message === "success") {
       setMyNutrients(response.data.data);
@@ -99,10 +97,11 @@ export default function NutrientModal(props) {
       let intakes = [];
       for (let i = 0; i < infos.length; i++) {
         let history = infos[i].nutriHistoryList;
+
         // 영양제 기록이 없는 경우
         if (history.length == 0) {
           setHasRecord(false);
-          intakes[i] = infos[i].intakeRecommend;
+          intakes[i] = Number(infos[i].intakeRecommend);
         }
         // 영양제 기록이 있는 경우
         else {

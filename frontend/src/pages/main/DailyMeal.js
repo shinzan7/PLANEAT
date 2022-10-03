@@ -7,9 +7,10 @@
 import * as React from "react";
 import styled from "styled-components";
 import { Grid, Paper } from "@mui/material";
-import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 export default function DailyMeal(props) {
+
+    // 달력에서 클릭한 날짜 가공 함수
   let date = new Date(props.clickDate);
   let month = date.getMonth() + 1;
   let day = date.getDate();
