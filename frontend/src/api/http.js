@@ -44,7 +44,7 @@ function Instance() {
         originalRequest._retry = true
 
         const { data } = await axios.get(
-          `${process.env.REACT_APP_BASE_URL}oauth/refresh`, // token refresh api
+          `${process.env.REACT_APP_BASE_URL}/oauth/refresh`, // token refresh api
           {
             headers: {
               refreshToken: localStorage.getItem("refreshToken"),
@@ -69,7 +69,7 @@ function Instance() {
         return axios(originalRequest)
       } else if (status === 403) {
         // console.log("권한 없음")
-        window.location.replace("/forbidden")
+        window.location.replace("/")
       }
       return Promise.reject(error)
     }
