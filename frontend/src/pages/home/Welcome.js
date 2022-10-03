@@ -39,41 +39,25 @@ import Slide from "@mui/material/Slide";
 
 import { http } from "api/http";
 
+import { userState } from "states/userState";
+import { userRecIntake } from "states/userRecIntake";
+import { useRecoilState, useRecoilValue } from "recoil";
+
 const steps = ["이용약관 동의", "개인정보 입력", "건강고민 선택"];
 
-// const name = localStorage.getItem("name");
-
-const userInfo = {
-  name: "김싸피",
-};
-
-// 가입축하문구
-function CelebrateLine() {
-  const Line = styled.div`
-    margin-top: 3px;
-    text-align: center;
-  `;
-  return (
-    <div>
-      <Line>{userInfo.name} 님의 가입을 축하합니다!</Line>
-      <Line>더 나은 서비스 이용을 위해 약관동의 및 추가 정보를 기입해주세요.😊</Line>
-    </div>
-  );
-}
-
 // stepper 단계별 화면
-function getStepContent(step) {
-  switch (step) {
-    case 0:
-      return <TermsOfService></TermsOfService>; // 이용약관 화면
-    case 1:
-      return <MoreInfoForm />; // 추가정보 기입 화면
-    case 2:
-      return <UserTagForm />; // 건강고민 선택 화면
-    default:
-      throw new Error("Unknown step");
-  }
-}
+// function getStepContent(step) {
+//   switch (step) {
+//     case 0:
+//       return <TermsOfService></TermsOfService>; // 이용약관 화면
+//     case 1:
+//       return <MoreInfoForm />; // 추가정보 기입 화면
+//     case 2:
+//       return <UserTagForm />; // 건강고민 선택 화면
+//     default:
+//       throw new Error("Unknown step");
+//   }
+// }
 
 // 모달 transition 적용
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -81,6 +65,11 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 function Welcome() {
+  // userState 유저정보
+  const [userInfo, setUserInfo] = useRecoilState(userState);
+  // userRecIntake 유저 권장섭취량 정보
+  const [userRI, setUserRI] = useRecoilState(userRecIntake);
+
   const [activeStep, setActiveStep] = useState(0);
 
   // 약관동의 컴포넌트 체크 여부
@@ -102,8 +91,10 @@ function Welcome() {
   const [protein, setProtein] = useState(0); // 단백질 권장섭취량
   const [fat, setFat] = useState(0); // 지방 권장섭취량
 
-  // 유저 건강고민 카테고리
+  // 유저 건강고민 카테고리 (userId와 카테고리id를 포함한 api연동에 쓰일 데이터)
   const [userCategory, setUserCategory] = useState([]);
+  // 유저 건강고민 카테고리 (카테고리id와 카테고리name을 포함한 전역상태에 넣어둘 데이터)
+  const [categories, setCategories] = useState([]);
 
   // 플래닛가기 모달
   const [openDialogGoMain, setOpenDialogGoMain] = useState(false);
@@ -197,9 +188,9 @@ function Welcome() {
       if (!age || !height || !weight) {
         alert("모든 정보를 기입해주세요!");
       } else {
-        // 유저의 추가정보 등록 -> 유저아이디 변경 필요!!!!!!!!!!
-        const response = await http.post(`/user-infos/8`, {
-          userId: 8,
+        // 유저의 추가정보 등록
+        const response = await http.post(`/user-infos/${userInfo.userId}`, {
+          userId: userInfo.userId,
           birthyear: birthyear,
           gender: gender,
           recInfo: {
@@ -217,6 +208,29 @@ function Welcome() {
         });
 
         if (response.data.message === "success") {
+          // 유저정보 전역상태 수정
+          setUserInfo((user) => {
+            const copyUser = { ...user };
+            copyUser.birthYear = birthyear;
+            copyUser.gender = gender;
+            copyUser.height = height;
+            copyUser.weight = weight;
+            copyUser.active = activeAmount;
+            copyUser.bmi = bmi;
+            copyUser.age = age;
+            return { ...copyUser };
+          });
+
+          // 유저 권장섭취량 정보 전역상태 수정
+          setUserRI((userRI) => {
+            const copyUserRI = { ...userRI };
+            copyUserRI.kcal = Number(recoIntake);
+            copyUserRI.carbohydrate = Number(carbo);
+            copyUserRI.protein = Number(protein);
+            copyUserRI.fat = Number(fat);
+            return { ...copyUserRI };
+          });
+
           setActiveStep(activeStep + 1);
         }
       }
@@ -225,9 +239,9 @@ function Welcome() {
       if (userCategory.length == 0) {
         alert("최소 1개를 선택해주세요!");
       } else {
-        // 건강고민 포함한 추가정보 등록 -> 유저아이디 변경 필요!!!!!!!!!!
-        const response = await http.post(`/user-infos/8`, {
-          userId: 8,
+        // 건강고민 포함한 추가정보 등록
+        const response = await http.post(`/user-infos/${userInfo.userId}`, {
+          userId: userInfo.userId,
           birthyear: birthyear,
           gender: gender,
           recInfo: {
@@ -245,6 +259,15 @@ function Welcome() {
         });
 
         if (response.data.message === "success") {
+          // 유저정보 건강고민 전역상태 수정
+          setUserInfo((user) => {
+            const copyUser = { ...user };
+            console.log(categories);
+            copyUser.categories = [...categories];
+            console.log(copyUser);
+            return { ...copyUser };
+          });
+
           // setActiveStep(activeStep + 1);
           setOpenDialogGoMain(true);
         }
@@ -298,7 +321,12 @@ function Welcome() {
 
       <Container component="main" maxWidth="md" sx={{ mb: 4, marginTop: "100px" }}>
         <Paper variant="outlined" sx={{ my: { xs: 3, md: 6 }, p: { xs: 2, md: 3 } }}>
-          <CelebrateLine></CelebrateLine>
+          <div style={{ marginTop: "3px", textAlign: "center", lineHeight: "2" }}>
+            <h4>
+              {userInfo.name} 님의 가입을 축하합니다!
+              <br />더 나은 서비스 이용을 위해 약관동의 및 추가 정보를 기입해주세요.😊
+            </h4>
+          </div>
 
           {/* Stepper */}
           <Stepper activeStep={activeStep} sx={{ pt: 3, pb: 5 }}>
@@ -353,6 +381,7 @@ function Welcome() {
                   <UserTagForm
                     userCategory={userCategory}
                     setUserCategory={setUserCategory}
+                    categories={categories}
                   ></UserTagForm>
                 )}
                 <Box sx={{ display: "flex", justifyContent: "flex-end" }}>

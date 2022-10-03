@@ -1,12 +1,13 @@
-import { atom } from 'recoil'
+import { atom } from "recoil";
 
 export const userRecIntake = atom({
-  key: 'recIntake',
+  key: "recIntake",
   default: {
     kcal: 0,
     carbohydrate: 0,
     protein: 0,
     fat: 0,
-    // 영양소별 권장 섭취량도 
-  }
-})
+    sugar: 50,
+    // 영양소별 권장 섭취량도
+  },
+});
