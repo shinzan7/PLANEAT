@@ -21,7 +21,7 @@ function Router() {
 
     return (
             <BrowserRouter>
-            { url === 'http://localhost:3000/' ? 
+            { url === 'https://j7a701.p.ssafy.io/' ? 
                 null : <Header />}
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -42,7 +42,7 @@ function Router() {
                     <Route path="/mypage" element={<MyPage />} />
                     <Route path="/logincheck" element={<Logincheck />} />
                 </Routes>
-                { url === 'http://localhost:3000/' ? 
+                { url === 'https://j7a701.p.ssafy.io/' ? 
                 null : <Footer />}
             </BrowserRouter>
         
