@@ -9,18 +9,27 @@ import Grid from "@mui/material/Grid";
 import TextField from "@mui/material/TextField";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Container from "@mui/material/Container";
-import { FormControl, FormLabel, RadioGroup, Radio } from "@mui/material";
+import {
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  Radio,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+} from "@mui/material";
 import BtnMain from "components/common/BtnMain";
 
 import { http } from "api/http";
 
 import { userState } from "states/userState";
 import { userRecIntake } from "states/userRecIntake";
-import { useRecoilValue } from "recoil";
+import { useRecoilState } from "recoil";
 
 export default function UserInfo() {
-  const userInfo = useRecoilValue(userState);
-  const userRecIntakeInfo = useRecoilValue(userRecIntake);
+  const [userInfo, setUserInfo] = useRecoilState(userState);
+  const [userRecIntakeInfo, setUserRecIntakeInfo] = useRecoilState(userRecIntake);
 
   const [gender, setGender] = useState(userInfo.gender); // 성별
   const [age, setAge] = useState(userInfo.age); // 나이
@@ -34,6 +43,9 @@ export default function UserInfo() {
   const [carbo, setCarbo] = useState(userRecIntakeInfo.carbohydrate); // 탄수화물 권장섭취량
   const [protein, setProtein] = useState(userRecIntakeInfo.protein); // 단백질 권장섭취량
   const [fat, setFat] = useState(userRecIntakeInfo.fat); // 지방 권장섭취량
+
+  // 수정 완료 모달
+  const [open, setOpen] = useState(false);
 
   // 성별
   const handleGender = (event) => {
@@ -144,6 +156,11 @@ export default function UserInfo() {
     changeCarbProFat();
   });
 
+  // 모달 닫기
+  const handleClose = () => {
+    setOpen(false);
+  };
+
   async function updateUserInfo() {
     // 건강고민 카테고리 변경
     for (let i = 0; i < categories.length; i++) {
@@ -152,15 +169,14 @@ export default function UserInfo() {
         userCategoryInfoId: categories[i].categoryId,
       });
     }
-    console.log("유저카테고리고리");
-    console.log(userCategory);
+    // console.log(userCategory);
 
     // 정보 수정 api 연동
     const response = await http.put(`user-infos/${userInfo.userId}`, {
       userId: userInfo.userId,
       birthyear: birthyear,
       gender: gender,
-      name: "이야",
+      name: userInfo.name,
       recInfo: {
         updateDate: getToday(),
         height: height,
@@ -175,7 +191,35 @@ export default function UserInfo() {
       categoriesList: userCategory,
     });
 
-    console.log(response.data);
+    // console.log(response.data);
+
+    if (response.data.message === "success") {
+      // 유저정보 전역상태 수정
+      setUserInfo((user) => {
+        const copyUser = { ...user };
+        copyUser.age = age;
+        copyUser.birthYear = birthyear;
+        copyUser.gender = gender;
+        copyUser.height = height;
+        copyUser.weight = weight;
+        copyUser.active = activeAmount;
+        copyUser.bmi = bmi;
+        return { ...copyUser };
+      });
+
+      // 유저 권장섭취량 정보 전역상태 수정
+      setUserRecIntakeInfo((userRI) => {
+        const copyUserRI = { ...userRI };
+        copyUserRI.kcal = Number(recoIntake);
+        copyUserRI.carbohydrate = Number(carbo);
+        copyUserRI.protein = Number(protein);
+        copyUserRI.fat = Number(fat);
+        return { ...copyUserRI };
+      });
+
+      // 수정완료 모달 열기
+      setOpen(true);
+    }
   }
 
   return (
@@ -186,6 +230,7 @@ export default function UserInfo() {
         </Typography>
         <Typography variant="subtitle">
           회원 정보를 수정하고, BMI 및 권장섭취량을 확인할 수 있습니다!
+          <br />
         </Typography>
         {/* 이름 */}
         <Grid
@@ -330,7 +375,7 @@ export default function UserInfo() {
         {/* 활동량 */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs={3}>
-            <div style={{ marginTop: "8px" }}>활동량{activeAmount}</div>
+            <div style={{ marginTop: "8px" }}>활동량</div>
           </Grid>
           <Grid item xs={9}>
             <FormControl>
@@ -413,7 +458,8 @@ export default function UserInfo() {
         {/* BMI */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs>
-            {userInfo.name}님의 현재 BMI지수는 <b style={{ color: "orange" }}>{userInfo.bmi}</b>
+            <b>{userInfo.name}</b>님의 현재 BMI지수는{" "}
+            <b style={{ color: "orange" }}>{userInfo.bmi}</b>
             입니다.
           </Grid>
         </Grid>
@@ -421,7 +467,7 @@ export default function UserInfo() {
         {/* 권장섭취량 */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs>
-            {userInfo.name}님의 현재 권장섭취량은{" "}
+            <b>{userInfo.name}</b>님의 현재 권장섭취량은{" "}
             <b style={{ color: "orange" }}>{userRecIntakeInfo.kcal}kcal</b>
             입니다.
           </Grid>
@@ -466,6 +512,36 @@ export default function UserInfo() {
           </BtnMain>
         </Grid>
       </React.Fragment>
+      {/* 수정 완료 모달 */}
+      <Dialog
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogContent>
+          <DialogContentText sx={{ textAlign: "center" }} id="alert-dialog-description">
+            <img src="assets/planet.png" style={{ marginBottom: "5px" }}></img>
+            <div
+              style={{
+                margin: "20px 20px 0px 20px",
+                color: "#747373",
+                fontSize: "20px",
+                // fontWeight: "bold",
+                textAlign: "center",
+                lineHeight: "1.7",
+              }}
+            >
+              회원정보가 정상적으로 수정되었습니다! 😀
+            </div>
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions sx={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+          <BtnMain onClick={handleClose} width="100px" autoFocus>
+            확인
+          </BtnMain>
+        </DialogActions>
+      </Dialog>
     </Container>
   );
 }
