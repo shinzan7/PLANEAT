@@ -55,4 +55,13 @@ public class NutrientHistory {
         this.intakeReal = intakeReal;
         return this;
     }
+
+    @Override
+    public String toString() {
+        return "NutrientHistory{" +
+                "id=" + id +
+                ", intakeDate=" + intakeDate +
+                ", intakeReal=" + intakeReal +
+                '}';
+    }
 }

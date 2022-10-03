@@ -38,4 +38,15 @@ public class UserNutrientResponse {
         this.intakeRecommend = intakeRecommend;
         this.nutriHistoryList = nutriHistoryList;
     }
+
+    @Override
+    public String toString() {
+        return "UserNutrientResponse{" +
+                "userNutrientId=" + userNutrientId +
+                ", userId=" + userId +
+                ", nutrientName='" + nutrientName + '\'' +
+                ", intakeRecommend=" + intakeRecommend +
+                ", nutriHistoryList=" + nutriHistoryList +
+                '}';
+    }
 }
