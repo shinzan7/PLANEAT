@@ -42,7 +42,7 @@ public class FoodInfoController {
      */
     @PostMapping("/{userId}")
     @ApiOperation(value = "식품 정보(내 음식) 등록", notes = "유저 Id와 등록할 식품 정보를 받아 등록한다")
-    @ApiImplicitParam(name = "userId", value = "식품 정보를 등록할 유저의 Id", required = true, dataType = "long")
+    @ApiImplicitParam(name = "userId", value = "식품 정보를 등록할 유저의 Id", required = true, dataTypeClass = Long.class)
     public ResponseEntity<BasicResponse<Long>> CreateFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
         Long id = foodInfoService.createFoodInfo(userId, foodInfoRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
@@ -57,7 +57,7 @@ public class FoodInfoController {
      */
     @GetMapping("/{userId}")
     @ApiOperation(value = "식품 정보(내 음식) 조회", notes = "유저 Id가 등록한 식품 정보 목록을 반환한다 - 최대 100개")
-    @ApiImplicitParam(name = "userId", value = "식품 정보를 등록할 유저의 Id", required = true, dataType = "long")
+    @ApiImplicitParam(name = "userId", value = "식품 정보를 등록할 유저의 Id", required = true, dataTypeClass = Long.class)
     public ResponseEntity<BasicResponse<List<FoodInfoResponse>>> readUserFoodInfos(@PathVariable("userId") Long userId) {
         List<FoodInfoResponse> responses = foodInfoService.readFoodInfo(userId);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
@@ -74,8 +74,8 @@ public class FoodInfoController {
     @GetMapping("/{userId}/{name}")
     @ApiOperation(value = "식품 정보(내 음식) 이름으로 조회", notes = "입력된 이름 조건에 맞는 식품 정보 목록을 반환한다 - 최대 500개")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "식품 정보를 조회할 유저의 Id", required = true, dataType = "long"),
-            @ApiImplicitParam(name = "name", value = "식품 정보를 조회할 식품 이름(키워드)", required = true, dataType = "String")
+            @ApiImplicitParam(name = "userId", value = "식품 정보를 조회할 유저의 Id", required = true, dataTypeClass = Long.class),
+            @ApiImplicitParam(name = "name", value = "식품 정보를 조회할 식품 이름(키워드)", required = true, dataTypeClass = String.class)
     })
     public ResponseEntity<BasicResponse<List<FoodInfoResponse>>> readNameFoodInfos(@PathVariable("userId") Long userId, @PathVariable("name") String name) {
         List<FoodInfoResponse> responses = foodInfoService.readByNameFoodInfo(userId, name);
@@ -93,7 +93,7 @@ public class FoodInfoController {
      */
     @PutMapping("/{userId}")
     @ApiOperation(value = "식품 정보(내 음식) 등록", notes = "유저 Id와 수정할 식품 정보를 받아 수정한다")
-    @ApiImplicitParam(name = "userId", value = "식품 정보를 수정할 유저의 Id", required = true, dataType = "long")
+    @ApiImplicitParam(name = "userId", value = "식품 정보를 수정할 유저의 Id", required = true, dataTypeClass = Long.class)
     public ResponseEntity<BasicResponse<Long>> UpdateFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
         Long id = foodInfoService.updateFoodInfo(userId, foodInfoRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
@@ -110,7 +110,7 @@ public class FoodInfoController {
      */
     @DeleteMapping("/{userId}")
     @ApiOperation(value = "식품 정보(내 음식) 삭제", notes = "유저 Id와 삭제할 식품 정보를 받아 삭제한다")
-    @ApiImplicitParam(name = "userId", value = "식품 정보를 삭제할 유저의 Id", required = true, dataType = "long")
+    @ApiImplicitParam(name = "userId", value = "식품 정보를 삭제할 유저의 Id", required = true, dataTypeClass = Long.class)
     public ResponseEntity<BasicResponse<Long>> DeleteFoodInfo(@PathVariable("userId") Long userId, @RequestBody FoodInfoRequest foodInfoRequest) {
         Long id = foodInfoService.deleteFoodInfo(userId, foodInfoRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.OK);
