@@ -3,27 +3,35 @@
 @author 전상현
 @since 2022.09.22
 */
-import React from "react";
+import React, { useState, useEffect} from "react";
+import { useParams } from 'react-router-dom'
 import CardNutrient from "components/common/CardNutrient";
 import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
+import { http } from "api/http";
 
 
 function TagResult() {
-  const data = {
-    img: "",
-    nutrient_name: "락토핏 생유산균 화이버",
-    company: "종근당",
-    category_tag: ["장건강"],
-    ingredient_name: ["차전자피식이섬유"],
-  }
+  const tagname = useParams()
+
 
   const section = { marginTop:'80px' }
   const section1 = { marginTop:'25vh', textAlign:'center'}
   const section2 = { marginTop:'5vh', textAlign:'center'}
   const section3 = { marginTop:'10vh' }
   const card = { textAlign:'left' }
+  const bold = {fontWeight:'bold'}
+
+  const [info, setInfo] = useState([])
+
+  useEffect(() => {
+    http.get(`/nutrient/tag/${tagname.id}`)
+    .then(response => {
+      console.log('info', response.data.data)
+      setInfo(response.data.data)
+    })
+  }, [])
 
   return (
       <div style={section}>
@@ -40,7 +48,7 @@ function TagResult() {
                 </Grid>
                 {/* 중앙 상단 문구 */}
                 <Grid item xs={4}>
-                  <p>(건강 고민)개선에 도움이 되는 영양제들이에요.</p>
+                  <p><span style={bold}>{tagname.id}</span> 개선에 도움이 되는 영양제들이에요.</p>
                 </Grid>
                 <Grid item xs={5}>
                   
@@ -55,25 +63,19 @@ function TagResult() {
                 <Grid item xs={1}>
 
                 </Grid>
-                <Grid item xs={8}>
+                <Grid item xs={9}>
+                  {/* 태그 검색 결과  */}
                   <Grid container style={card}>
-                    <Link to='/searchdetail/10' style={{textDecoration:'none'}}>
-                      <CardNutrient pill={data}/>
-                    </Link>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
+                    {info.map(function(data, i) { 
+                      return (
+                      <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
+                        <CardNutrient key={i} pill={data} />
+                      </Link>
+                      )
+                    })}
                   </Grid>
                 </Grid>
-                <Grid item xs={3}>
+                <Grid item xs={2}>
 
                 </Grid>  
               </Grid>

@@ -14,6 +14,11 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import styled from "styled-components";
+import Chart from "react-apexcharts";
+import ChipDeletable from "components/common/ChipDeletable";
+// recoil 사용
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
 
 import {
   Typography,
@@ -27,6 +32,10 @@ import {
   ListItemButton,
   ListItemText,
   ListSubheader,
+  FormControl,
+  OutlinedInput,
+  InputAdornment,
+  FormHelperText,
 } from "@mui/material";
 import BtnMain from "components/common/BtnMain";
 import SearchIcon from "@mui/icons-material/Search";
@@ -41,6 +50,7 @@ import DietModal from "components/modal/main/DietModal";
 import FoodModal from "components/modal/main/FoodModal";
 import { http } from "api/http";
 import { click } from "@testing-library/user-event/dist/click";
+import Btn from "components/common/Btn";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -77,7 +87,8 @@ function a11yProps(index) {
 
 export default function MaxWidthDialog(props) {
   const [allFood, setAllFood] = useState([]); // 모든 음식, 왼쪽 영역 음식
-  const [myFood, setMyFood] = useState([]); // 내가 추가한 음식
+  const [myFood, setMyFood] = useState([]); // 내음식
+  const [myDiet, setMyDiet] = useState([]); // 내식단
 
   // 맨 처음 음식 전체 데이터 가져오기
   async function getAllFood() {
@@ -89,12 +100,22 @@ export default function MaxWidthDialog(props) {
     }
   }
 
-  //todo: 로그인한 유저 아이디로 변경하기
+  // 맨 처음 내 음식 가져오는 함수
   async function getMyFood() {
     console.log("getMyFood");
-    const response = await http.get(`/food-infos/10`);
+    const response = await http.get(`/food-infos/${userInfo.userId}`);
     if (response.data.message === "success") {
       setMyFood(response.data.data);
+      console.log(response.data.data);
+    }
+  }
+
+  // 맨 처음 내 식단 가져오는 함수
+  async function getMyDiet() {
+    console.log("getMyDiet");
+    const response = await http.get(`/my-diets/${userInfo.userId}`);
+    if (response.data.message === "success") {
+      setMyDiet(response.data.data);
       console.log(response.data.data);
     }
   }
@@ -107,11 +128,13 @@ export default function MaxWidthDialog(props) {
     } else {
       getAllFood();
       getMyFood();
+      getMyDiet();
     }
   }, [isChange]);
 
   const [searchKeyWord, setSearchKeyWord] = useState();
-  const searchInput = React.useRef(null); // 검색바 input 객체
+  const searchInput = useRef(null); // 검색바 input 객체
+  const intakeFoodInput = useRef(null); // 섭취량 input 객체
   const [fullWidth, setFullWidth] = useState(true);
   const [showMoreFoodModal, setShowMoreFoodModal] = useState(false);
 
@@ -126,33 +149,200 @@ export default function MaxWidthDialog(props) {
 
   // 전체탭 음식 클릭 함수
   function foodClick(index) {
-    console.log("foodClick");
-    console.log(allFood[index]);
-    setClickedFood(allFood[index]);
+    let food = allFood[index];
+    food.amount = 1;
+
+    setClickedFood(food);
+    setModifyFood(food);
+
+    // 탄, 단, 지, 당, 나 함량 변경
+    let nutri = [];
+    nutri[0] = food.carbohydrate;
+    nutri[1] = food.protein;
+    nutri[2] = food.fat;
+    nutri[3] = food.sugar;
+    nutri[4] = food.sodium;
+    setIntakeAmount(nutri);
+
+    // 섭취량 입력 창 초기 값 설정
+    intakeFoodInput.current.value = allFood[index].servingSize;
   }
 
   // MY탭 음식 클릭 함수
   function myFoodClick(index) {
-    console.log("foodClickMY");
+    console.log("MYfoodClick");
     console.log(myFood[index]);
-    setClickedFood(myFood[index]);
+
+    let food = myFood[index];
+    food.amount = 1;
+
+    setClickedFood(food);
+    setModifyFood(food);
+
+    // 탄, 단, 지, 당, 나 함량 변경
+
+    let nutri = [];
+    nutri[0] = food.carbohydrate;
+    nutri[1] = food.protein;
+    nutri[2] = food.fat;
+    nutri[3] = food.sugar;
+    nutri[4] = food.sodium;
+    setIntakeAmount(nutri);
+
+    // 섭취량 입력 창 초기 값 설정
+    intakeFoodInput.current.value = allFood[index].servingSize;
   }
 
   // Tab 관련 변수, 함수
   const [value, setValue] = useState(0);
   const handleChange = (event, newValue) => {
     setValue(newValue);
+    setClickedFood(null);
   };
 
   const [dietModalOpen, setDietModalOpen] = useState(false); // 식단 모달 관리 변수
   const [foodModalOpen, setFoodModalOpen] = useState(false); // 음식 직접입력 모달 관리 변수
-  const [clickedFood, setClickedFood] = useState(null); // 클릭한 음식
+  const [clickedFood, setClickedFood] = useState(null); // 클릭한 음식 (기준)
+  const [clickedDiet, setClickedDiet] = useState(null); // 클릭한 식단 (기준)
+  const [modifyFood, setModifyFood] = useState(null); // 클릭한 양조절 후 변수
   const [clickedFoodList, setClickedFoodList] = useState([]); // 클릭한 음식 담는 배열
+  // todo: 실제 권장 섭취량으로 변경 필요
+  const [recIntakeAmount, setRecIntakeAmount] = useState([
+    400, 30, 10, 50, 1000,
+  ]); // 탄, 단, 지, 당, 나 권장섭취량
+  const [intakeAmount, setIntakeAmount] = useState([0, 0, 0, 0, 0]); // 탄, 단, 지, 당, 나 함량
+
+  // 클릭한 음식 섭취량 조절 함수
+  let regex = /^[0-9]+$/;
+  function changeClickedFood(e) {
+    e.preventDefault();
+    if (regex.test(e.target.value) || e.target.value == "") {
+    } else {
+      alert("섭취량을 숫자로 입력하세요");
+      intakeFoodInput.current.value = null; // 내가 먹은양
+    }
+
+    let copy = { ...clickedFood }; // 음식 정보
+    let info = []; // 영양성분의 양
+    copy.amount =
+      Number(intakeFoodInput.current.value) /
+      clickedFood.servingSize.toFixed(2); // 음식 객체의 year 를 amount로 쓰자
+    copy.carbohydrate = Number(copy.amount * clickedFood.carbohydrate).toFixed(
+      1
+    );
+    info[0] = copy.carbohydrate;
+    copy.protein = Number(copy.amount * clickedFood.protein).toFixed(1);
+    info[1] = copy.protein;
+    copy.fat = Number(copy.amount * clickedFood.fat).toFixed(1);
+    info[2] = copy.fat;
+    copy.sugar = Number(copy.amount * clickedFood.sugar).toFixed(1);
+    info[3] = copy.sugar;
+    copy.sodium = Number(copy.amount * clickedFood.sodium).toFixed(1);
+    info[4] = copy.sodium;
+
+    // 변경된 음식 정보, 각 음식양 변경
+    setModifyFood(copy);
+    setIntakeAmount(info);
+  }
+
+  // 음식 영양정보 (탄,단,지,당,나) 차트
+  function FoodInfoChart() {
+    const series = [
+      {
+        data: [
+          ((modifyFood.carbohydrate / recIntakeAmount[0]) * 100).toFixed(1),
+          ((modifyFood.protein / recIntakeAmount[1]) * 100).toFixed(1),
+          ((modifyFood.fat / recIntakeAmount[2]) * 100).toFixed(1),
+          ((modifyFood.sugar / recIntakeAmount[3]) * 100).toFixed(1),
+          ((modifyFood.sodium / recIntakeAmount[4]) * 100).toFixed(1),
+        ], // 음식의 (영양분/권장)*100
+      },
+    ];
+
+    const options = {
+      colors: ["#FFEFC9", "#FFB3B3", "#A9D5C7", "#9DA6F8", "#E6E8FD"],
+      chart: {
+        type: "bar",
+        height: 350,
+      },
+      plotOptions: {
+        bar: {
+          distributed: true, // 막대바 마다 색 바꿔 주기 위해서 사용하는 옵션
+          borderRadius: 4,
+          horizontal: true,
+          barHeight: "50%",
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        textAnchor: "start",
+        style: {
+          colors: ["#666666"],
+        },
+        formatter: function (val, opt) {
+          return intakeAmount[opt.dataPointIndex] + " (" + val + "%" + ")";
+        },
+        offsetX: -10,
+      },
+      xaxis: {
+        categories: [
+          "탄수화물(g)",
+          "단백질(g)",
+          "지방(g)",
+          "당류(g)",
+          "나트륨(mg)",
+        ],
+        axisBorder: { show: false },
+        axisTicks: { show: false },
+        labels: { show: false },
+      },
+      legend: {
+        show: false,
+      },
+    };
+
+    return (
+      <div className="app">
+        <div id="chart">
+          <Chart options={options} series={series} type="bar" height={350} />
+        </div>
+      </div>
+    );
+  }
+
+  // 오른쪽 영역에서 식사에 추가 버튼
+  function addMeal() {
+    let copyList = [...clickedFoodList];
+
+    let id = modifyFood.foodInfoId;
+    let hasFood = false;
+    for (let i = 0; i < copyList.length; i++) {
+      // copyList에 추가하려는 음식이 있는 경우
+      if (copyList[i].foodInfoId == id) {
+        // 음식 양을 변경 후 음식 리스트 변경
+        copyList[i].amount = modifyFood.amount;
+        hasFood = true;
+        setClickedFoodList(copyList);
+        break;
+      }
+    }
+
+    if (!hasFood) {
+      copyList.push(modifyFood);
+      setClickedFoodList(copyList);
+    }
+  }
+
+  const userInfo = useRecoilValue(userState);
 
   return (
     <div>
       {/* 식단으로 추가 모달 */}
-      <DietModal open={dietModalOpen} close={() => setDietModalOpen(false)} />
+      <DietModal
+        open={dietModalOpen}
+        close={() => setDietModalOpen(false)}
+        foodList={clickedFoodList}
+      />
       {/* 내음식 추가 모달 */}
       <FoodModal
         open={foodModalOpen}
@@ -190,19 +380,18 @@ export default function MaxWidthDialog(props) {
           </Grid>
           <Grid container xs={5}>
             {/* 내 식단으로 추가 버튼 */}
-            <Grid items xs={6}>
+            <Grid item xs={6}>
               <BtnMain
                 width="80%"
                 onClick={() => {
                   setDietModalOpen(true);
                 }}
               >
-                {" "}
                 내 식단으로 추가
               </BtnMain>
             </Grid>
             {/* 식사 등록 버튼 */}
-            <Grid items xs={6}>
+            <Grid item xs={6}>
               <BtnMain
                 width="70%"
                 onClick={() => {
@@ -221,7 +410,31 @@ export default function MaxWidthDialog(props) {
           style={{ paddingLeft: "2vw" }}
           alignItems="center"
         >
-          선택 음식 칩영역
+          선택 음식 칩영역 {JSON.stringify(clickedFoodList)}
+          {clickedFoodList.length == 0 ? null : (
+            <>
+              {clickedFoodList.map(function (food, i) {
+                return (
+                  <ChipDeletable
+                    col="black"
+                    label={food.name}
+                    onClick={() => {
+                      intakeFoodInput.current.value =
+                        food.servingSize * food.amount;
+                      setModifyFood(food);
+                    }}
+                    onDelete={() => {
+                      let copy = [...clickedFoodList];
+                      let index = copy.indexOf(food);
+                      copy.splice(index, 1);
+                      setClickedFoodList(copy);
+                    }}
+                    style={{ marginRight: "5px" }}
+                  ></ChipDeletable>
+                );
+              })}
+            </>
+          )}
         </Grid>
         {/* 검색바 영역 */}
         <Grid
@@ -294,8 +507,9 @@ export default function MaxWidthDialog(props) {
           aria-label="basic tabs example"
           centered
         >
-          <Tab label="전체" {...a11yProps(0)} style={{ minWidth: "50%" }} />
-          <Tab label="MY" {...a11yProps(1)} style={{ minWidth: "50%" }} />
+          <Tab label="전체" {...a11yProps(0)} style={{ minWidth: "33%" }} />
+          <Tab label="내음식" {...a11yProps(1)} style={{ minWidth: "33%" }} />
+          <Tab label="내식단" {...a11yProps(2)} style={{ minWidth: "33%" }} />
         </Tabs>
         {/* 전체 탭 내용*/}
         <TabPanel value={value} index={0}>
@@ -306,7 +520,7 @@ export default function MaxWidthDialog(props) {
             justifyContent="center"
           >
             {/* 음식 선택 영역: 왼쪽 */}
-            <Grid items xs={6}>
+            <Grid item xs={6}>
               <StyledWrapper>
                 <Grid container xs={12} id="container">
                   <List sx={{ width: "100%" }}>
@@ -326,7 +540,7 @@ export default function MaxWidthDialog(props) {
               </StyledWrapper>
             </Grid>
             {/* 음식 선택 영역: 오른쪽 */}
-            <Grid items xs={6}>
+            <Grid item xs={6}>
               <StyledWrapper>
                 <Grid
                   container
@@ -336,32 +550,101 @@ export default function MaxWidthDialog(props) {
                 >
                   {clickedFood == null ? (
                     <Grid id="noClickedFood">
-                      <Grid items xs={12} sx={{ mb: 2 }}>
+                      <Grid item xs={12} sx={{ mb: 2 }}>
                         <img src="assets/planet.png" id="planet" />
                       </Grid>
-                      <Grid items xs={12}>
+                      <Grid item xs={12}>
                         음식을 클릭하면 영양성분을 확인할 수 있어요
                       </Grid>
                     </Grid>
                   ) : (
-                    <>
-                      <div>클릭한 음식 있음</div>
-                    </>
+                    <Grid
+                      container
+                      xs={12}
+                      style={{
+                        padding: "3%",
+                        height: "400px",
+                      }}
+                    >
+                      {/* 음식명 */}
+                      <Grid
+                        container
+                        xs={12}
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <Grid
+                          item
+                          xs={6}
+                          style={{ fontSize: "20px", fontWeight: "bold" }}
+                        >
+                          섭취량 설정
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Btn
+                            bgColor="#E6E8FD"
+                            fontColor="black"
+                            onClick={() => {
+                              addMeal();
+                            }}
+                          >
+                            식사에 추가
+                          </Btn>
+                        </Grid>
+                      </Grid>
+                      {/* 음식 양 */}
+                      <Grid item xs={12}>
+                        <ListItemText
+                          primary={modifyFood.name}
+                          secondary={`${modifyFood.calorie}kcal, ${modifyFood.servingSize}${modifyFood.servingUnit}, (1회 제공량)`}
+                        />
+                        <FormControl
+                          sx={{ m: 1, width: "25ch" }}
+                          variant="outlined"
+                        >
+                          <OutlinedInput
+                            id="outlined-adornment-weight"
+                            defaultValue={clickedFood.servingSize}
+                            onChange={(e) => {
+                              changeClickedFood(e);
+                            }}
+                            inputRef={intakeFoodInput}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                {clickedFood.servingUnit}
+                              </InputAdornment>
+                            }
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FoodInfoChart></FoodInfoChart>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{ color: "#666666", fontSize: "12px" }}
+                      >
+                        * (%)하루 권장섭취량에 대한 비율
+                      </Grid>
+                    </Grid>
                   )}
                 </Grid>
               </StyledWrapper>
             </Grid>
           </Grid>
         </TabPanel>
-        {/* MY 탭 내용*/}
+        {/* 내음식탭 내용*/}
         <TabPanel value={value} index={1}>
           <Grid container direction="row" alignItems="center">
             {/* 음식 선택 영역: 왼쪽 */}
-            <Grid items xs={6}>
+            <Grid item xs={6}>
               <StyledWrapper>
                 <Grid container xs={12} id="container" elevation={0}>
                   <List
-                    sx={{ width: "100%" }}
+                    sx={{
+                      width: "100%",
+                    }}
                     subheader={
                       <ListSubheader
                         sx={{ fontWeight: "bold", fontSize: "18px" }}
@@ -388,8 +671,7 @@ export default function MaxWidthDialog(props) {
               </StyledWrapper>
             </Grid>
             {/* 음식 선택 영역: 오른쪽 */}
-            {/* 음식 선택 영역: 오른쪽 */}
-            <Grid items xs={6}>
+            <Grid item xs={6}>
               <StyledWrapper>
                 <Grid
                   container
@@ -399,24 +681,91 @@ export default function MaxWidthDialog(props) {
                 >
                   {clickedFood == null ? (
                     <Grid id="noClickedFood">
-                      <Grid items xs={12} sx={{ mb: 2 }}>
+                      <Grid item xs={12} sx={{ mb: 2 }}>
                         <img src="assets/planet.png" id="planet" />
                       </Grid>
-                      <Grid items xs={12}>
+                      <Grid item xs={12}>
                         음식을 클릭하면 영양성분을 확인할 수 있어요
                       </Grid>
                     </Grid>
                   ) : (
-                    <>
-                      <div>클릭한 음식 있음</div>
-                    </>
+                    <Grid
+                      container
+                      xs={12}
+                      style={{
+                        padding: "3%",
+                        height: "400px",
+                      }}
+                    >
+                      {/* 음식명 */}
+                      <Grid
+                        container
+                        xs={12}
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <Grid
+                          item
+                          xs={6}
+                          style={{ fontSize: "20px", fontWeight: "bold" }}
+                        >
+                          섭취량 설정
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Btn
+                            bgColor="#E6E8FD"
+                            fontColor="black"
+                            onClick={() => {
+                              addMeal();
+                            }}
+                          >
+                            식사에 추가
+                          </Btn>
+                        </Grid>
+                      </Grid>
+                      {/* 음식 양 */}
+                      <Grid item xs={12}>
+                        <ListItemText
+                          primary={clickedFood.name}
+                          secondary={`${clickedFood.calorie}kcal, ${clickedFood.servingSize}${clickedFood.servingUnit}, (1회 제공량)`}
+                        />
+                        <FormControl
+                          sx={{ m: 1, width: "25ch" }}
+                          variant="outlined"
+                        >
+                          <OutlinedInput
+                            id="outlined-adornment-weight"
+                            defaultValue={clickedFood.servingSize}
+                            onChange={(e) => {
+                              changeClickedFood(e);
+                            }}
+                            inputRef={intakeFoodInput}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                {clickedFood.servingUnit}
+                              </InputAdornment>
+                            }
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FoodInfoChart></FoodInfoChart>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{ color: "#666666", fontSize: "12px" }}
+                      >
+                        * (%)하루 권장섭취량에 대한 비율
+                      </Grid>
+                    </Grid>
                   )}
                 </Grid>
               </StyledWrapper>
             </Grid>
             {/* 음식 정보 직접 입력 버튼 */}
             <Grid container xs={12} justifyContent="center">
-              <Grid items xs={4}>
+              <Grid item xs={4}>
                 <BtnMain
                   width="100%"
                   onClick={() => {
@@ -426,6 +775,136 @@ export default function MaxWidthDialog(props) {
                   음식 정보 직접 입력
                 </BtnMain>
               </Grid>
+            </Grid>
+          </Grid>
+        </TabPanel>
+        {/* 내식단 탭 내용*/}
+        <TabPanel value={value} index={2}>
+          <Grid container direction="row" alignItems="center">
+            {/* 음식 선택 영역: 왼쪽 */}
+            <Grid item xs={6}>
+              <StyledWrapper>
+                <Grid container xs={12} id="container" elevation={0}>
+                  <List
+                    sx={{ width: "100%" }}
+                    subheader={
+                      <ListSubheader
+                        sx={{ fontWeight: "bold", fontSize: "18px" }}
+                        component="div"
+                        id="nested-list-subheader"
+                      >
+                        내 식단
+                      </ListSubheader>
+                    }
+                  >
+                    {myDiet.map(function (diet, i) {
+                      return (
+                        <>
+                          <ListItemButton
+                            key={i}
+                            onClick={() => console.log(myDiet[i])}
+                          >
+                            <ListItemText primary={diet.dietName} id={i} />
+                          </ListItemButton>
+                        </>
+                      );
+                    })}
+                  </List>
+                </Grid>
+              </StyledWrapper>
+            </Grid>
+            {/* 음식 선택 영역: 오른쪽 */}
+            <Grid item xs={6}>
+              <StyledWrapper>
+                <Grid
+                  container
+                  id="container"
+                  justifyContent="center"
+                  alignItems="center"
+                >
+                  {clickedDiet == null ? (
+                    <Grid id="noClickedFood">
+                      <Grid item xs={12} sx={{ mb: 2 }}>
+                        <img src="assets/planet.png" id="planet" />
+                      </Grid>
+                      <Grid item xs={12}>
+                        식단을 클릭하면 정보를 확인할 수 있어요
+                      </Grid>
+                    </Grid>
+                  ) : (
+                    <Grid
+                      container
+                      xs={12}
+                      style={{
+                        padding: "3%",
+                        height: "400px",
+                      }}
+                    >
+                      {/* 음식명 */}
+                      <Grid
+                        container
+                        xs={12}
+                        alignItems="center"
+                        justifyContent="space-between"
+                      >
+                        <Grid
+                          item
+                          xs={6}
+                          style={{ fontSize: "20px", fontWeight: "bold" }}
+                        >
+                          섭취량 설정
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Btn
+                            bgColor="#E6E8FD"
+                            fontColor="black"
+                            onClick={() => {
+                              addMeal();
+                            }}
+                          >
+                            식사에 추가
+                          </Btn>
+                        </Grid>
+                      </Grid>
+                      {/* 음식 양 */}
+                      <Grid item xs={12}>
+                        <ListItemText
+                          primary={clickedFood.name}
+                          secondary={`${clickedFood.calorie}kcal, ${clickedFood.servingSize}${clickedFood.servingUnit}, (1회 제공량)`}
+                        />
+                        <FormControl
+                          sx={{ m: 1, width: "25ch" }}
+                          variant="outlined"
+                        >
+                          <OutlinedInput
+                            id="outlined-adornment-weight"
+                            defaultValue={clickedFood.servingSize}
+                            onChange={(e) => {
+                              changeClickedFood(e);
+                            }}
+                            inputRef={intakeFoodInput}
+                            endAdornment={
+                              <InputAdornment position="end">
+                                {clickedFood.servingUnit}
+                              </InputAdornment>
+                            }
+                          />
+                        </FormControl>
+                      </Grid>
+                      <Grid item xs={12}>
+                        <FoodInfoChart></FoodInfoChart>
+                      </Grid>
+                      <Grid
+                        item
+                        xs={12}
+                        style={{ color: "#666666", fontSize: "12px" }}
+                      >
+                        * (%)하루 권장섭취량에 대한 비율
+                      </Grid>
+                    </Grid>
+                  )}
+                </Grid>
+              </StyledWrapper>
             </Grid>
           </Grid>
         </TabPanel>
