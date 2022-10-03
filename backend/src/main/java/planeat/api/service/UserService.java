@@ -160,7 +160,7 @@ public class UserService {
         updateUser.setRefreshToken(user.getRefreshToken());
         userRepository.save(updateUser);
 
-        List<UserRecIntake> userRecIntakes = userRecIntakeRepository.findByUserId(userId);
+        List<UserRecIntake> userRecIntakes = userRecIntakeRepository.findByUserOrderByUpdateDateAsc(user);
 
         List<UserRecIntake> userRecIntakeList = userRecIntakes;
 
