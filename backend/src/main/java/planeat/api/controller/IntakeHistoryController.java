@@ -8,6 +8,10 @@ package planeat.api.controller;
  @since 2022-09-25
 */
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +30,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/intake-histories")
+@Api(tags = {"섭취 기록 API를 제공하는 Controller"})
 public class IntakeHistoryController {
 
     final IntakeHistoryService intakeHistoryService;
@@ -40,6 +45,8 @@ public class IntakeHistoryController {
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
     @PostMapping("/{userId}")
+    @ApiOperation(value = "섭취 기록 등록", notes = "유저 Id와 등록할 섭취 기록을 받아 등록한다")
+    @ApiImplicitParam(name = "userId", value = "섭취 기록 정보를 등록할 유저의 Id", required = true, dataTypeClass = Long.class)
     public ResponseEntity<BasicResponse<Long>> createIntakeHistory(@PathVariable("userId") Long userId, @RequestBody IntakeHistoryRequest intakeHistoryRequest) {
         Long id = intakeHistoryService.createIntakeHistory(userId, intakeHistoryRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
@@ -54,28 +61,16 @@ public class IntakeHistoryController {
      * @return SUCCCESS, List<MyDietResponse>, HttpStatus.OK(200)
      */
     @GetMapping("/{userId}/{date}")
+    @ApiOperation(value = "섭취 기록 날짜로 조회", notes = "입력된 날짜 조건에 맞는 섭취 기록 정보 목록을 반환한다")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "userId", value = "섭취 기록 정보를 조회할 유저의 Id", required = true, dataTypeClass = Long.class),
+            @ApiImplicitParam(name = "date", value = "섭취 기록 정보를 조회할 섭취 기록 날짜(키워드)", required = true, dataTypeClass = String.class)
+    })
     public ResponseEntity<BasicResponse<List<IntakeHistoryResponse>>> readIntakeHistories(@PathVariable("userId") Long userId, @PathVariable("date") String date) throws ParseException {
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         List<IntakeHistoryResponse> responses = intakeHistoryService.readByDateIntakeHistory(userId, localDate);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
     }
-
-    /*
-     * 날짜-구분 별로 섭취 기록 조회
-     *
-     * 그냥 위에꺼로 보내고 프론트에서 잘라 쓰는게 낫나..? 모르겠네....프론트한테 물어보기
-     *
-     * @param userId 유저 번호
-     * @param date 날짜
-     * @param type 구분(아침/점심/저녁/간식)
-     * @return SUCCCESS, List<MyDietResponse>, HttpStatus.OK(200)
-     */
-//    @GetMapping("/{userId}/{date}/{type}")
-//    public ResponseEntity<BasicResponse<List<IntakeHistoryResponse>>> readByDateAndTypeIntakeHistories(@PathVariable("userId") Long userId, @PathVariable("date") Date date, @PathVariable("type") String type) {
-//        List<IntakeHistoryResponse> responses = intakeHistoryService.readByDateAndTypeIntakeHistory(userId, date, type);
-//        return new ResponseEntity<>(makeBasicResponse(SUCCESS, responses), HttpStatus.OK);
-//
-//    }
 
 
     /**
@@ -86,6 +81,8 @@ public class IntakeHistoryController {
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
     @PutMapping("/{userId}")
+    @ApiOperation(value = "섭취 기록 수정", notes = "유저 Id와 수정할 섭취 기록 정보를 받아 수정한다")
+    @ApiImplicitParam(name = "userId", value = "섭취 기록 정보를 수정할 유저의 Id", required = true, dataTypeClass = Long.class)
     public ResponseEntity<BasicResponse<Long>> UpdateIntakeHistory(@PathVariable("userId") Long userId, @RequestBody IntakeHistoryRequest intakeHistoryRequest) {
         Long id = intakeHistoryService.updateIntakeHistory(userId, intakeHistoryRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
@@ -101,6 +98,8 @@ public class IntakeHistoryController {
      * @return SUCCCESS, userId, HttpStatus.CREATED(200)
      */
     @DeleteMapping("/{userId}")
+    @ApiOperation(value = "섭취 기록 삭제", notes = "유저 Id와 삭제할 섭취 기록 정보를 받아 삭제한다")
+    @ApiImplicitParam(name = "userId", value = "섭취 기록 정보를 삭제할 유저의 Id", required = true, dataTypeClass = Long.class)
     public ResponseEntity<BasicResponse<Long>> DeleteIntakeHistory(@PathVariable("userId") Long userId, @RequestBody IntakeHistoryRequest intakeHistoryRequest) {
         Long id = intakeHistoryService.deleteIntakeHistory(userId, intakeHistoryRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.OK);
