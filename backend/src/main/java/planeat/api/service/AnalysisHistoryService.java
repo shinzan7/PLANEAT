@@ -96,8 +96,9 @@ public class AnalysisHistoryService {
                     .build();
 
             //해당날짜의 유저 권장섭취량
-            UserRecIntake userRecIntake = userRecIntakeRepository.
-                    findFirstByUserAndUpdateDateBeforeOrderByUpdateDateDesc(user, localDate);
+            List<UserRecIntake> userRecIntakeList = userRecIntakeRepository.
+//                    findFirstByUserAndUpdateDateBeforeOrderByUpdateDateDesc(user, localDate);
+        findByUserIdAndDate(user.getId(), localDate);
 
             //필수영양소
             int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
@@ -149,11 +150,14 @@ public class AnalysisHistoryService {
                     .transFattyAcid(2f)
                     .build();
 
-            //칼로리,탄,단,지 -> 유저 권장섭취량으로 update
-            recommend.updateRecIntake(userRecIntake.getCalorie(),
-                    userRecIntake.getCarbohydrate(),
-                    userRecIntake.getProtein(),
-                    userRecIntake.getFat());
+            if(userRecIntakeList.size() != 0){
+                UserRecIntake userRecIntake = userRecIntakeList.get(0);
+                //칼로리,탄,단,지 -> 유저 권장섭취량으로 update
+                recommend.updateRecIntake(userRecIntake.getCalorie(),
+                        userRecIntake.getCarbohydrate(),
+                        userRecIntake.getProtein(),
+                        userRecIntake.getFat());
+            }
 
             analysisHistoryRepository.save(real);
             analysisHistoryRepository.save(recommend);
