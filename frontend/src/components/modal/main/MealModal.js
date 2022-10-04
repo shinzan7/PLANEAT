@@ -52,6 +52,7 @@ import { http } from "api/http";
 import { click } from "@testing-library/user-event/dist/click";
 import Btn from "components/common/Btn";
 import RegistMeal from "pages/main/RegistMeal";
+import { useNavigate } from "react-router-dom";
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -87,6 +88,8 @@ function a11yProps(index) {
 }
 
 export default function MaxWidthDialog(props) {
+  const navigator = useNavigate();
+
   let month = props.month;
   if (month < 10) {
     month = "0" + props.month;
@@ -464,7 +467,6 @@ export default function MaxWidthDialog(props) {
     }
   }
 
-  // 여기 하던 중
   async function deleteMyFood() {
     console.log(clickedFood);
     const response = await http.delete(`food-infos/${userInfo.userId}`, {
@@ -509,12 +511,13 @@ export default function MaxWidthDialog(props) {
     } else {
       alert("식사 등록에 실패했습니다.");
     }
-
+    getMealRecord();
+    let change = props.isChange;
+    props.setIsChange(!change);
     props.close();
   }
 
   // 식사 수정 함수
-  //todo: 오류 확인 필요
   async function modifyMeal() {
     // 음식 정보 데이터 변환
     let list = [];
@@ -529,6 +532,7 @@ export default function MaxWidthDialog(props) {
       date: curDate,
       intakeFoodsList: list,
       mealType: props.mealType,
+      userId: userInfo.userId,
     });
 
     if (response.data.message == "success") {
@@ -543,6 +547,8 @@ export default function MaxWidthDialog(props) {
       alert("식사 수정에 실패했습니다.");
     }
     getMealRecord();
+    let change = props.isChange;
+    props.setIsChange(!change);
     props.close();
   }
 
@@ -683,7 +689,6 @@ export default function MaxWidthDialog(props) {
           style={{ paddingLeft: "2vw" }}
           alignItems="center"
         >
-          선택 음식 칩영역 {JSON.stringify(clickedFoodList)}
           {clickedFoodList.length == 0 ? null : (
             <>
               {clickedFoodList.map(function (food, i) {
