@@ -40,7 +40,7 @@ public class AnalysisHistoryService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
         );
-        List<AnalysisHistory> historyList = analysisHistoryRepository.findAll();
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUser(user);
         List<AnalysisHistoryResponse> responseList = new ArrayList<>(historyList.size());
 
         if(historyList.size()!=0){
@@ -285,40 +285,40 @@ public class AnalysisHistoryService {
                 goodCount++;
             }
 
-            calorie += Math.round((real.getCalorie() * 10 / rec.getCalorie()) / 10f);
-            protein += Math.round((real.getProtein() * 10 / rec.getProtein()) / 10f);
-            fat += Math.round((real.getFat() * 10 / rec.getFat()) / 10f);
-            carbohydrate += Math.round((real.getCarbohydrate() * 10 / rec.getCarbohydrate()) / 10f);
-            sugar += Math.round((real.getSugar() * 10 / rec.getSugar()) / 10f);
+            calorie += Math.round((real.getCalorie() * 10 / rec.getCalorie())) / 10f;
+            protein += Math.round((real.getProtein() * 10 / rec.getProtein())) / 10f;
+            fat += Math.round((real.getFat() * 10 / rec.getFat())) / 10f;
+            carbohydrate += Math.round((real.getCarbohydrate() * 10 / rec.getCarbohydrate())) / 10f;
+            sugar += Math.round((real.getSugar() * 10 / rec.getSugar())) / 10f;
 
-            dietaryFiber += Math.round((real.getDietaryFiber() * 10 / rec.getDietaryFiber()) / 10f);
-            calcium += Math.round((real.getCalcium() * 10 / rec.getCalcium()) / 10f);
-            iron += Math.round((real.getIron() * 10 / rec.getIron()) / 10f);
-            magnesium += Math.round((real.getMagnesium() * 10 / rec.getMagnesium()) / 10f);
-            phosphorus += Math.round((real.getPhosphorus() * 10 / rec.getPhosphorus()) / 10f);
+            dietaryFiber += Math.round((real.getDietaryFiber() * 10 / rec.getDietaryFiber())) / 10f;
+            calcium += Math.round((real.getCalcium() * 10 / rec.getCalcium())) / 10f;
+            iron += Math.round((real.getIron() * 10 / rec.getIron())) / 10f;
+            magnesium += Math.round((real.getMagnesium() * 10 / rec.getMagnesium())) / 10f;
+            phosphorus += Math.round((real.getPhosphorus() * 10 / rec.getPhosphorus())) / 10f;
 
-            potassium += Math.round((real.getPotassium() * 10 / rec.getPotassium()) / 10f);
-            sodium += Math.round((real.getSodium() * 10 / rec.getSodium()) / 10f);
-            zinc += Math.round((real.getZinc() * 10 / rec.getZinc()) / 10f);
-            copper += Math.round((real.getCopper() * 10 / rec.getCopper()) / 10f);
-            manganese += Math.round((real.getManganese() * 10 / rec.getManganese()) / 10f);
+            potassium += Math.round((real.getPotassium() * 10 / rec.getPotassium())) / 10f;
+            sodium += Math.round((real.getSodium() * 10 / rec.getSodium())) / 10f;
+            zinc += Math.round((real.getZinc() * 10 / rec.getZinc())) / 10f;
+            copper += Math.round((real.getCopper() * 10 / rec.getCopper())) / 10f;
+            manganese += Math.round((real.getManganese() * 10 / rec.getManganese())) / 10f;
 
-            selenium += Math.round((real.getSelenium() * 10 / rec.getSelenium()) / 10f);
-            vitaminA += Math.round((real.getVitaminA() * 10 / rec.getVitaminA()) / 10f);
-            vitaminD += Math.round((real.getVitaminD() * 10 / rec.getVitaminD()) / 10f);
-            vitaminB6 += Math.round((real.getVitaminB6() * 10 / rec.getVitaminB6()) / 10f);
-            folate += Math.round((real.getFolate() * 10 / rec.getFolate()) / 10f);
+            selenium += Math.round((real.getSelenium() * 10 / rec.getSelenium())) / 10f;
+            vitaminA += Math.round((real.getVitaminA() * 10 / rec.getVitaminA())) / 10f;
+            vitaminD += Math.round((real.getVitaminD() * 10 / rec.getVitaminD())) / 10f;
+            vitaminB6 += Math.round((real.getVitaminB6() * 10 / rec.getVitaminB6())) / 10f;
+            folate += Math.round((real.getFolate() * 10 / rec.getFolate())) / 10f;
 
-            vitaminB12 += Math.round((real.getVitaminB12() * 10 / rec.getVitaminB12()) / 10f);
-            vitaminC += Math.round((real.getVitaminC() * 10 / rec.getVitaminC()) / 10f);
-            cholesterol += Math.round((real.getCholesterol() * 10 / rec.getCholesterol()) / 10f);
-            fattyAcid += Math.round((real.getFattyAcid() * 10 / rec.getFattyAcid()) / 10f);
-            linoleicAcid += Math.round((real.getLinoleicAcid() * 10 / rec.getLinoleicAcid()) / 10f);
+            vitaminB12 += Math.round((real.getVitaminB12() * 10 / rec.getVitaminB12())) / 10f;
+            vitaminC += Math.round((real.getVitaminC() * 10 / rec.getVitaminC())) / 10f;
+            cholesterol += Math.round((real.getCholesterol() * 10 / rec.getCholesterol())) / 10f;
+            fattyAcid += Math.round((real.getFattyAcid() * 10 / rec.getFattyAcid())) / 10f;
+            linoleicAcid += Math.round((real.getLinoleicAcid() * 10 / rec.getLinoleicAcid())) / 10f;
 
-            alphaLinoleicAcid += Math.round((real.getAlphaLinoleicAcid() * 10 / rec.getAlphaLinoleicAcid()) / 10f);
-            transFattyAcid += Math.round((real.getTransFattyAcid() * 10 / rec.getTransFattyAcid()) / 10f);
-            vitaminB1 += Math.round((real.getVitaminB1() * 10 / rec.getVitaminB1()) / 10f);
-            vitaminB2 += Math.round((real.getVitaminB2() * 10 / rec.getVitaminB2()) / 10f);
+            alphaLinoleicAcid += Math.round((real.getAlphaLinoleicAcid() * 10 / rec.getAlphaLinoleicAcid())) / 10f;
+            transFattyAcid += Math.round((real.getTransFattyAcid() * 10 / rec.getTransFattyAcid())) / 10f;
+            vitaminB1 += Math.round((real.getVitaminB1() * 10 / rec.getVitaminB1())) / 10f;
+            vitaminB2 += Math.round((real.getVitaminB2() * 10 / rec.getVitaminB2())) / 10f;
         }
 
         int size = historyList.size() / 2;
@@ -506,7 +506,7 @@ public class AnalysisHistoryService {
         total += sugarFatScore(real.getFattyAcid(), rec.getFattyAcid());
         total += sugarFatScore(real.getTransFattyAcid(), rec.getTransFattyAcid());
 
-        float score = (float) ((total * 1.0) / 28);
+        float score = (float) (Math.round((total * 1.0) / 28)) / 10f;
 
         return score;
     }
