@@ -180,7 +180,6 @@ export default function UserInfo() {
     // 정보 수정 api 연동
     const response = await http.put(`user-infos/${userInfo.userId}`, {
       userId: userInfo.userId,
-      name: userInfo.name,
       birthyear: birthyear,
       gender: gender,
       // name: userInfo.name,
