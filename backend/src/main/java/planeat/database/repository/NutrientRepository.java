@@ -26,4 +26,8 @@ public interface NutrientRepository extends JpaRepository<Nutrient, Long> {
             "(select nutrient_id from user_nutrient where user_nutrient_id = :userNutrientId)"
             , nativeQuery = true)
     Nutrient findNutrientByUserNutrientId(@Param("userNutrientId") Long userNutrientId);
+
+    List<Nutrient> findByNutrientNameContains(String searchWord);
+
+
 }

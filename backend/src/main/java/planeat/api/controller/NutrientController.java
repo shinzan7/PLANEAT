@@ -90,6 +90,13 @@ public class NutrientController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , imageUrl), HttpStatus.CREATED);
     }
 
+    @GetMapping("/name/{searchWord}")
+    @ApiOperation(value = "영양제 이름검색", notes = "검색한 키워드를 포함하는 영양제 목록을 반환한다")
+    public ResponseEntity<BasicResponse<List<NutrientSearchResponse>>> readAllNutrientByName(@PathVariable("searchWord") String searchWord){
+        List<NutrientSearchResponse> responseList = nutrientService.readAllNutrientBySearchKeyword(searchWord);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, responseList), HttpStatus.OK);
+    }
+
 
     /**
      * 기본 Response 형식 DTO
