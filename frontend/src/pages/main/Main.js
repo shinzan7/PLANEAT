@@ -11,13 +11,14 @@ import { Grid, Item } from "@mui/material";
 import { useState } from "react";
 import DailyMeal from "./DailyMeal";
 import "./Main.css";
+import { useRef } from "react";
+import { http } from "api/http";
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
+import { useEffect } from "react";
 
 function Main() {
-  // 맨 처음 유저 권장섭취량 state 저장
-
-  async function updateRecInfo() {
-    console.log(updateRecInfo);
-  }
+  const userInfo = useRecoilValue(userState);
 
   // 오늘 날짜 구하기
   const date = new Date();
@@ -36,15 +37,75 @@ function Main() {
   const today = year + "-" + month + "-" + day;
 
   const [clickDate, setClickDate] = useState(today); // 딜력에서 선택된 날짜
-  const [goodDays, setGoodDays] = useState([
-    "2022-09-01",
-    "2022-09-03",
-    "2022-09-10",
-    "2022-09-17",
-    "2022-09-21",
-  ]); // 플래닛 지수 좋음
-  const [normalDays, setNormalDays] = useState(["2022-09-30", "2022-09-14"]); // 플래닛 지수 보통
-  const [badDays, setBadDays] = useState(["2022-09-02", "2022-09-04"]); // 플래닛 지수 나쁨
+  const [recIntakeAmount, setRecIntakeAmount] = useState(null); //권장 섭취량
+
+  const [goodDays, setGoodDays] = useState([]); // 플래닛 지수 좋음
+  const [normalDays, setNormalDays] = useState([]); // 플래닛 지수 보통
+  const [badDays, setBadDays] = useState([]); // 플래닛 지수 나쁨
+
+  // 맨 처음 유저 권장섭취량 state 저장
+  async function getRecIntakeAmount() {
+    console.log("getRec");
+    const response = await http.get(
+      `/user-infos/rec-intake/${userInfo.userId}/${clickDate}`
+    );
+    if (response.data.message == "success") {
+      setRecIntakeAmount(response.data.data);
+    }
+  }
+
+  // 맨 처음 식사 기록 가져오는 함수(플래닛 지수)
+  async function getIntakeRecords() {
+    console.log("getRecs");
+    const response = await http.get(`/analysis/all`, {
+      params: {
+        userId: userInfo.userId,
+      },
+    });
+    if (response.data.message == "success") {
+      console.log(response.data.data);
+      let records = response.data.data;
+      let goods = [];
+      let bads = [];
+      let normals = [];
+      for (let i = 0; i < records.length; i++) {
+        if (records[i].analysisType == 0) {
+          let score = records[i].analysisScore;
+          if (score == "나쁨") {
+            bads.push(records[i].date);
+          } else if (score == "보통") {
+            normals.push(records[i].date);
+          } else {
+            goods.push(records[i].date);
+          }
+        } else {
+          continue;
+        }
+      }
+      setGoodDays(goods);
+      setBadDays(bads);
+      setNormalDays(normals);
+    }
+  }
+
+  const mounted1 = useRef(false);
+  useEffect(() => {
+    if (!mounted1.current) {
+      mounted1.current = true;
+    } else {
+      getRecIntakeAmount();
+    }
+  }, [clickDate]);
+
+  const mounted2 = useRef(false);
+  useEffect(() => {
+    if (!mounted2.current) {
+      mounted2.current = true;
+    } else {
+      getIntakeRecords();
+    }
+  }, []);
+
   const [breakfastAmount, setBreakfastAmount] = useState("350"); // 아침 칼로리
   const [lunchAmount, setLunchAmount] = useState("200"); // 점심 칼로리
   const [dinnerAmount, setDinnerAmount] = useState("500"); // 저녁 칼로리
@@ -71,6 +132,7 @@ function Main() {
             xs={12}
             md={6}
           >
+            {JSON.stringify(badDays)}
             <Calendar
               clickDate={clickDate}
               setClickDate={setClickDate}
@@ -97,6 +159,7 @@ function Main() {
                 setDinnerAmount={setDinnerAmount}
                 snackAmount={snackAmount}
                 setsnackAmount={setsnackAmount}
+                recIntakeAmount={recIntakeAmount}
               ></RegistMeal>
               <DailyMeal clickDate={clickDate}></DailyMeal>
             </Grid>
