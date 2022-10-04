@@ -4,6 +4,7 @@
 @since 2022.10.01
 */
 import * as React from "react";
+import { useEffect } from "react";
 import Timeline from "@mui/lab/Timeline";
 import TimelineItem from "@mui/lab/TimelineItem";
 import TimelineSeparator from "@mui/lab/TimelineSeparator";
@@ -17,8 +18,44 @@ import HotelIcon from "@mui/icons-material/Hotel";
 import RepeatIcon from "@mui/icons-material/Repeat";
 import Typography from "@mui/material/Typography";
 import { Paper, Grid } from "@mui/material";
+import { getFormControlUnstyledUtilityClass } from "@mui/base";
+import { http } from "api/http";
+
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
 
 export default function TimelineStat({ value }) {
+  const userInfo = useRecoilValue(userState);
+
+  // 오늘 날짜 yyyy-mm-dd 형식으로 받아오기
+  function getDateStr(myDate) {
+    var year = myDate.getFullYear();
+    var month = myDate.getMonth() + 1;
+    var day = myDate.getDate();
+
+    month = month < 10 ? "0" + String(month) : month;
+    day = day < 10 ? "0" + String(day) : day;
+
+    return year + "-" + month + "-" + day;
+  }
+  // 오늘로부터 beforedate 전 날짜 반환
+  function lastDay(beforedate) {
+    var d = new Date();
+    var dayOfMonth = d.getDate();
+    d.setDate(dayOfMonth - beforedate);
+    return getDateStr(d);
+  }
+
+  // 1일전, 2일전, 3일전, 4일전, 5일전 음식 받아오기
+  async function getFoodData() {
+    const response = await http.get(`intake-histories/${userInfo.userId}/${lastDay(1)}`);
+    console.log(response.data);
+  }
+
+  useEffect(() => {
+    getFoodData();
+  }, []);
+
   return (
     <Paper
       elevation={3}
@@ -45,7 +82,7 @@ export default function TimelineStat({ value }) {
                 variant="body2"
                 color="text.secondary"
               >
-                9월 27일
+                {lastDay(1)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
@@ -73,7 +110,7 @@ export default function TimelineStat({ value }) {
                 variant="body2"
                 color="text.secondary"
               >
-                9월 28일
+                {lastDay(2)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
@@ -102,7 +139,7 @@ export default function TimelineStat({ value }) {
                 variant="body2"
                 color="text.secondary"
               >
-                9월 29일
+                {lastDay(3)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
@@ -131,7 +168,7 @@ export default function TimelineStat({ value }) {
                 variant="body2"
                 color="text.secondary"
               >
-                9월 30일
+                {lastDay(4)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
@@ -160,7 +197,7 @@ export default function TimelineStat({ value }) {
                 variant="body2"
                 color="text.secondary"
               >
-                10월 1일
+                {lastDay(5)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />

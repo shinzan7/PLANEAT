@@ -4,45 +4,28 @@
 @since 2022.10.01
 */
 import { Paper, Grid, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
+import { getStaticContextFromError } from "@remix-run/router";
 import { http } from "api/http";
-import { useEffect } from "react";
-
-// 해당 기간의 플랜잇지수(좋음, 나쁨, 보통) 갯수
-const analysisHistory = {
-  score_good: 4,
-  score_bad: 2,
-  score_soso: 1,
-};
+import { useEffect, useState, useRef } from "react";
 
 // 플랜잇 지수 percentage
-let good_per =
-  Math.round(
-    (100 * analysisHistory.score_good) /
-      (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-  ) + "%";
-let bad_per =
-  Math.round(
-    (100 * analysisHistory.score_bad) /
-      (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-  ) + "%";
-let soso_per =
-  Math.round(
-    (100 * analysisHistory.score_soso) /
-      (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-  ) + "%";
+// let good_per =
+//   Math.round(
+//     (100 * analysisHistory.score_good) /
+//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
+//   ) + "%";
+// let bad_per =
+//   Math.round(
+//     (100 * analysisHistory.score_bad) /
+//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
+//   ) + "%";
+// let soso_per =
+//   Math.round(
+//     (100 * analysisHistory.score_soso) /
+//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
+//   ) + "%";
 
-export default function PlaneatStat({ value }) {
-  useEffect(() => {
-    // 분석 기록 조회 (value == 0 -> 최근 7일, 1 -> 최근 30일 , 2 -> 전체기간)
-    // if (value == 0) {
-    //   const response = http.get(``);
-    // } else if (value == 1) {
-    //   const response = http.get(``);
-    // } else {
-    //   const response = http.get(``);
-    // }
-  }, []);
-
+export default function PlaneatStat({ value, score }) {
   return (
     <Paper
       elevation={3}
@@ -97,7 +80,9 @@ export default function PlaneatStat({ value }) {
                 style={{ display: "block" }}
                 src="assets/score/score_bad.png"
               ></img>
-              <p style={{ color: "#FFB3B3", fontWeight: "bold", textAlign: "center" }}>{bad_per}</p>
+              <p style={{ color: "#FFB3B3", fontWeight: "bold", textAlign: "center" }}>
+                {score[0]}
+              </p>
             </Grid>
             <Grid item>
               <img
@@ -107,7 +92,7 @@ export default function PlaneatStat({ value }) {
                 src="assets/score/score_good.png"
               ></img>
               <p style={{ color: "#A9D5C7", fontWeight: "bold", textAlign: "center" }}>
-                {good_per}
+                {score[1]}
               </p>
             </Grid>
             <Grid item>
@@ -118,7 +103,7 @@ export default function PlaneatStat({ value }) {
                 src="assets/score/score_soso.png"
               ></img>
               <p style={{ color: "#FFEFC9", fontWeight: "bold", textAlign: "center" }}>
-                {soso_per}
+                {score[2]}
               </p>
             </Grid>
           </Grid>
