@@ -253,7 +253,7 @@ function Welcome() {
         alert("최소 1개를 선택해주세요!");
       } else {
         // 건강고민 포함한 추가정보 등록
-        const response = await http.post(`/user-infos/${userInfo.userId}`, {
+        const response = await http.put(`/user-infos/${userInfo.userId}`, {
           userId: userInfo.userId,
           birthyear: birthyear,
           gender: gender,
