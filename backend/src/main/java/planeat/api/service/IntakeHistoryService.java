@@ -107,10 +107,9 @@ public class IntakeHistoryService {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
 
-            //추가 코드
-            IntakeHistory history = intakeHistoryRepository.findById(intakeHistoryRequest.getIntakeHistoryId()).orElseThrow(
-                    () -> new CustomException(CustomExceptionList.INTAKEHISTORY_NOT_FOUND_ERROR)
-            );
+            //추가 코드 유저Id, 날짜, mealType
+            IntakeHistory history = intakeHistoryRepository.findByUserAndDateAndMealType(user, intakeHistoryRequest.getDate(), intakeHistoryRequest.getMealType())
+                    .orElseThrow(() -> new CustomException((CustomExceptionList.INTAKEHISTORY_NOT_FOUND_ERROR)));
             List<IntakeFood> intakeFoods = intakeFoodRepository.findByIntakeHistoryId(history.getId());
             //분석기록에서 foodInfo * amount만큼 차감
             for (IntakeFood i : intakeFoods){
