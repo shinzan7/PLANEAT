@@ -98,6 +98,9 @@ public class User {
         this.gender = gender;
     }
 
+    public void setName(String name) {
+        this.name = name;
+    }
 
     public void setBirthyear(Integer birthyear) {
         this.birthyear = birthyear;
@@ -136,6 +139,7 @@ public class User {
 
     public static User updateUser(User user, UserInfoRequest userInfoRequest) {
         User newUser = user;
+        newUser.setName(userInfoRequest.getName());
         newUser.setRefreshToken(user.getRefreshToken());
         newUser.setUserCategoryList(user.getUserCategoryList());
         newUser.setUserNutrientList(user.getUserNutrientList());

@@ -41,7 +41,7 @@ public class UserController {
     /**
      * 유저 정보, 유저 권장 섭취량, 카테고리 등록
      *
-     * @param userId 유저 번호
+     * @param userId          유저 번호
      * @param userInfoRequest 유저 정보가 담긴 Dto
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
@@ -54,23 +54,33 @@ public class UserController {
     }
 
     /**
-     * 유저, 유저 권장 섭취량, 카테고리 조회
+     * 가장 최근 날짜의 유저, 유저 권장 섭취량, 카테고리 조회
      *
      * @param userId 유저 번호
-     * @param date 조회할 날짜
+     * @return SUCCCESS, UserInfoResponse, HttpStatus.OK(200)
+     */
+    @GetMapping("/{userId}")
+    @ApiOperation(value = "가장 최근 날짜의 유저 정보(관심 건강, 권장섭취량) 조회", notes = "유저 Id 정보를 받아 조회한다")
+    @ApiImplicitParam(name = "userId", value = "유저 정보를 조회할 유저의 Id", required = true, dataTypeClass = Long.class)
+    public ResponseEntity<BasicResponse<UserInfoResponse>> readUserInfo(@PathVariable("userId") Long userId) {
+        UserInfoResponse response = userService.readInfoByUserId(userId);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
+    }
+
+    /**
+     * 특정 날짜의 유저, 유저 권장 섭취량, 카테고리 조회
+     *
+     * @param userId 유저 번호
+     * @param date   조회할 날짜
      * @return SUCCCESS, UserInfoResponse, HttpStatus.OK(200)
      */
     @GetMapping("/{userId}/{date}")
-    @ApiOperation(value = "유저 정보(관심 건강, 권장섭취량) 조회", notes = "유저 Id와 날짜 정보를 받아 조회한다")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "userId", value = "유저 정보를 조회할 유저의 Id", required = true, dataTypeClass = Long.class),
-            @ApiImplicitParam(name = "date", value = "유저 정보를 조회할 날짜", required = true, dataTypeClass = String.class)
-    })
     public ResponseEntity<BasicResponse<UserInfoResponse>> readUserInfo(@PathVariable("userId") Long userId, @PathVariable("date") String date) {
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         UserInfoResponse response = userService.readInfoByUserId(userId, localDate);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
     }
+
 
     /**
      * 유저 카테고리 목록만 조회
@@ -88,7 +98,7 @@ public class UserController {
     }
 
     /**
-     * 유저 권장 섭취량만 조회 - 필수 영양소 테이블 값도 조회해 와서 response에 넣어줘야 함
+     * 유저 권장 섭취량만 조회
      *
      * @param userId 유저 번호
      * @return SUCCCESS, UserInfoResponse, HttpStatus.OK(200)
@@ -108,7 +118,7 @@ public class UserController {
     /**
      * 유저, 유저 권장 섭취량, 카테고리 수정
      *
-     * @param userId 유저 번호
+     * @param userId          유저 번호
      * @param userInfoRequest 수정할 유저 정보가 담긴 Dto
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
