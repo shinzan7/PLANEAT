@@ -4,6 +4,8 @@
 @since 2022.10.01
 */
 import { Paper, Grid, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
+import { http } from "api/http";
+import { useEffect } from "react";
 
 // 해당 기간의 플랜잇지수(좋음, 나쁨, 보통) 갯수
 const analysisHistory = {
@@ -30,6 +32,17 @@ let soso_per =
   ) + "%";
 
 export default function PlaneatStat({ value }) {
+  useEffect(() => {
+    // 분석 기록 조회 (value == 0 -> 최근 7일, 1 -> 최근 30일 , 2 -> 전체기간)
+    // if (value == 0) {
+    //   const response = http.get(``);
+    // } else if (value == 1) {
+    //   const response = http.get(``);
+    // } else {
+    //   const response = http.get(``);
+    // }
+  }, []);
+
   return (
     <Paper
       elevation={3}
