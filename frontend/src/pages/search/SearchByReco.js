@@ -13,15 +13,52 @@ import {Link} from 'react-router-dom';
 import { http } from "api/http";
 
 function SearchByReco() {
-  const data = {
-    img: "",
-    nutrientName: "락토핏 생유산균 화이버",
-    company: "종근당",
-    categoryTag: ["장건강"],
-    ingredientName: ["차전자피식이섬유"],
-  }
-
   const name = localStorage.getItem('name')
+
+  const [tag, setTag] = useState([])
+  const [info, setInfo] = useState([])
+
+  useEffect(() => {
+    http.get('/user-infos/categories/9')
+    .then(response => {
+      // console.log('tag', response.data.data)
+      setTag(response.data.data)
+    })
+
+    http.get(`/nutrient/tag/${tag[0]}`)
+    .then(response => {
+      // console.log('info', response.data.data)
+      setInfo(response.data.data)
+    })
+  }, [])
+
+  // let random = []
+  // if ( info.length > 12) {
+  //   for (var i=0; i<12; i++) {
+  //     const num = Math.floor(Math.random()*info.length)
+  //     if (random.indexOf(num) === -1) {
+  //       random.push(num)
+  //     }
+  //     else {
+  //       i--
+  //     }
+  //   }
+  // }
+  // else {
+  //   random = info
+  // }
+  
+
+  // console.log('random', random)
+
+  // const randomData = []
+  // for (var j=0; j<12; j++) {
+  //   randomData.push(info[random[j]])
+  // }
+
+  // console.log('data', randomData)
+
+  
 
   const settings = {
     dots: true,
@@ -82,165 +119,36 @@ function SearchByReco() {
               <p>&nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게 추천해요</p>
             </div>
 
-            <div style={card}>
+            {/* <div>
               <Slider {...settings}>
                 <div>
                   <Link to="/searchdetail/10" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
                 </div>
-                <div>
-                  <Link to="/searchdetail/7" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/searchdetail/12" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/searchdetail/13" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
-                  </Link>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
               </Slider>
-            </div>
+            </div> */}
           </Grid>
           <Grid item xs={1.7}>
 
           </Grid>
 
-          <Grid item xs={0.5}>
-
-          </Grid>
-          <Grid item xs={9.8}>
-            <div style={section1}>
-              {/* 유저 동일 성별/나이대에서 많이 등록된 영양소 순서 대로 추천 */}
-              <p>&nbsp;&nbsp;<span style={bold}>20대 여성</span>이 많이 먹고 있어요</p>
-            </div>
-
-            <div style={card}>
-              <Slider {...settings}>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-              </Slider>
-            </div>
-          </Grid>
-          <Grid item xs={1.7}>
-
-          </Grid>
           <Grid item xs={0.5}>
 
           </Grid>
           <Grid item xs={9.8}>
             <div style={section1}>
               {/* 유저가 설정한 건강 고민 태그 기반 추천 */}
-              <p>&nbsp;&nbsp;<span style={bold}>장건강</span>에 좋아요</p>
+              <p>&nbsp;&nbsp;<span style={bold}>{tag[0]}</span>에 좋아요</p>
             </div>
 
-            <div style={card}>
+            <div>
               <Slider {...settings}>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
+                {/* {randomData.map((data, i) => (
+                  <Link to={'/searchdetail/'} style={{textDecoration:'none'}}>
+                    <CardNutrient key={i} pill={data}/>
+                  </Link>
+                ))} */}
               </Slider>
             </div>
           </Grid>
@@ -248,6 +156,8 @@ function SearchByReco() {
 
           </Grid>
         </Grid>
+        <br></br>
+        <br></br>
       </div>
   );
 }

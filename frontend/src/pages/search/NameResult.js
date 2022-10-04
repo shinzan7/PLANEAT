@@ -17,41 +17,17 @@ function NameResult() {
   const name = useParams()
 
   const [info, setInfo] = useState([])
-  const [info2, setInfo2] = useState([])
-
-  const infoList = []
-  const info2List = []
-  
 
   useEffect(() => {
-    // 영양제 이름 전체 조회
-    http.get('/nutrient/all/name')
+    http.get(`/nutrient/name/${name.id}`)
     .then(response => {
-      for (var i = 0; i < response.data.data.length; i++) {
-        // 그 중 제품명에 키워드를 포함하는 영양제만 
-        if (response.data.data[i].nutrientName.includes(name.id)) {
-          // infoList.push(response.data.data[i].id)
-          infoList.push(response.data.data[i].id)
-        }
-      }
-      setInfo(infoList)
+      // console.log(response.data.data)
+      setInfo(response.data.data)
     })
   }, [])
   
   console.log('info', info)
 
-  //nutrientId로 단건 검색 
-  useEffect(() => {
-    for (var j = 0; j < info.length; j++) {
-      http.get(`/nutrient?id=${info[j]}`)
-      .then(response => {
-        info2List.push(response.data.data)
-      })
-    }
-    setInfo2(info2List)
-  }, [])
-
-  console.log('info2', info2)
       
   const [limit, setLimit] = useState(20)
   const [page, setPage] = useState(1)
@@ -97,13 +73,13 @@ function NameResult() {
 
                 </Grid>
                 <Grid item xs={8}>
-                  <Grid container style={card}>
-                  {/* {info2.slice(offset, offset+limit).map(function(data, i) {
+                  <Grid container>
+                  {info.slice(offset, offset+limit).map(function(data, k) {
                       return (
-                        <Link to={'/searchdetail/'+info2[i].nutrientId} style={{textDecoration:'none'}}>
-                          <CardNutrient key={i} pill={data} />
+                        <Link to={'/searchdetail/'+info[k].nutrientId} style={{textDecoration:'none'}}>
+                          <CardNutrient key={k} pill={data} />
                         </Link>
-                      )})} */}
+                      )})}
                   </Grid>
                 </Grid>
                 
