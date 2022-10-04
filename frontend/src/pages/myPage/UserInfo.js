@@ -69,9 +69,9 @@ export default function UserInfo() {
   };
 
   // 유저 건강고민 카테고리 (userId와 카테고리id를 포함한 api연동에 쓰일 데이터)
-  const [userCategory, setUserCategory] = useState([]);
+  const [userCategory, setUserCategory] = useState(userInfo.categories);
   // 유저 건강고민 카테고리 (카테고리id와 카테고리name을 포함한 전역상태에 넣어둘 데이터)
-  const [categories, setCategories] = useState(userInfo.categories);
+  const [categories, setCategories] = useState([]);
 
   // 추가정보 설정
   function changeMoreInfo() {
@@ -163,12 +163,18 @@ export default function UserInfo() {
 
   async function updateUserInfo() {
     // 건강고민 카테고리 변경
-    for (let i = 0; i < categories.length; i++) {
-      userCategory.push({
+    let output = localStorage.getItem("categories");
+    let list = JSON.parse(output);
+    let arr = [];
+    console.log(list);
+    for (let i = 0; i < list.length; i++) {
+      arr.push({
         userId: userInfo.userId,
-        userCategoryInfoId: categories[i].categoryId,
+        userCategoryInfoId: list[i].categoryId,
       });
     }
+    setUserCategory(list);
+
     // console.log(userCategory);
 
     // 정보 수정 api 연동
@@ -176,7 +182,7 @@ export default function UserInfo() {
       userId: userInfo.userId,
       birthyear: birthyear,
       gender: gender,
-      name: userInfo.name,
+      // name: userInfo.name,
       recInfo: {
         updateDate: getToday(),
         height: height,
@@ -188,12 +194,25 @@ export default function UserInfo() {
         protein: protein,
         fat: fat,
       },
-      categoriesList: userCategory,
+      categoriesList: arr,
     });
 
     // console.log(response.data);
 
     if (response.data.message === "success") {
+      localStorage.setItem("birthYear", birthyear);
+      localStorage.setItem("gender", gender);
+      localStorage.setItem("age", age);
+      localStorage.setItem("height", height);
+      localStorage.setItem("weight", weight);
+      localStorage.setItem("active", activeAmount);
+      localStorage.setItem("bmi", bmi);
+
+      localStorage.setItem("recoIntake", Number(recoIntake));
+      localStorage.setItem("carbo", Number(carbo));
+      localStorage.setItem("protein", Number(protein));
+      localStorage.setItem("fat", Number(fat));
+
       // 유저정보 전역상태 수정
       setUserInfo((user) => {
         const copyUser = { ...user };
@@ -222,6 +241,11 @@ export default function UserInfo() {
     }
   }
 
+  // useEffect(() => {
+  //   // 유저 정보 불러오기
+  //   const response = http.get(``);
+  // }, []);
+
   return (
     <Container component="main" sx={{ mb: 4, width: "650px", height: "700px" }}>
       <React.Fragment>
@@ -230,7 +254,6 @@ export default function UserInfo() {
         </Typography>
         <Typography variant="subtitle">
           회원 정보를 수정하고, BMI 및 권장섭취량을 확인할 수 있습니다!
-          <br />
         </Typography>
         {/* 이름 */}
         <Grid

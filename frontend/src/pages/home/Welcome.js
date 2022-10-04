@@ -208,6 +208,19 @@ function Welcome() {
         });
 
         if (response.data.message === "success") {
+          localStorage.setItem("birthYear", birthyear);
+          localStorage.setItem("gender", gender);
+          localStorage.setItem("age", age);
+          localStorage.setItem("height", height);
+          localStorage.setItem("weight", weight);
+          localStorage.setItem("active", activeAmount);
+          localStorage.setItem("bmi", bmi);
+
+          localStorage.setItem("recoIntake", Number(recoIntake));
+          localStorage.setItem("carbo", Number(carbo));
+          localStorage.setItem("protein", Number(protein));
+          localStorage.setItem("fat", Number(fat));
+
           // 유저정보 전역상태 수정
           setUserInfo((user) => {
             const copyUser = { ...user };
@@ -259,7 +272,9 @@ function Welcome() {
         });
 
         if (response.data.message === "success") {
-          // 유저정보 건강고민 전역상태 수정
+          localStorage.setItem("categories", JSON.stringify(categories));
+
+          //유저정보 건강고민 전역상태 수정
           setUserInfo((user) => {
             const copyUser = { ...user };
             console.log(categories);
