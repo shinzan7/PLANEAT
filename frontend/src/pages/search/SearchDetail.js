@@ -96,7 +96,7 @@ function SearchDetail() {
                 <grid item xs={8} style={text}>
                   <Grid container>
                     <Grid item xs={2.5}>
-                      <img src={info.imagePath} alt='' />
+                      <img src={info.imagePath} alt='' style={{ width:'20vw', height: '20vh'}}/>
                       <br></br>
                       <br></br>
                       <p>{info.company}</p>

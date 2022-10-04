@@ -87,7 +87,11 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img width="20" height="20" src="assets/score/score_bad.png"></img>
+                  <img
+                    width="20"
+                    height="20"
+                    src="assets/score/score_bad.png"
+                  ></img>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -111,7 +115,11 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img width="20" height="20" src="assets/score/score_good.png"></img>
+                  <img
+                    width="20"
+                    height="20"
+                    src="assets/score/score_good.png"
+                  ></img>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -119,7 +127,9 @@ export default function TimelineStat({ value }) {
                 {/* <Typography variant="h6" component="span">
                   Code
                 </Typography> */}
-                <Typography sx={{ fontSize: "13px" }}>떡볶이, 피자, 보쌈, 닭발</Typography>
+                <Typography sx={{ fontSize: "13px" }}>
+                  떡볶이, 피자, 보쌈, 닭발
+                </Typography>
               </TimelineContent>
             </TimelineItem>
             <TimelineItem>
@@ -134,7 +144,11 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img width="20" height="20" src="assets/score/score_soso.png"></img>
+                  <img
+                    width="20"
+                    height="20"
+                    src="assets/score/score_soso.png"
+                  ></img>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -159,7 +173,11 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img width="20" height="20" src="assets/score/score_soso.png"></img>
+                  <img
+                    width="20"
+                    height="20"
+                    src="assets/score/score_soso.png"
+                  ></img>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -184,7 +202,11 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img width="20" height="20" src="assets/score/score_good.png"></img>
+                  <img
+                    width="20"
+                    height="20"
+                    src="assets/score/score_good.png"
+                  ></img>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -192,7 +214,9 @@ export default function TimelineStat({ value }) {
                 {/* <Typography variant="h6" component="span">
                   Repeat
                 </Typography> */}
-                <Typography sx={{ fontSize: "13px" }}>돈까스, 탕수육, 보쌈, 스테이크</Typography>
+                <Typography sx={{ fontSize: "13px" }}>
+                  돈까스, 탕수육, 보쌈, 스테이크
+                </Typography>
               </TimelineContent>
             </TimelineItem>
           </Timeline>

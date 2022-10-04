@@ -17,10 +17,14 @@ import {
 import BtnMain from "components/common/BtnMain";
 import { http } from "api/http";
 
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
+
 export default function FoodModal(props) {
-  //todo: foodUser에 로그인한 유저 아이디로 변경 필요
+  const userInfo = useRecoilValue(userState);
+
   const myFood = {
-    foodUser: 10, // 유저 아이디
+    foodUser: userInfo.userId, // 유저 아이디
     name: "", // 음식이름
     calorie: 0, // 1인분당 칼로리
     serving_size: 0, //1회 제공량
@@ -61,10 +65,26 @@ export default function FoodModal(props) {
 
     if (foodInfo.name == "") {
       alert("음식 이름을 입력해주세요");
+    } else if (
+      isNaN(foodInfo.calorie) ||
+      isNaN(foodInfo.serving_size) ||
+      isNaN(foodInfo.carbohydrate) ||
+      isNaN(foodInfo.fat) ||
+      isNaN(foodInfo.protein) ||
+      isNaN(foodInfo.cholesterol) ||
+      isNaN(foodInfo.sodium) ||
+      isNaN(foodInfo.potassium) ||
+      isNaN(foodInfo.dietary_fiber) ||
+      isNaN(foodInfo.sugar) ||
+      isNaN(foodInfo.vitaminA) ||
+      isNaN(foodInfo.vitaminC) ||
+      isNaN(foodInfo.calcium) ||
+      isNaN(foodInfo.iron)
+    ) {
+      alert("올바른 값을 입력해주세요.");
     } else {
-      //todo: 로그인한 유저 아이디로 변경 필요
-      const response = await http.post(`/food-infos/10`, {
-        foodUser: 10, // 유저 아이디
+      const response = await http.post(`/food-infos/${userInfo.userId}`, {
+        foodUser: userInfo.userId, // 유저 아이디
         name: foodInfo.name, // 음식이름
         calorie: foodInfo.calorie, // 1인분당 칼로리
         servingSize: foodInfo.serving_size, //1회 제공량
@@ -83,12 +103,11 @@ export default function FoodModal(props) {
         iron: foodInfo.iron, //철
       });
 
-      //todo: 모달 css 변경하기
       if (response.data.message == "success") {
-        alert("성공");
+        alert(`${foodInfo.name} 이 등록되었습니다.`);
         props.close();
         setFoodInfo(myFood);
-        props.setIsChange(true); // 내음식 새로 추가하기 위한 변수
+        props.getMyFood();
       } else {
         alert("입력 값을 확인해주세요.");
         setFoodInfo(myFood);
@@ -105,6 +124,8 @@ export default function FoodModal(props) {
     setFoodInfo(copy);
   };
 
+  const foodNameInput = useRef(null);
+
   return (
     <Dialog
       style={{ zIndex: 1800 }}
@@ -112,7 +133,10 @@ export default function FoodModal(props) {
       fullWidth={fullWidth}
       maxWidth="xs"
       open={props.open}
-      onClose={props.close}
+      onClose={() => {
+        foodInfo.name = "";
+        props.close();
+      }}
     >
       <Grid
         container
@@ -169,6 +193,7 @@ export default function FoodModal(props) {
                 setFoodInfo(copy);
               }}
               value={foodInfo.name}
+              inputRef={foodNameInput}
             />
           </Grid>
         </Grid>
