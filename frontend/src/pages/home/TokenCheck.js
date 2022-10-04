@@ -50,32 +50,32 @@ export function RefreshTokenExpireCheck() {
   }
 }
 
-// export function IsUser() {
+export function TokenCheck() {
 
-//   const userId = localStorage.getItem('userId')
-//   // userId 유무로 로그인 유무 체크
-//   if (!userId) {
-//     window.location.replace("/")
-//   } else {
-//     // access, refresh 둘 다 만료면 그냥 로그인 시키자
-//     if (AccessTokenExpireCheck()) {
-//       if (RefreshTokenExpireCheck()) {
-//         window.location.replace("/")
-//       }
-//       // access만 만료면 refresh 보내서 access 재발급 
-//       else {
-//         http.get('oauth/refresh', 
-//         {
-//           headers: {
-//             refreshToken: localStorage.getItem("refreshToken"),
-//           },
-//         })
-//         .then((res) => {
-//           console.log(res.data)
-//           localStorage.setItem('accessToken', res.data.accessToken)
-
-//         })
-//       }
-//     }
-//   }
-// }
+  const userId = localStorage.getItem('userId')
+  // userId 유무로 로그인 유무 체크
+  if (!userId) {
+    window.location.replace("/")
+  } else {
+    // access, refresh 둘 다 만료면 그냥 로그인 다시 하게 
+    if (AccessTokenExpireCheck()) {
+      if (RefreshTokenExpireCheck()) {
+        window.location.replace("/")
+      }
+      // access만 만료면 refresh로 access 재발급 요청
+      else {
+        http.get('oauth/refresh', 
+        {
+          headers: {
+            refreshToken: localStorage.getItem("refreshToken"),
+          },
+        })
+        .then((res) => {
+          console.log(res.data)
+          localStorage.setItem('accessToken', res.data.accessToken)
+          localStorage.setItem("accessTokenExpiration", res.data.accessTokenExpiration)
+        })
+      }
+    }
+  }
+}
