@@ -111,6 +111,7 @@ public class IntakeHistoryService {
             IntakeHistory history = intakeHistoryRepository.findByUserAndDateAndMealType(user, intakeHistoryRequest.getDate(), intakeHistoryRequest.getMealType())
                     .orElseThrow(() -> new CustomException((CustomExceptionList.INTAKEHISTORY_NOT_FOUND_ERROR)));
             List<IntakeFood> intakeFoods = intakeFoodRepository.findByIntakeHistoryId(history.getId());
+            intakeHistoryRequest.setIntakeHistoryId(history.getId());
             //분석기록에서 foodInfo * amount만큼 차감
             for (IntakeFood i : intakeFoods){
                 //음식정보와 섭취량을 분석기록에 반영
@@ -120,6 +121,7 @@ public class IntakeHistoryService {
             IntakeHistory intakeHistory = IntakeHistory.updateIntakeHistory(user, intakeHistoryRequest);
 
             List<IntakeFood> intakeFoodList = intakeFoodRepository.findByIntakeHistoryId(history.getId());
+
             intakeFoodRepository.deleteAll(intakeFoodList);
 
             for (int i = 0; i < intakeHistoryRequest.getIntakeFoodsList().size(); i++) {
@@ -129,6 +131,7 @@ public class IntakeHistoryService {
                 analysisHistoryService.plusFoodFromAnalysisHistory(userId, intakeHistoryRequest.getDate() ,intakeFood.getFoodInfo(), intakeFood.getAmount());
 
                 intakeFoodRepository.save(intakeFood);
+                intakeFood.getIntakeHistory().getIntakeFoodList().add(intakeFood);
             }
 
 

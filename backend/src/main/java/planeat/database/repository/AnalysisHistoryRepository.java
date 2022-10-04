@@ -10,6 +10,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface AnalysisHistoryRepository extends JpaRepository<AnalysisHistory, Long> {
+
+    List<AnalysisHistory> findByUser(User user);
+
     List<AnalysisHistory> findByUserAndDateAfter(User user, LocalDate date);
 
     List<AnalysisHistory> findByUserAndDate(User user, LocalDate date);

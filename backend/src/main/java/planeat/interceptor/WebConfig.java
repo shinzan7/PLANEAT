@@ -27,6 +27,7 @@
 //        interceptorRegistry.addInterceptor(authInterceptor)
 //                .addPathPatterns("/**")
 //                .excludePathPatterns("/oauth/**");
+
 //
 //    }
 //
