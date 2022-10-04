@@ -118,8 +118,8 @@ public class IntakeHistoryService {
             }
 
             IntakeHistory intakeHistory = IntakeHistory.updateIntakeHistory(user, intakeHistoryRequest);
-            intakeHistoryRepository.save(intakeHistory);
-            List<IntakeFood> intakeFoodList = intakeFoodRepository.findByIntakeHistoryId(intakeHistory.getId());
+
+            List<IntakeFood> intakeFoodList = intakeFoodRepository.findByIntakeHistoryId(history.getId());
             intakeFoodRepository.deleteAll(intakeFoodList);
 
             for (int i = 0; i < intakeHistoryRequest.getIntakeFoodsList().size(); i++) {
@@ -130,6 +130,8 @@ public class IntakeHistoryService {
 
                 intakeFoodRepository.save(intakeFood);
             }
+
+
         }
         return userId;
     }
