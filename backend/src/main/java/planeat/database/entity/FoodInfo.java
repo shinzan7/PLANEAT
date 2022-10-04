@@ -265,6 +265,22 @@ public class FoodInfo {
                 .vitaminA(foodInfoRequest.getVitaminA())
                 .vitaminC(foodInfoRequest.getVitaminC())
                 .cholesterol(foodInfoRequest.getCholesterol())
+                .magnesium((float) 0)
+                .phosphorus((float) 0)
+                .zinc((float) 0)
+                .copper((float) 0)
+                .manganese((float) 0)
+                .selenium((float) 0)
+                .vitaminD((float) 0)
+                .folate((float) 0)
+                .vitaminB12((float) 0)
+                .linoleicAcid((float) 0)
+                .alphaLinoleicAcid((float) 0)
+                .vitaminB1((float) 0)
+                .vitaminB2((float) 0)
+                .vitaminB6((float) 0)
+                .fattyAcid((float) 0)
+                .transFattyAcid((float) 0)
                 .build();
         return foodInfo;
     }

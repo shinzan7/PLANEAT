@@ -190,11 +190,7 @@ public class UserService {
 
             userRecIntakeRepository.deleteAll(userRecIntakes);
 
-            UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
-            userRecIntakeRepository.save(userRecIntake);
-            userRecIntake.getUser().getUserRecIntakeList().add(userRecIntake);
-
-            for (int i = 1; i < userRecIntakeList.size(); i++) {
+            for (int i = 0; i < userRecIntakeList.size(); i++) {
                 UserInfoRequest uir = userInfoRequest;
                 uir.getRecInfo().setUserRecIntakeId(userRecIntakeList.get(i).getId());
                 uir.getRecInfo().setUpdateDate(userRecIntakeList.get(i).getUpdateDate());
