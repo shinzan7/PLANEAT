@@ -13,13 +13,6 @@ function MainCalendar(props) {
   const [value, setValue] = useState(new Date());
   let today = new Date();
 
-  const mark = [
-    "2022-09-01",
-    "2022-09-03",
-    "2022-09-10",
-    "2022-09-17",
-    "2022-09-21",
-  ]; // 플래닛 지수 날짜 담을 배열
   // todo: 플래닛 지수 별 배열 만들기
   // todo: 날짜 클릭시 우측 영역 보여주기 함수
 
