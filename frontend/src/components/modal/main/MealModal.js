@@ -509,7 +509,7 @@ export default function MaxWidthDialog(props) {
     } else {
       alert("식사 등록에 실패했습니다.");
     }
-
+    getMealRecord();
     props.close();
   }
 
@@ -529,6 +529,7 @@ export default function MaxWidthDialog(props) {
       date: curDate,
       intakeFoodsList: list,
       mealType: props.mealType,
+      userId: userInfo.userId,
     });
 
     if (response.data.message == "success") {
@@ -683,7 +684,6 @@ export default function MaxWidthDialog(props) {
           style={{ paddingLeft: "2vw" }}
           alignItems="center"
         >
-          선택 음식 칩영역 {JSON.stringify(clickedFoodList)}
           {clickedFoodList.length == 0 ? null : (
             <>
               {clickedFoodList.map(function (food, i) {

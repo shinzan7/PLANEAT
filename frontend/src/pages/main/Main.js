@@ -72,11 +72,20 @@ function Main() {
         if (records[i].analysisType == 0) {
           let score = records[i].analysisScore;
           if (score == "나쁨") {
-            bads.push(records[i].date);
+            let index = bads.indexOf(records[i].date);
+            if (index == -1) {
+              bads.push(records[i].date);
+            }
           } else if (score == "보통") {
-            normals.push(records[i].date);
+            let index = normals.indexOf(records[i].date);
+            if (index == -1) {
+              normals.push(records[i].date);
+            }
           } else {
-            goods.push(records[i].date);
+            let index = goods.indexOf(records[i].date);
+            if (index == -1) {
+              goods.push(records[i].date);
+            }
           }
         } else {
           continue;
