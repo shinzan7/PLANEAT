@@ -36,6 +36,7 @@ public class Nutrient {
     private String company;
     private String description;
     private String imagePath;
+    private String wordCloudImagePath;
 
 
 //    @JsonIgnore
@@ -43,12 +44,13 @@ public class Nutrient {
     List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
 
     @Builder
-    public Nutrient(Long id, String nutrientName, String company, String description, String imagePath) {
+    public Nutrient(Long id, String nutrientName, String company, String description, String imagePath, String wordCloudImagePath) {
         this.id = id;
         this.nutrientName = nutrientName;
         this.company = company;
         this.description = description;
         this.imagePath = imagePath;
+        this.wordCloudImagePath = wordCloudImagePath;
     }
 
 
@@ -59,12 +61,13 @@ public class Nutrient {
      * @param imagePath 이미지 경로
      * @return
      */
-    public Nutrient createNutrient(String nutrientName, String company, String description, String imagePath) {
+    public Nutrient createNutrient(String nutrientName, String company, String description, String imagePath, String wordCloudImagePath) {
         return Nutrient.builder()
                 .nutrientName(nutrientName)
                 .company(company)
                 .description(description)
                 .imagePath(imagePath)
+                .wordCloudImagePath(wordCloudImagePath)
                 .build();
     }
 
@@ -76,4 +79,19 @@ public class Nutrient {
         this.imagePath = imagePath;
     }
 
+    public void updateWordCloudImagePath(String wordCloudImagePath){
+        this.wordCloudImagePath = wordCloudImagePath;
+    }
+
+    @Override
+    public String toString() {
+        return "Nutrient{" +
+                "id=" + id +
+                ", nutrientName='" + nutrientName + '\'' +
+                ", company='" + company + '\'' +
+                ", description='" + description + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", wordCloudImagePath='" + wordCloudImagePath + '\'' +
+                '}';
+    }
 }
