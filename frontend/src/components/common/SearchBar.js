@@ -52,7 +52,7 @@ function SearchBar() {
                         />
                         { /* 검색어 삭제 버튼 */}
                         {
-                        (searchKeyWord == null || searchKeyWord == "") ? null :
+                        (searchKeyWord === null || searchKeyWord === "") ? null :
                             (<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => {
                                 searchInput.current.value = null; // input 객체의 값을 비운다.
                                 setSearchKeyWord(null)
@@ -61,11 +61,13 @@ function SearchBar() {
                             </IconButton>)
                         }
                         { /* 돋보기 버튼 */}
-                        <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2 }} aria-label="search" onClick={(e) => {
-                            search(e)
-                        }}>
-                            <SearchIcon />
-                        </IconButton>
+                          <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2 }} aria-label="search" onClick={(e) => {
+                              search(e)
+                          }}>
+                            <Link to={'/result/'+ searchKeyWord} >
+                              <SearchIcon/>
+                            </Link>
+                          </IconButton>                  
                     </Paper>
     </div>
   )

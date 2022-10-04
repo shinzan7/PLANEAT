@@ -46,7 +46,7 @@ function SearchByTag() {
     {
       id: "7",
       src: "assets/concerns/노화&항산화.png",
-      title: "노화",
+      title: "노화 & 항산화",
     },
     {
       id: "8",
@@ -56,7 +56,7 @@ function SearchByTag() {
     {
       id: "9",
       src: "assets/concerns/두뇌활동.png",
-      title: "두뇌 활동",
+      title: "두뇌활동",
     },
     {
       id: "10",
@@ -81,12 +81,12 @@ function SearchByTag() {
     {
       id: "14",
       src: "assets/concerns/운동능력개선.png",
-      title: "운동능력 개선",
+      title: "운동 능력 개선",
     },
     {
       id: "15",
       src: "assets/concerns/위건강&소화.png",
-      title: "위건강 & 소화기능",
+      title: "위 건강 & 소화기능",
     },
     {
       id: "16",
@@ -131,12 +131,12 @@ function SearchByTag() {
     {
       id: "25",
       src: "assets/concerns/혈당.png",
-      title: "혈당",
+      title: "혈당조절",
     },
     {
       id: "26",
       src: "assets/concerns/혈압.png",
-      title: "혈압",
+      title: "혈압 조절",
     },
     {
       id: "27",

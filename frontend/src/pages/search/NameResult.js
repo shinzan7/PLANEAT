@@ -3,21 +3,63 @@
 @author 전상현
 @since 2022.09.22
 */
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CardNutrient from "components/common/CardNutrient";
-import { Grid } from "@mui/material";
+import { useParams } from 'react-router-dom'
+import { Grid, responsiveFontSizes } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
+import { http } from "api/http";
+import Pagination from "components/common/Pagination";
 
 
 function NameResult() {
-  const data = {
-    img: "",
-    nutrient_name: "락토핏 생유산균 화이버",
-    company: "종근당",
-    category_tag: ["장건강"],
-    ingredient_name: ["차전자피식이섬유"],
-  }
+  const name = useParams()
+
+  const [info, setInfo] = useState([])
+  const [info2, setInfo2] = useState([])
+
+  const infoList = []
+  const info2List = []
+  
+
+  useEffect(() => {
+    // 영양제 이름 전체 조회
+    http.get('/nutrient/all/name')
+    .then(response => {
+      for (var i = 0; i < response.data.data.length; i++) {
+        // 그 중 제품명에 키워드를 포함하는 영양제만 
+        if (response.data.data[i].nutrientName.includes(name.id)) {
+          // infoList.push(response.data.data[i].id)
+          infoList.push(response.data.data[i].id)
+        }
+      }
+      setInfo(infoList)
+    })
+  }, [])
+  
+  console.log('info', info)
+
+  //nutrientId로 단건 검색 
+  useEffect(() => {
+    for (var j = 0; j < info.length; j++) {
+      http.get(`/nutrient?id=${info[j]}`)
+      .then(response => {
+        info2List.push(response.data.data)
+      })
+    }
+    setInfo2(info2List)
+  }, [])
+
+  console.log('info2', info2)
+      
+  const [limit, setLimit] = useState(20)
+  const [page, setPage] = useState(1)
+  const offset = (page-1)*limit
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
   const section = { marginTop:'80px' }
   const section1 = { marginTop:'25vh', textAlign:'center'}
@@ -39,7 +81,7 @@ function NameResult() {
                 </Grid>
                 
                 <Grid item xs={4}>
-                  <p>(검색단어)에 대한 검색 결과 n건</p>
+                  <p><span style={{fontWeight:'bold'}}>{name.id}</span>에 대한 검색 결과 {info.length}건</p>
                 </Grid>
                 <Grid item xs={5}>
                   
@@ -56,22 +98,34 @@ function NameResult() {
                 </Grid>
                 <Grid item xs={8}>
                   <Grid container style={card}>
-                    <Link to='/searchdetail' style={{textDecoration:'none'}}>
-                      <CardNutrient pill={data}/>
-                    </Link>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
-                    <CardNutrient pill={data}/>
+                  {/* {info2.slice(offset, offset+limit).map(function(data, i) {
+                      return (
+                        <Link to={'/searchdetail/'+info2[i].nutrientId} style={{textDecoration:'none'}}>
+                          <CardNutrient key={i} pill={data} />
+                        </Link>
+                      )})} */}
                   </Grid>
                 </Grid>
+                
+                <Grid container>
+                      <Grid item xs={2}>
+
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Pagination
+                        total={info.length}
+                        limit={limit}
+                        page={page}
+                        setPage={setPage}
+                      />
+
+
+                      </Grid>
+                      <Grid item xs={4}>
+                
+                      </Grid>
+                    </Grid>
+                        
                 <Grid item xs={3}>
 
                 </Grid>  
