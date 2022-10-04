@@ -58,6 +58,7 @@ export default function UserInfo() {
   // 맨 처음 유저의 영양제 목록 불러오기
   async function getUserNutrients() {
     const response = await http.get(`/nutrient/user/list/${userInfo.userId}`);
+    // console.log(response.data);
     if (response.data.message === "success") {
       // console.log(response.data.data);
       setMyNutrients(response.data.data);
@@ -87,7 +88,7 @@ export default function UserInfo() {
       nutrientId: myNutrientId,
       userId: userInfo.userId,
     });
-    // console.log(response.data);
+    console.log(response.data);
 
     setOpen(false);
   }
