@@ -26,7 +26,7 @@ public class WebConfig implements WebMvcConfigurer {
 
         interceptorRegistry.addInterceptor(authInterceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/oauth/**", "/api/**");
+                .excludePathPatterns("/oauth/**", "/swagger-ui/**");
 
     }
 
