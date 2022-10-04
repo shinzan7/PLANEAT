@@ -2,7 +2,6 @@ package planeat.api.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import planeat.api.dto.analysishistory.AnalysisHistoryRequest;
 import planeat.api.dto.analysishistory.AnalysisHistoryResponse;
 import planeat.database.entity.AnalysisHistory;
 import planeat.database.entity.User;
@@ -269,6 +268,56 @@ public class AnalysisHistoryService {
 
         return responseList;
 
+    }
+
+    public List<AnalysisHistoryResponse> readFirstAnalysisHistoryByDate(Long userId, LocalDate date){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
+        );
+
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDate(user, date);
+        List<AnalysisHistoryResponse> responseList = new ArrayList<>(historyList.size());
+
+        for (AnalysisHistory h : historyList){
+            AnalysisHistoryResponse response = AnalysisHistoryResponse.builder()
+                    .analysisHistoryId(h.getId())
+                    .date(h.getDate().format(DateTimeFormatter.ISO_DATE))
+                    .analysisType(h.getAnalysisType())
+                    .analysisScore(h.getAnalysisScore())
+                    .calorie(h.getCalorie())
+                    .protein(h.getProtein())
+                    .fat(h.getFat())
+                    .carbohydrate(h.getCarbohydrate())
+                    .sugar(h.getSugar())
+                    .dietaryFiber(h.getDietaryFiber())
+                    .calcium(h.getCalcium())
+                    .iron(h.getIron())
+                    .magnesium(h.getMagnesium())
+                    .phosphorus(h.getPhosphorus())
+                    .potassium(h.getPotassium())
+                    .sodium(h.getSodium())
+                    .zinc(h.getZinc())
+                    .copper(h.getCopper())
+                    .manganese(h.getManganese())
+                    .selenium(h.getSelenium())
+                    .vitaminA(h.getVitaminA())
+                    .vitaminD(h.getVitaminD())
+                    .vitaminB6(h.getVitaminB6())
+                    .folate(h.getFolate())
+                    .vitaminB12(h.getVitaminB12())
+                    .vitaminC(h.getVitaminC())
+                    .cholesterol(h.getCholesterol())
+                    .fattyAcid(h.getFattyAcid())
+                    .linoleicAcid(h.getLinoleicAcid())
+                    .alphaLinoleicAcid(h.getAlphaLinoleicAcid())
+                    .transFattyAcid(h.getTransFattyAcid())
+                    .vitaminB1(h.getVitaminB1())
+                    .vitaminB2(h.getVitaminB2())
+                    .build();
+            responseList.add(response);
+        }
+
+        return responseList;
     }
 
     /**
