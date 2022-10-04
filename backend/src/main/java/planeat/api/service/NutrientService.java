@@ -211,5 +211,32 @@ public class NutrientService {
 
     }
 
+    /**
+     * 이미지를 업로드하고 해당 영양제의 이미지경로를 update한다
+     * @param nutrientId 영양제id
+     * @param multipartFile 이미지파일
+     * @return 이미지파일 경로
+     */
+    public String updateNutrientImage(Long nutrientId, MultipartFile multipartFile) {
+        //이미지 업로드 후 경로 받아오기
+        //imageUrl 사진경로
+        String imageUrl = null;
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            try {
+                imageUrl = s3Uploader.uploadFiles(multipartFile, "static");
+            } catch (Exception e) {
+                throw new CustomException(CustomExceptionList.UPLOAD_ERROR);
+            }
+        }
+        Nutrient nutrient = nutrientRepository.findById(nutrientId).orElseThrow(
+                () -> new CustomException(CustomExceptionList.NUTRIENT_NOT_FOUND_ERROR)
+        );
+        //이미지 경로 변경
+        nutrient.updateImagePath(imageUrl);
+
+        return imageUrl;
+    }
+
+
 }
 

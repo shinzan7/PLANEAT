@@ -72,4 +72,8 @@ public class Nutrient {
         this.nutrientIngredientList.add(nutrientIngredient);
     }
 
+    public void updateImagePath(String imagePath){
+        this.imagePath = imagePath;
+    }
+
 }

@@ -156,6 +156,13 @@ public class NutrientController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , " "), HttpStatus.CREATED);
     }
 
+    @PutMapping
+    @ApiOperation(value = "영양제 이미지 수정", notes = "영양제 id와 수정할 이미지를 받아 이미지를 업로드하고 해당 url을 반환한다")
+    public ResponseEntity<BasicResponse<String>> updateNutrientImage(@RequestParam Long nutrientId, MultipartFile multipartFile){
+        String imageUrl = nutrientService.updateNutrientImage(nutrientId, multipartFile);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS , imageUrl), HttpStatus.CREATED);
+    }
+
     /**
      * 기본 Response 형식 DTO
      *
