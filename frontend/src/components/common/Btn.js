@@ -8,7 +8,7 @@
 import Button from "@mui/material/Button";
 import styled from "styled-components";
 
-const BtnGray = styled(Button)`
+const Btn = styled(Button)`
   && {
     background-color: ${(props) => props.bgColor};
     color: ${(props) => props.fontColor};
@@ -23,4 +23,4 @@ const BtnGray = styled(Button)`
   }
 `;
 
-export default BtnGray;
+export default Btn;
