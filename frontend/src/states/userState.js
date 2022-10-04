@@ -15,8 +15,8 @@ export const userState = atom({
     // refreshToken: localStorage.getItem("refreshToken"),
     // accessTokenExpiration: localStorage.getItem("accessTokenExpiration"),
     // refreshTokenExpiration: localStorage.getItem("refreshTokenExpiration"),
-    // userId: localStorage.getItem("userId"),
-    // name: localStorage.getItem("name"),
+    userId: localStorage.getItem("userId"),
+    name: localStorage.getItem("name"),
     // 로컬에서 확인해보고 싶을 때, 특정 id와 name 넣어보기
     // userId: "8",
     // name: "조혜아니아니",
