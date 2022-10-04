@@ -80,7 +80,6 @@ export default function DietModal(props) {
         style={{ padding: "2vw", fontSize: "18px", fontWeight: "bold" }}
         alignItems="center"
       >
-        {JSON.stringify(props.foodList)} {dietName}
         <Grid
           container
           xs={12}

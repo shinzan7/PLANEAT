@@ -20,6 +20,8 @@ import { useEffect } from "react";
 function Main() {
   const userInfo = useRecoilValue(userState);
 
+  const [isChange, setIsChange] = useState(false);
+
   // 오늘 날짜 구하기
   const date = new Date();
   const year = date.getFullYear();
@@ -42,6 +44,14 @@ function Main() {
   const [goodDays, setGoodDays] = useState([]); // 플래닛 지수 좋음
   const [normalDays, setNormalDays] = useState([]); // 플래닛 지수 보통
   const [badDays, setBadDays] = useState([]); // 플래닛 지수 나쁨
+
+  const [clickDateMeal, setClickDateMeal] = useState([]); // 선택된 날짜 식사기록
+  const [clickDateAnalysis, setClickDateAnalysis] = useState([]); //선택된 날짜 식사기록 분석
+
+  const [breakfastAmount, setBreakfastAmount] = useState("350"); // 아침 칼로리
+  const [lunchAmount, setLunchAmount] = useState("200"); // 점심 칼로리
+  const [dinnerAmount, setDinnerAmount] = useState("500"); // 저녁 칼로리
+  const [snackAmount, setsnackAmount] = useState("100"); // 간식 칼로리
 
   // 맨 처음 유저 권장섭취량 state 저장
   async function getRecIntakeAmount() {
@@ -72,11 +82,20 @@ function Main() {
         if (records[i].analysisType == 0) {
           let score = records[i].analysisScore;
           if (score == "나쁨") {
-            bads.push(records[i].date);
+            let index = bads.indexOf(records[i].date);
+            if (index == -1) {
+              bads.push(records[i].date);
+            }
           } else if (score == "보통") {
-            normals.push(records[i].date);
+            let index = normals.indexOf(records[i].date);
+            if (index == -1) {
+              normals.push(records[i].date);
+            }
           } else {
-            goods.push(records[i].date);
+            let index = goods.indexOf(records[i].date);
+            if (index == -1) {
+              goods.push(records[i].date);
+            }
           }
         } else {
           continue;
@@ -88,12 +107,42 @@ function Main() {
     }
   }
 
+  // 날짜 클릭시 해당 날짜 식사 기록 가져오는 함수
+  async function getClickDayRecord() {
+    console.log("click here !!");
+    const response = await http.get(
+      `/intake-histories/${userInfo.userId}/${clickDate}`
+    );
+    if (response.data.message == "success") {
+      setClickDateMeal(response.data.data);
+    } else {
+      setClickDateMeal([]);
+    }
+    console.log("클릭 날짜 식사 기록 있음 !!!!");
+  }
+
+  // 날짜 클릭시 해당 날짜 식사 기록 분석 가져오는 함수
+  async function getClickDayAnalysis() {
+    console.log("analysis !!!!");
+    const response = await http.get(`/analysis/${clickDate}`, {
+      params: {
+        userId: userInfo.userId,
+      },
+    });
+    if (response.data.message == "success") {
+      setClickDateAnalysis(response.data.data);
+    }
+  }
+
   const mounted1 = useRef(false);
   useEffect(() => {
     if (!mounted1.current) {
       mounted1.current = true;
     } else {
       getRecIntakeAmount();
+      getClickDayRecord();
+      getClickDayAnalysis();
+      getIntakeRecords();
     }
   }, [clickDate]);
 
@@ -102,14 +151,23 @@ function Main() {
     if (!mounted2.current) {
       mounted2.current = true;
     } else {
+      getClickDayRecord();
+      getClickDayAnalysis();
+      getIntakeRecords();
+    }
+  }, [isChange]);
+
+  const mounted3 = useRef(false);
+  useEffect(() => {
+    if (!mounted3.current) {
+      mounted3.current = true;
+    } else {
+      getRecIntakeAmount();
+      getClickDayRecord();
+      getClickDayAnalysis();
       getIntakeRecords();
     }
   }, []);
-
-  const [breakfastAmount, setBreakfastAmount] = useState("350"); // 아침 칼로리
-  const [lunchAmount, setLunchAmount] = useState("200"); // 점심 칼로리
-  const [dinnerAmount, setDinnerAmount] = useState("500"); // 저녁 칼로리
-  const [snackAmount, setsnackAmount] = useState("100"); // 간식 칼로리
 
   return (
     <div>
@@ -133,6 +191,7 @@ function Main() {
             md={6}
           >
             {JSON.stringify(badDays)}
+            {JSON.stringify(normalDays)}
             <Calendar
               clickDate={clickDate}
               setClickDate={setClickDate}
@@ -160,8 +219,16 @@ function Main() {
                 snackAmount={snackAmount}
                 setsnackAmount={setsnackAmount}
                 recIntakeAmount={recIntakeAmount}
+                isChange={isChange}
+                setIsChange={setIsChange}
               ></RegistMeal>
-              <DailyMeal clickDate={clickDate}></DailyMeal>
+              <DailyMeal
+                clickDate={clickDate}
+                clickDateMeal={clickDateMeal}
+                recIntakeAmount={recIntakeAmount}
+                isChange={isChange}
+                setIsChange={setIsChange}
+              ></DailyMeal>
             </Grid>
           </Grid>
         </Grid>
