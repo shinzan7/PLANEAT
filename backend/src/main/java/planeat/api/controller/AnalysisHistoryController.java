@@ -5,10 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import planeat.api.dto.analysishistory.AnalysisHistoryResponse;
 import planeat.api.dto.common.BasicResponse;
 import planeat.api.service.AnalysisHistoryService;
@@ -36,6 +33,14 @@ public class AnalysisHistoryController {
     public ResponseEntity<BasicResponse<List<AnalysisHistoryResponse>>> readAnalysisAfterDate(@RequestParam Long userId, @RequestParam String date){
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         List<AnalysisHistoryResponse> historyList = analysisHistoryService.readAllAnalysisHistoryByDateAfter(userId, localDate);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, historyList), HttpStatus.OK);
+    }
+
+    @GetMapping("/{date}")
+    @ApiOperation(value = "특정 날짜 분석기록 조회", notes = "유저 아이디와 지정날짜를 받아 지정날짜의 분석기록을 반환한다.")
+    public ResponseEntity<BasicResponse<List<AnalysisHistoryResponse>>> readAnalysisDate(@RequestParam Long userId, @PathVariable("date") String date){
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+        List<AnalysisHistoryResponse> historyList = analysisHistoryService.readFirstAnalysisHistoryByDate(userId, localDate);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, historyList), HttpStatus.OK);
     }
 
