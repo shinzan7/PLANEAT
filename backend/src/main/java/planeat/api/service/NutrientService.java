@@ -6,7 +6,9 @@ package planeat.api.service;
 */
 
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.qlrm.mapper.JpaResultMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.nutrient.NutrientDto;
@@ -37,6 +39,18 @@ public class NutrientService {
     private final CategoryRepository categoryRepository;
     private final S3Uploader s3Uploader;
     private final EntityManager em;
+    private final ModelMapper modelMapper;
+
+    public List<NutrientSearchResponse> readAllNutrientBySearchKeyword(String searchWord){
+        List<Nutrient> nutrientList = nutrientRepository.findByNutrientNameContains(searchWord);
+        List<NutrientSearchResponse> responseList = new ArrayList<>(nutrientList.size());
+
+        for (Nutrient n : nutrientList){
+            NutrientSearchResponse response = modelMapper.map(n, NutrientSearchResponse.class);
+            responseList.add(response);
+        }
+        return responseList;
+    }
 
     /**
      * 태그를 포함하는 영양제를 모두 검색
