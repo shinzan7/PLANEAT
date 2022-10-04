@@ -61,6 +61,22 @@ public class IntakeHistory {
         this.mealType = mealType;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setDate(LocalDate date) {
+        this.date = date;
+    }
+
+    public void setMealType(MealType mealType) {
+        this.mealType = mealType;
+    }
+
     public static IntakeHistory createIntakeHistory(User user, IntakeHistoryRequest intakeHistoryRequest) {
         IntakeHistory intakeHistory = IntakeHistory.builder()
                 .user(user)
@@ -72,12 +88,11 @@ public class IntakeHistory {
 
 
     public static IntakeHistory updateIntakeHistory(User user, IntakeHistoryRequest intakeHistoryRequest) {
-        IntakeHistory intakeHistory = IntakeHistory.builder()
-                .id(intakeHistoryRequest.getIntakeHistoryId())
-                .date(intakeHistoryRequest.getDate())
-                .user(user)
-                .mealType(intakeHistoryRequest.getMealType())
-                .build();
+        IntakeHistory intakeHistory = new IntakeHistory();
+        intakeHistory.setId(intakeHistoryRequest.getIntakeHistoryId());
+        intakeHistory.setDate(intakeHistoryRequest.getDate());
+        intakeHistory.setUser(user);
+        intakeHistory.setMealType(intakeHistoryRequest.getMealType());
         return intakeHistory;
     }
 
