@@ -30,7 +30,7 @@ import { useRecoilState } from "recoil";
 export default function UserInfo() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [userRecIntakeInfo, setUserRecIntakeInfo] = useRecoilState(userRecIntake);
-  const [name, setName] = useState(userInfo.name);
+
   const [gender, setGender] = useState(userInfo.gender); // 성별
   const [age, setAge] = useState(userInfo.age); // 나이
   const [height, setHeight] = useState(userInfo.height); // 키
@@ -180,6 +180,7 @@ export default function UserInfo() {
     // 정보 수정 api 연동
     const response = await http.put(`user-infos/${userInfo.userId}`, {
       userId: userInfo.userId,
+      name: userInfo.name,
       birthyear: birthyear,
       gender: gender,
       // name: userInfo.name,
