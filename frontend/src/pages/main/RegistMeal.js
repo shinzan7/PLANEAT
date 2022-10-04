@@ -46,6 +46,7 @@ export default function RegistMeal(props) {
           day={day}
           mealType={mealType}
           close={() => setMealModalOpen(false)}
+          recIntakeAmount={props.recIntakeAmount}
         />
       ) : null}
       <Grid container id="container" xs={12} direction="row">

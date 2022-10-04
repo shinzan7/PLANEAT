@@ -21,10 +21,12 @@ import {
 
 import styled from "styled-components";
 import BtnMain from "components/common/BtnMain";
+import BtnGray from "components/common/BtnGray";
 import { useNavigate } from "react-router-dom";
 import { useRef } from "react";
 import { http } from "api/http";
 import AddIcon from "@mui/icons-material/AddCircle";
+import AddIcon2 from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/RemoveCircle";
 import { RepeatOneSharp } from "@mui/icons-material";
 
@@ -166,15 +168,24 @@ export default function NutrientModal(props) {
         alignItems="center"
       >
         {/* 모달 타이틀 */}
-        <Grid
-          container
-          xs={12}
-          style={{ marginBottom: "2vw", fontSize: "20px", color: "#9DA6F8" }}
-        >
-          <Grid items xs={9}>
-            {props.month}월 {props.day}일 {props.mealType}
+        <Grid container xs={12} style={{ marginBottom: "2vw" }}>
+          <Grid container xs={9}>
+            <Grid
+              item
+              xs={12}
+              style={{
+                color: "#9DA6F8",
+                fontSize: "20px",
+                marginBottom: "1vw",
+              }}
+            >
+              {props.month}월 {props.day}일 {props.mealType}
+            </Grid>
+            <Grid item xs={12} style={{ fontSize: "14px" }}>
+              오늘 복용한 영양제 개수를 입력해주세요!
+            </Grid>
           </Grid>
-          <Grid items xs={3}>
+          <Grid item xs={3}>
             {hasRecord == true ? (
               <>
                 <BtnMain
@@ -189,10 +200,11 @@ export default function NutrientModal(props) {
             ) : (
               <>
                 <BtnMain
-                  width="90%"
+                  width="100%"
                   onClick={(e) => {
                     registPill(e);
                   }}
+                  style={{ fontSize: "17px" }}
                 >
                   기록하기
                 </BtnMain>
@@ -226,11 +238,12 @@ export default function NutrientModal(props) {
                         xs={12}
                         style={{ margin: "1vw" }}
                         alignItems="center"
+                        justifyContent="space-evenly"
                       >
-                        <Grid items xs={9}>
+                        <Grid item xs={8}>
                           {pill.nutrientName}
                         </Grid>
-                        <Grid items xs={1}>
+                        <Grid item xs={1}>
                           <IconButton
                             size="small"
                             id={i}
@@ -242,7 +255,7 @@ export default function NutrientModal(props) {
                             <RemoveIcon id={i} fontSize="inherit" />
                           </IconButton>
                         </Grid>
-                        <Grid items xs={1}>
+                        <Grid item xs={1}>
                           <input
                             min="0"
                             type="number"
@@ -250,7 +263,7 @@ export default function NutrientModal(props) {
                             value={intakes[i]}
                           ></input>
                         </Grid>
-                        <Grid items xs={1}>
+                        <Grid item xs={1}>
                           <IconButton
                             id={i}
                             onClick={() => {
@@ -268,18 +281,18 @@ export default function NutrientModal(props) {
                 </Grid>
               </>
             )}
-          </Grid>
-          {/* 모달 하단 버튼 */}
-          <Grid container xs={12} justifyContent="center" sx={{ mt: 3 }}>
-            <Grid items xs={5}>
-              <BtnMain
-                width="100%"
-                onClick={() => {
-                  moveMyPage();
-                }}
-              >
-                영양제 추가하기
-              </BtnMain>
+            {/* 영양제 추가 버튼 */}
+            <Grid container xs={12} justifyContent="center" sx={{ mt: 3 }}>
+              <Grid items xs={2}>
+                <BtnGray
+                  width="100%"
+                  onClick={() => {
+                    moveMyPage();
+                  }}
+                >
+                  <AddIcon2 />
+                </BtnGray>
+              </Grid>
             </Grid>
           </Grid>
         </StyledComponent>

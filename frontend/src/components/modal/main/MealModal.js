@@ -136,10 +136,12 @@ export default function MaxWidthDialog(props) {
   async function getMealRecord() {
     console.log("getMealRecord");
     console.log(curDate);
+
     const response = await http.get(
       `/intake-histories/${userInfo.userId}/${curDate}`
     );
 
+    console.log(response.data.data);
     let record = response.data.data;
 
     for (let i = 0; i < record.length; i++) {
@@ -211,7 +213,6 @@ export default function MaxWidthDialog(props) {
     setModifyFood(food);
 
     // 탄, 단, 지, 당, 나 함량 변경
-
     let nutri = [];
     nutri[0] = food.carbohydrate;
     nutri[1] = food.protein;
@@ -221,7 +222,7 @@ export default function MaxWidthDialog(props) {
     setIntakeAmount(nutri);
 
     // 섭취량 입력 창 초기 값 설정
-    intakeFoodInput.current.value = allFood[index].servingSize;
+    intakeFoodInput.current.value = myFood[index].servingSize;
   }
 
   // 내 식단 클릭 함수
@@ -257,10 +258,6 @@ export default function MaxWidthDialog(props) {
   const [clickedDiet, setClickedDiet] = useState(null); // 클릭한 식단 (기준)
   const [modifyFood, setModifyFood] = useState(null); // 클릭한 양조절 후 변수
   const [clickedFoodList, setClickedFoodList] = useState([]); // 클릭한 음식 담는 배열
-  // todo: 실제 권장 섭취량으로 변경 필요
-  const [recIntakeAmount, setRecIntakeAmount] = useState([
-    400, 30, 10, 50, 1000,
-  ]); // 탄, 단, 지, 당, 나 권장섭취량
   const [intakeAmount, setIntakeAmount] = useState([0, 0, 0, 0, 0]); // 탄, 단, 지, 당, 나 함량
   const [myDietAmount, setMyDietAmount] = useState([0, 0, 0, 0, 0]); // 선택한 식단의 영양 정보 함량
 
@@ -298,15 +295,23 @@ export default function MaxWidthDialog(props) {
   }
 
   // 식단 영양정보 (탄,단,지,당,나) 차트
+  // 권장섭취량 이용하는 곳
   function DietInfoChart() {
     const series = [
       {
         data: [
-          ((myDietAmount[0] / recIntakeAmount[0]) * 100).toFixed(1),
-          ((myDietAmount[1] / recIntakeAmount[1]) * 100).toFixed(1),
-          ((myDietAmount[2] / recIntakeAmount[2]) * 100).toFixed(1),
-          ((myDietAmount[3] / recIntakeAmount[3]) * 100).toFixed(1),
-          ((myDietAmount[4] / recIntakeAmount[4]) * 100).toFixed(1),
+          (
+            (myDietAmount[0] / props.recIntakeAmount.carbohydrate) *
+            100
+          ).toFixed(1),
+          ((myDietAmount[1] / props.recIntakeAmount.protein) * 100).toFixed(1),
+          ((myDietAmount[2] / props.recIntakeAmount.fat) * 100).toFixed(1),
+          ((myDietAmount[3] / 50) * 100).toFixed(1),
+          (
+            (myDietAmount[4] /
+              props.recIntakeAmount.nutritionsList[17].intake_rec) *
+            100
+          ).toFixed(1),
         ], // 음식의 (영양분/권장)*100
       },
     ];
@@ -367,11 +372,20 @@ export default function MaxWidthDialog(props) {
     const series = [
       {
         data: [
-          ((modifyFood.carbohydrate / recIntakeAmount[0]) * 100).toFixed(1),
-          ((modifyFood.protein / recIntakeAmount[1]) * 100).toFixed(1),
-          ((modifyFood.fat / recIntakeAmount[2]) * 100).toFixed(1),
-          ((modifyFood.sugar / recIntakeAmount[3]) * 100).toFixed(1),
-          ((modifyFood.sodium / recIntakeAmount[4]) * 100).toFixed(1),
+          (
+            (modifyFood.carbohydrate / props.recIntakeAmount.carbohydrate) *
+            100
+          ).toFixed(1),
+          ((modifyFood.protein / props.recIntakeAmount.protein) * 100).toFixed(
+            1
+          ),
+          ((modifyFood.fat / props.recIntakeAmount.fat) * 100).toFixed(1),
+          ((modifyFood.sugar / 50) * 100).toFixed(1),
+          (
+            (modifyFood.sodium /
+              props.recIntakeAmount.nutritionsList[17].intake_rec) *
+            100
+          ).toFixed(1),
         ], // 음식의 (영양분/권장)*100
       },
     ];
@@ -450,7 +464,23 @@ export default function MaxWidthDialog(props) {
     }
   }
 
-  //todo: 오류 확인 필요 (내 음식은 기록이 안됨)
+  // 여기 하던 중
+  async function deleteMyFood() {
+    console.log(clickedFood);
+    const response = await http.delete(`food-infos/${userInfo.userId}`, {
+      data: {
+        foodInfoId: clickedFood.foodInfoId,
+        foodUser: clickedFood.foodUser,
+        userId: userInfo.userId,
+      },
+    });
+    if (response.data.message == "success") {
+      alert(`${clickedFood.name} 이(가) 삭제 되었습니다.`);
+      setClickedFood(null);
+      getMyFood();
+    }
+  }
+
   // 식사 등록 함수
   async function registerMeal() {
     // 음식 정보 데이터 변환
@@ -969,6 +999,17 @@ export default function MaxWidthDialog(props) {
                             }}
                           >
                             식사에 추가
+                          </Btn>
+                        </Grid>
+                        <Grid item xs={3}>
+                          <Btn
+                            bgColor="#D9D9D9"
+                            fontColor="black"
+                            onClick={() => {
+                              deleteMyFood();
+                            }}
+                          >
+                            삭제
                           </Btn>
                         </Grid>
                       </Grid>
