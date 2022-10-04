@@ -23,13 +23,15 @@ public class NutrientSearchResponse {
     String description;
     String imagePath;
     String nutrientName;
+    String wordCloudImagePath;
 
     @Builder
-    public NutrientSearchResponse(BigInteger nutrientId, String company, String description, String imagePath, String nutrientName) {
+    public NutrientSearchResponse(BigInteger nutrientId, String company, String description, String imagePath, String nutrientName, String wordCloudImagePath) {
         this.nutrientId = nutrientId;
         this.company = company;
         this.description = description;
         this.imagePath = imagePath;
         this.nutrientName = nutrientName;
+        this.wordCloudImagePath = wordCloudImagePath;
     }
 }

@@ -237,6 +237,32 @@ public class NutrientService {
         return imageUrl;
     }
 
+    /**
+     * 워드 클라우드 이미지를 업로드하고 경로를 word_cloud_image_path에 update한다
+     * @param nutrientId 영양제 id
+     * @param multipartFile 이미지 파일
+     * @return 업로드한 이미지 경로
+     */
+    public String updateNutrientWordCloudImage(Long nutrientId, MultipartFile multipartFile) {
+        //이미지 업로드 후 경로 받아오기
+        //imageUrl 사진경로
+        String imageUrl = null;
+        if (multipartFile != null && !multipartFile.isEmpty()) {
+            try {
+                imageUrl = s3Uploader.uploadFiles(multipartFile, "static");
+            } catch (Exception e) {
+                throw new CustomException(CustomExceptionList.UPLOAD_ERROR);
+            }
+        }
+        Nutrient nutrient = nutrientRepository.findById(nutrientId).orElseThrow(
+                () -> new CustomException(CustomExceptionList.NUTRIENT_NOT_FOUND_ERROR)
+        );
+        //이미지 경로 변경
+        nutrient.updateWordCloudImagePath(imageUrl);
+
+        return imageUrl;
+    }
+
 
 }
 
