@@ -11,54 +11,30 @@ import "./slick.css";
 import "./slick-theme.css";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
+import { useRecoilValue } from 'recoil' 
+import { myTag } from 'states/userState'
+
 
 function SearchByReco() {
   const name = localStorage.getItem('name')
 
-  const [tag, setTag] = useState([])
+  const tagdata = useRecoilValue(myTag)
+  const tag = tagdata.categoriesList
+  // console.log('tag', tag)
+
   const [info, setInfo] = useState([])
 
   useEffect(() => {
-    http.get('/user-infos/categories/9')
-    .then(response => {
-      // console.log('tag', response.data.data)
-      setTag(response.data.data)
-    })
+      http.get(`/nutrient/tag/${tag[0]}`)
+      .then(response => {
+        setInfo(response.data.data)
+      })
+    }, [])
 
-    http.get(`/nutrient/tag/${tag[0]}`)
-    .then(response => {
-      // console.log('info', response.data.data)
-      setInfo(response.data.data)
-    })
-  }, [])
+    // console.log('info', info)
 
-  // let random = []
-  // if ( info.length > 12) {
-  //   for (var i=0; i<12; i++) {
-  //     const num = Math.floor(Math.random()*info.length)
-  //     if (random.indexOf(num) === -1) {
-  //       random.push(num)
-  //     }
-  //     else {
-  //       i--
-  //     }
-  //   }
-  // }
-  // else {
-  //   random = info
-  // }
-  
 
-  // console.log('random', random)
 
-  // const randomData = []
-  // for (var j=0; j<12; j++) {
-  //   randomData.push(info[random[j]])
-  // }
-
-  // console.log('data', randomData)
-
-  
 
   const settings = {
     dots: true,
@@ -103,7 +79,7 @@ function SearchByReco() {
 
   const section1 = { textAlign:'left', fontSize:'3.3vh'}
   const bold = {fontWeight:'bold'}
-  const card = {textAlign:'left'}
+  const card = {textDecoration:'none', color:'black'}
 
 
   return (
@@ -119,15 +95,15 @@ function SearchByReco() {
               <p>&nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게 추천해요</p>
             </div>
 
-            {/* <div>
+            <div>
               <Slider {...settings}>
-                <div>
+                {/* <div>
                   <Link to="/searchdetail/10" style={{textDecoration:'none'}}>
                     <CardNutrient pill={data}/>
                   </Link>
-                </div>
+                </div> */}
               </Slider>
-            </div> */}
+            </div>
           </Grid>
           <Grid item xs={1.7}>
 
@@ -144,11 +120,11 @@ function SearchByReco() {
 
             <div>
               <Slider {...settings}>
-                {/* {randomData.map((data, i) => (
-                  <Link to={'/searchdetail/'} style={{textDecoration:'none'}}>
-                    <CardNutrient key={i} pill={data}/>
+                {info.slice(0, 12).map((data, i) => (
+                  <Link to={`/searchdetail/${data.nutrientId}`}>
+                    <CardNutrient key={i} pill={data} />
                   </Link>
-                ))} */}
+                ))}
               </Slider>
             </div>
           </Grid>

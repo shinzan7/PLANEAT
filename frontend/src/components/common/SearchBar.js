@@ -61,10 +61,10 @@ function SearchBar() {
                             </IconButton>)
                         }
                         { /* 돋보기 버튼 */}
-                          <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2 }} aria-label="search" onClick={(e) => {
+                          <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2}} aria-label="search" onClick={(e) => {
                               search(e)
                           }}>
-                            <Link to={'/result/'+ searchKeyWord} >
+                            <Link to={'/result/'+ searchKeyWord} style={{color:'gray'}}>
                               <SearchIcon/>
                             </Link>
                           </IconButton>                  
