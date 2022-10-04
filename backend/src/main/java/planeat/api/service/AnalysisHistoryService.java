@@ -325,9 +325,9 @@ public class AnalysisHistoryService {
 
         response = AnalysisHistoryPercentResponse.builder()
                 .analysisType(2)
-                .badCount(badCount / size)
-                .normalCount(normalCount / size)
-                .goodCount(goodCount / size)
+                .badCount(badCount)
+                .normalCount(normalCount)
+                .goodCount(goodCount)
                 .calorie(calorie / size)
                 .protein(protein / size)
                 .fat(fat / size)
