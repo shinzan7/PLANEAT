@@ -7,6 +7,7 @@ export const userRecIntake = atom({
     carbohydrate: 0,
     protein: 0,
     fat: 0,
+    sugar: 50,
     // 영양소별 권장 섭취량도
   },
 });
