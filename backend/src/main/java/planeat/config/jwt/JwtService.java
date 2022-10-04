@@ -66,10 +66,22 @@ public class JwtService {
             Jws<Claims> claims = Jwts.parser()
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token);
+            System.out.println();
+            System.out.println("================================");
+            System.out.println(claims.getBody()
+                    .getExpiration()
+                    .after(new Date()));
+            System.out.println("================================");
+            System.out.println();
             return claims.getBody()
                     .getExpiration()
                     .after(new Date());
         } catch (Exception e) {
+            System.out.println();
+            System.out.println("================================");
+            System.out.println(e.getMessage());
+            System.out.println("================================");
+            System.out.println();
             return false;
         }
     }

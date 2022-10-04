@@ -33,6 +33,11 @@ public class AuthInterceptor implements HandlerInterceptor {
         }
 
         String accessToken = request.getHeader("accessToken");
+        System.out.println();
+        System.out.println("================================");
+        System.out.println(accessToken);
+        System.out.println("================================");
+        System.out.println();
         if (jwtService.verifyToken(accessToken)) {
             return true;
         }
