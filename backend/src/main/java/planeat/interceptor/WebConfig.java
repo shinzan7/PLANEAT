@@ -26,7 +26,8 @@
 //
 //        interceptorRegistry.addInterceptor(authInterceptor)
 //                .addPathPatterns("/**")
-//                .excludePathPatterns("/oauth/**", "/swagger-ui/**");
+//                .excludePathPatterns("/oauth/**");
+
 //
 //    }
 //

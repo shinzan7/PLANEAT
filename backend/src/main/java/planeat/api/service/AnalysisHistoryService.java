@@ -2,6 +2,7 @@ package planeat.api.service;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import planeat.api.dto.analysishistory.AnalysisHistoryPercentResponse;
 import planeat.api.dto.analysishistory.AnalysisHistoryResponse;
 import planeat.database.entity.AnalysisHistory;
 import planeat.database.entity.User;
@@ -219,6 +220,149 @@ public class AnalysisHistoryService {
         return analysisHistoryList;
     }
 
+    public AnalysisHistoryPercentResponse makeAverageAnalysisHistoryByDateAfter(Long userId, LocalDate date){
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
+        );
+        AnalysisHistoryPercentResponse response = new AnalysisHistoryPercentResponse();
+
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfter(user, date);
+        //기록이 없으면 빈값 넘겨주기
+        if(historyList.size()==0){
+            return response;
+        }
+
+        Integer badCount = 0;
+        Integer normalCount = 0;
+        Integer goodCount = 0;
+
+        float calorie = 0f;
+        float protein = 0f;
+        float fat = 0f;
+        float carbohydrate = 0f;
+        float sugar = 0f;
+
+        float dietaryFiber = 0f;
+        float calcium = 0f;
+        float iron = 0f;
+        float magnesium = 0f;
+        float phosphorus = 0f;
+
+        float potassium = 0f;
+        float sodium = 0f;
+        float zinc = 0f;
+        float copper = 0f;
+        float manganese = 0f;
+
+        float selenium = 0f;
+        float vitaminA = 0f;
+        float vitaminD = 0f;
+        float vitaminB6 = 0f;
+        float folate = 0f;
+
+        float vitaminB12 = 0f;
+        float vitaminC = 0f;
+        float cholesterol = 0f;
+        float fattyAcid = 0f;
+        float linoleicAcid = 0f;
+
+        float alphaLinoleicAcid = 0f;
+        float transFattyAcid = 0f;
+        float vitaminB1 = 0f;
+        float vitaminB2 = 0f;
+
+        //변수에 비율 모두 더하기
+        for (int i=0; i<historyList.size(); i++){
+            AnalysisHistory real = historyList.get(i); //실제섭취량
+            AnalysisHistory rec = historyList.get(++i); //실제섭취량
+
+            //점수 카운트
+            if(real.getAnalysisScore().equals("나쁨")){
+                badCount++;
+            } else if (real.getAnalysisScore().equals("보통")) {
+                normalCount++;
+            } else{
+                goodCount++;
+            }
+
+            calorie += Math.round((real.getCalorie() * 10 / rec.getCalorie()) / 10f);
+            protein += Math.round((real.getProtein() * 10 / rec.getProtein()) / 10f);
+            fat += Math.round((real.getFat() * 10 / rec.getFat()) / 10f);
+            carbohydrate += Math.round((real.getCarbohydrate() * 10 / rec.getCarbohydrate()) / 10f);
+            sugar += Math.round((real.getSugar() * 10 / rec.getSugar()) / 10f);
+
+            dietaryFiber += Math.round((real.getDietaryFiber() * 10 / rec.getDietaryFiber()) / 10f);
+            calcium += Math.round((real.getCalcium() * 10 / rec.getCalcium()) / 10f);
+            iron += Math.round((real.getIron() * 10 / rec.getIron()) / 10f);
+            magnesium += Math.round((real.getMagnesium() * 10 / rec.getMagnesium()) / 10f);
+            phosphorus += Math.round((real.getPhosphorus() * 10 / rec.getPhosphorus()) / 10f);
+
+            potassium += Math.round((real.getPotassium() * 10 / rec.getPotassium()) / 10f);
+            sodium += Math.round((real.getSodium() * 10 / rec.getSodium()) / 10f);
+            zinc += Math.round((real.getZinc() * 10 / rec.getZinc()) / 10f);
+            copper += Math.round((real.getCopper() * 10 / rec.getCopper()) / 10f);
+            manganese += Math.round((real.getManganese() * 10 / rec.getManganese()) / 10f);
+
+            selenium += Math.round((real.getSelenium() * 10 / rec.getSelenium()) / 10f);
+            vitaminA += Math.round((real.getVitaminA() * 10 / rec.getVitaminA()) / 10f);
+            vitaminD += Math.round((real.getVitaminD() * 10 / rec.getVitaminD()) / 10f);
+            vitaminB6 += Math.round((real.getVitaminB6() * 10 / rec.getVitaminB6()) / 10f);
+            folate += Math.round((real.getFolate() * 10 / rec.getFolate()) / 10f);
+
+            vitaminB12 += Math.round((real.getVitaminB12() * 10 / rec.getVitaminB12()) / 10f);
+            vitaminC += Math.round((real.getVitaminC() * 10 / rec.getVitaminC()) / 10f);
+            cholesterol += Math.round((real.getCholesterol() * 10 / rec.getCholesterol()) / 10f);
+            fattyAcid += Math.round((real.getFattyAcid() * 10 / rec.getFattyAcid()) / 10f);
+            linoleicAcid += Math.round((real.getLinoleicAcid() * 10 / rec.getLinoleicAcid()) / 10f);
+
+            alphaLinoleicAcid += Math.round((real.getAlphaLinoleicAcid() * 10 / rec.getAlphaLinoleicAcid()) / 10f);
+            transFattyAcid += Math.round((real.getTransFattyAcid() * 10 / rec.getTransFattyAcid()) / 10f);
+            vitaminB1 += Math.round((real.getVitaminB1() * 10 / rec.getVitaminB1()) / 10f);
+            vitaminB2 += Math.round((real.getVitaminB2() * 10 / rec.getVitaminB2()) / 10f);
+        }
+
+        int size = historyList.size() / 2;
+
+        response = AnalysisHistoryPercentResponse.builder()
+                .analysisType(2)
+                .badCount(badCount / size)
+                .normalCount(normalCount / size)
+                .goodCount(goodCount / size)
+                .calorie(calorie / size)
+                .protein(protein / size)
+                .fat(fat / size)
+                .carbohydrate(carbohydrate / size)
+                .sugar(sugar / size)
+                .dietaryFiber(dietaryFiber / size)
+                .calcium(calcium / size)
+                .iron(iron / size)
+                .magnesium(magnesium / size)
+                .phosphorus(phosphorus / size)
+                .potassium(potassium / size)
+                .sodium(sodium / size)
+                .zinc(zinc / size)
+                .copper(copper / size)
+                .manganese(manganese / size)
+                .selenium(selenium / size)
+                .vitaminA(vitaminA / size)
+                .vitaminD(vitaminD / size)
+                .vitaminB6(vitaminB6 / size)
+                .folate(folate / size)
+                .vitaminB12(vitaminB12 / size)
+                .vitaminC(vitaminC / size)
+                .cholesterol(cholesterol / size)
+                .fattyAcid(fattyAcid / size)
+                .linoleicAcid(linoleicAcid / size)
+                .alphaLinoleicAcid(alphaLinoleicAcid / size)
+                .transFattyAcid(transFattyAcid / size)
+                .vitaminB1(vitaminB1 / size)
+                .vitaminB2(vitaminB2 / size)
+                .build();
+
+        return response;
+
+    }
+
     public List<AnalysisHistoryResponse> readAllAnalysisHistoryByDateAfter(Long userId, LocalDate date){
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
@@ -394,7 +538,7 @@ public class AnalysisHistoryService {
      * @return 점수 (green:10, yellow:5, red:0)
      */
     public int vitaminScore(float real, float rec){
-        int colorScore = 0;
+        int colorScore = 2;
         float percent = real / rec;
         if(percent >= 0.6f){
             colorScore = 10;

@@ -26,6 +26,12 @@
 //
 //    @Override
 //    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+//        String url = request.getRequestURI();
+//        if (url.contains("swagger") || url.contains("api-docs") || url.contains("webjars")) {
+//            return true;
+//        }
+
 //        String accessToken = request.getHeader("accessToken");
 //        if (jwtService.verifyToken(accessToken)) {
 //            return true;
