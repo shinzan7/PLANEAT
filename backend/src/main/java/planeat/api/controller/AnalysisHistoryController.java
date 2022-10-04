@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import planeat.api.dto.analysishistory.AnalysisHistoryPercentResponse;
 import planeat.api.dto.analysishistory.AnalysisHistoryResponse;
 import planeat.api.dto.common.BasicResponse;
 import planeat.api.service.AnalysisHistoryService;
@@ -42,6 +43,14 @@ public class AnalysisHistoryController {
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         List<AnalysisHistoryResponse> historyList = analysisHistoryService.readFirstAnalysisHistoryByDate(userId, localDate);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, historyList), HttpStatus.OK);
+    }
+
+    @GetMapping("/percent")
+    @ApiOperation(value = "지정날짜 이후 평균비율 조회", notes = "유저 아이디와 지정날짜를 받아 지정날짜 이후의 모든 분석기록의 비율의 평균을 반환한다.")
+    public ResponseEntity<BasicResponse<AnalysisHistoryPercentResponse>> readAnalysisPercentAfterDate(@RequestParam Long userId, @RequestParam String date){
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+        AnalysisHistoryPercentResponse response = analysisHistoryService.makeAverageAnalysisHistoryByDateAfter(userId, localDate);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
     }
 
     /**
