@@ -914,7 +914,7 @@ public class AnalysisHistoryService {
                 realHistory.getTransFattyAcid() + infoDto.getFattyAcid()
         );
         realHistory.updateVitamin(
-                realHistory.getDietaryFiber() + infoDto.getDietary_fiber(),
+                realHistory.getDietaryFiber() + infoDto.getDietaryFiber(),
                 realHistory.getCalcium() + infoDto.getCalcium(),
                 realHistory.getIron() + infoDto.getIron(),
                 realHistory.getMagnesium() + infoDto.getMagnesium(),
@@ -981,7 +981,7 @@ public class AnalysisHistoryService {
                 realHistory.getTransFattyAcid() - infoDto.getFattyAcid()
         );
         realHistory.updateVitamin(
-                realHistory.getDietaryFiber() - infoDto.getDietary_fiber(),
+                realHistory.getDietaryFiber() - infoDto.getDietaryFiber(),
                 realHistory.getCalcium() - infoDto.getCalcium(),
                 realHistory.getIron() - infoDto.getIron(),
                 realHistory.getMagnesium() - infoDto.getMagnesium(),
