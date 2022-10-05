@@ -9,10 +9,12 @@ import { Grid } from "@mui/material";
 import Slider from "react-slick";
 import "./slick.css";
 import "./slick-theme.css";
+import './Reco.css'
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
 import { useRecoilValue } from 'recoil' 
 import { myTag } from 'states/userState'
+// import { myHistory } from 'states/userHistory'
 
 
 function SearchByReco() {
@@ -20,7 +22,8 @@ function SearchByReco() {
 
   const tagdata = useRecoilValue(myTag)
   const tag = tagdata.categoriesList
-  // console.log('tag', tag)
+  // const historyData = useRecoilValue(myHistory)
+  // console.log('hdata', historyData)
 
   const [info, setInfo] = useState([])
 
@@ -31,7 +34,7 @@ function SearchByReco() {
       })
     }, [])
 
-    // console.log('info', info)
+
 
 
 
@@ -121,7 +124,7 @@ function SearchByReco() {
             <div>
               <Slider {...settings}>
                 {info.slice(0, 12).map((data, i) => (
-                  <Link to={`/searchdetail/${data.nutrientId}`}>
+                  <Link to={`/searchdetail/${data.nutrientId}`} style={{ textDecoration:'none'}}>
                     <CardNutrient key={i} pill={data} />
                   </Link>
                 ))}

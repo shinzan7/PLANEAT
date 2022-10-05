@@ -57,7 +57,7 @@ function NameResult() {
                 </Grid>
                 
                 <Grid item xs={4}>
-                  <p><span style={{fontWeight:'bold'}}>{name.id}</span>에 대한 검색 결과 {info.length}건</p>
+                  <p><span style={{fontWeight:'bold'}}>'{name.id}'</span>에 대한 제품 검색 결과가 <span style={{fontWeight:'bold'}}>{info.length}</span>건 있어요</p>
                 </Grid>
                 <Grid item xs={5}>
                   

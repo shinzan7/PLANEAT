@@ -32,16 +32,9 @@ export const userState = atom({
 export const myTag = selector({
   key:'tag',
   get: async({get}) => {
+    // const response = await http.get(`/user-infos/${userId}`)
     const response = await http.get('/user-infos/9')
     return response.data.data
   }
 })
 
-// export const myHistory = selector({
-//   key:'history',
-//   get: async({get}) => {
-//     // const response = await http.get(`/intake-histories/${userId}/${date}`)
-//     const response = await http.get('/intake-histories/9/2022-09-30')
-//     return response.data
-//   }
-// })

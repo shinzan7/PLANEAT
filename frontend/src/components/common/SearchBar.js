@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { IconButton, Paper, InputBase} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 
@@ -64,7 +64,7 @@ function SearchBar() {
                           <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2}} aria-label="search" onClick={(e) => {
                               search(e)
                           }}>
-                            <Link to={'/result/'+ searchKeyWord} style={{color:'gray'}}>
+                            <Link to={'/result/'+ searchKeyWord} style={{color:'gray', marginTop:'7px'}}>
                               <SearchIcon/>
                             </Link>
                           </IconButton>                  
