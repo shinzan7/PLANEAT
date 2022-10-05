@@ -587,29 +587,35 @@ export default function DailyMeal(props) {
             <Grid item xs={12} sx={{ margin: "20px" }}>
               {real.sodium - rec.sodium > 0 ? (
                 <Grid item xs={12} sx={{ marginBottom: "15px" }}>
-                  나트륨을{" "}
+                  나트륨을 &nbsp;
                   <b style={{ color: "#f7bf87", fontSize: "20px" }}>
-                    {real.sodium - rec.sodium}mg
+                    {parseFloat((real.sodium - rec.sodium).toFixed(1))}mg
                   </b>
-                  더 섭취했어요
+                  &nbsp; 더 섭취했어요
                 </Grid>
               ) : null}
               {real.transFattyAcid - rec.transFattyAcid > 0 ? (
                 <Grid item xs={12} sx={{ marginBottom: "15px" }}>
-                  트랜스지방산을
+                  트랜스지방산을&nbsp;
                   <b style={{ color: "#f7bf87", fontSize: "20px" }}>
-                    {real.transFatty_acid - rec.transFattyAcid}g
+                    {parseFloat(
+                      (real.transFatty_acid - rec.transFattyAcid).toFixed(1)
+                    )}
+                    g
                   </b>
-                  더 섭취했어요
+                  &nbsp;더 섭취했어요
                 </Grid>
               ) : null}
               {real.cholesterol - rec.cholesterol > 0 ? (
                 <Grid item xs={12} sx={{ marginBottom: "15px" }}>
-                  트랜스지방산을
+                  콜레스테롤을&nbsp;
                   <b style={{ color: "#f7bf87", fontSize: "20px" }}>
-                    {real.transFatty_acid - rec.transFattyAcid}g
+                    {parseFloat(
+                      (real.transFatty_acid - rec.transFattyAcid).toFixed(1)
+                    )}
+                    g
                   </b>
-                  더 섭취했어요
+                  &nbsp; 더 섭취했어요
                 </Grid>
               ) : null}
               {real.transFattyAcid - rec.transFattyAcid <= 0 &&

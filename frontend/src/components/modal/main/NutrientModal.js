@@ -61,7 +61,7 @@ export default function NutrientModal(props) {
       console.log(response);
     }
     let temp = props.isChange;
-    props.setIsChange(temp);
+    props.setIsChange(!temp);
     props.close();
   }
 
@@ -78,7 +78,7 @@ export default function NutrientModal(props) {
     }
 
     let temp = props.isChange;
-    props.setIsChange(temp);
+    props.setIsChange(!temp);
     props.close();
   }
 
@@ -166,7 +166,6 @@ export default function NutrientModal(props) {
       onClose={props.close}
       id="mealModal"
     >
-      {JSON.stringify(myNutrients)}
       <Grid
         container
         direction="row"
