@@ -10,24 +10,28 @@ import { atom, selector } from 'recoil';
 import { http } from "api/http";
 
 export const userState = atom({
-  key: 'user',
-  default: { 
+  key: "user",
+  default: {
     // accessToken: localStorage.getItem("accessToken"),
     // refreshToken: localStorage.getItem("refreshToken"),
     // accessTokenExpiration: localStorage.getItem("accessTokenExpiration"),
     // refreshTokenExpiration: localStorage.getItem("refreshTokenExpiration"),
     userId: localStorage.getItem("userId"),
     name: localStorage.getItem("name"),
+    // 로컬에서 확인해보고 싶을 때, 특정 id와 name 넣어보기
+    // userId: "8",
+    // name: "조혜아니아니",
     birthYear: localStorage.getItem("birthYear"),
     gender: localStorage.getItem("gender"),
-    email: '',
-    height: 0.0,
-    weight: 0.0,
-    active: 0.0,
-    bmi: 0.0,
+    age: localStorage.getItem("age"),
+    email: "",
+    height: localStorage.getItem("height"),
+    weight: localStorage.getItem("weight"),
+    active: localStorage.getItem("active"),
+    bmi: localStorage.getItem("bmi"),
+    categories: localStorage.getItem("categories"),
   },
-}) 
-
+});
 
 export const myTag = selector({
   key:'tag',

@@ -10,6 +10,9 @@ import Typography from "@mui/material/Typography";
 import { Container, Grid } from "@mui/material";
 import TagMain from "components/common/TagMain";
 
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
+
 const userTags = [
   {
     id: "1",
@@ -92,73 +95,101 @@ const userTags = [
     title: "장 건강",
   },
   {
-    id: "17",
+    id: "18",
     src: "assets/concerns/체액농도밸런스.png",
     title: "체액 농도 밸런스",
   },
   {
-    id: "18",
+    id: "19",
     src: "assets/concerns/체지방감소.png",
     title: "체지방 감소",
   },
   {
-    id: "19",
+    id: "20",
     src: "assets/concerns/칼슘흡수촉진.png",
     title: "칼슘 흡수 촉진",
   },
   {
-    id: "20",
+    id: "21",
     src: "assets/concerns/피로감.png",
     title: "피로감",
   },
   {
-    id: "21",
+    id: "22",
     src: "assets/concerns/피부건강.png",
     title: "피부 건강",
   },
   {
-    id: "22",
+    id: "23",
     src: "assets/concerns/항산화.png",
     title: "항산화",
   },
   {
-    id: "23",
+    id: "24",
     src: "assets/concerns/혈관&혈액순환.png",
     title: "혈관 & 혈액순환",
   },
   {
-    id: "24",
+    id: "25",
     src: "assets/concerns/혈당.png",
     title: "혈당",
   },
   {
-    id: "25",
+    id: "26",
     src: "assets/concerns/혈압.png",
     title: "혈압",
   },
   {
-    id: "26",
+    id: "27",
     src: "assets/concerns/혈중콜레스테롤.png",
     title: "혈중 콜레스테롤",
   },
 ];
 
-export default function UserTagForm() {
+export default function UserTagForm({ userCategory, setUserCategory, categories }) {
+  // userState 유저 정보
+  const userInfo = useRecoilValue(userState);
+
   const [clickedItems, setClickedItems] = useState([]);
 
-  const clickedItemHandler = (title) => {
+  const clickedItemHandler = (id) => {
     //이미 클릭된 태그인 경우
-    if (clickedItems.includes(title)) {
+    if (clickedItems.includes(id)) {
       let copy = [...clickedItems];
-      let index = copy.indexOf(title);
+      let index = copy.indexOf(id);
       copy.splice(index, 1);
       setClickedItems(copy);
 
-      // 클릭 안된 태그인 경우
-    } else {
-      let copy = [...clickedItems];
-      copy.push(title);
-      setClickedItems(copy);
+      userCategory.splice(index, 1);
+      categories.splice(index, 1);
+    }
+    // 클릭 안된 태그인 경우
+    else {
+      // 건강고민은 3개까지 선택 가능, 초과할 시 alert
+      if (clickedItems.length >= 3) {
+        alert("건강고민은 최대 3개까지 선택이 가능합니다!");
+      } else {
+        let copy = [...clickedItems];
+        copy.push(id);
+        setClickedItems(copy);
+
+        // userCategory에 데이터 넣기
+        userCategory.push({
+          userId: userInfo.userId,
+          userCategoryInfoId: id,
+        });
+
+        // category에 데이터 넣기
+        for (let i = 0; i < userTags.length; i++) {
+          if (userTags[i].id == id) {
+            categories.push({
+              categoryId: id,
+              categoryName: userTags[i].title,
+            });
+          }
+        }
+      }
+      // console.log(categories);
     }
   };
 
@@ -168,7 +199,7 @@ export default function UserTagForm() {
         건강고민 선택
       </Typography>
       <Typography variant="subtitle2">
-        평소의 건강고민이나 가지고 있는 질환 관련해서 선택해주세요.
+        평소의 건강고민이나 가지고 있는 질환 관련해서 최대 3가지를 선택해주세요.
         <br />
         선택하신 건강고민을 고려해서 영양제를 추천해드려요!
       </Typography>
@@ -187,6 +218,7 @@ export default function UserTagForm() {
                 key={i}
                 src={data.src}
                 tag={data.title}
+                tagid={data.id}
                 clickedItems={clickedItems}
                 clickedItemHandler={clickedItemHandler}
               />

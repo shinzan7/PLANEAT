@@ -27,7 +27,7 @@
   position: relative;
   padding: 5%;
   margin-top: 5%;
-  color: #03e9f4;
+ 
   text-decoration: none;
   transition: 0.5s;
   letter-spacing: 4px;
@@ -124,7 +124,7 @@
 .section2 {
   margin-top: 20%;
   text-align: center;
-  font-size: 3.3vw;
+  
 }
 
 .cardsection {
@@ -140,14 +140,14 @@
 
 .section3 {
   margin-top: 20%;
-  font-size: 1.5vw;
+  
   text-align: center;
   
 }
 
 .section4 {
   margin-top: 20%;
-  font-size: 1.5vw;
+  
   text-align: center; 
 
 }

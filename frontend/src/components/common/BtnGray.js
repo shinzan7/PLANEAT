@@ -17,6 +17,11 @@ const BtnGray = styled(Button)`
         width: ${props => props.width};
         height: 37px;
     }
+
+    &:hover {
+        background-color: #D9D9D9 !important;
+        transform: scale(1.1);
+    }
 `;
 
 export default BtnGray;

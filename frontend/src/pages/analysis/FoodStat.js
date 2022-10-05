@@ -3,364 +3,220 @@
 @author 조혜안
 @since 2022.09.22
 */
-import { Divider, Paper, List, ListItem, ListItemText, Collapse } from "@mui/material";
-import { ExpandMore, ExpandLess } from "@mui/icons-material";
-import { React, useEffect, useState } from "react";
+import { Paper, Grid } from "@mui/material";
+import { useEffect, useState } from "react";
 import Chart from "react-apexcharts";
 
-// const name = localStorage.getItem("name");
+import { http } from "api/http";
+import { userState } from "states/userState";
+import { useRecoilValue } from "recoil";
 
-const userInfo = {
-  name: "김싸피",
-};
-
-const listItemStyle = {
-  textAlign: "right",
-};
-
-// 섭취량
-const intake = {
-  calorie: "111", // 총 에너지
-  carbohydrate: "44", // 탄수화물
-  protein: "55", // 단백질
-  fat: "67", // 지방
-  sugar: "83", // 총 당류
-  sodium: "91", // 나트륨
-  dietary_fiber: "13", // 총 식이섬유
-  calcium: "45", // 칼슘
-  iron: "15", //철
-  magnesium: "45", // 마그네슘
-  phosphorus: "73", // 인
-  potassium: "46", // 칼륨
-  sodium: "83", // 나트륨
-  zinc: "16", // 아연
-  copper: "73", // 구리
-  manganese: "64", // 망간
-  selenium: "15", // 셀레늄
-  vitamin_a: "43", // 비타민 A
-  vitamin_d: "16", // 비타민 D
-  vitamin_b6: "35", // 비타민 B6
-  folate: "16", // 엽산
-  vitamin_b12: "21", // 비타민 B12
-  vitamin_c: "12", // 비타민 C
-  cholesterol: "45", // 콜레스테롤
-  fatty_acid: "35", // 총 포화 지방산
-  linoleic_acid: "73", // 리놀레산
-  alpha_lineleic_acid: "15", // 알파 리놀레산
-  trans_fatty_acid: "16", // 트랜스 지방산
-  vitamin_b1: "21", // 비타민 B1
-  vitamin_b2: "20", // 비타민 B2
-};
-
-// 섭취량 차트
-function ShowIntakeCharts() {
-  // 탄수화물, 단백질, 지방, 당, 나트륨 순으로 해당 기간의 섭취량 받아오기
-  const series = [intake.carbohydrate, intake.protein, intake.fat, intake.sugar, intake.sodium];
-  const options = {
-    //data on the x-axis
-    colors: ["#FFB3B3", "#F7BF87", "#FFEFC9", "#A9D5C7", "#9DA6F8"],
-    chart: {
-      height: 350,
-      type: "radialBar",
-    },
-    plotOptions: {
-      radialBar: {
-        dataLabels: {
-          name: {
-            fontSize: "22px",
-          },
-          value: {
-            fontSize: "16px",
-          },
-          total: {
-            show: true,
-            label: "총 칼로리",
-            formatter: function (w) {
-              // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-              return intake.calorie;
-            },
-          },
-        },
-      },
-    },
-    labels: ["탄수화물", "단백질", "지방", "당류", "나트륨"],
-  };
-
-  return (
-    <div className="app">
-      <div className="row">
-        <div className="mixed-chart">
-          <Chart options={options} series={series} type="radialBar" width={650} height={350} />
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// 변화기록 차트
-function ShowWeightIntakeCharts() {
+// 분석 피드백 차트
+function ShowFeedbackCharts({ percent }) {
   const series = [
     {
-      name: "총 섭취량",
-      type: "column",
-      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160],
-    },
-    {
-      name: "권장 섭취량",
-      type: "column",
-      data: [1000, 1020, 1000, 1000, 1200, 1200, 1200, 1200, 1300, 1300, 1300, 1100],
-    },
-    {
-      name: "몸무게",
-      type: "line",
-      data: [48, 47, 49, 52, 51, 49, 47, 48, 48, 50, 49, 47],
-    },
-  ];
-
-  const options = {
-    colors: ["#F7BF87", "#FFEFC9", "#9DA6F8"],
-    chart: {
-      height: 350,
-      type: "line",
-      stacked: false,
-    },
-    stroke: {
-      width: [1, 1, 4],
-    },
-
-    dataLabels: {
-      enabled: false,
-    },
-    xaxis: {
-      categories: [
-        220908, 220909, 220910, 220911, 220912, 220913, 220914, 220915, 220916, 220917, 220918,
-        220919,
+      name: "영양소",
+      data: [
+        percent.carbohydrate,
+        percent.protein,
+        percent.fat,
+        percent.sugar,
+        percent.dietaryFiber,
+        percent.calcium,
+        percent.iron,
+        percent.magnesium,
+        percent.phosphorus,
+        percent.potassium,
+        percent.sodium,
+        percent.zinc,
+        percent.copper,
+        percent.manganese,
+        percent.selenium,
+        percent.vitaminA,
+        percent.vitaminB1,
+        percent.vitaminB2,
+        percent.vitaminB6,
+        percent.vitaminB12,
+        percent.vitaminC,
+        percent.vitaminD,
+        percent.folate,
+        percent.cholesterol,
+        percent.fattyAcid,
+        percent.linoleicAcid,
+        percent.alphaLinoleicAcid,
+        percent.transFattyAcid,
       ],
     },
-    yaxis: [
-      {
-        axisTicks: {
-          show: true,
+  ];
+  const options = {
+    chart: {
+      height: 350,
+      type: "bar",
+    },
+    plotOptions: {
+      bar: {
+        columnWidth: "40%",
+        borderRadius: 5,
+        dataLabels: {
+          position: "top", // top, center, bottom
         },
-        axisBorder: {
-          show: true,
-          color: "#F7BF87",
-        },
-        labels: {
-          style: {
-            colors: "#F7BF87",
-          },
-        },
-        title: {
-          text: "총 섭취량",
-          style: {
-            color: "#F7BF87",
-          },
-        },
-        tooltip: {
-          enabled: true,
-        },
-      },
-      {
-        seriesName: "Income",
-        opposite: true,
-        axisTicks: {
-          show: true,
-        },
-        axisBorder: {
-          show: true,
-          color: "#FFE6AA",
-        },
-        labels: {
-          style: {
-            colors: "#FFE6AA",
-          },
-        },
-        title: {
-          text: "권장 섭취량",
-          style: {
-            color: "#FFE6AA",
-          },
-        },
-      },
-      {
-        seriesName: "Revenue",
-        opposite: true,
-        axisTicks: {
-          show: true,
-        },
-        axisBorder: {
-          show: true,
-          color: "#9DA6F8",
-        },
-        labels: {
-          style: {
-            colors: "#9DA6F8",
-          },
-        },
-        title: {
-          text: "몸무게",
-          style: {
-            color: "#9DA6F8",
-          },
-        },
-      },
-    ],
-    tooltip: {
-      fixed: {
-        enabled: true,
-        position: "topLeft", // topRight, topLeft, bottomRight, bottomLeft
-        offsetY: 30,
-        offsetX: 60,
       },
     },
-    legend: {
-      horizontalAlign: "left",
-      offsetX: 40,
+    colors: ["#9DA6F8"],
+    dataLabels: {
+      enabled: true,
+      formatter: function (val) {
+        return val + "%";
+      },
+      offsetY: -20,
+      style: {
+        fontSize: "12px",
+        colors: ["#666666"],
+      },
+    },
+
+    xaxis: {
+      categories: [
+        "탄수화물",
+        "단백질",
+        "지방",
+        "당류",
+        "식이섬유",
+        "칼슘",
+        "철",
+        "마그네슘",
+        "인",
+        "칼륨",
+        "나트륨",
+        "아연",
+        "구리",
+        "망간",
+        "셀레늄",
+        "비타민A",
+        "비타민B1",
+        "비타민B2",
+        "비타민B6",
+        "비타민B12",
+        "비타민C",
+        "비타민D",
+        "엽산",
+        "콜레스테롤",
+        "총 포화지방산",
+        "리놀레산",
+        "알파 리놀렌산",
+        "트랜스지방산",
+      ],
+
+      position: "bottom",
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: false,
+      },
+      crosshairs: {
+        fill: {
+          type: "gradient",
+          gradient: {
+            colorFrom: "#9DA6F8",
+            colorTo: "#E6E8FD",
+            stops: [0, 100],
+            opacityFrom: 0.4,
+            opacityTo: 0.5,
+          },
+        },
+      },
+      tooltip: {
+        enabled: true,
+      },
+    },
+    yaxis: {
+      max: 100,
+      tickAmount: 5,
+      axisBorder: {
+        show: false,
+      },
+      axisTicks: {
+        show: true,
+      },
+      labels: {
+        show: true,
+        formatter: function (val) {
+          return val + "%";
+        },
+      },
     },
   };
 
   return (
     <div className="app">
-      <div className="row">
-        <div className="mixed-chart">
-          <Chart options={options} series={series} type="line" width={650} height={350} />
-        </div>
+      <div>
+        <Chart options={options} series={series} type="bar" width="100%" height={350} />
       </div>
     </div>
   );
 }
 
-export default function FootStat({ value }) {
-  // 세부정보 더보기 상태
-  const [open, setOpen] = useState(false);
+export default function FoodStat({ value, data, percent }) {
+  // userState 유저 정보
+  const userInfo = useRecoilValue(userState);
 
-  // 세부정보 더보기 열기 버튼 클릭
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  // 오늘 날짜 yyyy-mm-dd 형식으로 받아오기
+  function getToday() {
+    let date = new Date();
+    let year = date.getFullYear();
+    let month = ("0" + (1 + date.getMonth())).slice(-2);
+    let day = ("0" + date.getDate()).slice(-2);
+
+    return year + "-" + month + "-" + day;
+  }
+
+  // 유저 권장섭취량 정보
+  const [userRecIntake, setUserRecIntake] = useState([]);
+  const [nutritionsList, setNutritionsList] = useState([]);
+
+  async function getRecIntake() {
+    const response = await http.get(`/user-infos/rec-intake/${userInfo.userId}/${getToday()}`);
+    if (response.data.message == "success") {
+      setUserRecIntake(response.data.data);
+      setNutritionsList(response.data.data.nutritionsList);
+    }
+  }
+
+  useEffect(() => {
+    getRecIntake();
+  }, []);
 
   return (
     <Paper
+      elevation={3}
       sx={{
-        maxHeight: 600,
         borderWidth: "3px",
         borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
-        scrollbarWidth: "thin",
-        "&::-webkit-scrollbar": {
-          width: "0.4em",
-        },
-        "&::-webkit-scrollbar-track": {
-          background: "#f1f1f1",
-        },
-        "&::-webkit-scrollbar-thumb": {
-          backgroundColor: "#F7BF87",
-        },
-        "&::-webkit-scrollbar-thumb:hover": {
-          background: "#FFB973",
-        },
       }}
     >
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
       {/* {value} */}
-      <div style={{ margin: 20 }}>
-        <h3>{userInfo.name} 님의 섭취량</h3>
-        <ShowIntakeCharts></ShowIntakeCharts>
-        {/* 총 영양성분의 세부정보 */}
-        <List
-          sx={{ width: "100%", bgcolor: "background.paper" }}
-          component="nav"
-          aria-label="mailbox folders"
-        >
-          <ListItem>
-            <ListItemText secondary="총 섭취 칼로리" />
-            <ListItemText sx={listItemStyle} secondary={intake.calorie} />
-          </ListItem>
-          <Divider />
-          <ListItem divider>
-            <ListItemText secondary="탄수화물" />
-            <ListItemText sx={listItemStyle} secondary={intake.carbohydrate} />
-          </ListItem>
-          <ListItem>
-            <ListItemText secondary="단백질" />
-            <ListItemText sx={listItemStyle} secondary={intake.protein} />
-          </ListItem>
-          <Divider light />
-          <ListItem>
-            <ListItemText secondary="지방" />
-            <ListItemText sx={listItemStyle} secondary={intake.fat} />
-          </ListItem>
-          <Divider light />
-          <ListItem>
-            <ListItemText secondary="총 당류" />
-            <ListItemText sx={listItemStyle} secondary={intake.sugar} />
-          </ListItem>
-          <Divider light />
-          <ListItem>
-            <ListItemText secondary="나트륨" />
-            <ListItemText sx={listItemStyle} secondary={intake.sodium} />
-          </ListItem>
-          <Divider light />
-          <ListItem button onClick={handleClick}>
-            <ListItemText secondary="세부성분 더보기" />
-            {open ? <ExpandLess /> : <ExpandMore />}
-          </ListItem>
-          <Collapse in={open} timeout="auto" unmountOnExit>
-            <List component="div" disablePadding>
-              <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="총 식이섬유" />
-                <ListItemText sx={listItemStyle} secondary={intake.dietary_fiber} />
-              </ListItem>
-              <Divider light />
-              <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="칼슘" />
-                <ListItemText sx={listItemStyle} secondary={intake.calcium} />
-              </ListItem>
-              <Divider light />
-              <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="철" />
-                <ListItemText sx={listItemStyle} secondary={intake.iron} />
-              </ListItem>
-              <Divider light />
-              <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="마그네슘" />
-                <ListItemText sx={listItemStyle} secondary={intake.magnesium} />
-              </ListItem>
-              <Divider light />
-              <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="인" />
-                <ListItemText sx={listItemStyle} secondary={intake.phosphorus} />
-              </ListItem>
-              <Divider light />
-              <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="칼륨" />
-                <ListItemText sx={listItemStyle} secondary={intake.potassium} />
-              </ListItem>
-              <Divider light />
-              <ListItem sx={{ pl: 4 }}>
-                <ListItemText secondary="나트륨" />
-                <ListItemText sx={listItemStyle} secondary={intake.sodium} />
-              </ListItem>
-              <Divider light />
-            </List>
-          </Collapse>
-        </List>
-        {value === 0 ? (
-          <div>
-            <h3>{userInfo.name} 님의 최근 7일 섭취 피드백</h3>
-            <div>최근 7일동안 단백질을 부족하게 섭취했어요.</div>
-            <div></div>
-          </div>
-        ) : (
-          <div>
-            <h3>{userInfo.name} 님의 변화기록</h3>
-
-            <ShowWeightIntakeCharts></ShowWeightIntakeCharts>
-          </div>
-        )}
-      </div>
+      <Grid Container style={{ margin: 20 }}>
+        <Grid item>
+          <h3>섭취량 분석</h3>
+        </Grid>
+        <Grid item>
+          {data.length == 0 ? (
+            <div style={{ lineHeight: "2", textAlign: "center" }}>
+              현재는 섭취 기록이 없어요.😥
+              <br />
+              식사 기록 페이지에서 내가 먹은 식사를 등록해보세요!
+            </div>
+          ) : (
+            <div>
+              <ShowFeedbackCharts percent={percent}></ShowFeedbackCharts>
+            </div>
+          )}
+        </Grid>
+      </Grid>
     </Paper>
   );
 }
