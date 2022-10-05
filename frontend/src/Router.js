@@ -21,7 +21,7 @@ function Router() {
 
     return (
             <BrowserRouter>
-            { url === 'https://j7a701.p.ssafy.io/' || 'https://j7a701.p.ssafy.io/welcome/' ? 
+            { url === 'https://j7a701.p.ssafy.io/' || url === 'https://j7a701.p.ssafy.io/welcome/' ? 
                 null : <Header />}
                 <Routes>
                     <Route path="/" element={<Home />} />

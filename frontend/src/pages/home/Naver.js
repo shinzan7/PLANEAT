@@ -1,3 +1,12 @@
+/*
+네이버 로그인 버튼
+@author 전상현
+@since 22.09.22
+
+로직: 버튼 누르면 NAVER_REQUSET 주소로 redirect 
+*/
+
+
 import React from "react";
 
 function Naver() {

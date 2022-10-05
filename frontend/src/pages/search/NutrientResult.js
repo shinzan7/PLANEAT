@@ -13,7 +13,7 @@ import { http } from "api/http";
 import Pagination from "components/common/Pagination";
 
 function NutrientResult() {
-
+  // 제품 아이디로 검색
   const ingredient = useParams()
   const location = useLocation()
   const dataTitle = location.state.data.title
@@ -32,13 +32,14 @@ function NutrientResult() {
   const section1 = { marginTop:'25vh', textAlign:'center'}
   const section2 = { marginTop:'5vh', textAlign:'center'}
   const section3 = { marginTop:'10vh' }
-  const card = { textAlign:'left' }
   const bold = {fontWeight:'bold'}
 
-  const [limit, setLimit] = useState(20)
-  const [page, setPage] = useState(1)
-  const offset = (page-1)*limit
+  // 페이지네이터 세팅
+  const [limit, setLimit] = useState(20) // 한 페이지 당 갯수
+  const [page, setPage] = useState(1) // 현재 페이지 deafult = 1
+  const offset = (page-1)*limit // 현재 페이지 첫 index
 
+  // 페이지 변경
   const handlePageChange = (page) => {
     setPage(page);
   };
