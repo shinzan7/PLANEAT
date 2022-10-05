@@ -64,7 +64,7 @@ function SearchBar() {
                           <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2}} aria-label="search" onClick={(e) => {
                               search(e)
                           }}>
-                            <Link to={'/result/'+ searchKeyWord} style={{color:'gray', marginTop:'7px'}}>
+                            <Link to={'/result/'+ searchKeyWord} style={{color:'gray', marginTop:'7px'}} >
                               <SearchIcon/>
                             </Link>
                           </IconButton>                  

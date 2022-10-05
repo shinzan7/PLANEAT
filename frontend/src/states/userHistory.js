@@ -13,7 +13,7 @@ const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
 export const myHistory = selector({
   key:'history',
   get: async({get}) => {
-    // const response = await http.get(`/analysis/percent?date=${year}-${month}-${day}%userId=${userId}`)
+    // const response = await http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`)
     const response = await http.get('/analysis/percent?date=2022-09-26&userId=8')
     return response.data.data
   }

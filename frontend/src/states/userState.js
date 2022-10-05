@@ -33,7 +33,7 @@ export const myTag = selector({
   key:'tag',
   get: async({get}) => {
     // const response = await http.get(`/user-infos/${userId}`)
-    const response = await http.get('/user-infos/9')
+    const response = await http.get('/user-infos/8')
     return response.data.data
   }
 })

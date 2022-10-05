@@ -93,11 +93,11 @@ function SearchByTag() {
       src: "assets/concerns/장건강.png",
       title: "장 건강",
     },
-    {
-      id: "18",
-      src: "assets/concerns/체액농도밸런스.png",
-      title: "체액 농도 밸런스",
-    },
+    // {
+    //   id: "18",
+    //   src: "assets/concerns/체액농도밸런스.png",
+    //   title: "체액 농도 밸런스",
+    // },
     {
       id: "19",
       src: "assets/concerns/체지방감소.png",
