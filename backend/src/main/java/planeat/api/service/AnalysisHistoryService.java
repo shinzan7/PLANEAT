@@ -435,82 +435,122 @@ public class AnalysisHistoryService {
                 goodCount++;
             }
 
-            calorie += Math.round((real.getCalorie() * 10 / rec.getCalorie())) / 10f;
-            protein += Math.round((real.getProtein() * 10 / rec.getProtein())) / 10f;
-            fat += Math.round((real.getFat() * 10 / rec.getFat())) / 10f;
-            carbohydrate += Math.round((real.getCarbohydrate() * 10 / rec.getCarbohydrate())) / 10f;
-            sugar += Math.round((real.getSugar() * 10 / rec.getSugar())) / 10f;
+            calorie += real.getCalorie() / rec.getCalorie();
+            protein += real.getProtein() / rec.getProtein();
+            fat += real.getFat() / rec.getFat();
+            carbohydrate += real.getCarbohydrate() / rec.getCarbohydrate();
+            sugar += real.getSugar() / rec.getSugar();
 
-            dietaryFiber += Math.round((real.getDietaryFiber() * 10 / rec.getDietaryFiber())) / 10f;
-            calcium += Math.round((real.getCalcium() * 10 / rec.getCalcium())) / 10f;
-            iron += Math.round((real.getIron() * 10 / rec.getIron())) / 10f;
-            magnesium += Math.round((real.getMagnesium() * 10 / rec.getMagnesium())) / 10f;
-            phosphorus += Math.round((real.getPhosphorus() * 10 / rec.getPhosphorus())) / 10f;
+            dietaryFiber += real.getDietaryFiber() / rec.getDietaryFiber();
+            calcium += real.getCalcium() / rec.getCalcium();
+            iron += real.getIron() / rec.getIron();
+            magnesium += real.getMagnesium() / rec.getMagnesium();
+            phosphorus += real.getPhosphorus() / rec.getPhosphorus();
 
-            potassium += Math.round((real.getPotassium() * 10 / rec.getPotassium())) / 10f;
-            sodium += Math.round((real.getSodium() * 10 / rec.getSodium())) / 10f;
-            zinc += Math.round((real.getZinc() * 10 / rec.getZinc())) / 10f;
-            copper += Math.round((real.getCopper() * 10 / rec.getCopper())) / 10f;
-            manganese += Math.round((real.getManganese() * 10 / rec.getManganese())) / 10f;
+            potassium += real.getPotassium() / rec.getPotassium();
+            sodium += real.getSodium() / rec.getSodium();
+            zinc += real.getZinc() / rec.getZinc();
+            copper += real.getCopper() / rec.getCopper();
+            manganese += real.getManganese() / rec.getManganese();
 
-            selenium += Math.round((real.getSelenium() * 10 / rec.getSelenium())) / 10f;
-            vitaminA += Math.round((real.getVitaminA() * 10 / rec.getVitaminA())) / 10f;
-            vitaminD += Math.round((real.getVitaminD() * 10 / rec.getVitaminD())) / 10f;
-            vitaminB6 += Math.round((real.getVitaminB6() * 10 / rec.getVitaminB6())) / 10f;
-            folate += Math.round((real.getFolate() * 10 / rec.getFolate())) / 10f;
+            selenium += real.getSelenium() / rec.getSelenium();
+            vitaminA += real.getVitaminA() / rec.getVitaminA();
+            vitaminD += real.getVitaminD() / rec.getVitaminD();
+            vitaminB6 += real.getVitaminB6() / rec.getVitaminB6();
+            folate += real.getFolate() / rec.getFolate();
 
-            vitaminB12 += Math.round((real.getVitaminB12() * 10 / rec.getVitaminB12())) / 10f;
-            vitaminC += Math.round((real.getVitaminC() * 10 / rec.getVitaminC())) / 10f;
-            cholesterol += Math.round((real.getCholesterol() * 10 / rec.getCholesterol())) / 10f;
-            fattyAcid += Math.round((real.getFattyAcid() * 10 / rec.getFattyAcid())) / 10f;
-            linoleicAcid += Math.round((real.getLinoleicAcid() * 10 / rec.getLinoleicAcid())) / 10f;
+            vitaminB12 += real.getVitaminB12() / rec.getVitaminB12();
+            vitaminC += real.getVitaminC() / rec.getVitaminC();
+            cholesterol += real.getCholesterol() / rec.getCholesterol();
+            fattyAcid += real.getFattyAcid() / rec.getFattyAcid();
+            linoleicAcid += real.getLinoleicAcid() / rec.getLinoleicAcid();
 
-            alphaLinoleicAcid += Math.round((real.getAlphaLinoleicAcid() * 10 / rec.getAlphaLinoleicAcid())) / 10f;
-            transFattyAcid += Math.round((real.getTransFattyAcid() * 10 / rec.getTransFattyAcid())) / 10f;
-            vitaminB1 += Math.round((real.getVitaminB1() * 10 / rec.getVitaminB1())) / 10f;
-            vitaminB2 += Math.round((real.getVitaminB2() * 10 / rec.getVitaminB2())) / 10f;
+            alphaLinoleicAcid += real.getAlphaLinoleicAcid() / rec.getAlphaLinoleicAcid();
+            transFattyAcid += real.getTransFattyAcid() / rec.getTransFattyAcid();
+            vitaminB1 += real.getVitaminB1() / rec.getVitaminB1();
+            vitaminB2 += real.getVitaminB2() / rec.getVitaminB2();
         }
 
         float size = historyList.size() / 2;
+
+        calorie = changePercent(calorie, size);
+        protein = changePercent(protein , size);
+        fat = changePercent(fat , size);
+        carbohydrate = changePercent(carbohydrate , size);
+        sugar = changePercent(sugar , size);
+
+        dietaryFiber = changePercent(dietaryFiber , size);
+        calcium = changePercent(calcium , size);
+        iron = changePercent(iron , size);
+        magnesium = changePercent(magnesium , size);
+        phosphorus = changePercent(phosphorus , size);
+
+        potassium = changePercent(potassium , size);
+        sodium = changePercent(sodium , size);
+        zinc = changePercent(zinc , size);
+        copper = changePercent(copper , size);
+        manganese = changePercent(manganese , size);
+
+        selenium = changePercent(selenium , size);
+        vitaminA = changePercent(vitaminA , size);
+        vitaminD = changePercent(vitaminD , size);
+        vitaminB6 = changePercent(vitaminB6 , size);
+        folate = changePercent(folate , size);
+
+        vitaminB12 = changePercent(vitaminB12 , size);
+        vitaminC = changePercent(vitaminC , size);
+        cholesterol = changePercent(cholesterol , size);
+        fattyAcid = changePercent(fattyAcid , size);
+        linoleicAcid = changePercent(linoleicAcid , size);
+
+        alphaLinoleicAcid = changePercent(alphaLinoleicAcid , size);
+        transFattyAcid = changePercent(transFattyAcid , size);
+        vitaminB1 = changePercent(vitaminB1 , size);
+        vitaminB2 = changePercent(vitaminB2 , size);
+
 
         response = AnalysisHistoryPercentResponse.builder()
                 .analysisType(2)
                 .badCount(badCount)
                 .normalCount(normalCount)
                 .goodCount(goodCount)
-                .calorie(calorie / size * 100)
-                .protein(protein / size * 100)
-                .fat(fat / size * 100)
-                .carbohydrate(carbohydrate / size * 100)
-                .sugar(sugar / size * 100)
-                .dietaryFiber(dietaryFiber / size * 100)
-                .calcium(calcium / size * 100)
-                .iron(iron / size * 100)
-                .magnesium(magnesium / size * 100)
-                .phosphorus(phosphorus / size * 100)
-                .potassium(potassium / size * 100)
-                .sodium(sodium / size * 100)
-                .zinc(zinc / size * 100)
-                .copper(copper / size * 100)
-                .manganese(manganese / size * 100)
-                .selenium(selenium / size * 100)
-                .vitaminA(vitaminA / size * 100)
-                .vitaminD(vitaminD / size * 100)
-                .vitaminB6(vitaminB6 / size * 100)
-                .folate(folate / size * 100)
-                .vitaminB12(vitaminB12 / size * 100)
-                .vitaminC(vitaminC / size * 100)
-                .cholesterol(cholesterol / size * 100)
-                .fattyAcid(fattyAcid / size * 100)
-                .linoleicAcid(linoleicAcid / size * 100)
-                .alphaLinoleicAcid(alphaLinoleicAcid / size * 100)
-                .transFattyAcid(transFattyAcid / size * 100)
-                .vitaminB1(vitaminB1 / size * 100)
-                .vitaminB2(vitaminB2 / size * 100)
+                .calorie(calorie)
+                .protein(protein)
+                .fat(fat)
+                .carbohydrate(carbohydrate)
+                .sugar(sugar)
+                .dietaryFiber(dietaryFiber)
+                .calcium(calcium)
+                .iron(iron)
+                .magnesium(magnesium)
+                .phosphorus(phosphorus)
+                .potassium(potassium)
+                .sodium(sodium)
+                .zinc(zinc)
+                .copper(copper)
+                .manganese(manganese)
+                .selenium(selenium)
+                .vitaminA(vitaminA)
+                .vitaminD(vitaminD)
+                .vitaminB6(vitaminB6)
+                .folate(folate)
+                .vitaminB12(vitaminB12)
+                .vitaminC(vitaminC)
+                .cholesterol(cholesterol)
+                .fattyAcid(fattyAcid)
+                .linoleicAcid(linoleicAcid)
+                .alphaLinoleicAcid(alphaLinoleicAcid)
+                .transFattyAcid(transFattyAcid)
+                .vitaminB1(vitaminB1)
+                .vitaminB2(vitaminB2)
                 .build();
 
         return response;
 
+    }
+
+    private float changePercent(float nut, float size){
+        return Math.round(nut / size * 100);
     }
 
     public List<AnalysisHistoryResponse> readAllAnalysisHistoryByDateAfter(Long userId, LocalDate date) {
