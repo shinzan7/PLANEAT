@@ -117,11 +117,9 @@ export default function MaxWidthDialog(props) {
 
   // 맨 처음 내 음식 가져오는 함수
   async function getMyFood() {
-    console.log("getMyFood");
     const response = await http.get(`/food-infos/${userInfo.userId}`);
     if (response.data.message === "success") {
       setMyFood(response.data.data);
-      console.log(response.data.data);
     }
   }
 
@@ -137,9 +135,6 @@ export default function MaxWidthDialog(props) {
 
   // 맨 처음 식사 기록 가져오는 함수
   async function getMealRecord() {
-    console.log("getMealRecord");
-    console.log(curDate);
-
     const response = await http.get(
       `/intake-histories/${userInfo.userId}/${curDate}`
     );
@@ -175,12 +170,46 @@ export default function MaxWidthDialog(props) {
   const [showMoreFoodModal, setShowMoreFoodModal] = useState(false);
 
   // 음식 이름 검색하는 함수
-  function search(e) {
-    console.log("search");
+  async function search(e) {
     if (e.key === "Enter") {
       e.preventDefault();
+      let keyword = searchKeyWord;
+      keyword = keyword.trim();
+      const response = await http.get(
+        `/food-infos/${userInfo.userId}/${keyword}`
+      );
+
+      if (response.data.message == "success") {
+        if (response.data.data.length == 0) {
+          alert(`${keyword}에 해당하는 음식이 없습니다.`);
+        } else {
+          setAllFood(response.data.data);
+        }
+      } else {
+        alert("올바른 검색어를 입력해주세요.");
+      }
+      searchInput.current.value = "";
     }
-    console.log(searchKeyWord);
+  }
+  // 음식 이름 검색하는 함수(클릭)
+  async function searchClick(e) {
+    e.preventDefault();
+    let keyword = searchKeyWord;
+    keyword = keyword.trim();
+    const response = await http.get(
+      `/food-infos/${userInfo.userId}/${keyword}`
+    );
+
+    if (response.data.message == "success") {
+      if (response.data.data.length == 0) {
+        alert(`${keyword}에 해당하는 음식이 없습니다.`);
+      } else {
+        setAllFood(response.data.data);
+      }
+    } else {
+      alert("올바른 검색어를 입력해주세요.");
+    }
+    searchInput.current.value = "";
   }
 
   // 전체탭 음식 클릭 함수
@@ -277,19 +306,16 @@ export default function MaxWidthDialog(props) {
     let copy = { ...clickedFood }; // 음식 정보
     let info = []; // 영양성분의 양
     copy.amount =
-      Number(intakeFoodInput.current.value) /
-      clickedFood.servingSize.toFixed(2); // 음식 객체의 year 를 amount로 쓰자
-    copy.carbohydrate = Number(copy.amount * clickedFood.carbohydrate).toFixed(
-      1
-    );
+      Number(intakeFoodInput.current.value) / clickedFood.servingSize; // 음식 객체의 year 를 amount로 쓰자
+    copy.carbohydrate = Number(copy.amount * clickedFood.carbohydrate);
     info[0] = copy.carbohydrate;
-    copy.protein = Number(copy.amount * clickedFood.protein).toFixed(1);
+    copy.protein = Number(copy.amount * clickedFood.protein);
     info[1] = copy.protein;
-    copy.fat = Number(copy.amount * clickedFood.fat).toFixed(1);
+    copy.fat = Number(copy.amount * clickedFood.fat);
     info[2] = copy.fat;
-    copy.sugar = Number(copy.amount * clickedFood.sugar).toFixed(1);
+    copy.sugar = Number(copy.amount * clickedFood.sugar);
     info[3] = copy.sugar;
-    copy.sodium = Number(copy.amount * clickedFood.sodium).toFixed(1);
+    copy.sodium = Number(copy.amount * clickedFood.sodium);
     info[4] = copy.sodium;
 
     // 변경된 음식 정보, 각 음식양 변경
@@ -298,26 +324,50 @@ export default function MaxWidthDialog(props) {
   }
 
   // 식단 영양정보 (탄,단,지,당,나) 차트
-  // 권장섭취량 이용하는 곳
   function DietInfoChart() {
-    const series = [
-      {
-        data: [
-          (
-            (myDietAmount[0] / props.recIntakeAmount.carbohydrate) *
-            100
-          ).toFixed(1),
-          ((myDietAmount[1] / props.recIntakeAmount.protein) * 100).toFixed(1),
-          ((myDietAmount[2] / props.recIntakeAmount.fat) * 100).toFixed(1),
-          ((myDietAmount[3] / 50) * 100).toFixed(1),
-          (
+    let series = [];
+    if (
+      typeof myDietAmount[0] == "number" &&
+      typeof myDietAmount[1] == "number" &&
+      typeof myDietAmount[2] == "number" &&
+      typeof myDietAmount[3] == "number" &&
+      typeof myDietAmount[4] == "number"
+    ) {
+      series = [
+        {
+          data: [
+            (
+              (myDietAmount[0] / props.recIntakeAmount.carbohydrate) *
+              100
+            ).toFixed(1),
+            ((myDietAmount[1] / props.recIntakeAmount.protein) * 100).toFixed(
+              1
+            ),
+            ((myDietAmount[2] / props.recIntakeAmount.fat) * 100).toFixed(1),
+            ((myDietAmount[3] / 50) * 100).toFixed(1),
+            (
+              (myDietAmount[4] /
+                props.recIntakeAmount.nutritionsList[17].intake_rec) *
+              100
+            ).toFixed(1),
+          ], // 음식의 (영양분/권장)*100
+        },
+      ];
+    } else {
+      series = [
+        {
+          data: [
+            (myDietAmount[0] / props.recIntakeAmount.carbohydrate) * 100,
+            (myDietAmount[1] / props.recIntakeAmount.protein) * 100,
+            (myDietAmount[2] / props.recIntakeAmount.fat) * 100,
+            (myDietAmount[3] / 50) * 100,
             (myDietAmount[4] /
               props.recIntakeAmount.nutritionsList[17].intake_rec) *
-            100
-          ).toFixed(1),
-        ], // 음식의 (영양분/권장)*100
-      },
-    ];
+              100,
+          ], // 음식의 (영양분/권장)*100
+        },
+      ];
+    }
 
     const options = {
       colors: ["#FFEFC9", "#FFB3B3", "#A9D5C7", "#9DA6F8", "#E6E8FD"],
@@ -372,26 +422,51 @@ export default function MaxWidthDialog(props) {
 
   // 음식 영양정보 (탄,단,지,당,나) 차트
   function FoodInfoChart() {
-    const series = [
-      {
-        data: [
-          (
+    let series = [];
+    if (
+      typeof modifyFood.carbohydrate == "number" &&
+      typeof modifyFood.protein == "number" &&
+      typeof modifyFood.fat == "number" &&
+      typeof modifyFood.sugar == "number" &&
+      typeof modifyFood.sodium == "number"
+    ) {
+      series = [
+        {
+          data: [
+            (
+              (modifyFood.carbohydrate / props.recIntakeAmount.carbohydrate) *
+              100
+            ).toFixed(1),
+            (
+              (modifyFood.protein / props.recIntakeAmount.protein) *
+              100
+            ).toFixed(1),
+            ((modifyFood.fat / props.recIntakeAmount.fat) * 100).toFixed(1),
+            ((modifyFood.sugar / 50) * 100).toFixed(1),
+            (
+              (modifyFood.sodium /
+                props.recIntakeAmount.nutritionsList[17].intake_rec) *
+              100
+            ).toFixed(1),
+          ], // 음식의 (영양분/권장)*100
+        },
+      ];
+    } else {
+      series = [
+        {
+          data: [
             (modifyFood.carbohydrate / props.recIntakeAmount.carbohydrate) *
-            100
-          ).toFixed(1),
-          ((modifyFood.protein / props.recIntakeAmount.protein) * 100).toFixed(
-            1
-          ),
-          ((modifyFood.fat / props.recIntakeAmount.fat) * 100).toFixed(1),
-          ((modifyFood.sugar / 50) * 100).toFixed(1),
-          (
+              100,
+            (modifyFood.protein / props.recIntakeAmount.protein) * 100,
+            (modifyFood.fat / props.recIntakeAmount.fat) * 100,
+            (modifyFood.sugar / 50) * 100,
             (modifyFood.sodium /
               props.recIntakeAmount.nutritionsList[17].intake_rec) *
-            100
-          ).toFixed(1),
-        ], // 음식의 (영양분/권장)*100
-      },
-    ];
+              100,
+          ], // 음식의 (영양분/권장)*100
+        },
+      ];
+    }
 
     const options = {
       colors: ["#FFEFC9", "#FFB3B3", "#A9D5C7", "#9DA6F8", "#E6E8FD"],
@@ -697,8 +772,15 @@ export default function MaxWidthDialog(props) {
                     col="black"
                     label={food.name}
                     onClick={() => {
-                      setClickedFood(food);
                       setModifyFood(food);
+                      setClickedFood(food);
+                      let nutri = [];
+                      nutri[0] = food.carbohydrate * food.amount;
+                      nutri[1] = food.protein * food.amount;
+                      nutri[2] = food.fat * food.amount;
+                      nutri[3] = food.sugar * food.amount;
+                      nutri[4] = food.sodium * food.amount;
+                      setIntakeAmount(nutri);
                       intakeFoodInput.current.value =
                         food.amount * food.servingSize;
                     }}
@@ -768,7 +850,7 @@ export default function MaxWidthDialog(props) {
                 sx={{ p: "10px", color: "#9DA6F8", mr: 2 }}
                 aria-label="search"
                 onClick={(e) => {
-                  search(e);
+                  searchClick(e);
                 }}
               >
                 <SearchIcon />
@@ -807,9 +889,16 @@ export default function MaxWidthDialog(props) {
                       return (
                         <ListItemButton key={i} onClick={() => foodClick(i)}>
                           <ListItemText
-                            primary={food.name}
+                            // primary={`[${food.manufacturer}] ${food.name}`}
+                            primary={
+                              <p>
+                                <b>[{food.manufacturer}]</b>&nbsp;
+                                {food.name}
+                              </p>
+                            }
                             secondary={`${food.calorie}kcal, ${food.servingSize}${food.servingUnit}, (1회 제공량)`}
                             id={i}
+                            sx={{ fontWeight: "bold" }}
                           />
                         </ListItemButton>
                       );
@@ -883,7 +972,9 @@ export default function MaxWidthDialog(props) {
                         >
                           <OutlinedInput
                             id="outlined-adornment-weight"
-                            defaultValue={clickedFood.servingSize}
+                            defaultValue={
+                              modifyFood.servingSize * modifyFood.amount
+                            }
                             onChange={(e) => {
                               changeClickedFood(e);
                             }}

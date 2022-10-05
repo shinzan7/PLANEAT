@@ -109,7 +109,6 @@ function Main() {
 
   // 날짜 클릭시 해당 날짜 식사 기록 가져오는 함수
   async function getClickDayRecord() {
-    console.log("click here !!");
     const response = await http.get(
       `/intake-histories/${userInfo.userId}/${clickDate}`
     );
@@ -118,12 +117,10 @@ function Main() {
     } else {
       setClickDateMeal([]);
     }
-    console.log("클릭 날짜 식사 기록 있음 !!!!");
   }
 
   // 날짜 클릭시 해당 날짜 식사 기록 분석 가져오는 함수
   async function getClickDayAnalysis() {
-    console.log("analysis !!!!");
     const response = await http.get(`/analysis/${clickDate}`, {
       params: {
         userId: userInfo.userId,
@@ -183,15 +180,12 @@ function Main() {
           <Grid
             item
             style={{
-              background: "#FCFBFA",
               textAlign: "center",
               justifyContent: "center",
             }}
             xs={12}
             md={6}
           >
-            {JSON.stringify(badDays)}
-            {JSON.stringify(normalDays)}
             <Calendar
               clickDate={clickDate}
               setClickDate={setClickDate}
@@ -200,12 +194,7 @@ function Main() {
               badDays={badDays}
             ></Calendar>
           </Grid>
-          <Grid
-            item
-            style={{ background: "#FCFBFA", textAlign: "center" }}
-            xs={12}
-            md={6}
-          >
+          <Grid item style={{ textAlign: "center" }} xs={12} md={6}>
             {/* 우측 영역 */}
             <Grid style={{ margin: "auto" }}>
               <RegistMeal
@@ -227,7 +216,6 @@ function Main() {
                 clickDateMeal={clickDateMeal}
                 recIntakeAmount={recIntakeAmount}
                 isChange={isChange}
-                setIsChange={setIsChange}
               ></DailyMeal>
             </Grid>
           </Grid>
