@@ -569,27 +569,31 @@ export default function MaxWidthDialog(props) {
       });
     }
 
-    const response = await http.post(`/intake-histories/${userInfo.userId}`, {
-      date: curDate,
-      intakeFoodsList: list,
-      mealType: props.mealType,
-    });
-
-    if (response.data.message == "success") {
-      let str = "";
-      if (props.mealType == "간식") {
-        str += "이 등록되었습니다.";
-      } else {
-        str += "식사가 등록되었습니다.";
-      }
-      alert(`${props.month}월 ${props.day}일 ${props.mealType}` + str);
+    if (list.length == 0) {
+      alert("음식을 선택해주세요.");
     } else {
-      alert("식사 등록에 실패했습니다.");
+      const response = await http.post(`/intake-histories/${userInfo.userId}`, {
+        date: curDate,
+        intakeFoodsList: list,
+        mealType: props.mealType,
+      });
+
+      if (response.data.message == "success") {
+        let str = "";
+        if (props.mealType == "간식") {
+          str += "이 등록되었습니다.";
+        } else {
+          str += "식사가 등록되었습니다.";
+        }
+        alert(`${props.month}월 ${props.day}일 ${props.mealType}` + str);
+      } else {
+        alert("식사 등록에 실패했습니다.");
+      }
+      getMealRecord();
+      let change = props.isChange;
+      props.setIsChange(!change);
+      props.close();
     }
-    getMealRecord();
-    let change = props.isChange;
-    props.setIsChange(!change);
-    props.close();
   }
 
   // 식사 수정 함수
