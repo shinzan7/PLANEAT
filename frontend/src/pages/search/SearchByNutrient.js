@@ -368,6 +368,9 @@ function SearchByNutrient() {
 
             </Grid>
           </Grid>
+          <div style={section3}>
+                
+          </div>
       </div>
   );
 }

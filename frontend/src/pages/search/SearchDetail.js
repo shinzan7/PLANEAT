@@ -5,7 +5,7 @@
 */
 
 import React, { useEffect, useState } from "react";
-import { json, useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
 import Header from 'components/nav/Header';
 import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
@@ -15,6 +15,7 @@ import { userState } from 'states/userState'
 import { useRecoilValue } from 'recoil'
 import ChipBlue from "components/common/ChipBlue";
 import ChipOrange from "components/common/ChipOrange";
+import CardNutrient from "components/common/CardNutrient";
 
 function SearchDetail() {
 
@@ -95,38 +96,30 @@ function SearchDetail() {
                 {/* 영양제 이미지 */}
                 <grid item xs={8} style={text}>
                   <Grid container>
-                    <Grid item xs={2.5}>
-                      <img src={info.imagePath} alt='' style={{ width:'20vw', height: '20vh'}}/>
+                    <Grid item xs={2.5} style={{textAlign:'center'}}>
+                      {/* <img src={info.imagePath} alt='' style={{ width:'15vw', height: '15vh'}}/>
                       <br></br>
                       <br></br>
                       <p>{info.company}</p>
-                      <p style={bold}>{info.nutrientName} </p> 
+                      <p style={bold}>{info.nutrientName} </p>  */}
+                      <CardNutrient pill={info}/>
                     </Grid>
                     <Grid item xs={0.2}>
 
                     </Grid>
                     <Grid item xs={7.3}>
-                      주요기능
-                      <br></br>
-                      <br></br>
+                      <p>주요기능</p>
                       {tags.map((data, i) => (
-                        <ChipOrange key={i} label={data} />
+                        <Link to={'/tagresult/'+ data} style={{textDecoration:'none', marginRight:'5px'}}>
+                          <ChipOrange key={i} label={data} />
+                        </Link>
                       ))}
-                      <br></br>
-                      <br></br>
-                      성분
-                      <br></br>
-                      <br></br>
+                      <p>성분</p>
                       {info.nutriIngredientList.map((data, i) => (
-                        <ChipBlue key={i} label={data.ingredientName} /> 
+                          <ChipBlue key={i} label={data.ingredientName} style={{marginRight:'5px'}}/> 
                       ))}
-                      <br></br>
-                      <br></br>
-
-                      상세정보
-                      <br></br>
-                      <br></br>
-                      {info.description}
+                      <p>상세정보</p>
+                      <p>{info.description}</p>
                     </Grid>
                     <Grid item xs={2}>
                       

@@ -6,7 +6,8 @@ recoil userState
 @since 2022.09.28
 */
 
-import { atom } from "recoil";
+import { atom, selector } from 'recoil';
+import { http } from "api/http";
 
 export const userState = atom({
   key: "user",
@@ -32,20 +33,12 @@ export const userState = atom({
   },
 });
 
-// export const myDiet = selector({
-//   key:'diet',
-//   get: async({get}) => {
-//     // const response = await http.get(`/my-diets/${userId}`)
-//     const response = await http.get('/my-diets/9')
-//     return response.data
-//   }
-// })
+export const myTag = selector({
+  key:'tag',
+  get: async({get}) => {
+    // const response = await http.get(`/user-infos/${userId}`)
+    const response = await http.get('/user-infos/8')
+    return response.data.data
+  }
+})
 
-// export const myHistory = selector({
-//   key:'history',
-//   get: async({get}) => {
-//     // const response = await http.get(`/intake-histories/${userId}/${date}`)
-//     const response = await http.get('/intake-histories/9/2022-09-30')
-//     return response.data
-//   }
-// })

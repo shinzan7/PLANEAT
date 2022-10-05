@@ -10,6 +10,7 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
+import Pagination from "components/common/Pagination";
 
 function NutrientResult() {
 
@@ -33,6 +34,14 @@ function NutrientResult() {
   const section3 = { marginTop:'10vh' }
   const card = { textAlign:'left' }
   const bold = {fontWeight:'bold'}
+
+  const [limit, setLimit] = useState(20)
+  const [page, setPage] = useState(1)
+  const offset = (page-1)*limit
+
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
   return (
       <div style={section}>
@@ -67,23 +76,33 @@ function NutrientResult() {
                 {/* 카드들 부분 */}
                 <Grid item xs={9}>
                   <Grid container>
-                  {info.map(function(data, i) { 
+                    {info.slice(offset, offset+limit).map(function(data, i) {
                       return (
-                      <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
-                        <CardNutrient key={i} pill={data} />
-                      </Link>
-                      )
-                    })}
+                        <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
+                          <CardNutrient key={i} pill={data} />
+                        </Link>
+                      )})}
                   </Grid>
 
-                  {/* <Info info={currentPosts} />   
-                  <Pagination 
-                    postPerPage={postPerPage}
-                    totalPosts={info.length}
-                    paginate={paginate}
-                    ingredient={ingredient}
-                  /> */}
+                  <Grid container>
+                      <Grid item xs={2}>
+
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Pagination
+                        total={info.length}
+                        limit={limit}
+                        page={page}
+                        setPage={setPage}
+                      />
+
+
+                      </Grid>
+                      <Grid item xs={4}>
                 
+                      </Grid>
+                    </Grid>
+                    <br></br>
                 </Grid>
                 <Grid item xs={2}>
 
