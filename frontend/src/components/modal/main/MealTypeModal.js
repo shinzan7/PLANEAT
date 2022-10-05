@@ -291,6 +291,7 @@ export default function MealTypeModal(props) {
         <Grid item xs={6}>
           <StyledWrapper>
             <Grid
+              xs={12}
               container
               id="container"
               justifyContent="center"
@@ -341,7 +342,7 @@ const StyledWrapper = styled.div`
     margin: 1vw;
     border: 2px solid #e6e8fd;
     border-radius: 15px;
-    width: 95%;
+    width: 90%;
     height: 350px;
     overflow: auto;
     scrollbar-width: thin;

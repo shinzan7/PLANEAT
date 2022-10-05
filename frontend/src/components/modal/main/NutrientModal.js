@@ -166,7 +166,6 @@ export default function NutrientModal(props) {
       onClose={props.close}
       id="mealModal"
     >
-      {JSON.stringify(myNutrients)}
       <Grid
         container
         direction="row"
