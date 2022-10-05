@@ -88,8 +88,10 @@ function Analysis() {
   // userState 유저정보
   const userInfo = useRecoilValue(userState);
 
-  // 분석기록
+  // 분석기록 (실제)
   const [analysisData, setAnalysisData] = useState([]);
+  // 분석기록 (권장)
+  const [recoData, setRecoData] = useState([]);
   // 분석기록 비율평균
   const [percentData, setPercentData] = useState([]);
   // 플래닛지수
@@ -101,6 +103,11 @@ function Analysis() {
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+
+  useEffect(() => {
+    getAnalysisData();
+    getPercentData();
+  }, [value]);
 
   async function getAnalysisData() {
     // 분석기록 받아오기
@@ -114,12 +121,16 @@ function Analysis() {
       });
       console.log(response1.data.data);
       let getData = [];
+      let getReco = [];
       for (let i = 0; i < response1.data.data.length; i++) {
         if (response1.data.data[i].analysisType == 0) {
           getData.push(response1.data.data[i]);
+        } else if (response1.data.data[i].analysisType == 1) {
+          getReco.push(response1.data.data[i]);
         }
       }
       setAnalysisData(getData);
+      setRecoData(getReco);
     } else if (value == 1) {
       // 최근 30일
       const response2 = await http.get(`analysis`, {
@@ -130,12 +141,16 @@ function Analysis() {
       });
       console.log(response2.data.data);
       let getData = [];
+      let getReco = [];
       for (let i = 0; i < response2.data.data.length; i++) {
         if (response2.data.data[i].analysisType == 0) {
           getData.push(response2.data.data[i]);
+        } else if (response2.data.data[i].analysisType == 1) {
+          getReco.push(response2.data.data[i]);
         }
       }
       setAnalysisData(getData);
+      setRecoData(getReco);
     } else if (value == 2) {
       // 전체 기간
       const response3 = await http.get(`analysis/all`, {
@@ -145,12 +160,16 @@ function Analysis() {
       });
       console.log(response3.data.data);
       let getData = [];
+      let getReco = [];
       for (let i = 0; i < response3.data.data.length; i++) {
         if (response3.data.data[i].analysisType == 0) {
           getData.push(response3.data.data[i]);
+        } else if (response3.data.data[i].analysisType == 1) {
+          getReco.push(response3.data.data[i]);
         }
       }
       setAnalysisData(getData);
+      setRecoData(getReco);
     }
   }
 
@@ -164,7 +183,7 @@ function Analysis() {
           userId: userInfo.userId,
         },
       });
-      // console.log(response1.data.data);
+      console.log(response1.data.data);
 
       // 영양소 비율 설정
       setPercentData(response1.data.data);
@@ -227,11 +246,6 @@ function Analysis() {
       setScore(arr2);
     }
   }
-
-  useEffect(() => {
-    getAnalysisData();
-    getPercentData();
-  }, [value]);
 
   return (
     <div>

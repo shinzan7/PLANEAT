@@ -89,7 +89,7 @@ function ShowNutrientCharts({ nameDatas, perDatas }) {
     },
     plotOptions: {
       bar: {
-        barHeight: "100%",
+        barHeight: "70%",
         distributed: true,
         horizontal: true,
         dataLabels: {

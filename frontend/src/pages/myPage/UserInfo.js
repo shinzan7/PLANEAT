@@ -31,6 +31,7 @@ export default function UserInfo() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [userRecIntakeInfo, setUserRecIntakeInfo] = useRecoilState(userRecIntake);
 
+  const [name, setName] = useState(userInfo.name);
   const [gender, setGender] = useState(userInfo.gender); // 성별
   const [age, setAge] = useState(userInfo.age); // 나이
   const [height, setHeight] = useState(userInfo.height); // 키
@@ -47,6 +48,10 @@ export default function UserInfo() {
   // 수정 완료 모달
   const [open, setOpen] = useState(false);
 
+  // 이름
+  const handleName = (event) => {
+    setName(event.target.value);
+  };
   // 성별
   const handleGender = (event) => {
     setGender(event.target.value);
@@ -182,7 +187,7 @@ export default function UserInfo() {
       userId: userInfo.userId,
       birthyear: birthyear,
       gender: gender,
-      // name: userInfo.name,
+      name: name,
       recInfo: {
         updateDate: getToday(),
         height: height,
@@ -200,6 +205,7 @@ export default function UserInfo() {
     // console.log(response.data);
 
     if (response.data.message === "success") {
+      localStorage.setItem("name", name);
       localStorage.setItem("birthYear", birthyear);
       localStorage.setItem("gender", gender);
       localStorage.setItem("age", age);
@@ -216,6 +222,7 @@ export default function UserInfo() {
       // 유저정보 전역상태 수정
       setUserInfo((user) => {
         const copyUser = { ...user };
+        copyUser.name = name;
         copyUser.age = age;
         copyUser.birthYear = birthyear;
         copyUser.gender = gender;
@@ -246,6 +253,19 @@ export default function UserInfo() {
   //   const response = http.get(``);
   // }, []);
 
+  // 숫자만 입력받게 하는 validation
+  const validationNumber = (val) => {
+    let check = /^[0-9]+$/;
+    // 숫자면 true, 그 외는 false 반환
+    return !val || check.test(val);
+  };
+
+  // 이름 validation
+  const validationName = (val) => {
+    let check = /^[가-힣]+$/;
+    return !val || check.test(val);
+  };
+
   return (
     <Container component="main" sx={{ mb: 4, width: "650px", height: "700px" }}>
       <React.Fragment>
@@ -267,12 +287,14 @@ export default function UserInfo() {
           </Grid>
           <Grid item xs={9}>
             <TextField
-              disabled
               id="userName"
               autoComplete="cc-exp"
               variant="standard"
               color="purple"
-              value={userInfo.name}
+              defaultValue={userInfo.name}
+              onChange={handleName}
+              error={!validationName(name)}
+              helperText={!validationName(name) ? "이름은 한글 2글자~5글자로 만들어주세요!" : ""}
             />
           </Grid>
         </Grid>

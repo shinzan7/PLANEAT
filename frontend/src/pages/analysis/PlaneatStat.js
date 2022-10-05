@@ -102,7 +102,7 @@ export default function PlaneatStat({ value, score }) {
                 style={{ display: "block" }}
                 src="assets/score/score_soso.png"
               ></img>
-              <p style={{ color: "#FFEFC9", fontWeight: "bold", textAlign: "center" }}>
+              <p style={{ color: "#F7BF87", fontWeight: "bold", textAlign: "center" }}>
                 {score[2]}
               </p>
             </Grid>

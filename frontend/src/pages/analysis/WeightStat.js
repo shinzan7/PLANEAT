@@ -19,15 +19,10 @@ function ShowWeightIntakeCharts() {
       type: "column",
       data: [1000, 1020, 1000, 1000, 1200, 1200, 1200, 1200, 1300, 1300, 1300, 1100],
     },
-    {
-      name: "몸무게",
-      type: "line",
-      data: [48, 47, 49, 52, 51, 49, 47, 48, 48, 50, 49, 47],
-    },
   ];
 
   const options = {
-    colors: ["#F7BF87", "#FFEFC9", "#9DA6F8"],
+    colors: ["#F7BF87", "#FFEFC9"],
     chart: {
       height: 350,
       type: "line",
@@ -89,28 +84,6 @@ function ShowWeightIntakeCharts() {
           text: "권장 섭취량",
           style: {
             color: "#FFE6AA",
-          },
-        },
-      },
-      {
-        seriesName: "Revenue",
-        opposite: true,
-        axisTicks: {
-          show: true,
-        },
-        axisBorder: {
-          show: true,
-          color: "#9DA6F8",
-        },
-        labels: {
-          style: {
-            colors: "#9DA6F8",
-          },
-        },
-        title: {
-          text: "몸무게",
-          style: {
-            color: "#9DA6F8",
           },
         },
       },
