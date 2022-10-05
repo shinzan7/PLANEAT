@@ -85,7 +85,6 @@ function ShowNutrientCharts({ nameDatas, perDatas }) {
     //data on the x-axis
     chart: {
       type: "bar",
-      height: 380,
     },
     plotOptions: {
       bar: {
@@ -149,163 +148,23 @@ function ShowNutrientCharts({ nameDatas, perDatas }) {
   return (
     <div className="app">
       <div>
-        <Chart options={options} series={series} type="bar" width="100%" height={380} />
+        <Chart
+          options={options}
+          series={series}
+          type="bar"
+          width="100%"
+          height={100 + nameDatas.length * 40}
+        />
       </div>
     </div>
   );
 }
 
-export default function NutrientStat({ value }) {
+export default function NutrientStat({ value, nameDatas, perDatas }) {
   // userState 유저 정보
   const userInfo = useRecoilValue(userState);
 
-  // 유저가 등록한 영양제
-  const [userNutrientInfo, setUserNutrientInfo] = useState([]);
-
-  // 오늘 날짜 yyyy-mm-dd 형식으로 받아오기
-  function getDateStr(myDate) {
-    var year = myDate.getFullYear();
-    var month = myDate.getMonth() + 1;
-    var day = myDate.getDate();
-
-    month = month < 10 ? "0" + String(month) : month;
-    day = day < 10 ? "0" + String(day) : day;
-
-    return year + "-" + month + "-" + day;
-  }
-  // 오늘로부터 1주일 전 날짜 반환
-  function lastWeek() {
-    var d = new Date();
-    var dayOfMonth = d.getDate();
-    d.setDate(dayOfMonth - 7);
-    return getDateStr(d);
-  }
-  // 오늘로부터 1개월 전 날짜 반환
-  function lastMonth() {
-    var d = new Date();
-    var monthOfYear = d.getMonth();
-    d.setMonth(monthOfYear - 1);
-    return getDateStr(d);
-  }
-
-  // 영양제 분석 데이터 받아오기
-  async function getNutrientStat() {
-    // 최근 7일 데이터
-    if (value === 0) {
-      const response1 = await http.get(`nutrient/user/list/period`, {
-        params: {
-          endDate: getDateStr(new Date()),
-          startDate: lastWeek(),
-          userId: userInfo.userId,
-        },
-      });
-
-      if (response1.data.message === "success") {
-        setUserNutrientInfo([...response1.data.data]);
-      }
-    }
-    // 최근 30일 데이터
-    else if (value === 1) {
-      const response2 = await http.get(`nutrient/user/list/period`, {
-        params: {
-          endDate: getDateStr(new Date()),
-          startDate: lastMonth(),
-          userId: userInfo.userId,
-        },
-      });
-
-      if (response2.data.message === "success") {
-        setUserNutrientInfo([...response2.data.data]);
-      }
-    }
-    // 전체 데이터
-    else if (value === 2) {
-      const response3 = await http.get(`nutrient/user/list/period`, {
-        params: {
-          endDate: getDateStr(new Date()),
-          startDate: "1900-01-01",
-          userId: userInfo.userId,
-        },
-      });
-
-      if (response3.data.message === "success") {
-        setUserNutrientInfo([...response3.data.data]);
-      }
-    }
-
-    makeData();
-  }
-
-  // 영양제 이름
-  const [nameDatas, setNameDatas] = useState([]);
-  // 영양제 섭취 비율 (기간동안 섭취한 횟수 / (권장횟수*기간) * 100)
-  const [perDatas, setPerDatas] = useState([]);
-
-  // 오늘 날짜 yyyy-mm-dd 형식으로 받아오기
-  function getToday() {
-    let date = new Date();
-    let year = date.getFullYear();
-    let month = ("0" + (1 + date.getMonth())).slice(-2);
-    let day = ("0" + date.getDate()).slice(-2);
-
-    return year + "-" + month + "-" + day;
-  }
-
-  // 날짜차이계산
-  const getDiff = (d1, d2) => {
-    const date1 = new Date(d1);
-    const date2 = new Date(d2);
-
-    const diffDate = date1.getTime() - date2.getTime();
-
-    return Math.floor(Math.abs(diffDate / (1000 * 60 * 60 * 24)));
-  };
-
-  function makeData() {
-    let list = [];
-    let list2 = [];
-    if (userNutrientInfo.length != 0) {
-      for (let i = 0; i < userNutrientInfo.length; i++) {
-        // console.log(userNutrientInfo[i].nutrientName);
-        list.push(userNutrientInfo[i].nutrientName);
-        if (value == 0) {
-          let intakes = 0; // 실제 섭취한 총 횟수
-          for (let j = 0; j < userNutrientInfo[i].nutriHistoryList.length; j++) {
-            intakes += userNutrientInfo[i].nutriHistoryList[j].intakeReal;
-          }
-          let per = (intakes * 100) / (userNutrientInfo[i].intakeRecommend * 7);
-          list2.push(per.toFixed(1));
-        } else if (value == 1) {
-          let intakes = 0; // 실제 섭취한 총 횟수
-          for (let j = 0; j < userNutrientInfo[i].nutriHistoryList.length; j++) {
-            intakes += userNutrientInfo[i].nutriHistoryList[j].intakeReal;
-          }
-          let per = (intakes * 100) / (userNutrientInfo[i].intakeRecommend * 30);
-          list2.push(per.toFixed(1));
-        } else if (value == 2) {
-          if (userNutrientInfo[i].nutriHistoryList.length != 0) {
-            // 처음 섭취한 날 부터 오늘까지의 날짜차이
-            // console.log(userNutrientInfo[i].nutriHistoryList[0].intakeDate);
-            let date = getDiff(getToday(), userNutrientInfo[i].nutriHistoryList[0].intakeDate);
-          }
-          // console.log(date);
-          let intakes = 0; // 실제 섭취한 총 횟수
-          for (let j = 0; j < userNutrientInfo[i].nutriHistoryList.length; j++) {
-            intakes += userNutrientInfo[i].nutriHistoryList[j].intakeReal;
-          }
-          let per = (intakes * 100) / (userNutrientInfo[i].intakeRecommend * 7);
-          list2.push(per.toFixed(1));
-        }
-      }
-      // console.log(nameDatas);
-      setNameDatas(list);
-      setPerDatas(list2);
-    }
-  }
-
-  useEffect(() => {
-    getNutrientStat();
-  });
+  useEffect(() => {}, []);
 
   return (
     <Paper
@@ -323,7 +182,7 @@ export default function NutrientStat({ value }) {
         {/* 영양제 분석 차트 */}
         <h3>영양제 섭취 비율</h3>
         {/* {JSON.stringify(userNutrientInfo)} */}
-        {userNutrientInfo.length == 0 ? (
+        {nameDatas.length == 0 ? (
           <div style={{ lineHeight: "2", textAlign: "center" }}>
             섭취하고 있는 영양제가 없어요.
             <br />
