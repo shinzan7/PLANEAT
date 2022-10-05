@@ -40,14 +40,15 @@ public class AnalysisHistoryService {
 
     /**
      * 분석기록을 삭제하면 그날의 섭취기록, 섭취음식, 유저영양제 섭취기록을 삭제한다.
+     *
      * @param userId
      * @param date
      * @return
      */
-    public Long deleteAnalysisHistory(Long userId, LocalDate date){
+    public Long deleteAnalysisHistory(Long userId, LocalDate date) {
         List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserIdAndDate(userId, date);
         Long result = 0L;
-        if(historyList.size()!=0){
+        if (historyList.size() != 0) {
             result = historyList.get(0).getId();
         }
         analysisHistoryRepository.deleteAll(historyList);
@@ -495,39 +496,39 @@ public class AnalysisHistoryService {
         float size = historyList.size() / 2;
 
         calorie = changePercent(calorie, size);
-        protein = changePercent(protein , size);
-        fat = changePercent(fat , size);
-        carbohydrate = changePercent(carbohydrate , size);
-        sugar = changePercent(sugar , size);
+        protein = changePercent(protein, size);
+        fat = changePercent(fat, size);
+        carbohydrate = changePercent(carbohydrate, size);
+        sugar = changePercent(sugar, size);
 
-        dietaryFiber = changePercent(dietaryFiber , size);
-        calcium = changePercent(calcium , size);
-        iron = changePercent(iron , size);
-        magnesium = changePercent(magnesium , size);
-        phosphorus = changePercent(phosphorus , size);
+        dietaryFiber = changePercent(dietaryFiber, size);
+        calcium = changePercent(calcium, size);
+        iron = changePercent(iron, size);
+        magnesium = changePercent(magnesium, size);
+        phosphorus = changePercent(phosphorus, size);
 
-        potassium = changePercent(potassium , size);
-        sodium = changePercent(sodium , size);
-        zinc = changePercent(zinc , size);
-        copper = changePercent(copper , size);
-        manganese = changePercent(manganese , size);
+        potassium = changePercent(potassium, size);
+        sodium = changePercent(sodium, size);
+        zinc = changePercent(zinc, size);
+        copper = changePercent(copper, size);
+        manganese = changePercent(manganese, size);
 
-        selenium = changePercent(selenium , size);
-        vitaminA = changePercent(vitaminA , size);
-        vitaminD = changePercent(vitaminD , size);
-        vitaminB6 = changePercent(vitaminB6 , size);
-        folate = changePercent(folate , size);
+        selenium = changePercent(selenium, size);
+        vitaminA = changePercent(vitaminA, size);
+        vitaminD = changePercent(vitaminD, size);
+        vitaminB6 = changePercent(vitaminB6, size);
+        folate = changePercent(folate, size);
 
-        vitaminB12 = changePercent(vitaminB12 , size);
-        vitaminC = changePercent(vitaminC , size);
-        cholesterol = changePercent(cholesterol , size);
-        fattyAcid = changePercent(fattyAcid , size);
-        linoleicAcid = changePercent(linoleicAcid , size);
+        vitaminB12 = changePercent(vitaminB12, size);
+        vitaminC = changePercent(vitaminC, size);
+        cholesterol = changePercent(cholesterol, size);
+        fattyAcid = changePercent(fattyAcid, size);
+        linoleicAcid = changePercent(linoleicAcid, size);
 
-        alphaLinoleicAcid = changePercent(alphaLinoleicAcid , size);
-        transFattyAcid = changePercent(transFattyAcid , size);
-        vitaminB1 = changePercent(vitaminB1 , size);
-        vitaminB2 = changePercent(vitaminB2 , size);
+        alphaLinoleicAcid = changePercent(alphaLinoleicAcid, size);
+        transFattyAcid = changePercent(transFattyAcid, size);
+        vitaminB1 = changePercent(vitaminB1, size);
+        vitaminB2 = changePercent(vitaminB2, size);
 
 
         response = AnalysisHistoryPercentResponse.builder()
@@ -570,7 +571,7 @@ public class AnalysisHistoryService {
 
     }
 
-    private float changePercent(float nut, float size){
+    private float changePercent(float nut, float size) {
         return Math.round(nut / size * 100);
     }
 
@@ -861,11 +862,21 @@ public class AnalysisHistoryService {
                 realHistory.getProtein() - foodInfo.getProtein() * multi,
                 realHistory.getFat() - foodInfo.getFat() * multi
         );
+
+        float sugar = realHistory.getSugar() - foodInfo.getSugar() * multi;
+        float cholesterol = realHistory.getCholesterol() - foodInfo.getCholesterol() * multi;
+        float fattyAcid = realHistory.getFattyAcid() - foodInfo.getFattyAcid() * multi;
+        float transFattyAcid = realHistory.getTransFattyAcid() - foodInfo.getTransFattyAcid() * multi;
+        sugar = sugar >= 0 ? sugar : 0;
+        cholesterol = cholesterol >= 0 ? cholesterol : 0;
+        fattyAcid = fattyAcid >= 0 ? fattyAcid : 0;
+        transFattyAcid = transFattyAcid >= 0 ? transFattyAcid : 0;
+
         realHistory.updateSugarFat(
-                realHistory.getSugar() - foodInfo.getSugar() * multi,
-                realHistory.getCholesterol() - foodInfo.getCholesterol() * multi,
-                realHistory.getFattyAcid() - foodInfo.getFattyAcid() * multi,
-                realHistory.getTransFattyAcid() - foodInfo.getTransFattyAcid() * multi
+                sugar,
+                cholesterol,
+                fattyAcid,
+                transFattyAcid
         );
         realHistory.updateVitamin(
                 realHistory.getDietaryFiber() - foodInfo.getDietary_fiber() * multi,
