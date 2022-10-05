@@ -10,14 +10,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 public interface AnalysisHistoryRepository extends JpaRepository<AnalysisHistory, Long> {
-
-    List<AnalysisHistory> findByUser(User user);
-
-    List<AnalysisHistory> findByUserAndDateAfter(User user, LocalDate date);
-
-    List<AnalysisHistory> findByUserAndDate(User user, LocalDate date);
-
-    @Query("select a from AnalysisHistory a where a.user.id = :userId and a.date = :date order by a.analysisType")
+    List<AnalysisHistory> findByUserOrderByDateAsc(User user);
+    List<AnalysisHistory> findByUserAndDateAfterOrderByDateAsc(User user, LocalDate date);
+    List<AnalysisHistory> findByUserAndDateOrderByDateAsc(User user, LocalDate date);
+    @Query("select a from AnalysisHistory a where a.user.id = :userId and a.date = :date order by a.analysisType, a.date")
     List<AnalysisHistory> findByUserIdAndDate(@Param("userId") Long userId,@Param("date") LocalDate date);
 
 }

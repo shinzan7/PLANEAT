@@ -36,15 +36,15 @@ public class AnalysisHistoryService {
     private final NutrientRepository nutrientRepository;
     private final NutrientIngredientRespository nutrientIngredientRespository;
 
-    public List<AnalysisHistoryResponse> getAllAnalysisHistory(Long userId){
+    public List<AnalysisHistoryResponse> getAllAnalysisHistory(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
         );
-        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUser(user);
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserOrderByDateAsc(user);
         List<AnalysisHistoryResponse> responseList = new ArrayList<>(historyList.size());
 
-        if(historyList.size()!=0){
-            for (AnalysisHistory h : historyList){
+        if (historyList.size() != 0) {
+            for (AnalysisHistory h : historyList) {
                 AnalysisHistoryResponse response = AnalysisHistoryResponse.builder()
                         .analysisHistoryId(h.getId())
                         .date(h.getDate().format(DateTimeFormatter.ISO_DATE))
@@ -91,11 +91,12 @@ public class AnalysisHistoryService {
     /**
      * 유저id와 날짜에 해당하는 엔티티 2개를 리스트로 반환한다
      * (만약 엔티티가 없으면 새로 생성한다 - 실제, 권장 2개)
-     * @param userId 조회할 유저id
+     *
+     * @param userId    조회할 유저id
      * @param localDate 조회할 분석기록 날짜
      * @return List[실제섭취량, 권장섭취량]
      */
-    public List<AnalysisHistory> getAnalysisHistory(Long userId , LocalDate localDate){
+    public List<AnalysisHistory> getAnalysisHistory(Long userId, LocalDate localDate) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
         );
@@ -105,7 +106,7 @@ public class AnalysisHistoryService {
                 findByUserIdAndDate(user.getId(), localDate);
 
         //데이터가 없는 경우 새로 생성
-        if(analysisHistoryList.size()==0){
+        if (analysisHistoryList.size() == 0) {
             //실제 섭취량
             AnalysisHistory real = AnalysisHistory.builder()
                     .user(user)
@@ -202,7 +203,7 @@ public class AnalysisHistoryService {
                     .transFattyAcid(2f)
                     .build();
 
-            if(userRecIntake.isPresent()){
+            if (userRecIntake.isPresent()) {
                 //칼로리,탄,단,지 -> 유저 권장섭취량으로 update
                 recommend.updateRecIntake(userRecIntake.get().getCalorie(),
                         userRecIntake.get().getCarbohydrate(),
@@ -220,15 +221,15 @@ public class AnalysisHistoryService {
         return analysisHistoryList;
     }
 
-    public AnalysisHistoryPercentResponse makeAverageAnalysisHistoryByDateAfter(Long userId, LocalDate date){
+    public AnalysisHistoryPercentResponse makeAverageAnalysisHistoryByDate(Long userId, LocalDate date) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
         );
         AnalysisHistoryPercentResponse response = new AnalysisHistoryPercentResponse();
 
-        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfter(user, date);
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateOrderByDateAsc(user, date);
         //기록이 없으면 빈값 넘겨주기
-        if(historyList.size()==0){
+        if (historyList.size() == 0) {
             return response;
         }
 
@@ -272,53 +273,202 @@ public class AnalysisHistoryService {
         float vitaminB2 = 0f;
 
         //변수에 비율 모두 더하기
-        for (int i=0; i<historyList.size(); i++){
+        for (int i = 0; i < historyList.size(); i++) {
             AnalysisHistory real = historyList.get(i); //실제섭취량
             AnalysisHistory rec = historyList.get(++i); //실제섭취량
 
             //점수 카운트
-            if(real.getAnalysisScore().equals("나쁨")){
+            if (real.getAnalysisScore().equals("나쁨")) {
                 badCount++;
             } else if (real.getAnalysisScore().equals("보통")) {
                 normalCount++;
-            } else{
+            } else {
                 goodCount++;
             }
 
-            calorie += Math.round((real.getCalorie() * 10 / rec.getCalorie()) / 10f);
-            protein += Math.round((real.getProtein() * 10 / rec.getProtein()) / 10f);
-            fat += Math.round((real.getFat() * 10 / rec.getFat()) / 10f);
-            carbohydrate += Math.round((real.getCarbohydrate() * 10 / rec.getCarbohydrate()) / 10f);
-            sugar += Math.round((real.getSugar() * 10 / rec.getSugar()) / 10f);
+            calorie += Math.round(real.getCalorie() * 100 / rec.getCalorie());
+            protein += Math.round(real.getProtein() * 100 / rec.getProtein());
+            fat += Math.round(real.getFat() * 100 / rec.getFat());
+            carbohydrate += Math.round(real.getCarbohydrate() * 100 / rec.getCarbohydrate());
+            sugar += Math.round(real.getSugar() * 100 / rec.getSugar());
 
-            dietaryFiber += Math.round((real.getDietaryFiber() * 10 / rec.getDietaryFiber()) / 10f);
-            calcium += Math.round((real.getCalcium() * 10 / rec.getCalcium()) / 10f);
-            iron += Math.round((real.getIron() * 10 / rec.getIron()) / 10f);
-            magnesium += Math.round((real.getMagnesium() * 10 / rec.getMagnesium()) / 10f);
-            phosphorus += Math.round((real.getPhosphorus() * 10 / rec.getPhosphorus()) / 10f);
+            dietaryFiber += Math.round(real.getDietaryFiber() * 100 / rec.getDietaryFiber());
+            calcium += Math.round(real.getCalcium() * 100 / rec.getCalcium());
+            iron += Math.round(real.getIron() * 100 / rec.getIron());
+            magnesium += Math.round(real.getMagnesium() * 100 / rec.getMagnesium());
+            phosphorus += Math.round(real.getPhosphorus() * 100 / rec.getPhosphorus());
 
-            potassium += Math.round((real.getPotassium() * 10 / rec.getPotassium()) / 10f);
-            sodium += Math.round((real.getSodium() * 10 / rec.getSodium()) / 10f);
-            zinc += Math.round((real.getZinc() * 10 / rec.getZinc()) / 10f);
-            copper += Math.round((real.getCopper() * 10 / rec.getCopper()) / 10f);
-            manganese += Math.round((real.getManganese() * 10 / rec.getManganese()) / 10f);
+            potassium += Math.round(real.getPotassium() * 100 / rec.getPotassium());
+            sodium += Math.round(real.getSodium() * 100 / rec.getSodium());
+            zinc += Math.round(real.getZinc() * 100 / rec.getZinc());
+            copper += Math.round(real.getCopper() * 100 / rec.getCopper());
+            manganese += Math.round(real.getManganese() * 100 / rec.getManganese());
 
-            selenium += Math.round((real.getSelenium() * 10 / rec.getSelenium()) / 10f);
-            vitaminA += Math.round((real.getVitaminA() * 10 / rec.getVitaminA()) / 10f);
-            vitaminD += Math.round((real.getVitaminD() * 10 / rec.getVitaminD()) / 10f);
-            vitaminB6 += Math.round((real.getVitaminB6() * 10 / rec.getVitaminB6()) / 10f);
-            folate += Math.round((real.getFolate() * 10 / rec.getFolate()) / 10f);
+            selenium += Math.round(real.getSelenium() * 100 / rec.getSelenium());
+            vitaminA += Math.round(real.getVitaminA() * 100 / rec.getVitaminA());
+            vitaminD += Math.round(real.getVitaminD() * 100 / rec.getVitaminD());
+            vitaminB6 += Math.round(real.getVitaminB6() * 100 / rec.getVitaminB6());
+            folate += Math.round(real.getFolate() * 100 / rec.getFolate());
 
-            vitaminB12 += Math.round((real.getVitaminB12() * 10 / rec.getVitaminB12()) / 10f);
-            vitaminC += Math.round((real.getVitaminC() * 10 / rec.getVitaminC()) / 10f);
-            cholesterol += Math.round((real.getCholesterol() * 10 / rec.getCholesterol()) / 10f);
-            fattyAcid += Math.round((real.getFattyAcid() * 10 / rec.getFattyAcid()) / 10f);
-            linoleicAcid += Math.round((real.getLinoleicAcid() * 10 / rec.getLinoleicAcid()) / 10f);
+            vitaminB12 += Math.round(real.getVitaminB12() * 100 / rec.getVitaminB12());
+            vitaminC += Math.round(real.getVitaminC() * 100 / rec.getVitaminC());
+            cholesterol += Math.round(real.getCholesterol() * 100 / rec.getCholesterol());
+            fattyAcid += Math.round(real.getFattyAcid() * 100 / rec.getFattyAcid());
+            linoleicAcid += Math.round(real.getLinoleicAcid() * 100 / rec.getLinoleicAcid());
 
-            alphaLinoleicAcid += Math.round((real.getAlphaLinoleicAcid() * 10 / rec.getAlphaLinoleicAcid()) / 10f);
-            transFattyAcid += Math.round((real.getTransFattyAcid() * 10 / rec.getTransFattyAcid()) / 10f);
-            vitaminB1 += Math.round((real.getVitaminB1() * 10 / rec.getVitaminB1()) / 10f);
-            vitaminB2 += Math.round((real.getVitaminB2() * 10 / rec.getVitaminB2()) / 10f);
+            alphaLinoleicAcid += Math.round(real.getAlphaLinoleicAcid() * 100 / rec.getAlphaLinoleicAcid());
+            transFattyAcid += Math.round(real.getTransFattyAcid() * 100 / rec.getTransFattyAcid());
+            vitaminB1 += Math.round(real.getVitaminB1() * 100 / rec.getVitaminB1());
+            vitaminB2 += Math.round(real.getVitaminB2() * 100 / rec.getVitaminB2());
+        }
+
+        response = AnalysisHistoryPercentResponse.builder()
+                .analysisType(2)
+                .badCount(badCount)
+                .normalCount(normalCount)
+                .goodCount(goodCount)
+                .calorie(calorie)
+                .protein(protein)
+                .fat(fat)
+                .carbohydrate(carbohydrate)
+                .sugar(sugar)
+                .dietaryFiber(dietaryFiber)
+                .calcium(calcium)
+                .iron(iron)
+                .magnesium(magnesium)
+                .phosphorus(phosphorus)
+                .potassium(potassium)
+                .sodium(sodium)
+                .zinc(zinc)
+                .copper(copper)
+                .manganese(manganese)
+                .selenium(selenium)
+                .vitaminA(vitaminA)
+                .vitaminD(vitaminD)
+                .vitaminB6(vitaminB6)
+                .folate(folate)
+                .vitaminB12(vitaminB12)
+                .vitaminC(vitaminC)
+                .cholesterol(cholesterol)
+                .fattyAcid(fattyAcid)
+                .linoleicAcid(linoleicAcid)
+                .alphaLinoleicAcid(alphaLinoleicAcid)
+                .transFattyAcid(transFattyAcid)
+                .vitaminB1(vitaminB1)
+                .vitaminB2(vitaminB2)
+                .build();
+
+        return response;
+
+    }
+
+
+    /**
+     * 지정날짜 이후의 분석기록들을 계산하여 (실섭취량/권장섭취량)비율의 평균을 구한다
+     *
+     * @param userId
+     * @param date
+     * @return
+     */
+    public AnalysisHistoryPercentResponse makeAverageAnalysisHistoryByDateAfter(Long userId, LocalDate date) {
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
+        );
+        AnalysisHistoryPercentResponse response = new AnalysisHistoryPercentResponse();
+
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfterOrderByDateAsc(user, date);
+        //기록이 없으면 빈값 넘겨주기
+        if (historyList.size() == 0) {
+            return response;
+        }
+
+        Integer badCount = 0;
+        Integer normalCount = 0;
+        Integer goodCount = 0;
+
+        float calorie = 0f;
+        float protein = 0f;
+        float fat = 0f;
+        float carbohydrate = 0f;
+        float sugar = 0f;
+
+        float dietaryFiber = 0f;
+        float calcium = 0f;
+        float iron = 0f;
+        float magnesium = 0f;
+        float phosphorus = 0f;
+
+        float potassium = 0f;
+        float sodium = 0f;
+        float zinc = 0f;
+        float copper = 0f;
+        float manganese = 0f;
+
+        float selenium = 0f;
+        float vitaminA = 0f;
+        float vitaminD = 0f;
+        float vitaminB6 = 0f;
+        float folate = 0f;
+
+        float vitaminB12 = 0f;
+        float vitaminC = 0f;
+        float cholesterol = 0f;
+        float fattyAcid = 0f;
+        float linoleicAcid = 0f;
+
+        float alphaLinoleicAcid = 0f;
+        float transFattyAcid = 0f;
+        float vitaminB1 = 0f;
+        float vitaminB2 = 0f;
+
+        //변수에 비율 모두 더하기
+        for (int i = 0; i < historyList.size(); i++) {
+            AnalysisHistory real = historyList.get(i); //실제섭취량
+            AnalysisHistory rec = historyList.get(++i); //실제섭취량
+
+            //점수 카운트
+            if (real.getAnalysisScore().equals("나쁨")) {
+                badCount++;
+            } else if (real.getAnalysisScore().equals("보통")) {
+                normalCount++;
+            } else {
+                goodCount++;
+            }
+
+            calorie += Math.round(real.getCalorie() * 100 / rec.getCalorie());
+            protein += Math.round(real.getProtein() * 100 / rec.getProtein());
+            fat += Math.round(real.getFat() * 100 / rec.getFat());
+            carbohydrate += Math.round(real.getCarbohydrate() * 100 / rec.getCarbohydrate());
+            sugar += Math.round(real.getSugar() * 100 / rec.getSugar());
+
+            dietaryFiber += Math.round(real.getDietaryFiber() * 100 / rec.getDietaryFiber());
+            calcium += Math.round(real.getCalcium() * 100 / rec.getCalcium());
+            iron += Math.round(real.getIron() * 100 / rec.getIron());
+            magnesium += Math.round(real.getMagnesium() * 100 / rec.getMagnesium());
+            phosphorus += Math.round(real.getPhosphorus() * 100 / rec.getPhosphorus());
+
+            potassium += Math.round(real.getPotassium() * 100 / rec.getPotassium());
+            sodium += Math.round(real.getSodium() * 100 / rec.getSodium());
+            zinc += Math.round(real.getZinc() * 100 / rec.getZinc());
+            copper += Math.round(real.getCopper() * 100 / rec.getCopper());
+            manganese += Math.round(real.getManganese() * 100 / rec.getManganese());
+
+            selenium += Math.round(real.getSelenium() * 100 / rec.getSelenium());
+            vitaminA += Math.round(real.getVitaminA() * 100 / rec.getVitaminA());
+            vitaminD += Math.round(real.getVitaminD() * 100 / rec.getVitaminD());
+            vitaminB6 += Math.round(real.getVitaminB6() * 100 / rec.getVitaminB6());
+            folate += Math.round(real.getFolate() * 100 / rec.getFolate());
+
+            vitaminB12 += Math.round(real.getVitaminB12() * 100 / rec.getVitaminB12());
+            vitaminC += Math.round(real.getVitaminC() * 100 / rec.getVitaminC());
+            cholesterol += Math.round(real.getCholesterol() * 100 / rec.getCholesterol());
+            fattyAcid += Math.round(real.getFattyAcid() * 100 / rec.getFattyAcid());
+            linoleicAcid += Math.round(real.getLinoleicAcid() * 100 / rec.getLinoleicAcid());
+
+            alphaLinoleicAcid += Math.round(real.getAlphaLinoleicAcid() * 100 / rec.getAlphaLinoleicAcid());
+            transFattyAcid += Math.round(real.getTransFattyAcid() * 100 / rec.getTransFattyAcid());
+            vitaminB1 += Math.round(real.getVitaminB1() * 100 / rec.getVitaminB1());
+            vitaminB2 += Math.round(real.getVitaminB2() * 100 / rec.getVitaminB2());
         }
 
         int size = historyList.size() / 2;
@@ -356,22 +506,22 @@ public class AnalysisHistoryService {
                 .alphaLinoleicAcid(Math.round(alphaLinoleicAcid / size * 10) / 10f)
                 .transFattyAcid(Math.round(transFattyAcid / size * 10) / 10f)
                 .vitaminB1(Math.round(vitaminB1 / size * 10) / 10f)
-                .vitaminB2(Math.round(vitaminB2 / size * 10)  / 10f)
+                .vitaminB2(Math.round(vitaminB2 / size * 10) / 10f)
                 .build();
 
         return response;
 
     }
 
-    public List<AnalysisHistoryResponse> readAllAnalysisHistoryByDateAfter(Long userId, LocalDate date){
+    public List<AnalysisHistoryResponse> readAllAnalysisHistoryByDateAfter(Long userId, LocalDate date) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
         );
 
-        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfter(user, date);
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfterOrderByDateAsc(user, date);
         List<AnalysisHistoryResponse> responseList = new ArrayList<>(historyList.size());
 
-        for (AnalysisHistory h : historyList){
+        for (AnalysisHistory h : historyList) {
             AnalysisHistoryResponse response = AnalysisHistoryResponse.builder()
                     .analysisHistoryId(h.getId())
                     .date(h.getDate().format(DateTimeFormatter.ISO_DATE))
@@ -414,15 +564,15 @@ public class AnalysisHistoryService {
 
     }
 
-    public List<AnalysisHistoryResponse> readFirstAnalysisHistoryByDate(Long userId, LocalDate date){
+    public List<AnalysisHistoryResponse> readFirstAnalysisHistoryByDate(Long userId, LocalDate date) {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
         );
 
-        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDate(user, date);
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateOrderByDateAsc(user, date);
         List<AnalysisHistoryResponse> responseList = new ArrayList<>(historyList.size());
 
-        for (AnalysisHistory h : historyList){
+        for (AnalysisHistory h : historyList) {
             AnalysisHistoryResponse response = AnalysisHistoryResponse.builder()
                     .analysisHistoryId(h.getId())
                     .date(h.getDate().format(DateTimeFormatter.ISO_DATE))
@@ -466,11 +616,12 @@ public class AnalysisHistoryService {
 
     /**
      * 분석기록의 영양 데이터들을 계산하여 analysis score를 계산한다
+     *
      * @param real 실제섭취량 분석기록 entity
-     * @param rec 권장섭취량 분석기록 entity
+     * @param rec  권장섭취량 분석기록 entity
      * @return
      */
-    public float calculateScore(AnalysisHistory real, AnalysisHistory rec){
+    public float calculateScore(AnalysisHistory real, AnalysisHistory rec) {
         int total = 0;
         total += nutritionScore(real.getCalorie(), rec.getCalorie());
         total += nutritionScore(real.getCarbohydrate(), rec.getCarbohydrate());
@@ -514,16 +665,17 @@ public class AnalysisHistoryService {
     /**
      * 칼로리, 탄수화물, 단백질, 지방, 당류, 포화지방, 트랜스지방의 점수를 계산하여 반환한다.
      * 권장섭취량의 +-30% 범위는 green, +-60% 범위는 yellow, 그외는 red
+     *
      * @param real 실체섭취 영양소 함량
-     * @param rec 권장섭취 영양소 함량
+     * @param rec  권장섭취 영양소 함량
      * @return 점수 (green:10, yellow:5, red:0)
      */
-    public int nutritionScore(float real, float rec){
+    public int nutritionScore(float real, float rec) {
         int colorScore = 0;
         float percent = real / rec;
-        if(percent >= 0.7f && percent <= 1.3f){
+        if (percent >= 0.7f && percent <= 1.3f) {
             colorScore = 10;
-        }else if(percent >= 0.4f && percent <= 1.6f){
+        } else if (percent >= 0.4f && percent <= 1.6f) {
             colorScore = 5;
         }
 
@@ -533,16 +685,17 @@ public class AnalysisHistoryService {
     /**
      * 비타민, 무기질의 점수를 계산하여 반환한다.
      * 권장섭취량의 60% 이상은 green, 30~60% yellow, 0~30% red
+     *
      * @param real 실체섭취 영양소 함량
-     * @param rec 권장섭취 영양소 함량
+     * @param rec  권장섭취 영양소 함량
      * @return 점수 (green:10, yellow:5, red:0)
      */
-    public int vitaminScore(float real, float rec){
+    public int vitaminScore(float real, float rec) {
         int colorScore = 2;
         float percent = real / rec;
-        if(percent >= 0.6f){
+        if (percent >= 0.6f) {
             colorScore = 10;
-        }else if(percent >= 0.3f && percent <= 0.6f){
+        } else if (percent >= 0.3f && percent <= 0.6f) {
             colorScore = 5;
         }
 
@@ -552,16 +705,17 @@ public class AnalysisHistoryService {
     /**
      * 당류, 콜레스테롤, 포화지방산, 트랜스지방산 점수를 계산하여 반환한다.
      * 적정량 100% 이하는 green, 100 ~ 200% yellow, 200% 초과는 red
+     *
      * @param real 실체섭취 영양소 함량
-     * @param rec 권장섭취 영양소 함량
+     * @param rec  권장섭취 영양소 함량
      * @return 점수 (green:10, yellow:5, red:0)
      */
-    public int sugarFatScore(float real, float rec){
+    public int sugarFatScore(float real, float rec) {
         int colorScore = 0;
         float percent = real / rec;
-        if(percent <= 1f){
+        if (percent <= 1f) {
             colorScore = 10;
-        }else if(percent > 1f && percent <= 2f){
+        } else if (percent > 1f && percent <= 2f) {
             colorScore = 5;
         }
         return colorScore;
@@ -569,16 +723,17 @@ public class AnalysisHistoryService {
 
     /**
      * 섭취음식이 등록되면 섭취기록의 날짜에 해당하는 유저의 분석기록에 더한다
+     *
      * @param userId
      * @param localDate
      * @param foodInfo
      * @param amount
      */
-    public void plusFoodFromAnalysisHistory(Long userId , LocalDate localDate, FoodInfo foodInfo, BigDecimal amount){
+    public void plusFoodFromAnalysisHistory(Long userId, LocalDate localDate, FoodInfo foodInfo, BigDecimal amount) {
         List<AnalysisHistory> historyList = getAnalysisHistory(userId, localDate);
         AnalysisHistory realHistory = historyList.get(0);
         AnalysisHistory rec = historyList.get(1);
-        float multi =  amount.floatValue();
+        float multi = amount.floatValue();
 
         realHistory.updateRecIntake(
                 realHistory.getCalorie() + foodInfo.getCalorie() * multi,
@@ -617,9 +772,9 @@ public class AnalysisHistoryService {
         //음식 추가 후 점수계산하여 update
         float score = calculateScore(realHistory, rec);
         String scoreString = "나쁨";
-        if(score >= 6){
+        if (score >= 6) {
             scoreString = "좋음";
-        }else if(score >= 3){
+        } else if (score >= 3) {
             scoreString = "보통";
         }
         realHistory.updateScore(scoreString);
@@ -627,16 +782,17 @@ public class AnalysisHistoryService {
 
     /**
      * 섭취음식이 삭제되거나 수정될 때 섭취기록의 날짜에 해당하는 유저의 분석기록에서 뺀다
+     *
      * @param userId
      * @param localDate
      * @param foodInfo
      * @param amount
      */
-    public void minusFoodFromAnalysisHistory(Long userId , LocalDate localDate, FoodInfo foodInfo, BigDecimal amount){
+    public void minusFoodFromAnalysisHistory(Long userId, LocalDate localDate, FoodInfo foodInfo, BigDecimal amount) {
         List<AnalysisHistory> historyList = getAnalysisHistory(userId, localDate);
         AnalysisHistory realHistory = historyList.get(0);
         AnalysisHistory rec = historyList.get(1);
-        float multi =  amount.floatValue();
+        float multi = amount.floatValue();
 
         realHistory.updateRecIntake(
                 realHistory.getCalorie() - foodInfo.getCalorie() * multi,
@@ -675,9 +831,9 @@ public class AnalysisHistoryService {
         //음식 추가 후 점수계산하여 update
         float score = calculateScore(realHistory, rec);
         String scoreString = "나쁨";
-        if(score >= 6){
+        if (score >= 6) {
             scoreString = "좋음";
-        }else if(score >= 3){
+        } else if (score >= 3) {
             scoreString = "보통";
         }
         realHistory.updateScore(scoreString);
@@ -685,10 +841,11 @@ public class AnalysisHistoryService {
 
     /**
      * 영양제 섭취기록이 등록되면 섭취날짜에 해당하는 유저의 분석기록에 더한다
+     *
      * @param userId
      * @param request 유저영양제id, 섭취날짜, 실제섭취횟수가 담긴 DTO
      */
-    public void addUserNutrientFromAnalysisHistory(Long userId, NutrientHistoryRequest request){
+    public void addUserNutrientFromAnalysisHistory(Long userId, NutrientHistoryRequest request) {
         List<AnalysisHistory> historyList = getAnalysisHistory(userId, request.getIntakeDate());
         AnalysisHistory realHistory = historyList.get(0);
         AnalysisHistory rec = historyList.get(1);
@@ -699,7 +856,7 @@ public class AnalysisHistoryService {
         IngredientInfoDto infoDto = new IngredientInfoDto();
 
         //영양제에 담긴 영양제 성분마다 dto에 함량만큼 더한다
-        for (NutrientIngredient n : nutrientIngredientList){
+        for (NutrientIngredient n : nutrientIngredientList) {
             Integer ingredientId = n.getIngredient().getId();
             infoDto.addIngredient(ingredientId, n.getIngredientAmount(), request.getIntakeReal());
         }
@@ -741,9 +898,9 @@ public class AnalysisHistoryService {
         //음식 추가 후 점수계산하여 update
         float score = calculateScore(realHistory, rec);
         String scoreString = "나쁨";
-        if(score >= 6){
+        if (score >= 6) {
             scoreString = "좋음";
-        }else if(score >= 3){
+        } else if (score >= 3) {
             scoreString = "보통";
         }
         realHistory.updateScore(scoreString);
@@ -751,10 +908,11 @@ public class AnalysisHistoryService {
 
     /**
      * 영양제 섭취기록이 수정되거나 삭제되면 섭취날짜에 해당하는 유저의 분석기록에서 뺀다
+     *
      * @param userId
      * @param request 유저영양제id, 섭취날짜, 실제섭취횟수가 담긴 DTO
      */
-    public void minusUserNutrientFromAnalysisHistory(Long userId, NutrientHistoryRequest request){
+    public void minusUserNutrientFromAnalysisHistory(Long userId, NutrientHistoryRequest request) {
         List<AnalysisHistory> historyList = getAnalysisHistory(userId, request.getIntakeDate());
         AnalysisHistory realHistory = historyList.get(0);
         AnalysisHistory rec = historyList.get(1);
@@ -765,7 +923,7 @@ public class AnalysisHistoryService {
         IngredientInfoDto infoDto = new IngredientInfoDto();
 
         //영양제에 담긴 영양제 성분마다 dto에 함량만큼 더한다
-        for (NutrientIngredient n : nutrientIngredientList){
+        for (NutrientIngredient n : nutrientIngredientList) {
             Integer ingredientId = n.getIngredient().getId();
             infoDto.addIngredient(ingredientId, n.getIngredientAmount(), request.getIntakeReal());
         }
@@ -807,9 +965,9 @@ public class AnalysisHistoryService {
         //음식 추가 후 점수계산하여 update
         float score = calculateScore(realHistory, rec);
         String scoreString = "나쁨";
-        if(score >= 6){
+        if (score >= 6) {
             scoreString = "좋음";
-        }else if(score >= 3){
+        } else if (score >= 3) {
             scoreString = "보통";
         }
         realHistory.updateScore(scoreString);
