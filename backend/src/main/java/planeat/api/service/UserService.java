@@ -35,6 +35,12 @@ public class UserService {
     private final UserCategoryRepository userCategoryRepository;
     private final UserCategoryInfoRepository userCategoryInfoRepository;
 
+    public void deleteUserInfo(Long userId){
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
+        userRepository.delete(user);
+    }
+
 
     /**
      * 유저 정보, 유저 권장 섭취량, 카테고리 등록
