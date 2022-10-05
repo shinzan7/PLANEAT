@@ -1,3 +1,10 @@
+/*
+토큰 유무 확인 // 폐기 될듯
+@author 전상현
+@since 2022.10.04
+*/
+
+
 import { http } from "api/http"
 
 const today = new Date()

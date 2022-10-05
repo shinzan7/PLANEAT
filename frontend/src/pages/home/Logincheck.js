@@ -1,14 +1,14 @@
-import React, { useState, useEffect } from "react";
-import Welcome from "./Welcome";
-import Main from "pages/main/Main";
+/*
+로그인 페이지
+@author 전상현
+@since 2022.09.25
+*/
+
+
+import React, { useEffect } from "react";
+
 
 function Logincheck() {
-
-  // const accessToken = location.state.accessToken
-  // const accessToken = new URLSearchParams(location.accessToken)
-
-  // const [NewUser, setNewUser] = useState(false)
-  // 신규유저 / 기존유저
   let accessToken,
     refreshToken,
     accessTokenExpiration,
@@ -19,6 +19,7 @@ function Logincheck() {
     gender
 
   useEffect(() => {
+    // Redirect된 url 주소에서 parameter 세팅
     accessToken = new URL(window.location.href).searchParams.get("accessToken")
     refreshToken = new URL(window.location.href).searchParams.get(
       "refreshToken"
@@ -36,7 +37,7 @@ function Logincheck() {
   
 
     if (accessToken && birthYear == "" && gender == "") {
-      // 이름과 이메일만 기본으로 들고옴
+      // 이름과 이메일만 기본으로 들고오므로 신규 유저는 welcome으로
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
       localStorage.setItem("accessTokenExpiration", accessTokenExpiration)
@@ -52,6 +53,7 @@ function Logincheck() {
     }
 
     if (accessToken && birthYear!="" && gender!="") {
+      // 나이와 성별이 있으면 기존 유저이므로 main으로
       localStorage.setItem("accessToken", accessToken)
       localStorage.setItem("refreshToken", refreshToken)
       localStorage.setItem("accessTokenExpiration", accessTokenExpiration)
@@ -66,9 +68,7 @@ function Logincheck() {
   }, [])
 
   return (
-    <div>
-      {/* {NewUser ? <Welcome /> : <Main />} */}
-    </div>
+    <div></div>
   )
 }
 
