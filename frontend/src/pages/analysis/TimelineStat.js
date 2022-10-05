@@ -12,20 +12,25 @@ import TimelineConnector from "@mui/lab/TimelineConnector";
 import TimelineContent from "@mui/lab/TimelineContent";
 import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 import TimelineDot from "@mui/lab/TimelineDot";
-import FastfoodIcon from "@mui/icons-material/Fastfood";
-import LaptopMacIcon from "@mui/icons-material/LaptopMac";
-import HotelIcon from "@mui/icons-material/Hotel";
-import RepeatIcon from "@mui/icons-material/Repeat";
+import CakeRoundedIcon from "@mui/icons-material/CakeRounded";
+import IcecreamRoundedIcon from "@mui/icons-material/IcecreamRounded";
+import RestaurantRoundedIcon from "@mui/icons-material/RestaurantRounded";
+import TapasRoundedIcon from "@mui/icons-material/TapasRounded";
+import NightlifeRoundedIcon from "@mui/icons-material/NightlifeRounded";
+
 import Typography from "@mui/material/Typography";
 import { Paper, Grid } from "@mui/material";
-import { getFormControlUnstyledUtilityClass } from "@mui/base";
 import { http } from "api/http";
 
 import { userState } from "states/userState";
 import { useRecoilValue } from "recoil";
 
-export default function TimelineStat({ value }) {
+export default function TimelineStat({ value, list1, list2, list3, list4, list5 }) {
   const userInfo = useRecoilValue(userState);
+
+  useEffect(() => {
+    console.log(list1);
+  });
 
   // 오늘 날짜 yyyy-mm-dd 형식으로 받아오기
   function getDateStr(myDate) {
@@ -64,7 +69,21 @@ export default function TimelineStat({ value }) {
         borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
-        height: "470px",
+        height: 480,
+        overflow: "auto",
+        scrollbarWidth: "thin",
+        "&::-webkit-scrollbar": {
+          width: "0.4em",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "#f1f1f1",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#F7BF87",
+        },
+        "&::-webkit-scrollbar-thumb:hover": {
+          background: "#FFB973",
+        },
       }}
     >
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
@@ -87,11 +106,7 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img
-                    width="20"
-                    height="20"
-                    src="assets/score/score_bad.png"
-                  ></img>
+                  <CakeRoundedIcon sx={{ color: "#A9D5C7" }}></CakeRoundedIcon>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -100,7 +115,17 @@ export default function TimelineStat({ value }) {
                   Eat
                 </Typography> */}
                 <Typography sx={{ fontSize: "13px" }}>
-                  양념치킨, 순대곱창, 수제버거, 깐풍기, 김치찌개
+                  {list1.length == 0
+                    ? "기록한 음식이 없어요.🤔"
+                    : list1.map(function (item, i) {
+                        if (i == 0 && list1.length == 1) {
+                          return item;
+                        } else if (i == list1.length - 1) {
+                          return item;
+                        } else {
+                          return item + ", ";
+                        }
+                      })}
                 </Typography>
               </TimelineContent>
             </TimelineItem>
@@ -115,11 +140,7 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img
-                    width="20"
-                    height="20"
-                    src="assets/score/score_good.png"
-                  ></img>
+                  <IcecreamRoundedIcon color="orange"></IcecreamRoundedIcon>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -128,7 +149,18 @@ export default function TimelineStat({ value }) {
                   Code
                 </Typography> */}
                 <Typography sx={{ fontSize: "13px" }}>
-                  떡볶이, 피자, 보쌈, 닭발
+                  {" "}
+                  {list2.length == 0
+                    ? "기록한 음식이 없어요.🤔"
+                    : list2.map(function (item, i) {
+                        if (i == 0 && list2.length == 1) {
+                          return item;
+                        } else if (i == list2.length - 1) {
+                          return item;
+                        } else {
+                          return item + ", ";
+                        }
+                      })}
                 </Typography>
               </TimelineContent>
             </TimelineItem>
@@ -144,11 +176,7 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img
-                    width="20"
-                    height="20"
-                    src="assets/score/score_soso.png"
-                  ></img>
+                  <RestaurantRoundedIcon color="purple"></RestaurantRoundedIcon>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -157,7 +185,17 @@ export default function TimelineStat({ value }) {
                   Sleep
                 </Typography> */}
                 <Typography sx={{ fontSize: "13px" }}>
-                  햄버거, 바나나우유, 자장면, 제육덮밥
+                  {list3.length == 0
+                    ? "기록한 음식이 없어요.🤔"
+                    : list3.map(function (item, i) {
+                        if (i == 0 && list3.length == 1) {
+                          return item;
+                        } else if (i == list3.length - 1) {
+                          return item;
+                        } else {
+                          return item + ", ";
+                        }
+                      })}
                 </Typography>
               </TimelineContent>
             </TimelineItem>
@@ -173,11 +211,7 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img
-                    width="20"
-                    height="20"
-                    src="assets/score/score_soso.png"
-                  ></img>
+                  <TapasRoundedIcon sx={{ color: "#FFB3B3" }}></TapasRoundedIcon>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -186,7 +220,17 @@ export default function TimelineStat({ value }) {
                   Repeat
                 </Typography> */}
                 <Typography sx={{ fontSize: "13px" }}>
-                  콩나물국밥, 닭갈비, 후라이드치킨, 순대
+                  {list4.length == 0
+                    ? "기록한 음식이 없어요.🤔"
+                    : list4.map(function (item, i) {
+                        if (i == 0 && list4.length == 1) {
+                          return item;
+                        } else if (i == list4.length - 1) {
+                          return item;
+                        } else {
+                          return item + ", ";
+                        }
+                      })}
                 </Typography>
               </TimelineContent>
             </TimelineItem>
@@ -202,11 +246,7 @@ export default function TimelineStat({ value }) {
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <img
-                    width="20"
-                    height="20"
-                    src="assets/score/score_good.png"
-                  ></img>
+                  <NightlifeRoundedIcon color="orange"></NightlifeRoundedIcon>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -215,7 +255,18 @@ export default function TimelineStat({ value }) {
                   Repeat
                 </Typography> */}
                 <Typography sx={{ fontSize: "13px" }}>
-                  돈까스, 탕수육, 보쌈, 스테이크
+                  {" "}
+                  {list5.length == 0
+                    ? "기록한 음식이 없어요.🤔"
+                    : list5.map(function (item, i) {
+                        if (i == 0 && list5.length == 1) {
+                          return item;
+                        } else if (i == list5.length - 1) {
+                          return item;
+                        } else {
+                          return item + ", ";
+                        }
+                      })}
                 </Typography>
               </TimelineContent>
             </TimelineItem>
