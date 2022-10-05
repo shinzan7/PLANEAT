@@ -29,7 +29,21 @@ export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSo
         borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
-        height: "470px",
+        height: 480,
+        overflow: "auto",
+        scrollbarWidth: "thin",
+        "&::-webkit-scrollbar": {
+          width: "0.4em",
+        },
+        "&::-webkit-scrollbar-track": {
+          background: "#f1f1f1",
+        },
+        "&::-webkit-scrollbar-thumb": {
+          backgroundColor: "#F7BF87",
+        },
+        "&::-webkit-scrollbar-thumb:hover": {
+          background: "#FFB973",
+        },
       }}
     >
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
