@@ -5,12 +5,11 @@
 */
 import React from "react";
 import TagNute from "components/common/TagNute";
-import { Grid } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import SideBar from "components/common/SideBar";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 function SearchByNutrient() {
-
   const nuterientTags = [
     // {
     //   id: "1",
@@ -314,64 +313,72 @@ function SearchByNutrient() {
     // },
   ];
 
-  const section = { marginTop:'80px' }
-  const section1 = { marginTop:'25vh', textAlign:'center'}
-  const section2 = { marginTop:'5vh', textAlign:'center'}
-  const section3 = { marginTop:'10vh'}
+  const section = { marginTop: "80px" };
+  const section1 = { marginTop: "25vh", textAlign: "center" };
+  const section2 = { marginTop: "5vh", textAlign: "center" };
+  const section3 = { marginTop: "10vh" };
 
   return (
-      <div style={section}>
-          <Grid container> 
-            <Grid item xs={1.5} style={section1}>
-              <SideBar />
-            </Grid>
-
-            <Grid item xs={10.5} style={section2}>
-              <Grid container>
-                <Grid item xs={3}>
-
-                </Grid>
-                
-                <Grid item xs={4}>
-                  <p>원하는 성분을 포함한 영양제를 확인해보세요</p>
-                </Grid>
-                <Grid item xs={5}>
-                  
-                </Grid>
+    <div id="wrap">
+      <Grid container>
+        {/* 상단 문구 */}
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          xs={12}
+          style={{
+            background: "#FFEFC9",
+            borderRadius: "25px",
+            margin: "20px",
+            padding: "10px",
+            boxShadow: "1px 2px 6px #c7c7c7",
+          }}
+        >
+          {/* 약 이미지 */}
+          <Grid item xs={3.5} style={{ textAlign: "right" }}>
+            <img
+              src="assets/drug.png"
+              style={{ width: "90px", height: "90px" }}
+            />
+          </Grid>
+          {/* 문구 */}
+          <Grid item xs={5} style={{ marginLeft: "30px" }}>
+            <Typography
+              variant="h5"
+              style={{ marginBottom: "10px", fontWeight: "bold" }}
+            >
+              어떤 성분을 찾으시나요?
+            </Typography>
+            <Typography variant="subtitle1">
+              성분별로 영양제를 확인하세요!
+            </Typography>
+          </Grid>
+        </Grid>
+        {/* 사이드 바 */}
+        <Grid item xs={2}>
+          <SideBar />
+        </Grid>
+        {/* 태그 */}
+        <Grid item xs={9} style={{ marginTop: "30px", marginBottom: "50px" }}>
+          <Grid container justifyContent="center">
+            <Grid item xs={9}>
+              <Grid container justifyContent="center">
+                {nuterientTags.map((data, i) => (
+                  <Link
+                    to={`/nutrientresult/${data.id}`}
+                    state={{ data: data }}
+                    style={{ textDecoration: "none", color: "black" }}
+                  >
+                    <TagNute key={i} tag={data.title} index={i + 1} />
+                  </Link>
+                ))}
               </Grid>
-
-              <div style={section3}>
-                
-              </div>
-              
-              <Grid container>
-                <Grid item xs={2}>
-
-                </Grid>
-                <Grid item xs={8}>
-                  <Grid container>
-                    {nuterientTags.map((data, i) => (   
-                      <Link to={`/nutrientresult/${data.id}`} state={{ data:data }} style={{textDecoration:'none', color:'black'}}>
-                        <TagNute
-                        key={i}
-                        tag={data.title}
-                        index={i+1}
-                      />
-                      </Link>        
-                    ))}
-                  </Grid>
-                </Grid>
-                <Grid item xs={2}>
-
-                </Grid>
-            </Grid>
-
             </Grid>
           </Grid>
-          <div style={section3}>
-                
-          </div>
-      </div>
+        </Grid>
+      </Grid>
+    </div>
   );
 }
 

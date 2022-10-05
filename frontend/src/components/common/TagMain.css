@@ -8,7 +8,7 @@
     width: 130px;
     height: 130px;
     border-radius: 40px;
-    background-color: #EAEBF8;
+    background-color: #FDEDDE;
     box-shadow: 1px 3px 5px rgb(209, 215, 216);
     margin: 15px;
     display: flex;
@@ -17,6 +17,11 @@
 }
 
 .container:hover {
-    background: #9DA6F8;
-    color: white;
+    background: #FDEDDE;
+    transform: scale(1.1);
+}
+
+/* todo: 체크하기 */
+.container1:hover {
+    transform: scale(1.1);
 }

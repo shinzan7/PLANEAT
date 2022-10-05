@@ -5,10 +5,9 @@
 */
 import React from "react";
 import TagMain from "components/common/TagMain";
-import { Grid } from "@mui/material";
-import {Link} from 'react-router-dom';
+import { Grid, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import SideBar from "components/common/SideBar";
-
 
 function SearchByTag() {
   const userTags = [
@@ -145,68 +144,71 @@ function SearchByTag() {
     },
   ];
 
-  const section = { marginTop:'80px' }
-  const section1 = { marginTop:'25vh', textAlign:'center'}
-  const section2 = { marginTop:'5vh', textAlign:'center'}
-  const section3 = { marginTop:'10vh' }
+  const section = { marginTop: "80px" };
+  const section1 = { textAlign: "center" };
+  const section2 = { marginTop: "5vh", textAlign: "center" };
+  const section3 = { marginTop: "10vh" };
 
   return (
-      <div style={section}>
-        <Grid container> 
-            {/* 좌측 사이드바 */}
-            <Grid item xs={1.5} style={section1}>
-              <SideBar />
-            </Grid>
-
-            <Grid item xs={10.5} style={section2}>
-              <Grid container>
-                <Grid item xs={3}>
-
-                </Grid>
-                {/* 중앙 상단 문구 */}
-                <Grid item xs={4}>
-                  <p>내 건강 고민에 맞는 제품을 찾아보세요</p>
-                </Grid>
-                <Grid item xs={5}>
-                  
-                </Grid>
-            </Grid>
-
-            <div style={section3}>
-                
-            </div>
-              
-            <Grid container>
-              <Grid item xs={2}>
-
+    <div id="wrap">
+      <Grid container>
+        {/* 상단 문구 */}
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          style={{
+            background: "#E6E8FD",
+            borderRadius: "25px",
+            margin: "20px",
+            padding: "10px",
+            boxShadow: "1px 2px 6px #c7c7c7",
+          }}
+        >
+          {/* 약 이미지 */}
+          <Grid item xs={3.5} style={{ textAlign: "right" }}>
+            <img
+              src="assets/capsules.png"
+              style={{ width: "90px", height: "90px" }}
+            />
+          </Grid>
+          {/* 문구 */}
+          <Grid item xs={5} style={{ marginLeft: "30px" }}>
+            <Typography
+              variant="h5"
+              style={{ marginBottom: "10px", fontWeight: "bold" }}
+            >
+              어떤 건강 고민이 있으신가요?
+            </Typography>
+            <Typography variant="subtitle1">
+              건강 고민별 영양제를 확인하세요!
+            </Typography>
+          </Grid>
+        </Grid>
+        {/* 사이드 바 */}
+        <Grid item xs={2}>
+          <SideBar />
+        </Grid>
+        {/* 태그 */}
+        <Grid item xs={9} style={{ marginTop: "30px", marginBottom: "50px" }}>
+          <Grid container justifyContent="center">
+            <Grid item xs={9}>
+              <Grid container justifyContent="center">
+                {userTags.map((data, i) => (
+                  <Link
+                    to={`/tagresult/${data.title}`}
+                    style={{ textDecoration: "none", color: "black" }}
+                    key={i}
+                  >
+                    <TagMain key={i} src={data.src} tag={data.title} />
+                  </Link>
+                ))}
               </Grid>
-              <Grid item xs={8}>
-                <Grid container>
-                  
-                    {userTags.map((data, i) => (   
-                      <Link to={`/tagresult/${data.title}`} style={{textDecoration:'none', color:'black'}}>          
-                        <TagMain
-                        key={i}
-                        src={data.src}
-                        tag={data.title}
-                      />
-                      </Link>
-                    ))}
-                  
-                </Grid>
-              </Grid>
-              <Grid item xs={2}>
-
-              </Grid>
-
             </Grid>
           </Grid>
         </Grid>
-
-        <div style={section3}>
-                
-        </div>
-      </div>
+      </Grid>
+    </div>
   );
 }
 

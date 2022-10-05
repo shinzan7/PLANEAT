@@ -5,25 +5,28 @@
 */
 
 import styled from "styled-components";
-import React, { useState } from 'react'
+import React, { useState } from "react";
 
 function Pagination({ total, limit, page, setPage }) {
-  const numPages =[];
-  for (let i = 1; i <= Math.ceil(total/ limit); i++) {
+  const numPages = [];
+  for (let i = 1; i <= Math.ceil(total / limit); i++) {
     numPages.push(i);
   }
 
-  const [limit2, setLimit2] = useState(10) 
-  const offset = Math.floor((page-1)/10)*limit2
+  const [limit2, setLimit2] = useState(10);
+  const offset = Math.floor((page - 1) / 10) * limit2;
 
   return (
     <>
       <Nav>
-        <Button onClick={() => setPage(Math.floor((page-11)/10)*10+1)} disabled={page <= 10}>
+        <Button
+          onClick={() => setPage(Math.floor((page - 11) / 10) * 10 + 1)}
+          disabled={page <= 10}
+        >
           &lt;
         </Button>
 
-        {numPages.slice(offset, offset+limit2).map(function(number) {
+        {numPages.slice(offset, offset + limit2).map(function (number) {
           return (
             <Button
               key={number}
@@ -32,16 +35,22 @@ function Pagination({ total, limit, page, setPage }) {
             >
               {number}
             </Button>
-          )})} 
+          );
+        })}
 
-        <Button onClick={() => setPage(Math.floor((page+9)/10)*10+1)} disabled={ (Math.floor((Math.ceil(total/limit)-1)/10)*10)+1 <= page && page <= Math.ceil(total / limit) } >
+        <Button
+          onClick={() => setPage(Math.floor((page + 9) / 10) * 10 + 1)}
+          disabled={
+            Math.floor((Math.ceil(total / limit) - 1) / 10) * 10 + 1 <= page &&
+            page <= Math.ceil(total / limit)
+          }
+        >
           &gt;
         </Button>
       </Nav>
     </>
   );
 }
-
 
 // (Math.floor((Math.ceil(total/limit)-1)/10)*10)+1 <= page <= Math.ceil(total / limit)
 const Nav = styled.nav`
@@ -57,24 +66,27 @@ const Button = styled.button`
   border-radius: 8px;
   padding: 8px;
   margin: 0;
-  background: black;
-  color: white;
+  background: none;
+  color: black;
   font-size: 1rem;
 
   &:hover {
-    background: tomato;
+    background: #e6e8fd;
     cursor: pointer;
     transform: translateY(-2px);
   }
 
   &[disabled] {
-    background: grey;
+    background: none;
     cursor: revert;
     transform: revert;
+    color: black;
+    font-weight: bold;
   }
 
   &[aria-current] {
-    background: deeppink;
+    background: #9da6f8;
+    color: white;
     font-weight: bold;
     cursor: revert;
     transform: revert;
