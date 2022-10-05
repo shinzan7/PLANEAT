@@ -589,7 +589,7 @@ export default function DailyMeal(props) {
                 <Grid item xs={12} sx={{ marginBottom: "15px" }}>
                   나트륨을 &nbsp;
                   <b style={{ color: "#f7bf87", fontSize: "20px" }}>
-                    {real.sodium - rec.sodium}mg
+                    {parseFloat((real.sodium - rec.sodium).toFixed(1))}mg
                   </b>
                   &nbsp; 더 섭취했어요
                 </Grid>
@@ -598,7 +598,10 @@ export default function DailyMeal(props) {
                 <Grid item xs={12} sx={{ marginBottom: "15px" }}>
                   트랜스지방산을&nbsp;
                   <b style={{ color: "#f7bf87", fontSize: "20px" }}>
-                    {real.transFatty_acid - rec.transFattyAcid}g
+                    {parseFloat(
+                      (real.transFatty_acid - rec.transFattyAcid).toFixed(1)
+                    )}
+                    g
                   </b>
                   &nbsp;더 섭취했어요
                 </Grid>
@@ -607,7 +610,10 @@ export default function DailyMeal(props) {
                 <Grid item xs={12} sx={{ marginBottom: "15px" }}>
                   콜레스테롤을&nbsp;
                   <b style={{ color: "#f7bf87", fontSize: "20px" }}>
-                    {real.transFatty_acid - rec.transFattyAcid}g
+                    {parseFloat(
+                      (real.transFatty_acid - rec.transFattyAcid).toFixed(1)
+                    )}
+                    g
                   </b>
                   &nbsp; 더 섭취했어요
                 </Grid>
