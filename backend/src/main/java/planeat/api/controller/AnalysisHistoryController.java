@@ -46,7 +46,7 @@ public class AnalysisHistoryController {
     }
 
     @GetMapping("/percent")
-    @ApiOperation(value = "지정날짜 이후 평균비율 조회", notes = "유저 아이디와 지정날짜를 받아 지정날짜 이후의 모든 분석기록의 비율의 평균을 반환한다.")
+    @ApiOperation(value = "지정날짜 이후 평균비율 조회", notes = "유저 아이디와 지정날짜를 받아 지정날짜 이후의 모든 분석기록의 비율(%)의 평균을 반환한다.")
     public ResponseEntity<BasicResponse<AnalysisHistoryPercentResponse>> readAnalysisPercentAfterDate(@RequestParam Long userId, @RequestParam String date){
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         AnalysisHistoryPercentResponse response = analysisHistoryService.makeAverageAnalysisHistoryByDateAfter(userId, localDate);
@@ -54,7 +54,7 @@ public class AnalysisHistoryController {
     }
 
     @GetMapping("/percent/one")
-    @ApiOperation(value = "지정날짜 평균비율 조회", notes = "유저 아이디와 지정날짜를 받아 그날의 분석기록의 비율을 반환한다.")
+    @ApiOperation(value = "지정날짜 평균비율 조회", notes = "유저 아이디와 지정날짜를 받아 그날의 분석기록의 비율(%)을 반환한다.")
     public ResponseEntity<BasicResponse<AnalysisHistoryPercentResponse>> readAnalysisPercentDate(@RequestParam Long userId, @RequestParam String date){
         LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
         AnalysisHistoryPercentResponse response = analysisHistoryService.makeAverageAnalysisHistoryByDate(userId, localDate);
