@@ -110,13 +110,13 @@ function SearchDetail() {
                     <Grid item xs={7.3}>
                       <p>주요기능</p>
                       {tags.map((data, i) => (
-                        <Link to={'/tagresult/'+ data} style={{textDecoration:'none'}}>
+                        <Link to={'/tagresult/'+ data} style={{textDecoration:'none', marginRight:'5px'}}>
                           <ChipOrange key={i} label={data} />
                         </Link>
                       ))}
                       <p>성분</p>
                       {info.nutriIngredientList.map((data, i) => (
-                          <ChipBlue key={i} label={data.ingredientName} /> 
+                          <ChipBlue key={i} label={data.ingredientName} style={{marginRight:'5px'}}/> 
                       ))}
                       <p>상세정보</p>
                       <p>{info.description}</p>

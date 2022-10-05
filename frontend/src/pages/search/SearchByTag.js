@@ -202,6 +202,10 @@ function SearchByTag() {
             </Grid>
           </Grid>
         </Grid>
+
+        <div style={section3}>
+                
+        </div>
       </div>
   );
 }
