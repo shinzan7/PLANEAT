@@ -5,18 +5,9 @@
 */
 import { Divider, Paper, List, ListItem, ListItemText, Collapse, Grid, Box } from "@mui/material";
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useRef } from "react";
 import Chart from "react-apexcharts";
-
-// const name = localStorage.getItem("name");
-
-const userInfo = {
-  name: "김싸피",
-};
-
-const listItemStyle = {
-  textAlign: "right",
-};
+import { getCLS } from "web-vitals";
 
 // 섭취량
 const intake = {
@@ -53,53 +44,54 @@ const intake = {
 };
 
 // 섭취량 차트
-function ShowIntakeCharts() {
+function ShowIntakeCharts({ carbo, protein, fat }) {
   // 탄수화물, 단백질, 지방, 당, 나트륨 순으로 해당 기간의 섭취량 받아오기
-  const series = [intake.carbohydrate, intake.protein, intake.fat, intake.sugar, intake.sodium];
+  const series = [carbo, protein, fat];
   const options = {
     //data on the x-axis
+    labels: ["탄수화물", "단백질", "지방"],
     colors: ["#FFB3B3", "#F7BF87", "#FFEFC9", "#A9D5C7", "#9DA6F8"],
     chart: {
-      height: 350,
-      type: "radialBar",
+      type: "donut",
     },
-    plotOptions: {
-      radialBar: {
-        dataLabels: {
-          name: {
-            fontSize: "22px",
+    responsive: [
+      {
+        breakpoint: 480,
+        options: {
+          chart: {
+            width: 200,
           },
-          value: {
-            fontSize: "16px",
-          },
-          total: {
-            show: true,
-            label: "총 칼로리",
-            formatter: function (w) {
-              // By default this function returns the average of all series. The below is just an example to show the use of custom formatter function
-              return intake.calorie;
-            },
+          legend: {
+            position: "bottom",
           },
         },
       },
-    },
-    labels: ["탄수화물", "단백질", "지방", "당류", "나트륨"],
+    ],
   };
 
   return (
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="radialBar" width={500} height={350} />
+          <Chart options={options} series={series} type="donut" width={500} height={350} />
         </div>
       </div>
     </div>
   );
 }
 
-export default function FeedbackStat({ value, percent }) {
+export default function FeedbackStat({ value, data, percent, allCal, calArr }) {
+  const mounted = useRef(false);
   useEffect(() => {
-    console.log(percent);
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      console.log("뭐야뭐야");
+      // console.log(percent);
+      // console.log(data);
+      // console.log(allCal);
+      // console.log(calArr);
+    }
   }, []);
 
   return (
@@ -117,7 +109,12 @@ export default function FeedbackStat({ value, percent }) {
       <h3 style={{ margin: 20 }}>분석 피드백</h3>
       <Grid Container style={{ display: "flex", margin: 20 }}>
         <Grid item xs>
-          <ShowIntakeCharts></ShowIntakeCharts>
+          <ShowIntakeCharts
+            allCal={allCal}
+            carbo={calArr[0]}
+            protein={calArr[1]}
+            fat={calArr[2]}
+          ></ShowIntakeCharts>
         </Grid>
         <Divider orientation="vertical" flexItem />
         <Grid item xs>

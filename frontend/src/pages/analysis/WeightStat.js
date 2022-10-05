@@ -4,30 +4,26 @@
 @since 2022.10.01
 */
 import { Paper, Grid } from "@mui/material";
+import { useEffect, useState, useRef } from "react";
 import Chart from "react-apexcharts";
 
 // 변화기록 차트
-function ShowWeightIntakeCharts() {
+function ShowWeightIntakeCharts({ date, realIntake, recoIntake }) {
   const series = [
     {
       name: "총 섭취량",
       type: "column",
-      data: [440, 505, 414, 671, 227, 413, 201, 352, 752, 320, 257, 160],
+      data: realIntake,
     },
     {
       name: "권장 섭취량",
       type: "column",
-      data: [1000, 1020, 1000, 1000, 1200, 1200, 1200, 1200, 1300, 1300, 1300, 1100],
-    },
-    {
-      name: "몸무게",
-      type: "line",
-      data: [48, 47, 49, 52, 51, 49, 47, 48, 48, 50, 49, 47],
+      data: recoIntake,
     },
   ];
 
   const options = {
-    colors: ["#F7BF87", "#FFEFC9", "#9DA6F8"],
+    colors: ["#F7BF87", "#FFEFC9"],
     chart: {
       height: 350,
       type: "line",
@@ -41,10 +37,7 @@ function ShowWeightIntakeCharts() {
       enabled: false,
     },
     xaxis: {
-      categories: [
-        220908, 220909, 220910, 220911, 220912, 220913, 220914, 220915, 220916, 220917, 220918,
-        220919,
-      ],
+      categories: date,
     },
     yaxis: [
       {
@@ -92,28 +85,6 @@ function ShowWeightIntakeCharts() {
           },
         },
       },
-      {
-        seriesName: "Revenue",
-        opposite: true,
-        axisTicks: {
-          show: true,
-        },
-        axisBorder: {
-          show: true,
-          color: "#9DA6F8",
-        },
-        labels: {
-          style: {
-            colors: "#9DA6F8",
-          },
-        },
-        title: {
-          text: "몸무게",
-          style: {
-            color: "#9DA6F8",
-          },
-        },
-      },
     ],
     tooltip: {
       fixed: {
@@ -140,7 +111,50 @@ function ShowWeightIntakeCharts() {
   );
 }
 
-export default function WeightStat({ value }) {
+export default function WeightStat({ value, data, reco }) {
+  // 실제 칼로리
+  const [realIntake, setRealIntake] = useState([]);
+  // 권장 칼로리
+  const [recoIntake, setRecoIntake] = useState([]);
+  // 날짜
+  const [date, setDate] = useState([]);
+
+  // 한글날짜로 변환
+  function hangul_date(data) {
+    var format = /[12][0-9]{3}-[0-9]{2}-[0-9]{2}/;
+    if (data.search(format) == -1) return data;
+
+    var _year = data.substr(0, 4);
+    var _month = data.substr(5, 2);
+    var _day = data.substr(8, 2);
+
+    return _month + "월" + _day + "일";
+  }
+
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      // console.log(data);
+      // console.log(reco);
+      let arr = [];
+      let arr2 = [];
+      for (let i = 0; i < data.length; i++) {
+        arr.push(hangul_date(data[i].date));
+        arr2.push(data[i].calorie);
+      }
+      setDate(arr); // 날짜
+      setRealIntake(arr2); // 실제 칼로리
+
+      let arr3 = [];
+      for (let i = 0; i < reco.length; i++) {
+        arr3.push(reco[i].calorie); // 권장 칼로리
+      }
+      setRecoIntake(arr3);
+    }
+  }, []);
+
   return (
     <Paper
       elevation={3}
@@ -159,7 +173,11 @@ export default function WeightStat({ value }) {
           <h3>변화기록</h3>
         </Grid>
         <Grid item sx={{ textAlign: "center" }}>
-          <ShowWeightIntakeCharts></ShowWeightIntakeCharts>
+          <ShowWeightIntakeCharts
+            date={date}
+            realIntake={realIntake}
+            recoIntake={recoIntake}
+          ></ShowWeightIntakeCharts>
         </Grid>
       </Grid>
     </Paper>

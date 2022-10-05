@@ -4,28 +4,23 @@
 @since 2022.10.01
 */
 import { Paper, Grid, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
-import { getStaticContextFromError } from "@remix-run/router";
 import { http } from "api/http";
 import { useEffect, useState, useRef } from "react";
 
-// 플랜잇 지수 percentage
-// let good_per =
-//   Math.round(
-//     (100 * analysisHistory.score_good) /
-//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-//   ) + "%";
-// let bad_per =
-//   Math.round(
-//     (100 * analysisHistory.score_bad) /
-//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-//   ) + "%";
-// let soso_per =
-//   Math.round(
-//     (100 * analysisHistory.score_soso) /
-//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-//   ) + "%";
+export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSoso }) {
+  const [bad, setBad] = useState("");
 
-export default function PlaneatStat({ value, score }) {
+  const mounted = useRef(false);
+  useEffect(() => {
+    if (!mounted.current) {
+      mounted.current = true;
+    } else {
+      // console.log("스코어", scoreBad);
+      // console.log("스코어", scoreGood);
+      // console.log("스코어", scoreSoso);
+    }
+  }, []);
+
   return (
     <Paper
       elevation={3}
@@ -43,6 +38,7 @@ export default function PlaneatStat({ value, score }) {
         <Grid item>
           <h3 style={{ marginBottom: "10px" }}>플래닛지수</h3>
         </Grid>
+        {score}
         <List>
           <ListItem sx={{ padding: "0px" }}>
             <ListItemIcon sx={{ minWidth: "30px" }}>
@@ -81,7 +77,7 @@ export default function PlaneatStat({ value, score }) {
                 src="assets/score/score_bad.png"
               ></img>
               <p style={{ color: "#FFB3B3", fontWeight: "bold", textAlign: "center" }}>
-                {score[0]}
+                {scoreBad}
               </p>
             </Grid>
             <Grid item>
@@ -92,7 +88,7 @@ export default function PlaneatStat({ value, score }) {
                 src="assets/score/score_good.png"
               ></img>
               <p style={{ color: "#A9D5C7", fontWeight: "bold", textAlign: "center" }}>
-                {score[1]}
+                {scoreGood}
               </p>
             </Grid>
             <Grid item>
@@ -102,8 +98,8 @@ export default function PlaneatStat({ value, score }) {
                 style={{ display: "block" }}
                 src="assets/score/score_soso.png"
               ></img>
-              <p style={{ color: "#FFEFC9", fontWeight: "bold", textAlign: "center" }}>
-                {score[2]}
+              <p style={{ color: "#F7BF87", fontWeight: "bold", textAlign: "center" }}>
+                {scoreSoso}
               </p>
             </Grid>
           </Grid>
