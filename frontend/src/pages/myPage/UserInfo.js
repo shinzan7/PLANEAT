@@ -31,19 +31,19 @@ export default function UserInfo() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
   const [userRecIntakeInfo, setUserRecIntakeInfo] = useRecoilState(userRecIntake);
 
-  const [name, setName] = useState(userInfo.name);
-  const [gender, setGender] = useState(userInfo.gender); // 성별
-  const [age, setAge] = useState(userInfo.age); // 나이
-  const [height, setHeight] = useState(userInfo.height); // 키
-  const [weight, setWeight] = useState(userInfo.weight); // 몸무게
+  const [name, setName] = useState("");
+  const [gender, setGender] = useState(""); // 성별
+  const [age, setAge] = useState(0); // 나이
+  const [height, setHeight] = useState(0); // 키
+  const [weight, setWeight] = useState(0); // 몸무게
   const [active, setActive] = useState(""); // 활동량
-  const [bmi, setBMI] = useState(userInfo.bmi); // bmi
-  const [recoIntake, setRecoIntake] = useState(userRecIntakeInfo.kcal); // 권장섭취량
-  const [activeAmount, setActiveAmount] = useState(userInfo.active); // 기준별 활동지수
-  const [birthyear, setBirthYear] = useState(userInfo.birthYear); // 출생년도
-  const [carbo, setCarbo] = useState(userRecIntakeInfo.carbohydrate); // 탄수화물 권장섭취량
-  const [protein, setProtein] = useState(userRecIntakeInfo.protein); // 단백질 권장섭취량
-  const [fat, setFat] = useState(userRecIntakeInfo.fat); // 지방 권장섭취량
+  const [bmi, setBMI] = useState(0.0); // bmi
+  const [recoIntake, setRecoIntake] = useState(0.0); // 권장섭취량
+  const [activeAmount, setActiveAmount] = useState(0.0); // 기준별 활동지수
+  const [birthyear, setBirthYear] = useState(0); // 출생년도
+  const [carbo, setCarbo] = useState(0.0); // 탄수화물 권장섭취량
+  const [protein, setProtein] = useState(0.0); // 단백질 권장섭취량
+  const [fat, setFat] = useState(0.0); // 지방 권장섭취량
 
   // 수정 완료 모달
   const [open, setOpen] = useState(false);
@@ -182,6 +182,9 @@ export default function UserInfo() {
 
     // console.log(userCategory);
 
+    console.log(bmi);
+    console.log(recoIntake);
+    console.log(activeAmount);
     // 정보 수정 api 연동
     const response = await http.put(`user-infos/${userInfo.userId}`, {
       userId: userInfo.userId,
@@ -248,10 +251,29 @@ export default function UserInfo() {
     }
   }
 
-  // useEffect(() => {
-  //   // 유저 정보 불러오기
-  //   const response = http.get(``);
-  // }, []);
+  async function getUserInfo() {
+    // 유저 정보 불러오기
+    const response = await http.get(`user-infos/${userInfo.userId}`);
+    let info = response.data.data;
+    console.log(info);
+    setName(info.name);
+    setGender(info.gender);
+    setBirthYear(info.birthyear);
+    let age = new Date().getFullYear() - info.birthyear + 1;
+    setAge(age);
+    setHeight(info.recInfo.height);
+    setWeight(info.recInfo.weight);
+    setActiveAmount(info.recInfo.active);
+    setBMI(info.recInfo.bmi);
+    setRecoIntake(info.recInfo.calorie);
+    setCarbo(info.recInfo.carbohydrate);
+    setProtein(info.recInfo.protein);
+    setFat(info.recInfo.fat);
+  }
+
+  useEffect(() => {
+    getUserInfo();
+  }, []);
 
   // 숫자만 입력받게 하는 validation
   const validationNumber = (val) => {
@@ -291,7 +313,7 @@ export default function UserInfo() {
               autoComplete="cc-exp"
               variant="standard"
               color="purple"
-              defaultValue={userInfo.name}
+              value={name}
               onChange={handleName}
               error={!validationName(name)}
               helperText={!validationName(name) ? "이름은 한글 2글자~5글자로 만들어주세요!" : ""}
@@ -326,7 +348,7 @@ export default function UserInfo() {
               <RadioGroup
                 row
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue={userInfo.gender}
+                value={gender}
                 name="radio-buttons-group"
                 onChange={handleGender}
               >
@@ -375,7 +397,7 @@ export default function UserInfo() {
               autoComplete="cc-number"
               variant="standard"
               color="purple"
-              defaultValue={userInfo.age}
+              value={age}
               onChange={handleAge}
             />
           </Grid>
@@ -386,6 +408,7 @@ export default function UserInfo() {
           <Grid item xs={3}>
             키
           </Grid>
+
           <Grid item xs={9}>
             <TextField
               id="userHeight"
@@ -393,7 +416,7 @@ export default function UserInfo() {
               variant="standard"
               color="purple"
               required
-              defaultValue={userInfo.height}
+              value={height}
               onChange={handleHeight}
             />
           </Grid>
@@ -411,7 +434,7 @@ export default function UserInfo() {
               variant="standard"
               required
               color="purple"
-              defaultValue={userInfo.weight}
+              value={weight}
               onChange={handleWeight}
             />
           </Grid>
@@ -427,12 +450,12 @@ export default function UserInfo() {
               <RadioGroup
                 row
                 aria-labelledby="demo-radio-buttons-group-label"
-                defaultValue={
-                  userInfo.active == "1.0"
+                value={
+                  activeAmount == "1.0"
                     ? "notactive"
-                    : userInfo.active == "1.11" || userInfo.active == "1.12"
+                    : activeAmount == "1.11" || activeAmount == "1.12"
                     ? "lessactive"
-                    : userInfo.active == "1.25" || userInfo.active == "1.27"
+                    : activeAmount == "1.25" || activeAmount == "1.27"
                     ? "active"
                     : "veryactive"
                 }
@@ -503,8 +526,7 @@ export default function UserInfo() {
         {/* BMI */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs>
-            <b>{userInfo.name}</b>님의 현재 BMI지수는{" "}
-            <b style={{ color: "orange" }}>{userInfo.bmi}</b>
+            <b>{name}</b>님의 현재 BMI지수는 <b style={{ color: "orange" }}>{bmi}</b>
             입니다.
           </Grid>
         </Grid>
@@ -512,8 +534,7 @@ export default function UserInfo() {
         {/* 권장섭취량 */}
         <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
           <Grid item xs>
-            <b>{userInfo.name}</b>님의 현재 권장섭취량은{" "}
-            <b style={{ color: "orange" }}>{userRecIntakeInfo.kcal}kcal</b>
+            <b>{name}</b>님의 현재 권장섭취량은 <b style={{ color: "orange" }}>{recoIntake}kcal</b>
             입니다.
           </Grid>
         </Grid>

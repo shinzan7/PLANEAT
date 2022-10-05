@@ -8,23 +8,6 @@ import { getStaticContextFromError } from "@remix-run/router";
 import { http } from "api/http";
 import { useEffect, useState, useRef } from "react";
 
-// 플랜잇 지수 percentage
-// let good_per =
-//   Math.round(
-//     (100 * analysisHistory.score_good) /
-//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-//   ) + "%";
-// let bad_per =
-//   Math.round(
-//     (100 * analysisHistory.score_bad) /
-//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-//   ) + "%";
-// let soso_per =
-//   Math.round(
-//     (100 * analysisHistory.score_soso) /
-//       (analysisHistory.score_good + analysisHistory.score_bad + analysisHistory.score_soso)
-//   ) + "%";
-
 export default function PlaneatStat({ value, score }) {
   return (
     <Paper
@@ -81,7 +64,7 @@ export default function PlaneatStat({ value, score }) {
                 src="assets/score/score_bad.png"
               ></img>
               <p style={{ color: "#FFB3B3", fontWeight: "bold", textAlign: "center" }}>
-                {score[0]}
+                {(score[0] = "NaN%" ? "0%" : score[0])}
               </p>
             </Grid>
             <Grid item>
@@ -92,7 +75,7 @@ export default function PlaneatStat({ value, score }) {
                 src="assets/score/score_good.png"
               ></img>
               <p style={{ color: "#A9D5C7", fontWeight: "bold", textAlign: "center" }}>
-                {score[1]}
+                {(score[1] = "NaN%" ? "0%" : score[1])}
               </p>
             </Grid>
             <Grid item>
@@ -103,7 +86,7 @@ export default function PlaneatStat({ value, score }) {
                 src="assets/score/score_soso.png"
               ></img>
               <p style={{ color: "#F7BF87", fontWeight: "bold", textAlign: "center" }}>
-                {score[2]}
+                {(score[2] = "NaN%" ? "0%" : score[2])}
               </p>
             </Grid>
           </Grid>

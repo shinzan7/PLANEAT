@@ -204,9 +204,17 @@ export default function FoodStat({ value, data, percent }) {
           <h3>섭취량 분석</h3>
         </Grid>
         <Grid item>
-          <div>
-            <ShowFeedbackCharts percent={percent}></ShowFeedbackCharts>
-          </div>
+          {data.length == 0 ? (
+            <div style={{ lineHeight: "2", textAlign: "center" }}>
+              현재는 섭취 기록이 없어요.😥
+              <br />
+              식사 기록 페이지에서 내가 먹은 식사를 등록해보세요!
+            </div>
+          ) : (
+            <div>
+              <ShowFeedbackCharts percent={percent}></ShowFeedbackCharts>
+            </div>
+          )}
         </Grid>
       </Grid>
     </Paper>
