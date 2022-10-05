@@ -1,7 +1,6 @@
 package planeat.api.dto.analysishistory;
 
 import lombok.Data;
-import planeat.database.entity.FoodInfo;
 
 import java.io.Serializable;
 
@@ -16,7 +15,7 @@ public class IngredientInfoDto implements Serializable {
     private Float carbohydrate = 0f;
     private Float sugar = 0f;
 
-    private Float dietary_fiber = 0f;
+    private Float dietaryFiber = 0f;
     private Float calcium = 0f;
     private Float iron = 0f;
     private Float magnesium = 0f;
@@ -64,7 +63,7 @@ public class IngredientInfoDto implements Serializable {
             case 5: this.sugar += ingredientAmount * intakeReal;
                 break;
 
-            case 6: this.dietary_fiber += ingredientAmount * intakeReal;
+            case 6: this.dietaryFiber += ingredientAmount * intakeReal;
                 break;
             case 7: this.calcium += ingredientAmount * intakeReal;
                 break;
@@ -92,29 +91,29 @@ public class IngredientInfoDto implements Serializable {
                 break;
             case 18: this.vitaminD += ingredientAmount * intakeReal;
                 break;
-            case 19: this.vitaminB6 += ingredientAmount * intakeReal;
+            case 19: this.vitaminB1 += ingredientAmount * intakeReal;
                 break;
-            case 20: this.folate += ingredientAmount * intakeReal;
-                break;
-
-            case 21: this.vitaminB12 += ingredientAmount * intakeReal;
-                break;
-            case 22: this.vitaminC += ingredientAmount * intakeReal;
-                break;
-            case 23: this.cholesterol += ingredientAmount * intakeReal;
-                break;
-            case 24: this.fattyAcid += ingredientAmount * intakeReal;
-                break;
-            case 25: this.linoleicAcid += ingredientAmount * intakeReal;
+            case 20: this.vitaminB2 += ingredientAmount * intakeReal;
                 break;
 
-            case 26: this.alphaLinoleicAcid += ingredientAmount * intakeReal;
+            case 21: this.vitaminB6 += ingredientAmount * intakeReal;
                 break;
-            case 27: this.transFattyAcid += ingredientAmount * intakeReal;
+            case 22: this.folate += ingredientAmount * intakeReal;
                 break;
-            case 28: this.vitaminB1 += ingredientAmount * intakeReal;
+            case 23: this.vitaminB12 += ingredientAmount * intakeReal;
                 break;
-            case 29: this.vitaminB2 += ingredientAmount * intakeReal;
+            case 24: this.vitaminC += ingredientAmount * intakeReal;
+                break;
+            case 25: this.cholesterol += ingredientAmount * intakeReal;
+                break;
+
+            case 26: this.fattyAcid += ingredientAmount * intakeReal;
+                break;
+            case 27: this.alphaLinoleicAcid += ingredientAmount * intakeReal;
+                break;
+            case 28: this.linoleicAcid += ingredientAmount * intakeReal;
+                break;
+            case 29: this.transFattyAcid += ingredientAmount * intakeReal;
                 break;
             default: break;
         }
