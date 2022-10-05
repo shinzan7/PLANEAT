@@ -22,7 +22,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
-import longlogo from 'assets/longlogo.png'
+import longlogo from "assets/longlogo.png";
 
 const pages = ["식사 기록", "영양제 검색", "내 영양분석"];
 
@@ -119,9 +119,15 @@ const ResponsiveAppBar = () => {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    {page == "식사 기록" && <StyledLink to="/main">{page}</StyledLink>}
-                    {page == "영양제 검색" && <StyledLink to="/search">{page}</StyledLink>}
-                    {page == "내 영양분석" && <StyledLink to="/analysis">{page}</StyledLink>}
+                    {page == "식사 기록" && (
+                      <StyledLink to="/main">{page}</StyledLink>
+                    )}
+                    {page == "영양제 검색" && (
+                      <StyledLink to="/search">{page}</StyledLink>
+                    )}
+                    {page == "내 영양분석" && (
+                      <StyledLink to="/analysis">{page}</StyledLink>
+                    )}
                   </Typography>
                 </MenuItem>
               ))}
@@ -146,7 +152,13 @@ const ResponsiveAppBar = () => {
             PLANEAT
           </Typography>
           {/* 중앙 메뉴 영역 (기본 사이즈) */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: "200px" }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              ml: "200px",
+            }}
+          >
             {pages.map((page) => (
               <Typography
                 key={page}
@@ -160,12 +172,26 @@ const ResponsiveAppBar = () => {
                   </StyledLink>
                 )}
                 {page == "영양제 검색" && (
-                  <StyledLink to="/search" current={location.pathname == "/search"}>
+                  <StyledLink
+                    to="/search"
+                    current={
+                      location.pathname == "/search" ||
+                      location.pathname == "/searchtag" ||
+                      location.pathname == "/searchnutrient" ||
+                      location.pathname.includes("/searchdetail") ||
+                      location.pathname.includes("/tagresult") ||
+                      location.pathname.includes("/result") ||
+                      location.pathname.includes("/nutrientresult")
+                    }
+                  >
                     {page}
                   </StyledLink>
                 )}
                 {page == "내 영양분석" && (
-                  <StyledLink to="/analysis" current={location.pathname == "/analysis"}>
+                  <StyledLink
+                    to="/analysis"
+                    current={location.pathname == "/analysis"}
+                  >
                     {page}
                   </StyledLink>
                 )}
@@ -211,9 +237,9 @@ const ResponsiveAppBar = () => {
                 <Typography
                   textAlign="center"
                   onClick={() => {
-                    localStorage.clear()
-                    window.location.replace("/")
-                    console.log('로그아웃')
+                    localStorage.clear();
+                    window.location.replace("/");
+                    console.log("로그아웃");
                   }}
                 >
                   로그아웃

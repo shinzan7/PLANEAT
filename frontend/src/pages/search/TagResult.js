@@ -107,17 +107,6 @@ function TagResult() {
                         setPage={setPage}
                       />
 
-                        {/* <Pagination
-                        activePage={page}
-                        itemsCountPerPage={20}
-                        totalItemsCount={info.length}
-                        pageRangeDisplayed={10}
-                        prevPageText={"‹"}
-                        nextPageText={"›"}
-                        onChange={handlePageChange}
-                      /> */}
-
-                      {/* <Paging page={page} total={info.length} setPage={setPage} /> */}
 
                       </Grid>
                       <Grid item xs={4}>

@@ -34,6 +34,8 @@ export default function RegistMeal(props) {
           month={month}
           day={day}
           mealType={mealType}
+          isChange={props.isChange}
+          setIsChange={props.setIsChange}
         />
       ) : null}
       {/* 식사 추가 모달 */}
@@ -47,6 +49,8 @@ export default function RegistMeal(props) {
           mealType={mealType}
           close={() => setMealModalOpen(false)}
           recIntakeAmount={props.recIntakeAmount}
+          isChange={props.isChange}
+          setIsChange={props.setIsChange}
         />
       ) : null}
       <Grid container id="container" xs={12} direction="row">

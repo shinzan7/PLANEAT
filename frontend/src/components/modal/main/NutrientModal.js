@@ -58,8 +58,10 @@ export default function NutrientModal(props) {
         intakeReal: intakes[i],
         userNutrientId: myNutrients[i].userNutrientId,
       });
-      console.log(response.data);
+      console.log(response);
     }
+    let temp = props.isChange;
+    props.setIsChange(!temp);
     props.close();
   }
 
@@ -72,8 +74,11 @@ export default function NutrientModal(props) {
         intakeReal: intakes[i],
         userNutrientId: myNutrients[i].userNutrientId,
       });
-      console.log(response.data);
+      console.log(response);
     }
+
+    let temp = props.isChange;
+    props.setIsChange(!temp);
     props.close();
   }
 

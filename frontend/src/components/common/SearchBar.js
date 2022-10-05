@@ -9,7 +9,7 @@ import React, { useState } from "react";
 import { IconButton, Paper, InputBase} from '@mui/material';
 import SearchIcon from '@mui/icons-material/Search';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import {Link} from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
 
 
@@ -52,7 +52,7 @@ function SearchBar() {
                         />
                         { /* 검색어 삭제 버튼 */}
                         {
-                        (searchKeyWord == null || searchKeyWord == "") ? null :
+                        (searchKeyWord === null || searchKeyWord === "") ? null :
                             (<IconButton type="button" sx={{ p: '10px' }} aria-label="search" onClick={() => {
                                 searchInput.current.value = null; // input 객체의 값을 비운다.
                                 setSearchKeyWord(null)
@@ -61,11 +61,13 @@ function SearchBar() {
                             </IconButton>)
                         }
                         { /* 돋보기 버튼 */}
-                        <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2 }} aria-label="search" onClick={(e) => {
-                            search(e)
-                        }}>
-                            <SearchIcon />
-                        </IconButton>
+                          <IconButton type="button" sx={{ p: '10px', color: "#9DA6F8", mr: 2}} aria-label="search" onClick={(e) => {
+                              search(e)
+                          }}>
+                            <Link to={'/result/'+ searchKeyWord} style={{color:'gray', marginTop:'7px'}} >
+                              <SearchIcon/>
+                            </Link>
+                          </IconButton>                  
                     </Paper>
     </div>
   )

@@ -9,19 +9,73 @@ import { Grid } from "@mui/material";
 import Slider from "react-slick";
 import "./slick.css";
 import "./slick-theme.css";
+import './Reco.css'
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
 
-function SearchByReco() {
-  const data = {
-    img: "",
-    nutrientName: "락토핏 생유산균 화이버",
-    company: "종근당",
-    categoryTag: ["장건강"],
-    ingredientName: ["차전자피식이섬유"],
-  }
 
+function SearchByReco() {
   const name = localStorage.getItem('name')
+
+  const [tag, setTag] = useState([])
+  const [info, setInfo] = useState([])
+  const [history, setHistory] = useState([])
+
+  // const today = new Date()
+  // const year = today.getFullYear().toString()
+  // const tmpMonth = today.getMonth() + 1
+  // const month = tmpMonth + 1 < 10 ? "0" + tmpMonth : "" + tmpMonth
+  // const tmpDay = today.getDate()
+  // const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
+  // const userId = localStorage.getItem('userId')
+
+  // console.log('tag', tag)
+  // console.log('info', info)
+  // console.log('history', history)
+
+  useEffect(() => {
+      // http.get(`/user-infos/${userId}`)
+      http.get('/user-infos/8')
+      .then(response => {
+        const data = response.data.data.categoriesList
+        const ran = Math.floor(Math.random()*(data.length+1))
+
+        http.get(`/nutrient/tag/${data[ran]}`)
+        .then(response => {
+          setInfo(response.data.data)
+        })
+        setTag(data)
+      })
+
+      // http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`)
+      http.get('/analysis/percent?date=2022-09-26&userId=8')
+      .then(response => {
+        const data2 = Object.entries(response.data.data)
+        const data3 =  [data2[10], data2[17], data2[9], data2[23], data2[11], data2[12],
+                        data2[18], data2[19], data2[20], data2[31], 
+                        data2[32], data2[22], data2[25], data2[24], data2[21], data2[16]]
+        const data4 = []
+        for (var i=0; i<data3.length; i++) {
+          data4.push(data3[i][1])
+        }
+
+        const data5 = []
+        for (var j=0; j<data4.length; j++) {
+          if ( data4[j] === Math.min.apply(null, data4) ) {
+            data5.push(j)
+          }
+        }
+
+        const numbers = [7, 14, 6, 22, 8, 9, 15, 16, 17, 19, 20, 21, 23, 24, 18, 13]
+        const ran2 = Math.floor(Math.random()*(data5.length+1))
+        const num = numbers[data5[ran2]]
+
+        http.get(`/nutrient/ingredient/${num}`)
+        .then(response => {
+          setHistory(response.data.data)
+        })
+      })
+    }, [])
 
   const settings = {
     dots: true,
@@ -66,7 +120,7 @@ function SearchByReco() {
 
   const section1 = { textAlign:'left', fontSize:'3.3vh'}
   const bold = {fontWeight:'bold'}
-  const card = {textAlign:'left'}
+  const section3 = { marginTop:'10vh' }
 
 
   return (
@@ -78,58 +132,15 @@ function SearchByReco() {
           <Grid item xs={9.8}>
             <div style={section1}>
               {/* 유저 식단 기반 분석에서 부족한 영양소 성분 기반 추천 */}
-              {/* <p><span style={bold}>{name}</span> 님을 위한 영양제 추천</p> */}
               <p>&nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게 추천해요</p>
             </div>
-
-            <div style={card}>
+            <div>
               <Slider {...settings}>
-                <div>
-                  <Link to="/searchdetail/10" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
+                {history.slice(0, 20).map((data, i) => (
+                  <Link to={`/searchdetail/${data.nutrientId}`} style={{ textDecoration:'none'}}>
+                    <CardNutrient key={i} pill={data} />
                   </Link>
-                </div>
-                <div>
-                  <Link to="/searchdetail/7" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/searchdetail/12" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
-                  </Link>
-                </div>
-                <div>
-                  <Link to="/searchdetail/13" style={{textDecoration:'none'}}>
-                    <CardNutrient pill={data}/>
-                  </Link>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
+                ))}
               </Slider>
             </div>
           </Grid>
@@ -137,110 +148,22 @@ function SearchByReco() {
 
           </Grid>
 
-          <Grid item xs={0.5}>
-
-          </Grid>
-          <Grid item xs={9.8}>
-            <div style={section1}>
-              {/* 유저 동일 성별/나이대에서 많이 등록된 영양소 순서 대로 추천 */}
-              <p>&nbsp;&nbsp;<span style={bold}>20대 여성</span>이 많이 먹고 있어요</p>
-            </div>
-
-            <div style={card}>
-              <Slider {...settings}>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-              </Slider>
-            </div>
-          </Grid>
-          <Grid item xs={1.7}>
-
-          </Grid>
           <Grid item xs={0.5}>
 
           </Grid>
           <Grid item xs={9.8}>
             <div style={section1}>
               {/* 유저가 설정한 건강 고민 태그 기반 추천 */}
-              <p>&nbsp;&nbsp;<span style={bold}>장건강</span>에 좋아요</p>
+              <p>&nbsp;&nbsp;<span style={bold}>{tag[0]}</span>에 좋아요</p>
             </div>
 
-            <div style={card}>
+            <div>
               <Slider {...settings}>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
-                <div>
-                  <CardNutrient pill={data}/>
-                </div>
+                {info.slice(0, 20).map((data, i) => (
+                  <Link to={`/searchdetail/${data.nutrientId}`} style={{ textDecoration:'none'}}>
+                    <CardNutrient key={i} pill={data} />
+                  </Link>
+                ))}
               </Slider>
             </div>
           </Grid>
@@ -248,6 +171,9 @@ function SearchByReco() {
 
           </Grid>
         </Grid>
+        <div style={section3}>
+                
+        </div>
       </div>
   );
 }

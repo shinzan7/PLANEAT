@@ -10,9 +10,10 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
+import Pagination from "components/common/Pagination";
 
 function NutrientResult() {
-
+  // 제품 아이디로 검색
   const ingredient = useParams()
   const location = useLocation()
   const dataTitle = location.state.data.title
@@ -31,8 +32,17 @@ function NutrientResult() {
   const section1 = { marginTop:'25vh', textAlign:'center'}
   const section2 = { marginTop:'5vh', textAlign:'center'}
   const section3 = { marginTop:'10vh' }
-  const card = { textAlign:'left' }
   const bold = {fontWeight:'bold'}
+
+  // 페이지네이터 세팅
+  const [limit, setLimit] = useState(20) // 한 페이지 당 갯수
+  const [page, setPage] = useState(1) // 현재 페이지 deafult = 1
+  const offset = (page-1)*limit // 현재 페이지 첫 index
+
+  // 페이지 변경
+  const handlePageChange = (page) => {
+    setPage(page);
+  };
 
   return (
       <div style={section}>
@@ -67,23 +77,33 @@ function NutrientResult() {
                 {/* 카드들 부분 */}
                 <Grid item xs={9}>
                   <Grid container>
-                  {info.map(function(data, i) { 
+                    {info.slice(offset, offset+limit).map(function(data, i) {
                       return (
-                      <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
-                        <CardNutrient key={i} pill={data} />
-                      </Link>
-                      )
-                    })}
+                        <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
+                          <CardNutrient key={i} pill={data} />
+                        </Link>
+                      )})}
                   </Grid>
 
-                  {/* <Info info={currentPosts} />   
-                  <Pagination 
-                    postPerPage={postPerPage}
-                    totalPosts={info.length}
-                    paginate={paginate}
-                    ingredient={ingredient}
-                  /> */}
+                  <Grid container>
+                      <Grid item xs={2}>
+
+                      </Grid>
+                      <Grid item xs={6}>
+                        <Pagination
+                        total={info.length}
+                        limit={limit}
+                        page={page}
+                        setPage={setPage}
+                      />
+
+
+                      </Grid>
+                      <Grid item xs={4}>
                 
+                      </Grid>
+                    </Grid>
+                    <br></br>
                 </Grid>
                 <Grid item xs={2}>
 
