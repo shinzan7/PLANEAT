@@ -42,7 +42,7 @@ export default function IconMenu() {
             onClick={() => {
               navigator("/searchtag");
             }}
-            id={location.pathname == "/searchtag" ? "current" : null}
+            id={location.pathname.includes("tag") ? "current" : null}
           >
             고민별 검색
           </ListItemButton>
@@ -56,7 +56,7 @@ export default function IconMenu() {
             onClick={() => {
               navigator("/searchnutrient");
             }}
-            id={location.pathname == "/searchnutrient" ? "current" : null}
+            id={location.pathname.includes("nutrient") ? "current" : null}
           >
             성분별 검색
           </ListItemButton>

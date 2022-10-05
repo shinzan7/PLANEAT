@@ -181,7 +181,7 @@ function SearchByTag() {
               어떤 건강 고민이 있으신가요?
             </Typography>
             <Typography variant="subtitle1">
-              건강 고민별 영양제 추천을 확인하세요!
+              건강 고민별 영양제를 확인하세요!
             </Typography>
           </Grid>
         </Grid>

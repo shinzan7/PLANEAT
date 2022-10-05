@@ -348,10 +348,10 @@ function SearchByNutrient() {
               variant="h5"
               style={{ marginBottom: "10px", fontWeight: "bold" }}
             >
-              어떤 건강 고민이 있으신가요?
+              어떤 성분을 찾으시나요?
             </Typography>
             <Typography variant="subtitle1">
-              건강 고민별 영양제 추천을 확인하세요!
+              성분별로 영양제를 확인하세요!
             </Typography>
           </Grid>
         </Grid>
