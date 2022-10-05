@@ -193,6 +193,7 @@ function Welcome() {
           userId: userInfo.userId,
           birthyear: birthyear,
           gender: gender,
+          name: userInfo.name,
           recInfo: {
             updateDate: getToday(),
             height: height,
@@ -257,6 +258,7 @@ function Welcome() {
           userId: userInfo.userId,
           birthyear: birthyear,
           gender: gender,
+          name: userInfo.name,
           recInfo: {
             updateDate: getToday(),
             height: height,
