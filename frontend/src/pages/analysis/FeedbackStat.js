@@ -7,7 +7,6 @@ import { Divider, Paper, List, ListItem, ListItemText, Collapse, Grid, Box } fro
 import { ExpandMore, ExpandLess } from "@mui/icons-material";
 import { React, useEffect, useState, useRef } from "react";
 import Chart from "react-apexcharts";
-import { getCLS } from "web-vitals";
 
 // 섭취량
 const intake = {
@@ -50,9 +49,25 @@ function ShowIntakeCharts({ carbo, protein, fat }) {
   const options = {
     //data on the x-axis
     labels: ["탄수화물", "단백질", "지방"],
-    colors: ["#FFB3B3", "#F7BF87", "#FFEFC9", "#A9D5C7", "#9DA6F8"],
+    colors: ["#FFB3B3", "#F7BF87", "#A9D5C7", "#A9D5C7", "#9DA6F8"],
     chart: {
-      type: "donut",
+      type: "pie",
+    },
+    plotOptions: {
+      pie: {
+        donut: {
+          labels: {
+            show: true,
+            total: {
+              showAlways: true,
+              label: "총 칼로리 평균",
+              fontWeight: 600,
+              fontFamily: "Nanum Gothic",
+              // color: "#9DA6F8",
+            },
+          },
+        },
+      },
     },
     responsive: [
       {
@@ -73,7 +88,7 @@ function ShowIntakeCharts({ carbo, protein, fat }) {
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="donut" width={500} height={350} />
+          <Chart options={options} series={series} type="pie" width={450} />
         </div>
       </div>
     </div>
@@ -81,18 +96,31 @@ function ShowIntakeCharts({ carbo, protein, fat }) {
 }
 
 export default function FeedbackStat({ value, data, percent, allCal, calArr }) {
+  const [chol, setChol] = useState(percent.cholesterol); // 콜레스테롤
+  const [trans, setTrans] = useState(percent.transFattyAcid); // 트랜스지방산
+  const [sodium, setSodium] = useState(percent.sodium); // 나트륨
+
+  const [carbo, setCarbo] = useState(percent.carbohydrate); // 탄수화물
+  const [protein, setProtein] = useState(percent.protein); // 단백질
+  const [fat, setFat] = useState(percent.fat); // 지방
+
   const mounted = useRef(false);
   useEffect(() => {
     if (!mounted.current) {
       mounted.current = true;
     } else {
-      console.log("뭐야뭐야");
+      setChol(percent.cholesterol);
+      setTrans(percent.transFattyAcid);
+      setSodium(percent.sodium);
+      setCarbo(percent.carbohydrate);
+      setProtein(percent.protein);
+      setFat(percent.fat);
       // console.log(percent);
       // console.log(data);
       // console.log(allCal);
-      // console.log(calArr);
+      // console.log(calArr)
     }
-  }, []);
+  });
 
   return (
     <Paper
@@ -107,14 +135,16 @@ export default function FeedbackStat({ value, data, percent, allCal, calArr }) {
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
       {/* {value} */}
       <h3 style={{ margin: 20 }}>분석 피드백</h3>
-      <Grid Container style={{ display: "flex", margin: 20 }}>
+      <Grid Container justifyContent="center" style={{ display: "flex", margin: 20 }}>
         <Grid item xs>
-          <ShowIntakeCharts
-            allCal={allCal}
-            carbo={calArr[0]}
-            protein={calArr[1]}
-            fat={calArr[2]}
-          ></ShowIntakeCharts>
+          <div style={{ marginLeft: "5%" }}>
+            <ShowIntakeCharts
+              allCal={allCal}
+              carbo={calArr[0]}
+              protein={calArr[1]}
+              fat={calArr[2]}
+            ></ShowIntakeCharts>
+          </div>
         </Grid>
         <Divider orientation="vertical" flexItem />
         <Grid item xs>
@@ -139,12 +169,86 @@ export default function FeedbackStat({ value, data, percent, allCal, calArr }) {
               lineHeight: "2",
             }}
           >
-            <div style={{ textAlign: "center" }}>
-              <b style={{ fontSize: "20px" }}>탄수화물</b>을 <b>20%</b> 더 섭취했어요!
+            <div
+              style={{
+                lineHeight: "1.6",
+                textAlign: "center",
+                marginBottom: "3%",
+                color: "#7c7c7c",
+                fontWeight: "bold",
+              }}
+            >
+              평균 섭취 칼로리
+              <br />
+              <b style={{ color: "#9DA6F8", fontSize: "23px" }}>{allCal}</b> kcal
             </div>
-            <div style={{ textAlign: "center" }}>
-              <b style={{ fontSize: "20px" }}>단백질</b>을 <b>10%</b> 더 섭취했어요!
-            </div>
+            {carbo > 100 ? (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#FFB3B3" }}>탄수화물</b>을{" "}
+                <b style={{ color: "#FFB3B3" }}>{carbo - 100}%</b> 더 섭취했어요!
+              </div>
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#FFB3B3" }}>탄수화물</b>이{" "}
+                <b style={{ color: "#FFB3B3" }}>{100 - carbo}%</b> 부족해요!
+              </div>
+            )}
+            {protein > 100 ? (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#F7BF87" }}>단백질</b>을{" "}
+                <b style={{ color: "#F7BF87" }}>{protein - 100}%</b> 더 섭취했어요!
+              </div>
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#F7BF87" }}>단백질</b>이{" "}
+                <b style={{ color: "#F7BF87" }}>{100 - protein}%</b> 부족해요!
+              </div>
+            )}
+            {fat > 100 ? (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#A9D5C7" }}>지방</b>을{" "}
+                <b style={{ color: "#A9D5C7" }}>{fat - 100}%</b> 더 섭취했어요!
+              </div>
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#A9D5C7" }}>지방</b>이{" "}
+                <b style={{ color: "#A9D5C7" }}>{100 - fat}%</b> 부족해요!
+              </div>
+            )}
+            <div></div>
+            {chol > 100 ? (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#747373" }}>콜레스테롤</b>을{" "}
+                <b style={{ color: "#747373" }}>{chol - 100}%</b> 더 섭취했어요!
+              </div>
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#747373" }}>콜레스테롤</b>을{" "}
+                <b style={{ color: "#747373" }}>{100 - chol}%</b> 적게 섭취했어요!
+              </div>
+            )}
+            {trans > 100 ? (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#747373" }}>트랜스지방</b>을{" "}
+                <b style={{ color: "#747373" }}>{trans - 100}%</b> 더 섭취했어요!
+              </div>
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#747373" }}>트랜스지방</b>을{" "}
+                <b style={{ color: "#747373" }}>{100 - trans}%</b> 적게 섭취했어요!
+              </div>
+            )}
+            {sodium > 100 ? (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#747373" }}>나트륨</b>을{" "}
+                <b style={{ color: "#747373" }}>{sodium - 100}%</b> 더 섭취했어요!
+              </div>
+            ) : (
+              <div style={{ textAlign: "center" }}>
+                <b style={{ fontSize: "18px", color: "#747373" }}>나트륨</b>을{" "}
+                <b style={{ color: "#747373" }}>{100 - sodium}%</b> 적게 섭취했어요!
+              </div>
+            )}
           </Box>
         </Grid>
       </Grid>

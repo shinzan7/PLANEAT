@@ -62,7 +62,7 @@ function ShowFeedbackCharts({ percent }) {
         },
       },
     },
-    colors: ["#9DA6F8"],
+    colors: ["#9DA6F8", "#E6E8FD"],
     dataLabels: {
       enabled: true,
       formatter: function (val) {
@@ -201,20 +201,12 @@ export default function FoodStat({ value, data, percent }) {
       {/* {value} */}
       <Grid Container style={{ margin: 20 }}>
         <Grid item>
-          <h3>섭취량 분석</h3>
+          <h3>섭취량 세부 분석</h3>
         </Grid>
         <Grid item>
-          {data.length == 0 ? (
-            <div style={{ lineHeight: "2", textAlign: "center" }}>
-              현재는 섭취 기록이 없어요.😥
-              <br />
-              식사 기록 페이지에서 내가 먹은 식사를 등록해보세요!
-            </div>
-          ) : (
-            <div>
-              <ShowFeedbackCharts percent={percent}></ShowFeedbackCharts>
-            </div>
-          )}
+          <div>
+            <ShowFeedbackCharts percent={percent}></ShowFeedbackCharts>
+          </div>
         </Grid>
       </Grid>
     </Paper>

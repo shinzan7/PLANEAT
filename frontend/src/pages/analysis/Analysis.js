@@ -69,11 +69,11 @@ function getDateStr(myDate) {
 
   return year + "-" + month + "-" + day;
 }
-// 오늘로부터 1주일 전 날짜 반환
-function lastWeek() {
+// 오늘로부터 beforedate 전 날짜 반환
+function lastDay(beforedate) {
   var d = new Date();
   var dayOfMonth = d.getDate();
-  d.setDate(dayOfMonth - 7);
+  d.setDate(dayOfMonth - beforedate);
   return getDateStr(d);
 }
 // 오늘로부터 1개월 전 날짜 반환
@@ -119,8 +119,84 @@ function Analysis() {
       getAnalysisData();
       getPercentData();
       getNutrientStat();
+      getTimelineData();
     }
   }, [value]);
+
+  // 타임라인 음식리스트 5개
+  const [list1, setList1] = useState([]);
+  const [list2, setList2] = useState([]);
+  const [list3, setList3] = useState([]);
+  const [list4, setList4] = useState([]);
+  const [list5, setList5] = useState([]);
+
+  async function getTimelineData() {
+    const response1 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(1)}`);
+    console.log("이거야이거", response1.data.data);
+    let arr1 = [...response1.data.data];
+    let total1 = [];
+    for (let i = 0; i < arr1.length; i++) {
+      let foods1 = [...arr1[i].intakeFoodsList];
+      for (let j = 0; j < foods1.length; j++) {
+        total1.push(foods1[j].name);
+      }
+    }
+    setList1(total1);
+
+    const response2 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(2)}`);
+    console.log("이거야이거", response2.data.data);
+    let arr2 = [...response2.data.data];
+    let total2 = [];
+    for (let i = 0; i < arr2.length; i++) {
+      let foods2 = [...arr2[i].intakeFoodsList];
+      for (let j = 0; j < foods2.length; j++) {
+        total2.push(foods2[j].name);
+      }
+    }
+    setList2(total2);
+
+    const response3 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(3)}`);
+    console.log("이거야이거", response3.data.data);
+    let arr3 = [...response3.data.data];
+    let total3 = [];
+    for (let i = 0; i < arr3.length; i++) {
+      let foods3 = [...arr3[i].intakeFoodsList];
+      for (let j = 0; j < foods3.length; j++) {
+        total3.push(foods3[j].name);
+      }
+    }
+    setList3(total3);
+
+    const response4 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(4)}`);
+    console.log("이거야이거", response4.data.data);
+    let arr4 = [...response4.data.data];
+    let total4 = [];
+    for (let i = 0; i < arr4.length; i++) {
+      let foods4 = [...arr4[i].intakeFoodsList];
+      for (let j = 0; j < foods4.length; j++) {
+        total4.push(foods4[j].name);
+      }
+    }
+    setList4(total4);
+
+    const response5 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(5)}`);
+    console.log("이거야이거", response5.data.data);
+    let arr5 = [...response5.data.data];
+    let total5 = [];
+    for (let i = 0; i < arr5.length; i++) {
+      let foods5 = [...arr5[i].intakeFoodsList];
+      for (let j = 0; j < foods5.length; j++) {
+        total4.push(foods5[j].name);
+      }
+    }
+    setList5(total5);
+
+    // console.log(total1);
+    // console.log(total2);
+    // console.log(total3);
+    // console.log(total4);
+    // console.log(total5);
+  }
 
   async function getAnalysisData() {
     // 분석기록 받아오기
@@ -198,9 +274,9 @@ function Analysis() {
       fatCal += getData[i].fat;
       allCal += getData[i].calorie;
     }
-    arr.push(Number(carboCal.toFixed(1)));
-    arr.push(Number(proteinCal.toFixed(1)));
-    arr.push(Number(fatCal.toFixed(1)));
+    arr.push(Number((carboCal * 4).toFixed(1)));
+    arr.push(Number((proteinCal * 4).toFixed(1)));
+    arr.push(Number((fatCal * 9).toFixed(1)));
     setCalArr(arr);
     setAllCal(allCal);
     console.log("didididididididi");
@@ -513,7 +589,7 @@ function Analysis() {
 
   return (
     <div>
-      <Container sx={{ width: "100%", marginTop: "100px" }}>
+      <Container sx={{ width: "100%", marginTop: "100px", marginBottom: "50px" }}>
         <Tabs
           sx={{ marginRight: "25px", marginLeft: "25px" }}
           value={value}
@@ -532,7 +608,14 @@ function Analysis() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
               {/* 타임라인 */}
-              <TimelineStat value={value}></TimelineStat>
+              <TimelineStat
+                value={value}
+                list1={list1}
+                list2={list2}
+                list3={list3}
+                list4={list4}
+                list5={list5}
+              ></TimelineStat>
             </Grid>
             <Grid item xs={12} md={6}>
               {/* 플래닛지수 */}
@@ -545,10 +628,6 @@ function Analysis() {
               ></PlaneatStat>
             </Grid>
             <Grid item xs={12} md={12}>
-              {/* 섭취량 */}
-              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
-            </Grid>
-            <Grid item xs={12} md={12}>
               {/* 피드백*/}
               <FeedbackStat
                 value={value}
@@ -557,6 +636,10 @@ function Analysis() {
                 calArr={calArr}
                 allCal={allCal}
               ></FeedbackStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 섭취량 */}
+              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
             </Grid>
 
             <Grid item xs={12} md={12}>
@@ -583,10 +666,6 @@ function Analysis() {
               ></PlaneatStat>
             </Grid>
             <Grid item xs={12} md={12}>
-              {/* 섭취량 */}
-              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
-            </Grid>
-            <Grid item xs={12} md={12}>
               {/* 피드백*/}
               <FeedbackStat
                 value={value}
@@ -595,6 +674,10 @@ function Analysis() {
                 calArr={calArr}
                 allCal={allCal}
               ></FeedbackStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 섭취량 */}
+              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
             </Grid>
 
             <Grid item xs={12} md={12}>
@@ -621,10 +704,6 @@ function Analysis() {
               ></PlaneatStat>
             </Grid>
             <Grid item xs={12} md={12}>
-              {/* 섭취량 */}
-              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
-            </Grid>
-            <Grid item xs={12} md={12}>
               {/* 피드백*/}
               <FeedbackStat
                 value={value}
@@ -633,6 +712,10 @@ function Analysis() {
                 calArr={calArr}
                 allCal={allCal}
               ></FeedbackStat>
+            </Grid>
+            <Grid item xs={12} md={12}>
+              {/* 섭취량 */}
+              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
             </Grid>
 
             <Grid item xs={12} md={12}>
