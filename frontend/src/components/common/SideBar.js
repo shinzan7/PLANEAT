@@ -1,36 +1,74 @@
 /*
-검색 페이지 / 좌측 사이드 메뉴
-@author 전상현
-@since 2022.09.23
+사이드바 css, 구조 변경
+@author 여예원
+@since 2022.10.06
 */
 
-import React from "react";
-import { Button, ButtonGroup } from '@mui/material';
-import {Link} from 'react-router-dom';
+import * as React from "react";
+import Divider from "@mui/material/Divider";
+import Paper from "@mui/material/Paper";
+import { ListItemButton, List } from "@mui/material";
+import { useNavigate, useLocation } from "react-router-dom";
+import styled from "styled-components";
 
-function SideBar() {
-  const title = { color:'gray', border:'none'}
-  const none = { textDecoration:'none'}
+export default function IconMenu() {
+  const navigator = useNavigate();
+  const location = useLocation();
 
-  return(
-    <ButtonGroup orientation="vertical" variant="text">
-      <Link to='/search' style={none}>
-        <Button style={title}>
-          영양제 추천
-        </Button>  
-      </Link> 
-      <Link to='/searchtag' style={none}>
-        <Button style={title}>
-          고민별 검색
-        </Button>  
-      </Link>  
-      <Link to='/searchnutrient' style={none}>
-        <Button style={title}>
-          성분별 검색
-        </Button>  
-      </Link>  
-    </ButtonGroup>
-  )
+  return (
+    <StyledWrapper>
+      <Paper sx={{ width: "100%", padding: "30px" }} elevation={0}>
+        <List>
+          <ListItemButton
+            style={{
+              fontSize: "18px",
+              width: "100%",
+              padding: "30px",
+            }}
+            onClick={() => {
+              navigator("/search");
+            }}
+            id={location.pathname == "/search" ? "current" : null}
+          >
+            영양제 추천
+          </ListItemButton>
+          <Divider />
+          <ListItemButton
+            style={{
+              fontSize: "18px",
+              height: "100%",
+              padding: "30px",
+            }}
+            onClick={() => {
+              navigator("/searchtag");
+            }}
+            id={location.pathname == "/searchtag" ? "current" : null}
+          >
+            고민별 검색
+          </ListItemButton>
+          <Divider />
+          <ListItemButton
+            style={{
+              fontSize: "18px",
+              height: "100%",
+              padding: "30px",
+            }}
+            onClick={() => {
+              navigator("/searchnutrient");
+            }}
+            id={location.pathname == "/searchnutrient" ? "current" : null}
+          >
+            성분별 검색
+          </ListItemButton>
+        </List>
+      </Paper>
+    </StyledWrapper>
+  );
 }
 
-export default SideBar;
+const StyledWrapper = styled.div`
+  && #current {
+    color: #9da6f8;
+    font-weight: bold;
+  }
+`;
