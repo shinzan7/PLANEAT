@@ -19,6 +19,7 @@
     -webkit-tap-highlight-color: transparent;
 }
 
+
 .slick-list
 {
     position: relative;
@@ -119,3 +120,4 @@
 .slick-arrow.slick-hidden {
     display: block;
 }
+

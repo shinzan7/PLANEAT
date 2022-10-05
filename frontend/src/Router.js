@@ -21,7 +21,7 @@ function Router() {
 
     return (
             <BrowserRouter>
-            { url === 'https://j7a701.p.ssafy.io/' ? 
+            { url === 'https://j7a701.p.ssafy.io/' || url === 'https://j7a701.p.ssafy.io/welcome/' ? 
                 null : <Header />}
                 <Routes>
                     <Route path="/" element={<Home />} />
@@ -33,11 +33,8 @@ function Router() {
                     <Route path="/searchnutrient" element={<SearchByNutrient />} />
                     <Route path="/searchdetail/*" element={<SearchDetail />} />
                     <Route path="/searchdetail/:nutrientId" element={<SearchDetail />} />
-                    {/* <Route path="/tagresult" element={<TagResult />} /> */}
                     <Route path="/tagresult/:id" element={<TagResult />} />
-                    {/* <Route path="/result" element={<NameResult />} /> */}
                     <Route path="/result/:id" element={<NameResult />} />
-                    {/* <Route path="/nutrientresult" element={<NutrientResult />} /> */}
                     <Route path="/nutrientresult/:id" element={<NutrientResult />} />
                     <Route path="/mypage" element={<MyPage />} />
                     <Route path="/logincheck" element={<Logincheck />} />
