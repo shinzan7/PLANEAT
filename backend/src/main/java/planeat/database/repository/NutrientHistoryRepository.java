@@ -21,4 +21,7 @@ public interface NutrientHistoryRepository extends JpaRepository<NutrientHistory
     NutrientHistory findByIntakeDateAndUserNutrient(LocalDate intakeDate, UserNutrient userNutrient);
     NutrientHistory findByUserNutrientAndIntakeDate(UserNutrient userNutrient, LocalDate intakeDate);
     List<NutrientHistory> findByUserNutrient_UserAndIntakeDateAfterAndIntakeDateBefore(User user, LocalDate startDate, LocalDate endDate);
+
+    List<NutrientHistory> deleteByUserNutrient_User_IdAndIntakeDate(Long id, LocalDate intakeDate);
+
 }

@@ -61,6 +61,14 @@ public class AnalysisHistoryController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
     }
 
+    @DeleteMapping
+    @ApiOperation(value = "지정날짜 기록삭제", notes = "유저 아이디와 지정날짜를 받아 그날의 분석기록, 음식 섭취기록, 영양제 섭취기록을 삭제한다. 기록이 존재하지 않으면 id대신 0을 반환한다.")
+    public ResponseEntity<BasicResponse<Long>> deleteAnalysisPercentDate(@RequestParam Long userId, @RequestParam String date){
+        LocalDate localDate = LocalDate.parse(date, DateTimeFormatter.ISO_DATE);
+        Long idDeleted = analysisHistoryService.deleteAnalysisHistory(userId, localDate);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, idDeleted), HttpStatus.OK);
+    }
+
     /**
      * 기본 Response 형식 DTO
      *

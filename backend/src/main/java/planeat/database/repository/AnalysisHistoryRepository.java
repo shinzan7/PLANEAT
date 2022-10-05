@@ -16,4 +16,6 @@ public interface AnalysisHistoryRepository extends JpaRepository<AnalysisHistory
     @Query("select a from AnalysisHistory a where a.user.id = :userId and a.date = :date order by a.analysisType, a.date")
     List<AnalysisHistory> findByUserIdAndDate(@Param("userId") Long userId,@Param("date") LocalDate date);
 
+
+
 }
