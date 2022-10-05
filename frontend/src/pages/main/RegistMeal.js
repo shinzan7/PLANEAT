@@ -34,6 +34,8 @@ export default function RegistMeal(props) {
           month={month}
           day={day}
           mealType={mealType}
+          isChange={props.isChange}
+          setIsChange={props.setIsChange}
         />
       ) : null}
       {/* 식사 추가 모달 */}
