@@ -247,7 +247,7 @@ function Home() {
           <Grid item xs={0.9}></Grid>
           <Grid item xs={4.8}>
             <Card variant="outlined" style={card}>
-              영양제 추천 화면
+              식단 분석 화면
             </Card>
           </Grid>
           <Grid item xs={0.6}></Grid>

@@ -16,13 +16,14 @@ import { useRecoilValue } from 'recoil'
 import ChipBlue from "components/common/ChipBlue";
 import ChipOrange from "components/common/ChipOrange";
 import CardNutrient from "components/common/CardNutrient";
+import './Detail.css'
 
 function SearchDetail() {
 
   const { nutrientId }  = useParams();
   // console.log('params', nutrientId)
   const userInfo = useRecoilValue(userState)
-  console.log(userInfo)
+  // console.log(userInfo)
 
 
   const section = {marginTop:'80px'}
@@ -46,7 +47,7 @@ function SearchDetail() {
     http.get(`/nutrient?id=${nutrientId}`)
     // http.get('/nutrient?id=1')
     .then(response => {
-      console.log(response.data.data)
+      // console.log(response.data.data)
       setInfo(response.data.data)
     })
   }, [])
@@ -61,7 +62,11 @@ function SearchDetail() {
 
   const tagSet = new Set(tagArray)
   const tags = Array.from(tagSet)
-  
+
+  const des = info.description.replace(/\[/gi, '').replace(/\]/gi, '').replace(/\'/gi, '\n').replace(/,/gi, ' ')
+              .replace(/①/gi, '\n').replace(/②/gi, '\n').replace(/③/gi, '\n').replace(/④/gi, '\n').replace(/⑤/gi, '\n')
+  // console.log(des)
+
   return (
       <div style={section}>
         <Header />
@@ -110,16 +115,17 @@ function SearchDetail() {
                     <Grid item xs={7.3}>
                       <p>주요기능</p>
                       {tags.map((data, i) => (
-                        <Link to={'/tagresult/'+ data} style={{textDecoration:'none', marginRight:'5px'}}>
-                          <ChipOrange key={i} label={data} />
+                        <Link to={'/tagresult/'+ data} style={{textDecoration:'none'}}>
+                          <ChipOrange key={i} label={data} style={{marginRight:'5px', marginBottom:'5px'}}/>
                         </Link>
                       ))}
                       <p>성분</p>
                       {info.nutriIngredientList.map((data, i) => (
-                          <ChipBlue key={i} label={data.ingredientName} style={{marginRight:'5px'}}/> 
+                          <ChipBlue key={i} label={data.ingredientName} style={{marginRight:'5px', marginBottom:'5px'}}/> 
                       ))}
                       <p>상세정보</p>
-                      <p>{info.description}</p>
+                      {/* <p>{info.description}</p> */}
+                      <p className="description">{des}</p>
                     </Grid>
                     <Grid item xs={2}>
                       

@@ -30,13 +30,15 @@ function SearchByReco() {
 
   // console.log('tag', tag)
   // console.log('info', info)
-  console.log('history', history)
+  // console.log('history', history)
 
   useEffect(() => {
       http.get('/user-infos/8')
       .then(response => {
         const data = response.data.data.categoriesList
-        http.get(`/nutrient/tag/${data[0]}`)
+        const ran = Math.floor(Math.random()*(data.length+1))
+
+        http.get(`/nutrient/tag/${data[ran]}`)
         .then(response => {
           // console.log('response 두번째 get', response.data.data)
           setInfo(response.data.data)
@@ -63,7 +65,8 @@ function SearchByReco() {
         }
 
         const numbers = [7, 14, 6, 22, 8, 9, 15, 16, 17, 19, 20, 21, 23, 24, 18, 13]
-        const num = numbers[data5[0]]
+        const ran2 = Math.floor(Math.random()*(data5.length+1))
+        const num = numbers[data5[ran2]]
 
         http.get(`https://j7a701.p.ssafy.io/api/nutrient/ingredient/${num}`)
         .then(response => {
