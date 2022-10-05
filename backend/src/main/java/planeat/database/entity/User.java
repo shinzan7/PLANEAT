@@ -98,6 +98,7 @@ public class User {
         this.gender = gender;
     }
 
+
     public void setName(String name) {
         this.name = name;
     }
@@ -130,8 +131,7 @@ public class User {
         this.userNutrientList = userNutrientList;
     }
 
-    public User update(String name, String email) {
-        this.name = name;
+    public User update(String email) {
         this.email = email;
         return this;
     }
