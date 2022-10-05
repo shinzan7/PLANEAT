@@ -27,12 +27,14 @@ function SearchByReco() {
   // const month = tmpMonth + 1 < 10 ? "0" + tmpMonth : "" + tmpMonth
   // const tmpDay = today.getDate()
   // const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
+  // const userId = localStorage.getItem('userId')
 
   // console.log('tag', tag)
   // console.log('info', info)
   // console.log('history', history)
 
   useEffect(() => {
+      // http.get(`/user-infos/${userId}`)
       http.get('/user-infos/8')
       .then(response => {
         const data = response.data.data.categoriesList
@@ -40,13 +42,13 @@ function SearchByReco() {
 
         http.get(`/nutrient/tag/${data[ran]}`)
         .then(response => {
-          // console.log('response 두번째 get', response.data.data)
           setInfo(response.data.data)
         })
         setTag(data)
       })
 
-      http.get('https://j7a701.p.ssafy.io/api/analysis/percent?date=2022-09-26&userId=8')
+      // http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`)
+      http.get('/analysis/percent?date=2022-09-26&userId=8')
       .then(response => {
         const data2 = Object.entries(response.data.data)
         const data3 =  [data2[10], data2[17], data2[9], data2[23], data2[11], data2[12],
@@ -68,7 +70,7 @@ function SearchByReco() {
         const ran2 = Math.floor(Math.random()*(data5.length+1))
         const num = numbers[data5[ran2]]
 
-        http.get(`https://j7a701.p.ssafy.io/api/nutrient/ingredient/${num}`)
+        http.get(`/nutrient/ingredient/${num}`)
         .then(response => {
           setHistory(response.data.data)
         })

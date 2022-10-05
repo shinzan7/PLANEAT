@@ -18,6 +18,7 @@ import AOS from "aos";
 import "aos/dist/aos.css";
 import CountUp from "react-countup";
 import longlogo from "assets/longlogo.png";
+import home1 from 'assets/home1.png'
 
 import {
   Paper,
@@ -67,7 +68,7 @@ function Home() {
   return (
     <div className="bgColor">
       <Grid container>
-        <Grid item xs={6}>
+        <Grid item lg={6} xs={12}>
           <Grid container>
             <Grid item xs={2}></Grid>
 
@@ -223,8 +224,8 @@ function Home() {
 
       <div className="section3">
         <Grid container>
-          <Grid item xs={0.9}></Grid>
-          <Grid item xs={4.8}>
+          <Grid item lg={0.9} xs={3}></Grid>
+          <Grid item lg={4.8} xs={6}>
             <Card variant="outlined" style={textcard}>
               <p className="p">
                 내가 필요한 영양제를<br></br>
@@ -232,26 +233,28 @@ function Home() {
               </p>
             </Card>
           </Grid>
-          <Grid item xs={0.6}></Grid>
-          <Grid item xs={4.8}>
+          <Grid item lg={0.3} xs={3}></Grid>
+          <Grid item lg={0.3} xs={3}></Grid>
+          <Grid item lg={4.8} xs={6}>
             <Card variant="outlined" style={card}>
-              영양제 추천 화면
+              <img src={home1} style={{ width:'100%', height:'100%'}} />
             </Card>
           </Grid>
-          <Grid item xs={0.9}></Grid>
+          <Grid item lg={0.9} xs={3}></Grid>
         </Grid>
       </div>
 
       <div className="section4">
         <Grid container>
-          <Grid item xs={0.9}></Grid>
-          <Grid item xs={4.8}>
+          <Grid item lg={0.9} xs={3}></Grid>
+          <Grid item lg={4.8} xs={6}>
             <Card variant="outlined" style={card}>
               식단 분석 화면
             </Card>
           </Grid>
-          <Grid item xs={0.6}></Grid>
-          <Grid item xs={4.8}>
+          <Grid item lg={0.3} xs={3}></Grid>
+          <Grid item lg={0.3} xs={3}></Grid>
+          <Grid item lg={4.8} xs={6}>
             <Card variant="outlined" style={textcard}>
               <p className="p">
                 월간 통계를 통해<br></br>
@@ -259,7 +262,7 @@ function Home() {
               </p>
             </Card>
           </Grid>
-          <Grid item xs={0.9}></Grid>
+          <Grid item lg={0.9} xs={3}></Grid>
         </Grid>
       </div>
 

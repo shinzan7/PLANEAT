@@ -43,11 +43,8 @@ function SearchDetail() {
 
 
   useEffect(() => {
-    // const url = `https://j7a701.p.ssafy.io/api/nutrient?id=1` 
     http.get(`/nutrient?id=${nutrientId}`)
-    // http.get('/nutrient?id=1')
     .then(response => {
-      // console.log(response.data.data)
       setInfo(response.data.data)
     })
   }, [])
