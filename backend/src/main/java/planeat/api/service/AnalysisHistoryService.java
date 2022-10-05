@@ -35,6 +35,27 @@ public class AnalysisHistoryService {
     private final NutritionRepository nutritionRepository;
     private final NutrientRepository nutrientRepository;
     private final NutrientIngredientRespository nutrientIngredientRespository;
+    private final NutrientHistoryRepository nutrientHistoryRepository;
+    private final IntakeHistoryRepository intakeHistoryRepository;
+
+    /**
+     * 분석기록을 삭제하면 그날의 섭취기록, 섭취음식, 유저영양제 섭취기록을 삭제한다.
+     * @param userId
+     * @param date
+     * @return
+     */
+    public Long deleteAnalysisHistory(Long userId, LocalDate date){
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserIdAndDate(userId, date);
+        Long result = 0L;
+        if(historyList.size()!=0){
+            result = historyList.get(0).getId();
+        }
+        analysisHistoryRepository.deleteAll(historyList);
+        intakeHistoryRepository.deleteByUser_IdAndDate(userId, date);
+        nutrientHistoryRepository.deleteByUserNutrient_User_IdAndIntakeDate(userId, date);
+
+        return result;
+    }
 
     public List<AnalysisHistoryResponse> getAllAnalysisHistory(Long userId) {
         User user = userRepository.findById(userId).orElseThrow(
@@ -731,7 +752,7 @@ public class AnalysisHistoryService {
      * @return 점수 (green:10, yellow:5, red:0)
      */
     public int vitaminScore(float real, float rec) {
-        int colorScore = 2;
+        int colorScore = 0;
         float percent = real / rec;
         if (percent >= 0.6f) {
             colorScore = 10;
