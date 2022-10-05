@@ -10,9 +10,9 @@ import { Grid } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import {Link} from 'react-router-dom';
 import { http } from "api/http";
-import styled from "styled-components";
-// import Pagination from "components/common/Pagination";
-import Pagination from 'react-js-pagination'
+import Pagination from "components/common/Pagination";
+// import Pagination from 'react-js-pagination'
+import Paging from './Paging'
 
 
 
@@ -91,22 +91,23 @@ function TagResult() {
                           <CardNutrient key={i} pill={data} />
                         </Link>
                       )})}
+                    </Grid>
 
                     <br></br>
 
                     <Grid container>
-                      <Grid item xs={3}>
+                      <Grid item xs={2}>
 
                       </Grid>
                       <Grid item xs={6}>
-                        {/* <Pagination
+                        <Pagination
                         total={info.length}
                         limit={limit}
                         page={page}
                         setPage={setPage}
-                      /> */}
+                      />
 
-                        <Pagination
+                        {/* <Pagination
                         activePage={page}
                         itemsCountPerPage={20}
                         totalItemsCount={info.length}
@@ -114,17 +115,17 @@ function TagResult() {
                         prevPageText={"‹"}
                         nextPageText={"›"}
                         onChange={handlePageChange}
-                      />
+                      /> */}
+
+                      {/* <Paging page={page} total={info.length} setPage={setPage} /> */}
 
                       </Grid>
-                      <Grid item xs={3}>
+                      <Grid item xs={4}>
                 
                       </Grid>
                     </Grid>
 
                     <br></br>
-
-                  </Grid>
                 </Grid>
                 <Grid item xs={2}>
 
