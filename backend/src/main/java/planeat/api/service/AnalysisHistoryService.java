@@ -567,6 +567,9 @@ public class AnalysisHistoryService {
                 .vitaminB2(vitaminB2)
                 .build();
 
+        System.out.println("배포서버 분석기록 response 출력 테스트");
+        System.out.println(response);
+
         return response;
 
     }
