@@ -88,4 +88,43 @@ public class AnalysisHistoryPercentResponse implements Serializable {
         this.vitaminB1 = vitaminB1;
         this.vitaminB2 = vitaminB2;
     }
+
+    @Override
+    public String toString() {
+        return "AnalysisHistoryPercentResponse{" +
+                "analysisType=" + analysisType +
+                ", badCount=" + badCount +
+                ", normalCount=" + normalCount +
+                ", goodCount=" + goodCount +
+                ", calorie=" + calorie +
+                ", protein=" + protein +
+                ", fat=" + fat +
+                ", carbohydrate=" + carbohydrate +
+                ", sugar=" + sugar +
+                ", dietaryFiber=" + dietaryFiber +
+                ", calcium=" + calcium +
+                ", iron=" + iron +
+                ", magnesium=" + magnesium +
+                ", phosphorus=" + phosphorus +
+                ", potassium=" + potassium +
+                ", sodium=" + sodium +
+                ", zinc=" + zinc +
+                ", copper=" + copper +
+                ", manganese=" + manganese +
+                ", selenium=" + selenium +
+                ", vitaminA=" + vitaminA +
+                ", vitaminD=" + vitaminD +
+                ", vitaminB6=" + vitaminB6 +
+                ", folate=" + folate +
+                ", vitaminB12=" + vitaminB12 +
+                ", vitaminC=" + vitaminC +
+                ", cholesterol=" + cholesterol +
+                ", fattyAcid=" + fattyAcid +
+                ", linoleicAcid=" + linoleicAcid +
+                ", alphaLinoleicAcid=" + alphaLinoleicAcid +
+                ", transFattyAcid=" + transFattyAcid +
+                ", vitaminB1=" + vitaminB1 +
+                ", vitaminB2=" + vitaminB2 +
+                '}';
+    }
 }
