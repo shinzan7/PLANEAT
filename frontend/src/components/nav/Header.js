@@ -123,7 +123,7 @@ const ResponsiveAppBar = () => {
                       <StyledLink to="/main">{page}</StyledLink>
                     )}
                     {page == "영양제 검색" && (
-                      <StyledLink to="/search">{page}</StyledLink>
+                      <StyledLink to="/searchtag">{page}</StyledLink>
                     )}
                     {page == "내 영양분석" && (
                       <StyledLink to="/analysis">{page}</StyledLink>
@@ -173,7 +173,7 @@ const ResponsiveAppBar = () => {
                 )}
                 {page == "영양제 검색" && (
                   <StyledLink
-                    to="/search"
+                    to="/searchtag"
                     current={
                       location.pathname == "/search" ||
                       location.pathname == "/searchtag" ||
