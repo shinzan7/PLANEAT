@@ -46,7 +46,7 @@ export default function MediaCard(props) {
 
 const StyledWrapper = styled.div`
   && #cardContainer {
-    width: 230px;
+    width: 250px;
     height: 250px;
     border-radius: 25px;
     margin: 10px;

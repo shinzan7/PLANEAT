@@ -19,18 +19,23 @@ function SearchByReco() {
   const [tag, setTag] = useState([]);
   const [info, setInfo] = useState([]);
   const [history, setHistory] = useState([]);
+  const [history2, setHistory2] = useState([]);
+
+  function solution(arr) {
+    let answer = [],
+        sum = arr.reduce((acc, cur) => acc + cur, 0); // 수식, 시작값
+    answer = sum;
+    return answer;
+  }
+
 
   // const today = new Date()
   // const year = today.getFullYear().toString()
   // const tmpMonth = today.getMonth() + 1
-  // const month = tmpMonth + 1 < 10 ? "0" + tmpMonth : "" + tmpMonth
+  // const month = tmpMonth < 11 ? "0" + tmpMonth-1 : "" + tmpMonth-1
   // const tmpDay = today.getDate()
   // const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
   // const userId = localStorage.getItem('userId')
-
-  // console.log('tag', tag)
-  // console.log('info', info)
-  // console.log('history', history)
 
   useEffect(() => {
     // http.get(`/user-infos/${userId}`)
@@ -43,7 +48,8 @@ function SearchByReco() {
       });
       setTag(data);
     });
-
+    
+    // 최근 한달 기록 기반으로 검색
     // http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`)
     http.get("/analysis/percent?date=2022-09-26&userId=8").then((response) => {
       const data2 = Object.entries(response.data.data);
@@ -87,6 +93,7 @@ function SearchByReco() {
         setHistory(response.data.data);
       });
     });
+
   }, []);
 
   const settings = {
