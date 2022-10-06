@@ -136,9 +136,9 @@ export default function UserInfo() {
 
   // 탄단지 권장섭취량 설정
   function changeCarbProFat() {
-    let carboAmount = recoIntake * 0.6;
-    let proteinAmount = recoIntake * 0.13;
-    let fatAmount = recoIntake * 0.22;
+    let carboAmount = (recoIntake * 0.6) / 4.0;
+    let proteinAmount = (recoIntake * 0.13) / 4.0;
+    let fatAmount = (recoIntake * 0.22) / 9.0;
     setCarbo(carboAmount.toFixed(1));
     setProtein(proteinAmount.toFixed(1));
     setFat(fatAmount.toFixed(1));
