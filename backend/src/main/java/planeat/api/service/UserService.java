@@ -214,9 +214,13 @@ public class UserService {
                 uir.getRecInfo().setCarbohydrate(userRecIntakeList.get(i).getCarbohydrate());
                 uir.getRecInfo().setFat(userRecIntakeList.get(i).getFat());
 
-                uri = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
-                userRecIntakeRepository.save(uri);
-                uri.getUser().getUserRecIntakeList().add(uri);
+
+                if(uri.getUpdateDate().equals(uir.getRecInfo().getUpdateDate()) {
+                    userRecIntakeRepository.delete(uri);
+                }
+                UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
+                userRecIntakeRepository.save(userRecIntake);
+                uri.getUser().getUserRecIntakeList().add(userRecIntake);
             }
 
             List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
