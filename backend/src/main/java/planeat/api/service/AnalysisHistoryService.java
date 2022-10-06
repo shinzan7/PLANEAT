@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import planeat.api.dto.analysishistory.AnalysisHistoryPercentResponse;
 import planeat.api.dto.analysishistory.AnalysisHistoryResponse;
+import planeat.api.dto.user.UserInfoResponse;
 import planeat.database.entity.AnalysisHistory;
 import planeat.database.entity.User;
 import planeat.database.repository.AnalysisHistoryRepository;
@@ -171,10 +172,6 @@ public class AnalysisHistoryService {
                     .transFattyAcid(0f)
                     .build();
 
-            //해당날짜의 유저 권장섭취량
-            Optional<UserRecIntake> userRecIntake = userRecIntakeRepository.
-                    findFirstByUserAndUpdateDateLessThanEqualOrderByUpdateDateDesc(user, localDate);
-
             //필수영양소
             int nowYear = LocalDate.now(ZoneId.of("Asia/Seoul")).getYear() + 1;
             Integer age = nowYear - user.getBirthyear();
@@ -225,13 +222,24 @@ public class AnalysisHistoryService {
                     .transFattyAcid(2f)
                     .build();
 
-            if (userRecIntake.isPresent()) {
-                //칼로리,탄,단,지 -> 유저 권장섭취량으로 update
-                recommend.updateRecIntake(userRecIntake.get().getCalorie(),
-                        userRecIntake.get().getCarbohydrate(),
-                        userRecIntake.get().getProtein(),
-                        userRecIntake.get().getFat());
+            //해당날짜의 유저 권장섭취량
+            //칼로리,탄,단,지 -> 유저 권장섭취량으로 update
+            if (user.getJoinDate().isAfter(localDate)) {
+                UserRecIntake userRecIntake = userRecIntakeRepository.findFirstByUserOrderByUpdateDateAsc(user)
+                        .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+                recommend.updateRecIntake(userRecIntake.getCalorie(),
+                        userRecIntake.getCarbohydrate(),
+                        userRecIntake.getProtein(),
+                        userRecIntake.getFat());
+            } else {
+                UserRecIntake userRecIntake = userRecIntakeRepository.findFirstByUserAndUpdateDateLessThanEqualOrderByUpdateDateDesc(user, localDate)
+                        .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
+                recommend.updateRecIntake(userRecIntake.getCalorie(),
+                        userRecIntake.getCarbohydrate(),
+                        userRecIntake.getProtein(),
+                        userRecIntake.getFat());
             }
+
 
             analysisHistoryRepository.save(real);
             analysisHistoryRepository.save(recommend);
