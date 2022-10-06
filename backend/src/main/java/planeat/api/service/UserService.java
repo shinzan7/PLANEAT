@@ -196,10 +196,15 @@ public class UserService {
 
             userRecIntakeRepository.deleteAll(userRecIntakes);
 
-            UserRecIntake uri = userRecIntakeRepository.findFirstByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate())
-                                .orElse(UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo()));
-            userRecIntakeRepository.save(uri);
-            uri.getUser().getUserRecIntakeList().add(uri);
+            Boolean isExist = userRecIntakeRepository.existsByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate());
+            LocalDate localDate = null;
+            if(!isExist) {
+                UserRecIntake uri = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
+                userRecIntakeRepository.save(uri);
+                uri.getUser().getUserRecIntakeList().add(uri);
+                localDate = uri.getUpdateDate();
+            }
+
 
             for (int i = 0; i < userRecIntakeList.size(); i++) {
                 UserInfoRequest uir = userInfoRequest;
@@ -214,13 +219,11 @@ public class UserService {
                 uir.getRecInfo().setCarbohydrate(userRecIntakeList.get(i).getCarbohydrate());
                 uir.getRecInfo().setFat(userRecIntakeList.get(i).getFat());
 
-
-                if(uri.getUpdateDate().equals(uir.getRecInfo().getUpdateDate()) {
-                    userRecIntakeRepository.delete(uri);
+                if(!userRecIntakeList.get(i).getUpdateDate().equals(localDate)) {
+                    UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
+                    userRecIntakeRepository.save(userRecIntake);
+                    userRecIntake.getUser().getUserRecIntakeList().add(userRecIntake);
                 }
-                UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
-                userRecIntakeRepository.save(userRecIntake);
-                uri.getUser().getUserRecIntakeList().add(userRecIntake);
             }
 
             List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
