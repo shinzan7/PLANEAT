@@ -53,7 +53,11 @@ function Home() {
     fontSize: "1.5vw",
     color: "white",
   };
-  const textcard = { height: "50vh", backgroundColor: "transparent", border: "none" };
+  const textcard = {
+    height: "50vh",
+    backgroundColor: "transparent",
+    border: "none",
+  };
   const chip = { marginLeft: "20%" };
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -84,7 +88,12 @@ function Home() {
         <Grid item xs={2}></Grid>
         <Grid item xs={8}>
           <Grid container>
-            <Grid item xs={12} md={6} sx={{ marginTop: "20vh", textAlign: "center" }}>
+            <Grid
+              item
+              xs={12}
+              md={12}
+              sx={{ marginTop: "10vh", textAlign: "center" }}
+            >
               <div>
                 <img
                   // className="floating"
@@ -93,7 +102,7 @@ function Home() {
                   data-aos-duration="1000"
                   alt=""
                   style={{
-                    width: "400px",
+                    width: "45%",
 
                     marginBottom: "5vh",
                     textAlign: "center",
@@ -109,19 +118,16 @@ function Home() {
                   data-aos-offset="30"
                   data-aos-delay="500"
                   alt=""
-                  style={{ width: "300px" }}
+                  style={{ width: "30%" }}
                 />
               </div>
-
-              {/* <img
-              src={longlogo}
-              // data-aos="fade-right"
-              // data-aos-duration="3000"
-              alt=""
-              style={logo}
-            /> */}
             </Grid>
-            <Grid item xs={12} md={6} sx={{ marginTop: "35vh", textAlign: "center" }}>
+            <Grid
+              item
+              xs={12}
+              md={12}
+              sx={{ marginTop: "6vh", textAlign: "center" }}
+            >
               <div
                 data-aos="fade-left"
                 data-aos-duration="1000"
@@ -129,18 +135,24 @@ function Home() {
                 style={{
                   display: "inline-block",
                   padding: "20px",
-                  backgroundColor: "#190730",
+                  // backgroundColor: "#190730",
                   opacity: "1",
                   borderRadius: "24px",
                 }}
               >
-                <div style={{ marginBottom: "25px" }}>간편 로그인</div>
+                <div style={{ marginBottom: "30px", fontSize: "2.5vh" }}>
+                  간편 로그인
+                </div>
                 <Google />
                 <Naver />
                 <Kakao />
               </div>
             </Grid>
-            <Grid item xs={12} style={{ marginTop: "23vh", textAlign: "center" }}>
+            <Grid
+              item
+              xs={12}
+              style={{ marginTop: "7vh", textAlign: "center" }}
+            >
               <img
                 className="floating"
                 src="assets/arrow.png"
@@ -174,15 +186,21 @@ function Home() {
               sx={{ textAlign: "center" }}
               data-aos="fade-up"
               data-aos-duration="1000"
-              data-aos-offset="30"
+              data-aos-offset="50"
               data-aos-delay="400"
               xs={12}
               sm={12}
               md={4}
             >
-              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>음식 데이터</p>
+              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>
+                음식 데이터
+              </p>
               <CountUp
-                style={{ textAlign: "center", color: "white", fontSize: "30px" }}
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: "30px",
+                }}
                 start={0}
                 end={89962}
                 duration={3}
@@ -207,15 +225,21 @@ function Home() {
               sx={{ textAlign: "center" }}
               data-aos="fade-up"
               data-aos-duration="1000"
-              data-aos-offset="30"
+              data-aos-offset="50"
               data-aos-delay="600"
               xs={12}
               sm={12}
               md={4}
             >
-              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>영양제 데이터</p>
+              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>
+                영양제 데이터
+              </p>
               <CountUp
-                style={{ textAlign: "center", color: "white", fontSize: "30px" }}
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: "30px",
+                }}
                 start={0}
                 end={5421}
                 duration={3}
@@ -230,9 +254,9 @@ function Home() {
                 )}
               </CountUp>
               <div style={{ marginTop: "20px", lineHeight: "1.5" }}>
-                영양제를 추천받고
+                고민별, 성분별 검색과
                 <br />
-                고민별, 성분별로 검색이 가능합니다.
+                영양제 추천을 받을 수 있습니다.
               </div>
             </Grid>
             <Grid
@@ -240,15 +264,21 @@ function Home() {
               sx={{ textAlign: "center" }}
               data-aos="fade-up"
               data-aos-duration="1000"
-              data-aos-offset="30"
+              data-aos-offset="50"
               data-aos-delay="800"
               xs={12}
               sm={12}
               md={4}
             >
-              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>리뷰 데이터</p>
+              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>
+                리뷰 데이터
+              </p>
               <CountUp
-                style={{ textAlign: "center", color: "white", fontSize: "30px" }}
+                style={{
+                  textAlign: "center",
+                  color: "white",
+                  fontSize: "30px",
+                }}
                 start={0}
                 end={979551}
                 duration={3}
@@ -271,53 +301,23 @@ function Home() {
         </Container>
       </div>
 
-      <div style={{ marginTop: "10%", marginLeft: "10%", marginRight: "10%", textAlign: "end" }}>
+      <div
+        style={{
+          marginTop: "10%",
+          marginLeft: "10%",
+          marginRight: "10%",
+          textAlign: "end",
+        }}
+      >
         <Grid container>
           <Grid item xs={12} md={6} sx={{ display: "table" }}>
-            <div style={{ paddingRight: "20%", display: "table-cell", verticalAlign: "middle" }}>
-              <div
-                style={{
-                  display: "inline-block",
-                  marginTop: "20%",
-                  marginBottom: "5px",
-                  borderRadius: "4px",
-                  backgroundColor: "#9DA6F8",
-                  width: "90px",
-                  height: "5px",
-                }}
-              ></div>
-              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
-                나에게 필요한 영양제를<br></br>
-                쉽고 빠르게 찾아보세요
-              </p>
-            </div>
-          </Grid>
-
-          <Grid item xs={12} md={6}>
-            <img
-              src="assets/home2.png"
-              width="600vh"
-              data-aos="fade-down-left"
-              data-aos-offset="500"
-              data-aos-duration="1000"
-            />
-          </Grid>
-        </Grid>
-      </div>
-
-      <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "start" }}>
-        <Grid container>
-          <Grid item xs={12} md={6}>
-            <img
-              src="assets/home3.png"
-              width="600vh"
-              data-aos="fade-down-right"
-              data-aos-offset="500"
-              data-aos-duration="1000"
-            />
-          </Grid>
-          <Grid item xs={12} md={6} sx={{ display: "table" }}>
-            <div style={{ paddingLeft: "20%", display: "table-cell", verticalAlign: "middle" }}>
+            <div
+              style={{
+                paddingRight: "20%",
+                display: "table-cell",
+                verticalAlign: "middle",
+              }}
+            >
               <div
                 style={{
                   display: "inline-block",
@@ -335,13 +335,72 @@ function Home() {
               </p>
             </div>
           </Grid>
+
+          <Grid item xs={12} md={6}>
+            <img
+              src="assets/home2.png"
+              width="600vh"
+              data-aos="fade-down-left"
+              data-aos-offset="500"
+              data-aos-duration="1000"
+              style={{ marginRight: "30%" }}
+            />
+          </Grid>
+        </Grid>
+      </div>
+
+      <div
+        style={{ marginLeft: "10%", marginRight: "10%", textAlign: "start" }}
+      >
+        <Grid container>
+          <Grid item xs={12} md={6}>
+            <img
+              src="assets/home3.png"
+              width="600vh"
+              data-aos="fade-down-right"
+              data-aos-offset="500"
+              data-aos-duration="1000"
+              style={{ marginLeft: "25%" }}
+            />
+          </Grid>
+          <Grid item xs={12} md={6} sx={{ display: "table" }}>
+            <div
+              style={{
+                paddingLeft: "20%",
+                display: "table-cell",
+                verticalAlign: "middle",
+              }}
+            >
+              <div
+                style={{
+                  display: "inline-block",
+                  marginTop: "20%",
+                  marginBottom: "5px",
+                  borderRadius: "4px",
+                  backgroundColor: "#9DA6F8",
+                  width: "90px",
+                  height: "5px",
+                }}
+              ></div>
+              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+                나에게 필요한 영양제를<br></br>
+                쉽고 빠르게 찾아보세요
+              </p>
+            </div>
+          </Grid>
         </Grid>
       </div>
 
       <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "end" }}>
         <Grid container>
           <Grid item xs={12} md={6} sx={{ display: "table" }}>
-            <div style={{ paddingRight: "20%", display: "table-cell", verticalAlign: "middle" }}>
+            <div
+              style={{
+                paddingRight: "20%",
+                display: "table-cell",
+                verticalAlign: "middle",
+              }}
+            >
               <div
                 style={{
                   display: "inline-block",
@@ -367,12 +426,17 @@ function Home() {
               data-aos="fade-down-left"
               data-aos-offset="500"
               data-aos-duration="1000"
+              style={{ marginRight: "30%" }}
             />
           </Grid>
         </Grid>
       </div>
       <div style={{ paddingTop: "10%", paddingBottom: "3%" }}>
-        <Fab sx={{ float: "right", marginRight: "3%" }} color="primary" onClick={handleScroll}>
+        <Fab
+          sx={{ float: "right", marginRight: "3%" }}
+          color="primary"
+          onClick={handleScroll}
+        >
           <KeyboardArrowUpRoundedIcon />
         </Fab>
       </div>

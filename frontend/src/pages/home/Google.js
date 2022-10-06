@@ -16,12 +16,13 @@ function Google() {
     <a
       href={GOOGLE_REQUEST}
       style={{
-        marginRight: "15px",
+        marginLeft: "20px",
+        marginRight: "20px",
       }}
     >
       <svg
-        width="65"
-        height="65"
+        width="80"
+        height="80"
         viewBox="0 0 83 84"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
