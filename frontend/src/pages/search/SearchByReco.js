@@ -12,6 +12,7 @@ import "./slick-theme.css";
 import "./Reco.css";
 import { Link } from "react-router-dom";
 import { http } from "api/http";
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 function SearchByReco() {
   const name = localStorage.getItem("name");
@@ -40,7 +41,8 @@ function SearchByReco() {
   console.log(year, month, day)
 
   useEffect(() => {
-    http.get(`/user-infos/${userId}`).then((response) => {
+    http.get('user-infos/9').then((response) => {
+    // http.get(`/user-infos/${userId}`).then((response) => {
       const data = response.data.data.categoriesList;
       const ran = Math.floor(Math.random() * (data.length + 1));
 
@@ -149,7 +151,8 @@ function SearchByReco() {
             {/* 유저 식단 기반 분석에서 부족한 영양소 성분 기반 추천 */}
             <p>
               &nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게
-              추천해요
+              추천해요 &nbsp;
+              <VolunteerActivismIcon />
             </p>
           </div>
           <div>
