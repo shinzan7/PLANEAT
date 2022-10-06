@@ -1,8 +1,14 @@
 import axios from "axios";
-import {
-  AccessTokenExpireCheck,
-  RefreshTokenExpireCheck,
-} from "../pages/home/TokenCheck"
+
+// axios 객체 생성
+// const http = axios.create({
+//     baseURL: "https://j7a701.p.ssafy.io/api/",
+//     headers: {
+//         "Content-type": "application/json"
+//     },
+// });
+
+// export { http };
 
 function Instance() {
   const instance = axios.create({
@@ -14,67 +20,66 @@ function Instance() {
   // request insterceptor 요청 전 헤더에 토큰 등록
   instance.interceptors.request.use(
     (config) => {
-      // access token 만료 시
-      if (AccessTokenExpireCheck()) {
-        // refresh token 만료 시
-        if (RefreshTokenExpireCheck()) {
-          //access token & refresh token 둘 다 만료됐을 시
-          console.log("토큰 만료됨 ")
-          window.location.replace("/login")
-        } else {
-          // access token 만료 & refresh token 만료되지 않았을 시
-          console.log("리프레쉬 토큰으로 요청 ")
-          axios
-            .get(`${process.env.REACT_APP_BASE_URL}oauth/refresh`, {
-              headers: {
-                refreshToken: localStorage.getItem("refreshToken"),
-              },
-            })
-            .then((res) => {
-              console.log("새로운 엑세스 토큰 받음 ", res.data)
-              localStorage.setItem("accessToken", res.data.accessToken)
-              localStorage.setItem(
-                "accessTokenExpiration",
-                res.data.accessTokenExpiration
-              )
-              config.headers["refreshToken"] =
-                localStorage.getItem("refreshToken")
-              config.headers["accessToken"] =
-                localStorage.getItem("accessToken")
-
-              console.log("새 엑세스 토큰 헤더에 등록 ")
-              return config
-            })
-            .catch((err) => {
-              console.log("엑세스 토큰 발급 요청 에러 ", err)
-            })
-        }
-      } else {
-        console.log("기존 엑세스 토큰 ")
-        config.headers["accessToken"] = localStorage.getItem("accessToken")
-        config.headers["refreshToken"] = localStorage.getItem("refreshToken")
-        return config
-      }
+      console.log("request config 나왔슈")
+      config.headers["accessToken"] = localStorage.getItem("accessToken")
+      config.headers["refreshToken"] = localStorage.getItem("refreshToken")
+      return config
     },
     (error) => {
+      console.log("request config 에러났슈")
       return Promise.reject(error)
     }
   )
   // response interceptor 요청 응답 받은 후 데이터 가공
   instance.interceptors.response.use(
     (response) => {
+      console.log("response 리턴 나왔슈")
       return response
     },
-    (error) => {
-      // 에러 코드 받기 E003 - 토큰 만료 오류
-      console.log("Axios 에러입니다.", error)
-      //로그아웃 후 login page로 리다이렉트
-      // if (error.response.data.code === "E003") {
-      //   localStorage.clear()
-      //   window.location.replace("/")
-      // }
-      // 응답 에러 : 에러코드로 처리 방법 지정
-      //  ex) locaStorage에 토큰이 없음 -> 안내 메세지 후 로그인 페이지로 redirect
+    async (error) => {
+      console.log("request 에러 났슈")
+      const {
+        config,
+        response: { status },
+      } = error
+      const originalRequest = config
+      if (status === 401 && !originalRequest._retry) {
+        console.log("request 에서 토큰 요청 할거유")
+        // token refresh 요청
+        originalRequest._retry = true
+
+        const { data } = await axios.get(
+          `${process.env.REACT_APP_BASE_URL}/oauth/refresh`, // token refresh api
+          {
+            headers: {
+              refreshToken: localStorage.getItem("refreshToken"),
+            },
+          }
+        )
+        console.log("토큰 요청 했슈")
+        // 새로운 토큰 저장
+        const {
+          accessToken: newAccessToken,
+
+          accessTokenExpiration,
+        } = data
+
+        localStorage.setItem("accessToken", newAccessToken)
+
+        localStorage.setItem("accessTokenExpiration", accessTokenExpiration)
+        console.log("request 토큰 저장했슈")
+        instance.defaults.headers["refreshToken"] = localStorage.getItem("refreshToken")
+        originalRequest.headers["accessToken"] = newAccessToken
+        // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
+        console.log("이제 재요청 할거유")
+        return axios(originalRequest)
+      } else if (status === 403) {
+        console.log("권한없슈")
+        // console.log("권한 없음")
+        window.location.replace("/")
+      }
+      console.log("request ㅇ여긴 어디냐?")
+      return Promise.reject(error)
     }
   )
   return instance
