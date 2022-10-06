@@ -6,7 +6,6 @@
 로직: 버튼 누르면 NAVER_REQUSET 주소로 redirect 
 */
 
-
 import React from "react";
 
 function Naver() {
@@ -14,10 +13,16 @@ function Naver() {
   const NAVER_REQUEST = `${NAVER_REDIRECT_URI}?redirect_uri=http://j7a701.p.ssafy.io/oauth/redirect`;
 
   return (
-    <a href={NAVER_REQUEST} style={{ marginRight: "15px" }}>
+    <a
+      href={NAVER_REQUEST}
+      style={{
+        marginLeft: "20px",
+        marginRight: "20px",
+      }}
+    >
       <svg
-        width="65"
-        height="65"
+        width="80"
+        height="80"
         viewBox="0 0 84 84"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
