@@ -65,6 +65,7 @@ function SearchDetail() {
               .replace(/①/gi, '\n').replace(/②/gi, '\n').replace(/③/gi, '\n').replace(/④/gi, '\n').replace(/⑤/gi, '\n')
               .replace(/1\)/gi, '\n').replace(/2\)/gi, '\n').replace(/3\)/gi, '\n').replace(/4\)/gi, '\n').replace(/5\)/gi, '\n')
               .replace(/1\./gi, '\n').replace(/2\./gi, '\n').replace(/3\./gi, '\n').replace(/4\./gi, '\n').replace(/5\./gi, '\n')
+              .replace(/-/gi, '\n')
 
   
   // const ingredients = []
