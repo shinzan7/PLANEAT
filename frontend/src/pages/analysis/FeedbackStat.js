@@ -138,12 +138,18 @@ export default function FeedbackStat({ value, data, percent, allCal, calArr }) {
       <Grid Container justifyContent="center" style={{ display: "flex", margin: 20 }}>
         <Grid item xs>
           <div style={{ marginLeft: "5%" }}>
-            <ShowIntakeCharts
-              allCal={allCal}
-              carbo={calArr[0]}
-              protein={calArr[1]}
-              fat={calArr[2]}
-            ></ShowIntakeCharts>
+            {percent.analysisType == null ? (
+              <div style={{ marginTop: "20%", lineHeight: "2", textAlign: "center" }}>
+                섭취한 칼로리가 0kcal이에요.😥
+              </div>
+            ) : (
+              <ShowIntakeCharts
+                allCal={allCal}
+                carbo={calArr[0]}
+                protein={calArr[1]}
+                fat={calArr[2]}
+              ></ShowIntakeCharts>
+            )}
           </div>
         </Grid>
         <Divider orientation="vertical" flexItem />
