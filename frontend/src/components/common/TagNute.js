@@ -10,7 +10,6 @@ import { useNavigate } from "react-router-dom";
 import "./TagMain.css";
 
 const TagNute = ({ tag, index }) => {
-
   const navigate = useNavigate();
 
   const onCheck = ({ target }) => {
@@ -27,7 +26,11 @@ const TagNute = ({ tag, index }) => {
           onCheck(e);
         }}
       >
-        <div id={index} className="tag" style={{ fontWeight: "bold", fontSize: "15px"}}>
+        <div
+          id={index}
+          className="tag"
+          style={{ fontWeight: "bold", fontSize: "15px" }}
+        >
           {tag}
         </div>
       </div>

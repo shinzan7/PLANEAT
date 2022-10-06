@@ -63,7 +63,7 @@ function Logincheck() {
       localStorage.setItem("birthYear", birthYear)
       localStorage.setItem("gender", gender)
       // setNewUser(true)
-      window.location.replace("/main")
+      window.location.replace("/analysis")
     }
   }, [])
 

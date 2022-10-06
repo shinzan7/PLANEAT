@@ -4,49 +4,54 @@
 @author 여예원
 @since 2022.09.15
 */
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import ChipBlue from './ChipBlue';
-import ChipOrange from './ChipOrange';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import CardActions from "@mui/material/CardActions";
+import CardContent from "@mui/material/CardContent";
+import ChipBlue from "./ChipBlue";
+import ChipOrange from "./ChipOrange";
+import Typography from "@mui/material/Typography";
+import { Grid } from "@mui/material";
+import styled from "styled-components";
 
-const CardNutrient = function MediaCard(props) {
-    let imgUrl = props.pill.imagePath; // props의 이미지 url
+export default function MediaCard(props) {
+  let imgUrl = props.pill.imagePath; // props의 이미지 url
 
   return (
-      <Card sx={{ width: {xs:'250px'}, height: 250, borderRadius: 5, margin: 1}}>
-          <CardContent>
-          <p style={{textAlign: "center", marginTop:20}}>
-              <img
-              sx={{width: {xs:'100px'}}}
-              height="100"
-              src={
-                  imgUrl == "" ? "/assets/basic_nutrient.png" : imgUrl
-              }
-                      
-              />
-              </p>
-            {/* 제조 회사 */}
-            <Typography variant="caption">
-                {props.pill.company} 
+    <StyledWrapper>
+      <Grid id="cardContainer">
+        <Grid container alignItems="center" justifyContent="center">
+          <Grid item xs={12} style={{ marginTop: "10px" }}>
+            <img
+              sx={{ width: { xs: "150px" }, marginTop: 20 }}
+              height="150"
+              src={imgUrl == "" ? "/assets/basic_nutrient.png" : imgUrl}
+            />
+          </Grid>
+          {/* 제조 회사 */}
+          <Grid item xs={12} style={{ marginTop: "5px" }}>
+            <Typography variant="caption">{props.pill.company}</Typography>
+          </Grid>
+          {/* 영양제 이름 */}
+          <Grid item xs={12} style={{ marginTop: "5px" }}>
+            <Typography sx={{ fontWeight: "bold" }} variant="body1">
+              {props.pill.nutrientName}
             </Typography>
-            {/* 영양제 이름 */}
-            <Typography sx={{ fontWeight: "bold"}} variant="body1">
-                {props.pill.nutrientName} 
-            </Typography>
-          </CardContent>
-          {/* <CardActions sx={{ padding: 0, marginLeft: 2, marginBottom: 1 }} >
-            영양제 기능 태그
-            <ChipBlue label={ props.pill.nutriIngredientList[0].categoryTagList[0]}></ChipBlue>                    
-          </CardActions>
-          <CardActions sx={{padding: 0, marginLeft: 2} }>
-            영양제 성분 태그
-          <ChipOrange label={ props.pill.nutriIngredientList[0].ingredientName}></ChipOrange>
-        </CardActions> */}
-    </Card>
+          </Grid>
+        </Grid>
+      </Grid>
+    </StyledWrapper>
   );
 }
 
-export default CardNutrient;
+const StyledWrapper = styled.div`
+  && #cardContainer {
+    width: 250px;
+    height: 250px;
+    border-radius: 25px;
+    margin: 10px;
+    box-shadow: 1px 2px 6px #c7c7c7;
+    text-align: center;
+    color: black !important;
+  }
+`;

@@ -41,9 +41,9 @@ const TagMain = ({ tag, clickedItems, clickedItemHandler, src, tagid }) => {
   //     transform: scale(1.1);
   //   }
   // `;
-
+  // todo: 체크하기
   return (
-    <>
+    <div className="container1">
       <div
         id={type}
         className={tagid}
@@ -60,12 +60,16 @@ const TagMain = ({ tag, clickedItems, clickedItemHandler, src, tagid }) => {
           onCheck(e);
         }}
       >
-        <img className={tagid} src={src} style={{ marginTop: "20px", width: 60, height: 60 }}></img>
+        <img
+          className={tagid}
+          src={src}
+          style={{ marginTop: "20px", width: 60, height: 60 }}
+        ></img>
         <div className={tagid} style={{ fontWeight: "bold", fontSize: "15px" }}>
           {tag}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

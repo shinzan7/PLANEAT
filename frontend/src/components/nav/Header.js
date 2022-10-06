@@ -23,8 +23,9 @@ import {
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import longlogo from "assets/longlogo.png";
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
-const pages = ["식사 기록", "영양제 검색", "내 영양분석"];
+const pages = ["식사 기록", "영양제 검색", "내 영양분석", "MY"];
 
 const ResponsiveAppBar = () => {
   const location = useLocation();
@@ -123,7 +124,7 @@ const ResponsiveAppBar = () => {
                       <StyledLink to="/main">{page}</StyledLink>
                     )}
                     {page == "영양제 검색" && (
-                      <StyledLink to="/search">{page}</StyledLink>
+                      <StyledLink to="/searchtag">{page}</StyledLink>
                     )}
                     {page == "내 영양분석" && (
                       <StyledLink to="/analysis">{page}</StyledLink>
@@ -173,7 +174,7 @@ const ResponsiveAppBar = () => {
                 )}
                 {page == "영양제 검색" && (
                   <StyledLink
-                    to="/search"
+                    to="/searchtag"
                     current={
                       location.pathname == "/search" ||
                       location.pathname == "/searchtag" ||
@@ -195,13 +196,21 @@ const ResponsiveAppBar = () => {
                     {page}
                   </StyledLink>
                 )}
+                {page == "MY" && (
+                  <StyledLink
+                    to="/myPage"
+                    current={location.pathname == "/myPage"}
+                  >
+                    {page}
+                  </StyledLink>
+                )}
               </Typography>
             ))}
           </Box>
           {/* 우측 아이콘 영역(기본 사이즈) */}
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <SettingsIcon />
+              <AccountCircleRoundedIcon />
             </IconButton>
             <Menu
               sx={{ mt: "45px" }}
@@ -221,18 +230,6 @@ const ResponsiveAppBar = () => {
               onClose={handleCloseUserMenu}
             >
               {/* 우측 아이콘 클릭시 나오는 메뉴 */}
-              <MenuItem onClick={handleCloseUserMenu}>
-                <StyledLink to="/mypage">
-                  <Typography
-                    textAlign="center"
-                    onClick={() => {
-                      console.log("마이페이지");
-                    }}
-                  >
-                    마이페이지
-                  </Typography>
-                </StyledLink>
-              </MenuItem>
               <MenuItem onClick={handleCloseUserMenu}>
                 <Typography
                   textAlign="center"

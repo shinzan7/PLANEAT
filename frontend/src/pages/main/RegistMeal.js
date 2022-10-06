@@ -54,9 +54,8 @@ export default function RegistMeal(props) {
         />
       ) : null}
       <Grid container id="container" xs={12} direction="row">
-        <Grid container id="mealDate" xs={12}>
-          {" "}
-          {month}월 {day}일 식사 등록하기
+        <Grid container id="mealDate" xs={12} style={{fontSize: "18px"}}>
+          <b style={{fontSize: "20px"}}>{month} </b>월&nbsp;<b style={{fontSize: "20px"}}>{day}</b>일 식사 등록
         </Grid>
         <Grid
           container
