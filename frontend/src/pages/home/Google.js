@@ -6,8 +6,6 @@
 로직: 버튼 누르면 GOOGLE_REQUSET 주소로 redirect 
 */
 
-
-
 import React from "react";
 
 function Google() {
@@ -15,7 +13,12 @@ function Google() {
   const GOOGLE_REQUEST = `${GOOGLE_REDIRECT_URI}?redirect_uri=http://j7a701.p.ssafy.io/oauth/redirect`;
 
   return (
-    <a href={GOOGLE_REQUEST} style={{ marginRight: "15px" }}>
+    <a
+      href={GOOGLE_REQUEST}
+      style={{
+        marginRight: "15px",
+      }}
+    >
       <svg
         width="65"
         height="65"
