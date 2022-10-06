@@ -14,12 +14,12 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
+import planeat.api.dto.intakehistory.IntakeHistoryRequest;
 import planeat.enums.MealType;
 
 import javax.persistence.*;
-import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -39,7 +39,7 @@ public class IntakeHistory {
     private User user;
 
     @Column(name = "date", nullable = false)
-    private Date date;
+    private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "meal_type", nullable = false)
@@ -52,20 +52,46 @@ public class IntakeHistory {
 
 
     @Builder
-    public IntakeHistory(Long id, User user, Date date, MealType mealType) {
+    public IntakeHistory(Long id, User user, LocalDate date, MealType mealType) {
         this.id = id;
         this.user = user;
         this.date = date;
         this.mealType = mealType;
     }
 
-//    public void setDate(Date date) { this.date = date; }
-//    public void setMealType(MealType mealType) { this.mealType = mealType; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public IntakeHistory update(Date date, MealType mealType) {
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public void setDate(LocalDate date) {
         this.date = date;
+    }
+
+    public void setMealType(MealType mealType) {
         this.mealType = mealType;
-        return this;
+    }
+
+    public static IntakeHistory createIntakeHistory(User user, IntakeHistoryRequest intakeHistoryRequest) {
+        IntakeHistory intakeHistory = IntakeHistory.builder()
+                .user(user)
+                .date(intakeHistoryRequest.getDate())
+                .mealType(intakeHistoryRequest.getMealType())
+                .build();
+        return intakeHistory;
+    }
+
+
+    public static IntakeHistory updateIntakeHistory(User user, IntakeHistoryRequest intakeHistoryRequest) {
+        IntakeHistory intakeHistory = new IntakeHistory();
+        intakeHistory.setId(intakeHistoryRequest.getIntakeHistoryId());
+        intakeHistory.setDate(intakeHistoryRequest.getDate());
+        intakeHistory.setUser(user);
+        intakeHistory.setMealType(intakeHistoryRequest.getMealType());
+        return intakeHistory;
     }
 
 }

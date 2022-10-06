@@ -6,6 +6,7 @@ package planeat.database.entity;
  @author 신지한, 박윤하
  @since 2022-09-15
 */
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -24,7 +25,8 @@ import java.util.List;
 @Table(name = "user_nutrient")
 public class UserNutrient {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_nutrient_id")
     private Long id;
 
@@ -45,11 +47,19 @@ public class UserNutrient {
 
 
     @Builder
-    public UserNutrient(Long id, User user, Nutrient nutrient, Integer intakeRecommend) {
+    private UserNutrient(Long id, User user, Nutrient nutrient, Integer intakeRecommend) {
         this.id = id;
         this.user = user;
         this.nutrient = nutrient;
         this.intakeRecommend = intakeRecommend;
+    }
+
+    public static UserNutrient createUserNutrient(User user, Nutrient nutrient, Integer intakeRecommend) {
+        return UserNutrient.builder()
+                .user(user)
+                .nutrient(nutrient)
+                .intakeRecommend(intakeRecommend)
+                .build();
     }
 
     public UserNutrient update(User user, Nutrient nutrient, Integer intakeRecommend) {
@@ -58,4 +68,5 @@ public class UserNutrient {
         this.intakeRecommend = intakeRecommend;
         return this;
     }
+    
 }

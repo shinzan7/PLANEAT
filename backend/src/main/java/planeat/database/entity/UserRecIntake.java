@@ -15,6 +15,8 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import org.springframework.format.annotation.DateTimeFormat;
+import planeat.api.dto.user.UserInfoRequest;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
@@ -23,7 +25,6 @@ import java.time.LocalDate;
 @Entity
 @Getter
 @DynamicUpdate
-@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_rec_intake")
 public class UserRecIntake {
@@ -37,7 +38,7 @@ public class UserRecIntake {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @CreatedDate
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "update_date", nullable = false)
     private LocalDate updateDate;
 
@@ -81,26 +82,37 @@ public class UserRecIntake {
         this.fat = fat;
     }
 
+    public static UserRecIntake createUserRecIntake(User user, UserInfoRequest.RecInfo recInfo) {
+        UserRecIntake userRecIntake = UserRecIntake.builder()
+                .user(user)
+                .updateDate(recInfo.getUpdateDate())
+                .height(recInfo.getHeight())
+                .weight(recInfo.getWeight())
+                .bmi(recInfo.getBmi())
+                .active(recInfo.getActive())
+                .calorie(recInfo.getCalorie())
+                .carbohydrate(recInfo.getCarbohydrate())
+                .protein(recInfo.getProtein())
+                .fat(recInfo.getFat())
+                .build();
+        return userRecIntake;
+    }
 
-//    public void setHeight(BigDecimal height) { this.height = height; }
-//    public void setWeight(BigDecimal weight) { this.weight = weight; }
-//    public void setBmi(BigDecimal bmi) { this.bmi = bmi; }
-//    public void setActive(BigDecimal active) { this.active = active; }
-//    public void setCalorie(Float calorie) { this.calorie = calorie; }
-//    public void setCarbohydrate(Float carbohydrate) { this.carbohydrate = carbohydrate; }
-//    public void setProtein(Float protein) { this.protein = protein; }
-//    public void setFat(Float fat) { this.fat = fat; }
-
-    public UserRecIntake update(BigDecimal height, BigDecimal weight, BigDecimal bmi, BigDecimal active, Float calorie, Float carbohydrate, Float protein, Float fat) {
-        this.height = height;
-        this.weight = weight;
-        this.bmi = bmi;
-        this.active = active;
-        this.calorie = calorie;
-        this.carbohydrate = carbohydrate;
-        this.protein = protein;
-        this.fat = fat;
-        return this;
+    public static UserRecIntake updateUserRecIntake(User user, UserInfoRequest userInfoRequest) {
+        UserRecIntake userRecIntake = UserRecIntake.builder()
+                .id(userInfoRequest.getRecInfo().getUserRecIntakeId())
+                .user(user)
+                .updateDate(userInfoRequest.getRecInfo().getUpdateDate())
+                .height(userInfoRequest.getRecInfo().getHeight())
+                .weight(userInfoRequest.getRecInfo().getWeight())
+                .bmi(userInfoRequest.getRecInfo().getBmi())
+                .active(userInfoRequest.getRecInfo().getActive())
+                .calorie(userInfoRequest.getRecInfo().getCalorie())
+                .carbohydrate(userInfoRequest.getRecInfo().getCarbohydrate())
+                .protein(userInfoRequest.getRecInfo().getProtein())
+                .fat(userInfoRequest.getRecInfo().getFat())
+                .build();
+        return userRecIntake;
     }
 
 }

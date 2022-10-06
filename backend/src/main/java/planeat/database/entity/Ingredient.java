@@ -1,6 +1,5 @@
 package planeat.database.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,24 +28,25 @@ public class Ingredient {
     @Column(name = "ingredient_id")
     private Integer id;
 
+    @Column(nullable = false)
     private String ingredientName;
+    @Column(nullable = false)
+    private String unit;
 
-
-//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "ingredient")
     List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
 
-//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "ingredient")
     List<Category> categoryList = new ArrayList<>();
 
     @Builder
-    public Ingredient(Integer id, String ingredientName) {
+    public Ingredient(Integer id, String ingredientName, String unit) {
         this.id = id;
         this.ingredientName = ingredientName;
+        this.unit = unit;
     }
 
-    public void putCategory(Category category){
+    public void putCategory(Category category) {
         this.categoryList.add(category);
     }
 

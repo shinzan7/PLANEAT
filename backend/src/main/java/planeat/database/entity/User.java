@@ -14,17 +14,21 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-import planeat.api.dto.user.UserResponse;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import planeat.api.dto.user.UserInfoRequest;
 import planeat.enums.Gender;
 
 import javax.persistence.*;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @DynamicUpdate
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user")
 public class User {
@@ -43,6 +47,10 @@ public class User {
     @Column(name = "provider", nullable = false)
     private String provider;
 
+    @CreatedDate
+    @Column(name = "join_date")
+    private LocalDate joinDate;
+
     @Column(name = "birthyear")
     private Integer birthyear;
 
@@ -54,9 +62,9 @@ public class User {
     private String refreshToken;
 
 
-     @JsonIgnore
-     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
-     List<UserRecIntake> userRecIntakeList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<UserRecIntake> userRecIntakeList = new ArrayList<>();
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
@@ -72,42 +80,74 @@ public class User {
 
     @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
+    List<UserCategory> userCategoryList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "user")
     List<UserNutrient> userNutrientList = new ArrayList<>();
 
 
     @Builder
-    public User(Long id, String name, String email, String provider, Integer birthyear, Gender gender) {
+    public User(Long id, String name, String email, String provider, LocalDate joinDate, Integer birthyear, Gender gender) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.provider = provider;
+        this.joinDate = joinDate;
         this.birthyear = birthyear;
         this.gender = gender;
     }
 
 
-//    public void setName(String name) { this.name = name; }
-//    public void setEmail(String email) { this.email = email; }
-//    public void setProvider(String provider) { this.provider = provider; }
-//    public void setBirthyear(Integer birthyear) { this.birthyear = birthyear; }
-//    public void setGender(Gender gender) { this.gender = gender; }
-    public void setRefreshToken(String refreshToken) { this.refreshToken = refreshToken; }
-
-
-    public User update(String name, String email) {
+    public void setName(String name) {
         this.name = name;
+    }
+
+    public void setBirthyear(Integer birthyear) {
+        this.birthyear = birthyear;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public void setUserRecIntakeList(List<UserRecIntake> userRecIntakeList) {
+        this.userRecIntakeList = userRecIntakeList;
+    }
+
+    public void setMyDietList(List<MyDiet> myDietList) {
+        this.myDietList = myDietList;
+    }
+
+    public void setUserCategoryList(List<UserCategory> userCategoryList) {
+        this.userCategoryList = userCategoryList;
+    }
+
+    public void setUserNutrientList(List<UserNutrient> userNutrientList) {
+        this.userNutrientList = userNutrientList;
+    }
+
+    public User update(String email) {
         this.email = email;
         return this;
     }
 
 
-    public UserResponse toUserResponse() {
-        UserResponse userResponse = new UserResponse();
-        userResponse.setProvider(this.getProvider());
-        userResponse.setName(this.getName());
-        userResponse.setEmail(this.getEmail());
-
-        return userResponse;
+    public static User updateUser(User user, UserInfoRequest userInfoRequest) {
+        User newUser = user;
+        newUser.setName(userInfoRequest.getName());
+        newUser.setRefreshToken(user.getRefreshToken());
+        newUser.setUserCategoryList(user.getUserCategoryList());
+        newUser.setUserNutrientList(user.getUserNutrientList());
+        newUser.setUserRecIntakeList(user.getUserRecIntakeList());
+        newUser.setMyDietList(user.getMyDietList());
+        newUser.setGender(userInfoRequest.getGender());
+        newUser.setBirthyear(userInfoRequest.getBirthyear());
+        return newUser;
     }
 
 }

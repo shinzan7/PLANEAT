@@ -6,9 +6,6 @@ package planeat.api.controller;
  *
  @author 박윤하
  @since 2022-09-16
- *
- * 스웨거 접속 url
- * http://localhost:9000/api/swagger-ui/#/
 */
 
 import lombok.RequiredArgsConstructor;
@@ -26,6 +23,7 @@ import planeat.database.entity.User;
 import planeat.database.repository.UserRepository;
 import planeat.exception.CustomException;
 import planeat.exception.CustomExceptionList;
+import springfox.documentation.annotations.ApiIgnore;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -34,6 +32,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
 
+@ApiIgnore
 @Controller
 @RequestMapping("/oauth")
 @RequiredArgsConstructor
@@ -46,7 +45,7 @@ public class AuthController {
     /**
      * AccessToken, RefreshToken 발급
      *
-     * @param response FrontEnd 페이지로 리다이렉트할 때 담을 정보들
+     * @param response       FrontEnd 페이지로 리다이렉트할 때 담을 정보들
      * @param authentication 유저 정보
      * @throws IOException
      */
@@ -87,7 +86,7 @@ public class AuthController {
     /**
      * AccessToken 만료 시 재발급
      *
-     * @param request RefreshToken 정보
+     * @param request  RefreshToken 정보
      * @param response
      * @return 재발급된 AccessToken 반환
      */
@@ -125,7 +124,7 @@ public class AuthController {
 
     private User getAuthUser(Map<String, Object> attributes) {
         return userRepository.findByEmailAndProvider((String) attributes.get("email"), (String) attributes.get("provider"))
-                             .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
+                .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
     }
 
 }

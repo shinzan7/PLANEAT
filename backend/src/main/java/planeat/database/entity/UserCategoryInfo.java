@@ -7,6 +7,7 @@ package planeat.database.entity;
  @author 신지한
  @since 2022-09-22
 */
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -37,7 +38,7 @@ public class UserCategoryInfo {
     }
 
     @JsonIgnore
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userCategory")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userCategoryInfo")
     List<UserCategory> userCategoryList = new ArrayList<>();
 
 }

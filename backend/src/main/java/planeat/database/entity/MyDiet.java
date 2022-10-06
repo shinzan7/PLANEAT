@@ -8,7 +8,6 @@ package planeat.database.entity;
  @since 2022-09-14
 */
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,8 +37,7 @@ public class MyDiet {
 
     @Column(name = "diet_name", nullable = false)
     private String dietName;
-
-//    @JsonIgnore
+    
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "myDiet")
     List<DietInfo> dietInfoList = new ArrayList<>();
 
@@ -67,10 +65,6 @@ public class MyDiet {
                 .dietName(myDietRequest.getDietName())
                 .build();
         return myDiet;
-    }
-
-    public void putDietInfo(DietInfo dietInfo) {
-        this.dietInfoList.add(dietInfo);
     }
 
 }

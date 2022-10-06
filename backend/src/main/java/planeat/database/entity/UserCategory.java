@@ -8,6 +8,7 @@ package planeat.database.entity;
 */
 
 import lombok.AccessLevel;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
@@ -20,6 +21,7 @@ import javax.persistence.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "user_category")
 public class UserCategory {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "user_category_id")
@@ -31,6 +33,22 @@ public class UserCategory {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_category_info_id")
-    private UserCategory userCategory;
+    private UserCategoryInfo userCategoryInfo;
 
+
+    @Builder
+    public UserCategory(Long id, User user, UserCategoryInfo userCategoryInfo) {
+        this.id = id;
+        this.user = user;
+        this.userCategoryInfo = userCategoryInfo;
+    }
+
+
+    public static UserCategory createUserCategory(User user, UserCategoryInfo userCategoryInfo) {
+        UserCategory userCategory = UserCategory.builder()
+                .user(user)
+                .userCategoryInfo(userCategoryInfo)
+                .build();
+        return userCategory;
+    }
 }

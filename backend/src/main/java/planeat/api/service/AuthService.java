@@ -76,7 +76,7 @@ public class AuthService implements OAuth2UserService<OAuth2UserRequest, OAuth2U
     private void saveOrUpdate(UserProfile userProfile) {
 
         User user = userRepository.findByEmailAndProvider(userProfile.getEmail(), userProfile.getProvider()) //Optional<User>
-                .map(m -> m.update(userProfile.getName(), userProfile.getEmail())) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update
+                .map(m -> m.update(userProfile.getEmail())) // OAuth 서비스 사이트에서 유저 정보 변경이 있을 수 있기 때문에 우리 DB에도 update
                 .orElse(userProfile.toUser());
 
         userRepository.save(user);

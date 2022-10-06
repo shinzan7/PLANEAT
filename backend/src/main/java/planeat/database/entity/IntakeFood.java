@@ -49,11 +49,13 @@ public class IntakeFood {
         this.amount = amount;
     }
 
-//    public void setAmount(BigDecimal amount) { this.amount = amount; }
 
-    public IntakeFood update(BigDecimal amount) {
-        this.amount = amount;
-        return this;
+    public static IntakeFood createIntakeFood(FoodInfo foodInfo, BigDecimal amount, IntakeHistory intakeHistory) {
+        return IntakeFood.builder()
+                .intakeHistory(intakeHistory)
+                .foodInfo(foodInfo)
+                .amount(amount)
+                .build();
     }
 
 }
