@@ -214,6 +214,10 @@ public class UserService {
                 uri.getUser().getUserRecIntakeList().add(uri);
             }
 
+            UserRecIntake uri = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
+            userRecIntakeRepository.save(uri);
+            uri.getUser().getUserRecIntakeList().add(uri);
+
             List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
             userCategoryRepository.deleteAll(userCategoryList);
             for (int i = 0; i < userInfoRequest.getCategoriesList().size(); i++) {
