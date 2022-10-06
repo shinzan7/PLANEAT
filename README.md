@@ -1,6 +1,6 @@
 # ✨PLANEAT - 식단 기록 및 영양 분석 서비스
 
-<img src="/uploads/57b570687c5f99838c876e7f93d8a40d/PLANEAT_banner.png">
+<img src="/uploads/85cde0727437ca607614d620fa261758/PLANEAT_banner.png">
 
 ## 👉 [PLANEAT 체험해보기](https://j7a701.p.ssafy.io/)
 
@@ -64,8 +64,8 @@
 
 **Backend - Spring**
 
-- IntelliJ IDE 2022.1.3\*\*\*\*
-- JDK 11.0.15.1
+- IntelliJ IDE 2022.1.3
+- JDK 8
 - Springboot 2.7.1
 - Spring Data JPA
 - Spring Security
@@ -73,9 +73,10 @@
 - Swagger 3.0.0
 - MySQL 8.0.29
 - Hibernate 5.6.9 Final
-- Swagger 2.9.2
 
 **Backend - Hadoop**
+
+
 
 **Frontend - React**
 
@@ -89,8 +90,10 @@
 **CI/CD**
 
 - AWS EC2 Ubuntu 20.04 LTS
-- NGINX 1.18.0
+- NGINX 1.23.1
 - SSL
+
+---
 
 ## 📰 ERD
 
