@@ -197,29 +197,46 @@ public class UserService {
             userRecIntakeRepository.deleteAll(userRecIntakes);
 
             Boolean isExist = userRecIntakeRepository.existsByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate());
-            LocalDate localDate = null;
-            if(!isExist) {
-                UserRecIntake uri = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
-                userRecIntakeRepository.save(uri);
-                uri.getUser().getUserRecIntakeList().add(uri);
-                localDate = uri.getUpdateDate();
-            }
 
+            UserRecIntake uri = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
+            userRecIntakeRepository.save(uri);
+            uri.getUser().getUserRecIntakeList().add(uri);
 
-            for (int i = 0; i < userRecIntakeList.size(); i++) {
-                UserInfoRequest uir = userInfoRequest;
-                uir.getRecInfo().setUserRecIntakeId(userRecIntakeList.get(i).getId());
-                uir.getRecInfo().setUpdateDate(userRecIntakeList.get(i).getUpdateDate());
-                uir.getRecInfo().setHeight(userRecIntakeList.get(i).getHeight());
-                uir.getRecInfo().setWeight(userRecIntakeList.get(i).getWeight());
-                uir.getRecInfo().setBmi(userRecIntakeList.get(i).getBmi());
-                uir.getRecInfo().setActive(userRecIntakeList.get(i).getActive());
-                uir.getRecInfo().setCalorie(userRecIntakeList.get(i).getCalorie());
-                uir.getRecInfo().setProtein(userRecIntakeList.get(i).getProtein());
-                uir.getRecInfo().setCarbohydrate(userRecIntakeList.get(i).getCarbohydrate());
-                uir.getRecInfo().setFat(userRecIntakeList.get(i).getFat());
+            if(isExist) {
+                for (int i = 0; i < userRecIntakeList.size(); i++) {
+                    if(userInfoRequest.getRecInfo().getUpdateDate().isEqual(userRecIntakeList.get(i).getUpdateDate())) {
+                        continue;
+                    }
+                    UserInfoRequest uir = userInfoRequest;
+                    uir.getRecInfo().setUserRecIntakeId(userRecIntakeList.get(i).getId());
+                    uir.getRecInfo().setUpdateDate(userRecIntakeList.get(i).getUpdateDate());
+                    uir.getRecInfo().setHeight(userRecIntakeList.get(i).getHeight());
+                    uir.getRecInfo().setWeight(userRecIntakeList.get(i).getWeight());
+                    uir.getRecInfo().setBmi(userRecIntakeList.get(i).getBmi());
+                    uir.getRecInfo().setActive(userRecIntakeList.get(i).getActive());
+                    uir.getRecInfo().setCalorie(userRecIntakeList.get(i).getCalorie());
+                    uir.getRecInfo().setProtein(userRecIntakeList.get(i).getProtein());
+                    uir.getRecInfo().setCarbohydrate(userRecIntakeList.get(i).getCarbohydrate());
+                    uir.getRecInfo().setFat(userRecIntakeList.get(i).getFat());
 
-                if(!userRecIntakeList.get(i).getUpdateDate().equals(localDate)) {
+                    UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
+                    userRecIntakeRepository.save(userRecIntake);
+                    userRecIntake.getUser().getUserRecIntakeList().add(userRecIntake);
+                }
+            } else {
+                for (int i = 0; i < userRecIntakeList.size(); i++) {
+                    UserInfoRequest uir = userInfoRequest;
+                    uir.getRecInfo().setUserRecIntakeId(userRecIntakeList.get(i).getId());
+                    uir.getRecInfo().setUpdateDate(userRecIntakeList.get(i).getUpdateDate());
+                    uir.getRecInfo().setHeight(userRecIntakeList.get(i).getHeight());
+                    uir.getRecInfo().setWeight(userRecIntakeList.get(i).getWeight());
+                    uir.getRecInfo().setBmi(userRecIntakeList.get(i).getBmi());
+                    uir.getRecInfo().setActive(userRecIntakeList.get(i).getActive());
+                    uir.getRecInfo().setCalorie(userRecIntakeList.get(i).getCalorie());
+                    uir.getRecInfo().setProtein(userRecIntakeList.get(i).getProtein());
+                    uir.getRecInfo().setCarbohydrate(userRecIntakeList.get(i).getCarbohydrate());
+                    uir.getRecInfo().setFat(userRecIntakeList.get(i).getFat());
+
                     UserRecIntake userRecIntake = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
                     userRecIntakeRepository.save(userRecIntake);
                     userRecIntake.getUser().getUserRecIntakeList().add(userRecIntake);
