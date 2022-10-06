@@ -70,10 +70,10 @@ function NutrientResult() {
                 marginBottom: "10px",
               }}
             >
-              {dataTitle} 검색결과
+              {dataTitle} 검색결과{" "}
               <b style={{ color: "#F7BF87", fontWeight: "bold" }}>
-                {count}{" "}
-              </b>{" "}
+                {count}
+              </b>
               건
             </Typography>
             <Typography variant="subtitle1">

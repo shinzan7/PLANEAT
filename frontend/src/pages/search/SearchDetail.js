@@ -146,16 +146,12 @@ function SearchDetail() {
   const tags = Array.from(tagSet);
 
   const des = info.description
-    .replace(/\[/gi, "")
-    .replace(/\]/gi, "")
-    .replace(/\'/gi, "\n")
-    .replace(/,/gi, " ")
-    .replace(/①/gi, "\n")
-    .replace(/②/gi, "\n")
-    .replace(/③/gi, "\n")
-    .replace(/④/gi, "\n")
-    .replace(/⑤/gi, "\n");
-  // console.log(des)
+    .replace(/\[/gi, "").replace(/\]/gi, "").replace(/\'/gi, "\n").replace(/,/gi, " ").replace(/-/gi, " ")
+    .replace(/①/gi, "\n").replace(/②/gi, "\n").replace(/③/gi, "\n").replace(/④/gi, "\n").replace(/⑤/gi, "\n")
+    .replace(/1\./gi, "\n").replace(/2\./gi, "\n").replace(/3\./gi, "\n").replace(/4\./gi, "\n").replace(/5\./gi, "\n")
+    .replace(/1\)/gi, "\n").replace(/2\)/gi, "\n").replace(/3\)/gi, "\n").replace(/4\)/gi, "\n").replace(/5\)/gi, "\n")
+    .replace(/\(가\)/gi, "\n").replace(/\(나\)/gi, "\n").replace(/\(다\)/gi, "\n").replace(/\(라\)/gi, "\n").replace(/\(마\)/gi, "\n")
+
 
   return (
     <div id="wrap">
@@ -302,7 +298,7 @@ function SearchDetail() {
           </Grid>
           <Grid
             container
-            justifyContent="center"
+            // justifyContent="center"
             xs={10}
             style={{
               boxShadow: "1px 1px 6px #e6e8fd",
@@ -310,7 +306,8 @@ function SearchDetail() {
               borderRadius: "20px",
               padding: "5px",
               border: "2px solid #e6e8fd",
-              margin: "20px"
+              margin: "20px",
+              whiteSpace: 'pre-line'
             }}
           >
             {des}
