@@ -50,10 +50,9 @@ function Instance() {
       console.log("status : " + status)
       console.log("config : " + config)
       console.log("status : " + originalRequest._retry)
-      if (status === 401 && !originalRequest._retry) {
+      if (status === 500 && originalRequest._retry == undefined) {
         console.log("request 에서 토큰 요청 할거유")
         // token refresh 요청
-        originalRequest._retry = true
 
         const { data } = await axios.get(
           `${process.env.REACT_APP_BASE_URL}/oauth/refresh`, // token refresh api
