@@ -111,7 +111,6 @@ public class UserService {
             categoriesList.add(userCategory.getUserCategoryInfo().getUserCategoryName());
         }
         if (user.getJoinDate().isAfter(date)) {
-            System.out.println("before");
             UserRecIntake userRecIntake = userRecIntakeRepository.findFirstByUserOrderByUpdateDateAsc(user)
                     .orElseThrow(() -> new CustomException(CustomExceptionList.USER_REC_INTAKE_NOT_FOUND_ERROR));
             return new UserInfoResponse(user, userRecIntake, nutritionList, categoriesList);
