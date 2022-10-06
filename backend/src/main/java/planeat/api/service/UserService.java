@@ -196,6 +196,10 @@ public class UserService {
 
             userRecIntakeRepository.deleteAll(userRecIntakes);
 
+            UserRecIntake uri = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
+            userRecIntakeRepository.save(uri);
+            uri.getUser().getUserRecIntakeList().add(uri);
+
             for (int i = 0; i < userRecIntakeList.size(); i++) {
                 UserInfoRequest uir = userInfoRequest;
                 uir.getRecInfo().setUserRecIntakeId(userRecIntakeList.get(i).getId());
@@ -209,14 +213,10 @@ public class UserService {
                 uir.getRecInfo().setCarbohydrate(userRecIntakeList.get(i).getCarbohydrate());
                 uir.getRecInfo().setFat(userRecIntakeList.get(i).getFat());
 
-                UserRecIntake uri = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
+                uri = UserRecIntake.createUserRecIntake(user, uir.getRecInfo());
                 userRecIntakeRepository.save(uri);
                 uri.getUser().getUserRecIntakeList().add(uri);
             }
-
-            UserRecIntake uri = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
-            userRecIntakeRepository.save(uri);
-            uri.getUser().getUserRecIntakeList().add(uri);
 
             List<UserCategory> userCategoryList = userCategoryRepository.findAllByUserId(userId);
             userCategoryRepository.deleteAll(userCategoryList);
