@@ -81,16 +81,16 @@ function Home() {
   return (
     <div className="bgColor">
       <Grid container>
-        <Grid item xs={2.5}></Grid>
-        <Grid item xs={7}>
+        <Grid item xs={2}></Grid>
+        <Grid item xs={8}>
           <Grid container>
-            <Grid item xs={6} sx={{ marginTop: "20vh", textAlign: "center" }}>
+            <Grid item xs={12} md={6} sx={{ marginTop: "20vh", textAlign: "center" }}>
               <div>
                 <img
                   // className="floating"
                   src="assets/slogan.png"
                   data-aos="fade-right"
-                  data-aos-duration="3000"
+                  data-aos-duration="1000"
                   alt=""
                   style={{
                     width: "400px",
@@ -107,7 +107,7 @@ function Home() {
                   data-aos="fade-right"
                   data-aos-duration="3000"
                   data-aos-offset="30"
-                  data-aos-delay="1000"
+                  data-aos-delay="500"
                   alt=""
                   style={{ width: "300px" }}
                 />
@@ -121,10 +121,10 @@ function Home() {
               style={logo}
             /> */}
             </Grid>
-            <Grid item xs={6} sx={{ marginTop: "35vh", textAlign: "center" }}>
+            <Grid item xs={12} md={6} sx={{ marginTop: "35vh", textAlign: "center" }}>
               <div
                 data-aos="fade-left"
-                data-aos-duration="3000"
+                data-aos-duration="1000"
                 href="#"
                 style={{
                   display: "inline-block",
@@ -141,26 +141,31 @@ function Home() {
               </div>
             </Grid>
             <Grid item xs={12} style={{ marginTop: "23vh", textAlign: "center" }}>
-              <img className="floating" src="assets/arrow.png" width="50px"></img>
+              <img
+                className="floating"
+                src="assets/arrow.png"
+                style={{ margin: "0px" }}
+                width="5%"
+              ></img>
             </Grid>
           </Grid>
         </Grid>
-        <Grid item xs={2.5}></Grid>
+        <Grid item xs={2}></Grid>
       </Grid>
 
-      <div className="section2" style={{ marginBottom: "50px" }}>
+      <div className="section2" style={{ marginBottom: "40px" }}>
         <div
           style={{
             display: "inline-block",
             marginBottom: "50px",
             borderRadius: "4px",
             backgroundColor: "#9DA6F8",
-            width: "90px",
+            width: "8%",
             height: "5px",
           }}
         ></div>
-        <div style={{ fontSize: "40px", marginBottom: "80px" }}>
-          수만개의 데이터를 활용한 정확한 식단 피드백
+        <div style={{ fontSize: "30px", marginBottom: "80px" }}>
+          수십만개의 데이터를 활용한 정확한 식단 피드백
         </div>
         <Container maxWidth="md" component="main">
           <Grid container spacing={5} alignItems="flex-end">
@@ -170,7 +175,7 @@ function Home() {
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-offset="30"
-              data-aos-delay="500"
+              data-aos-delay="400"
               xs={12}
               sm={12}
               md={4}
@@ -236,7 +241,7 @@ function Home() {
               data-aos="fade-up"
               data-aos-duration="1000"
               data-aos-offset="30"
-              data-aos-delay="700"
+              data-aos-delay="800"
               xs={12}
               sm={12}
               md={4}
@@ -266,11 +271,10 @@ function Home() {
         </Container>
       </div>
 
-      <div className="section3">
+      <div style={{ marginTop: "10%", marginLeft: "10%", marginRight: "10%", textAlign: "end" }}>
         <Grid container>
-          <Grid item lg={0.9} xs={3}></Grid>
-          <Grid item lg={4.8} xs={6}>
-            <div>
+          <Grid item xs={12} md={6} sx={{ display: "table" }}>
+            <div style={{ paddingRight: "20%", display: "table-cell", verticalAlign: "middle" }}>
               <div
                 style={{
                   display: "inline-block",
@@ -288,73 +292,83 @@ function Home() {
               </p>
             </div>
           </Grid>
-          <Grid item lg={0.3} xs={3}></Grid>
-          <Grid item lg={0.3} xs={3}></Grid>
-          <Grid item lg={4.8} xs={6}>
-            <Card variant="outlined" style={card}>
-              <img src={home1} style={{ width: "100%", height: "100%" }} />
-            </Card>
+
+          <Grid item xs={12} md={6}>
+            <img
+              src="assets/home2.png"
+              width="600vh"
+              data-aos="fade-down-left"
+              data-aos-offset="500"
+              data-aos-duration="1000"
+            />
           </Grid>
-          <Grid item lg={0.9} xs={3}></Grid>
         </Grid>
       </div>
 
-      <div className="section4">
+      <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "start" }}>
         <Grid container>
-          <Grid item lg={0.9} xs={3}></Grid>
-          <Grid item lg={4.8} xs={6}>
-            <Card variant="outlined" style={card}>
-              식단 분석 화면
-            </Card>
+          <Grid item xs={12} md={6}>
+            <img
+              src="assets/home3.png"
+              width="600vh"
+              data-aos="fade-down-right"
+              data-aos-offset="500"
+              data-aos-duration="1000"
+            />
           </Grid>
-          <Grid item lg={0.3} xs={3}></Grid>
-          <Grid item lg={0.3} xs={3}></Grid>
-          <Grid item lg={4.8} xs={6}>
-            <div
-              style={{
-                display: "inline-block",
-                marginTop: "20%",
-                marginBottom: "5px",
-                borderRadius: "4px",
-                backgroundColor: "#9DA6F8",
-                width: "90px",
-                height: "5px",
-              }}
-            ></div>
-            <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
-              영양분석 통계를 통해<br></br>
-              식단을 점검해보세요
-            </p>
+          <Grid item xs={12} md={6} sx={{ display: "table" }}>
+            <div style={{ paddingLeft: "20%", display: "table-cell", verticalAlign: "middle" }}>
+              <div
+                style={{
+                  display: "inline-block",
+                  marginTop: "20%",
+                  marginBottom: "5px",
+                  borderRadius: "4px",
+                  backgroundColor: "#9DA6F8",
+                  width: "90px",
+                  height: "5px",
+                }}
+              ></div>
+              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+                영양분석 통계를 통해<br></br>
+                식단을 점검해보세요
+              </p>
+            </div>
           </Grid>
-          <Grid item lg={0.9} xs={3}></Grid>
         </Grid>
       </div>
 
-      <div className="section3">
+      <div style={{ marginLeft: "10%", marginRight: "10%", textAlign: "end" }}>
         <Grid container>
-          <Grid item lg={0.9} xs={3}></Grid>
-          <Grid item lg={4.8} xs={6}>
-            <div
-              style={{
-                display: "inline-block",
-                marginTop: "20%",
-                marginBottom: "5px",
-                borderRadius: "4px",
-                backgroundColor: "#9DA6F8",
-                width: "90px",
-                height: "5px",
-              }}
-            ></div>
-            <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
-              식사기록을 통해<br></br>
-            </p>
+          <Grid item xs={12} md={6} sx={{ display: "table" }}>
+            <div style={{ paddingRight: "20%", display: "table-cell", verticalAlign: "middle" }}>
+              <div
+                style={{
+                  display: "inline-block",
+                  marginTop: "20%",
+                  marginBottom: "5px",
+                  borderRadius: "4px",
+                  backgroundColor: "#9DA6F8",
+                  width: "90px",
+                  height: "5px",
+                }}
+              ></div>
+              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+                식사기록을 통해
+                <br />
+                부족한 영양분을 찾아보세요<br></br>
+              </p>
+            </div>
           </Grid>
-          <Grid item lg={0.3} xs={3}></Grid>
-          <Grid item lg={0.3} xs={3}></Grid>
-          <Grid item lg={4.8} xs={6}>
-            <img src={home1} style={{ width: "100%", height: "100%" }} />
+          <Grid item xs={12} md={6}>
+            <img
+              src="assets/home1.png"
+              width="600vh"
+              data-aos="fade-down-left"
+              data-aos-offset="500"
+              data-aos-duration="1000"
+            />
           </Grid>
-          <Grid item lg={0.9} xs={3}></Grid>
         </Grid>
       </div>
       <div style={{ paddingTop: "10%", paddingBottom: "3%" }}>

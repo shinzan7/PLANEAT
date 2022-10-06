@@ -22,7 +22,7 @@
 
 .floating { 
   animation-name: floating;
-  animation-duration: 3s;
+  animation-duration: 2s;
   animation-iteration-count: infinite;
   animation-timing-function: ease-in-out;
   margin-left: 30px;
@@ -147,19 +147,19 @@
 .p {
   font-size: 1.5vw;
   color: white;
-  position: relative;
+  /* position: relative; */
 
 }
 
 .section3 {
-  margin-top: 20%;
+  margin-top: 10%;
   
   text-align: center;
   
 }
 
 .section4 {
-  margin-top: 20%;
+  margin-top: 10%;
   
   text-align: center; 
 
