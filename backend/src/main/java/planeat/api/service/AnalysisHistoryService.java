@@ -443,6 +443,8 @@ public class AnalysisHistoryService {
         float vitaminB1 = 0f;
         float vitaminB2 = 0f;
 
+        System.out.println("=================배포서버 분석기록 response 출력 테스트=====================");
+
         //변수에 비율 모두 더하기
         for (int i = 0; i < historyList.size(); i++) {
             AnalysisHistory real = historyList.get(i); //실제섭취량
@@ -464,6 +466,11 @@ public class AnalysisHistoryService {
             sugar += real.getSugar() / rec.getSugar();
 
             dietaryFiber += real.getDietaryFiber() / rec.getDietaryFiber();
+            System.out.println("실제섭취 식이섬유 : " + real.getDietaryFiber());
+            System.out.println("권장섭취 식이섬유 : " + rec.getDietaryFiber());
+            System.out.println("나눈 값 : " + real.getDietaryFiber() / rec.getDietaryFiber());
+            System.out.println("결과 값 : " + dietaryFiber);
+
             calcium += real.getCalcium() / rec.getCalcium();
             iron += real.getIron() / rec.getIron();
             magnesium += real.getMagnesium() / rec.getMagnesium();
@@ -567,7 +574,7 @@ public class AnalysisHistoryService {
                 .vitaminB2(vitaminB2)
                 .build();
 
-        System.out.println("배포서버 분석기록 response 출력 테스트");
+
         System.out.println(response);
 
         return response;
