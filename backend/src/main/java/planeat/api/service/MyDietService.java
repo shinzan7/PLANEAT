@@ -42,7 +42,7 @@ public class MyDietService {
     /**
      * 내 식단 등록
      *
-     * @param userId 유저 번호
+     * @param userId        유저 번호
      * @param myDietRequest 등록할 내 식단 정보가 담긴 Dto
      * @return userId
      */
@@ -76,7 +76,7 @@ public class MyDietService {
             List<MyDietResponse.DietInfos> dietInfos = new ArrayList<>();
             List<DietInfo> dietInfoList = dietInfoRepository.findByMyDietId(myDiet.getId());
 
-            for (DietInfo dietInfo: dietInfoList) {
+            for (DietInfo dietInfo : dietInfoList) {
                 FoodInfo foodInfo = dietInfo.getFoodInfo();
                 BigDecimal amount = dietInfo.getAmount();
                 dietInfos.add(new MyDietResponse.DietInfos(foodInfo, amount));
@@ -90,8 +90,8 @@ public class MyDietService {
     /**
      * 식단 이름으로 내 식단 조회
      *
-     * @param userId 유저 번호
-     * @param dietName   내 식단 이름
+     * @param userId   유저 번호
+     * @param dietName 내 식단 이름
      * @return List<MyDietResponse>
      */
     public List<MyDietResponse> readByNameMyDiet(Long userId, String dietName) {
@@ -102,7 +102,7 @@ public class MyDietService {
             List<MyDietResponse.DietInfos> dietInfos = new ArrayList<>();
             List<DietInfo> dietInfoList = dietInfoRepository.findByMyDietId(myDiet.getId());
 
-            for (DietInfo dietInfo: dietInfoList) {
+            for (DietInfo dietInfo : dietInfoList) {
                 FoodInfo foodInfo = dietInfo.getFoodInfo();
                 BigDecimal amount = dietInfo.getAmount();
                 dietInfos.add(new MyDietResponse.DietInfos(foodInfo, amount));
@@ -116,13 +116,13 @@ public class MyDietService {
     /**
      * 내 식단 수정
      *
-     * @param userId 유저 번호
+     * @param userId        유저 번호
      * @param myDietRequest 수정될 내 식단 정보가 담긴 DTO
      * @return userId
      */
     public Long updateMyDiet(Long userId, MyDietRequest myDietRequest) {
         Long createUser = myDietRequest.getUserId();
-        if(userId.equals(createUser)) {
+        if (userId.equals(createUser)) {
             User user = userRepository.findById(userId)
                     .orElseThrow(() -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR));
             MyDiet myDiet = MyDiet.updateMyDiet(user, myDietRequest);
@@ -142,13 +142,13 @@ public class MyDietService {
     /**
      * 내 식단 삭제
      *
-     * @param userId 유저 번호
+     * @param userId        유저 번호
      * @param myDietRequest 삭제할 내 식단 정보가 담긴 DTO
      * @return userId
      */
     public Long deleteMyDiet(Long userId, MyDietRequest myDietRequest) {
         Long createUser = myDietRequest.getUserId();
-        if(userId.equals(createUser)) {
+        if (userId.equals(createUser)) {
             myDietRepository.delete(getMyDiet(myDietRequest.getMyDietId()));
         }
         return userId;

@@ -6,11 +6,11 @@ package planeat.api.dto.nutrient;
  @author 신지한
  @since 2022-09-21
 */
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 import java.util.List;
 
@@ -23,8 +23,9 @@ public class NutrientRequest {
     String description;
     List<NutriIngredient> nutriIngredientList;
 
-    @Getter @Setter
-    public static class NutriIngredient{
+    @Getter
+    @Setter
+    public static class NutriIngredient {
         String ingredientName;
         String unit;
         Float ingredientAmount;

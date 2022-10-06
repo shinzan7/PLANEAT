@@ -26,8 +26,8 @@ public enum CustomExceptionList {
     USER_NUTRIENT_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E008", "존재하지 않는 유저 영양제입니다."),
     NUTRIENT_HISTORY_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E009", "존재하지 않는 영양제 섭취기록입니다."),
     UPLOAD_ERROR(HttpStatus.NOT_FOUND, "E010", "업로드 오류입니다."),
-    USER_REC_INTAKE_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND,"E011", "존재하지 않는 유저 권장 섭취량입니다."),
-    USER_CATEGORY_INFO_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND,"E012", "존재하지 않는 관심 건강 카테고리 정보입니다.");
+    USER_REC_INTAKE_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E011", "존재하지 않는 유저 권장 섭취량입니다."),
+    USER_CATEGORY_INFO_NOT_FOUND_ERROR(HttpStatus.NOT_FOUND, "E012", "존재하지 않는 관심 건강 카테고리 정보입니다.");
 
     private final HttpStatus status;
     private final String code;
