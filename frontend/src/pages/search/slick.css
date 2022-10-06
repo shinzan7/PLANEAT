@@ -2,13 +2,13 @@
 .slick-slider
 {
     position: relative;
-    background-color: #F5F5F5;
+    background-color: white;
 
     display: block;
     box-sizing: border-box;
 
     -webkit-user-select: none;
-       -moz-user-select: none;
+        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
 
