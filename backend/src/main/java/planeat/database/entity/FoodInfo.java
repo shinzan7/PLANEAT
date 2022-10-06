@@ -1,4 +1,5 @@
 package planeat.database.entity;
+
 /*
  *
  * FoodInfo의 설명을 여기 작성한다.
@@ -7,6 +8,7 @@ package planeat.database.entity;
  @author 신지한, 박윤하
  @since 2022-09-14
 */
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.DynamicUpdate;
@@ -206,45 +208,77 @@ public class FoodInfo {
     }
 
 
-    public void setId(Long id) { this.id = id; }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    public void setFoodUser(Long foodUser) { this.foodUser = foodUser; }
+    public void setFoodUser(Long foodUser) {
+        this.foodUser = foodUser;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public void setServingSize(Integer servingSize) { this.servingSize = servingSize; }
+    public void setServingSize(Integer servingSize) {
+        this.servingSize = servingSize;
+    }
 
-    public void setServingUnit(String servingUnit) { this.servingUnit = servingUnit; }
+    public void setServingUnit(String servingUnit) {
+        this.servingUnit = servingUnit;
+    }
 
-    public void setCapacityG(Float capacityG) { this.capacityG = capacityG; }
+    public void setCalorie(Float calorie) {
+        this.calorie = calorie;
+    }
 
-    public void setCapacityMl(Float capacityMl) { this.capacityMl = capacityMl; }
+    public void setProtein(Float protein) {
+        this.protein = protein;
+    }
 
-    public void setCalorie(Float calorie) { this.calorie = calorie; }
+    public void setFat(Float fat) {
+        this.fat = fat;
+    }
 
-    public void setProtein(Float protein) { this.protein = protein; }
+    public void setCarbohydrate(Float carbohydrate) {
+        this.carbohydrate = carbohydrate;
+    }
 
-    public void setFat(Float fat) { this.fat = fat; }
+    public void setSugar(Float sugar) {
+        this.sugar = sugar;
+    }
 
-    public void setCarbohydrate(Float carbohydrate) { this.carbohydrate = carbohydrate; }
+    public void setDietary_fiber(Float dietary_fiber) {
+        this.dietary_fiber = dietary_fiber;
+    }
 
-    public void setSugar(Float sugar) { this.sugar = sugar; }
+    public void setCalcium(Float calcium) {
+        this.calcium = calcium;
+    }
 
-    public void setDietary_fiber(Float dietary_fiber) { this.dietary_fiber = dietary_fiber; }
+    public void setIron(Float iron) {
+        this.iron = iron;
+    }
 
-    public void setCalcium(Float calcium) { this.calcium = calcium; }
+    public void setPotassium(Float potassium) {
+        this.potassium = potassium;
+    }
 
-    public void setIron(Float iron) { this.iron = iron; }
+    public void setSodium(Float sodium) {
+        this.sodium = sodium;
+    }
 
-    public void setPotassium(Float potassium) { this.potassium = potassium; }
+    public void setVitaminA(Float vitaminA) {
+        this.vitaminA = vitaminA;
+    }
 
-    public void setSodium(Float sodium) { this.sodium = sodium; }
+    public void setVitaminC(Float vitaminC) {
+        this.vitaminC = vitaminC;
+    }
 
-    public void setVitaminA(Float vitaminA) { this.vitaminA = vitaminA; }
-
-    public void setVitaminC(Float vitaminC) { this.vitaminC = vitaminC; }
-
-    public void setCholesterol(Float cholesterol) { this.cholesterol = cholesterol; }
+    public void setCholesterol(Float cholesterol) {
+        this.cholesterol = cholesterol;
+    }
 
     public static FoodInfo createFoodInfo(Long userId, FoodInfoRequest foodInfoRequest) {
         FoodInfo foodInfo = FoodInfo.builder()
@@ -287,24 +321,24 @@ public class FoodInfo {
 
     public static FoodInfo updateFoodInfo(Long userId, FoodInfoRequest foodInfoRequest) {
         FoodInfo foodInfo = new FoodInfo();
-            foodInfo.setId(foodInfoRequest.getFoodInfoId());
-            foodInfo.setFoodUser(userId);
-            foodInfo.setName(foodInfoRequest.getName());
-            foodInfo.setServingSize(foodInfoRequest.getServingSize());
-            foodInfo.setServingUnit(foodInfoRequest.getServingUnit());
-            foodInfo.setCalorie(foodInfoRequest.getCalorie());
-            foodInfo.setProtein(foodInfoRequest.getProtein());
-            foodInfo.setFat(foodInfoRequest.getFat());
-            foodInfo.setCarbohydrate(foodInfoRequest.getCarbohydrate());
-            foodInfo.setSugar(foodInfoRequest.getSugar());
-            foodInfo.setDietary_fiber(foodInfoRequest.getDietary_fiber());
-            foodInfo.setCalcium(foodInfoRequest.getCalcium());
-            foodInfo.setIron(foodInfoRequest.getIron());
-            foodInfo.setPotassium(foodInfoRequest.getPotassium());
-            foodInfo.setSodium(foodInfoRequest.getSodium());
-            foodInfo.setVitaminA(foodInfoRequest.getVitaminA());
-            foodInfo.setVitaminC(foodInfoRequest.getVitaminC());
-            foodInfo.setCholesterol(foodInfoRequest.getCholesterol());
+        foodInfo.setId(foodInfoRequest.getFoodInfoId());
+        foodInfo.setFoodUser(userId);
+        foodInfo.setName(foodInfoRequest.getName());
+        foodInfo.setServingSize(foodInfoRequest.getServingSize());
+        foodInfo.setServingUnit(foodInfoRequest.getServingUnit());
+        foodInfo.setCalorie(foodInfoRequest.getCalorie());
+        foodInfo.setProtein(foodInfoRequest.getProtein());
+        foodInfo.setFat(foodInfoRequest.getFat());
+        foodInfo.setCarbohydrate(foodInfoRequest.getCarbohydrate());
+        foodInfo.setSugar(foodInfoRequest.getSugar());
+        foodInfo.setDietary_fiber(foodInfoRequest.getDietary_fiber());
+        foodInfo.setCalcium(foodInfoRequest.getCalcium());
+        foodInfo.setIron(foodInfoRequest.getIron());
+        foodInfo.setPotassium(foodInfoRequest.getPotassium());
+        foodInfo.setSodium(foodInfoRequest.getSodium());
+        foodInfo.setVitaminA(foodInfoRequest.getVitaminA());
+        foodInfo.setVitaminC(foodInfoRequest.getVitaminC());
+        foodInfo.setCholesterol(foodInfoRequest.getCholesterol());
         return foodInfo;
     }
 

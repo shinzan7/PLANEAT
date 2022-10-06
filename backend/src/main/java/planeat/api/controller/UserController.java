@@ -39,14 +39,6 @@ public class UserController {
     static final String SUCCESS = "success";
 
 
-    @DeleteMapping("/{userId}")
-    @ApiOperation(value = "유저 탈퇴", notes = "유저 Id를 받아 정보를 삭제한다")
-    @ApiImplicitParam(name = "userId", value = "유저 정보를 삭제할 유저의 Id", required = true, dataTypeClass = Long.class)
-    public ResponseEntity<BasicResponse<Long>> DeleteUserInfo(@PathVariable("userId") Long userId) {
-        userService.deleteUserInfo(userId);
-        return new ResponseEntity<>(makeBasicResponse(SUCCESS, userId), HttpStatus.CREATED);
-    }
-
     /**
      * 유저 정보, 유저 권장 섭취량, 카테고리 등록
      *
@@ -62,6 +54,7 @@ public class UserController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
     }
 
+
     /**
      * 가장 최근 날짜의 유저, 유저 권장 섭취량, 카테고리 조회
      *
@@ -75,6 +68,7 @@ public class UserController {
         UserInfoResponse response = userService.readInfoByUserId(userId);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
     }
+
 
     /**
      * 특정 날짜의 유저, 유저 권장 섭취량, 카테고리 조회
@@ -106,6 +100,7 @@ public class UserController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
     }
 
+
     /**
      * 유저 권장 섭취량만 조회
      *
@@ -124,6 +119,7 @@ public class UserController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, response), HttpStatus.OK);
     }
 
+
     /**
      * 유저, 유저 권장 섭취량, 카테고리 수정
      *
@@ -137,6 +133,21 @@ public class UserController {
     public ResponseEntity<BasicResponse<Long>> UpdateUserInfo(@PathVariable("userId") Long userId, @RequestBody UserInfoRequest userInfoRequest) {
         Long id = userService.updateUserInfo(userId, userInfoRequest);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS, id), HttpStatus.CREATED);
+    }
+
+
+    /**
+     * 유저 탈퇴
+     *
+     * @param userId 유저 번호
+     * @return SUCCCESS, userId, HttpStatus.CREATED(200)
+     */
+    @DeleteMapping("/{userId}")
+    @ApiOperation(value = "유저 탈퇴", notes = "유저 Id를 받아 정보를 삭제한다")
+    @ApiImplicitParam(name = "userId", value = "유저 정보를 삭제할 유저의 Id", required = true, dataTypeClass = Long.class)
+    public ResponseEntity<BasicResponse<Long>> DeleteUserInfo(@PathVariable("userId") Long userId) {
+        userService.deleteUserInfo(userId);
+        return new ResponseEntity<>(makeBasicResponse(SUCCESS, userId), HttpStatus.OK);
     }
 
 

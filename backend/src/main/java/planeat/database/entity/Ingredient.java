@@ -33,12 +33,9 @@ public class Ingredient {
     @Column(nullable = false)
     private String unit;
 
-
-//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "ingredient")
     List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
 
-//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "ingredient")
     List<Category> categoryList = new ArrayList<>();
 
@@ -49,7 +46,7 @@ public class Ingredient {
         this.unit = unit;
     }
 
-    public void putCategory(Category category){
+    public void putCategory(Category category) {
         this.categoryList.add(category);
     }
 

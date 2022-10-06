@@ -36,7 +36,7 @@ public class MyDietController {
     /**
      * 내 식단 등록
      *
-     * @param userId 유저 번호
+     * @param userId        유저 번호
      * @param myDietRequest 등록할 식품 정보가 담긴 Dto
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
@@ -67,8 +67,8 @@ public class MyDietController {
     /**
      * 이름으로 내 식단 조회
      *
-     * @param userId 유저 번호
-     * @param dietName   내 식단 이름
+     * @param userId   유저 번호
+     * @param dietName 내 식단 이름
      * @return SUCCCESS, List<MyDietResponse>, HttpStatus.OK(200)
      */
     @GetMapping("/{userId}/{dietName}")
@@ -87,7 +87,7 @@ public class MyDietController {
     /**
      * 내 식단 수정
      *
-     * @param userId 유저 번호
+     * @param userId        유저 번호
      * @param myDietRequest 수정될 식품 정보가 담긴 DTO
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */

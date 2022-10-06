@@ -24,7 +24,7 @@ public interface IntakeHistoryRepository extends JpaRepository<IntakeHistory, Lo
     Optional<IntakeHistory> findByUserAndDateAndMealType(User user, LocalDate date, MealType mealType);
 
     @Query("select i from IntakeHistory i where i.user.id = :userId and i.date = :date")
-    List<IntakeHistory> findAllByIdAndDateIntakeHistory(@Param("userId") Long userId,@Param("date") LocalDate date);
+    List<IntakeHistory> findAllByIdAndDateIntakeHistory(@Param("userId") Long userId, @Param("date") LocalDate date);
 
     List<IntakeHistory> deleteByUser_IdAndDate(Long id, LocalDate date);
 

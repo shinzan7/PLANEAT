@@ -6,6 +6,7 @@ package planeat.database.entity;
  @author 신지한
  @since 2022-09-15
 */
+
 import lombok.*;
 import net.minidev.json.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicUpdate;
@@ -20,7 +21,8 @@ import java.time.LocalDate;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "analysis_history")
 public class AnalysisHistory {
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "analysis_history_id")
     private Long id;
 
@@ -116,6 +118,7 @@ public class AnalysisHistory {
         this.analysisScore = analysisScore;
         return this;
     }
+
     /**
      * 엔티티 에너지 탄단지 수정
      */

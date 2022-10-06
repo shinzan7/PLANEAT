@@ -33,6 +33,7 @@ public class JwtService {
 
     static final String DATE_FORMAT = "yyyy-MM-dd-HH-mm-ss";
 
+
     @PostConstruct
     protected void init() {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
@@ -73,6 +74,7 @@ public class JwtService {
             return false;
         }
     }
+
 
     public String getEmail(String token) {
         return (String) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().get("email");

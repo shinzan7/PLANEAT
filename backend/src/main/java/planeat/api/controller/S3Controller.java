@@ -6,6 +6,7 @@ package planeat.api.controller;
  @author 신지한
  @since 2022-09-20
 */
+
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -35,14 +36,14 @@ public class S3Controller {
             e.printStackTrace();
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
-        return new ResponseEntity(imageUrl,HttpStatus.NO_CONTENT);
+        return new ResponseEntity(imageUrl, HttpStatus.NO_CONTENT);
     }
 
     /**
      * 기본 Response 형식 DTO
      *
      * @param message 성공, 실패 여부 메세지 "SUCCESS", "ERROR"
-     * @param data 반환할 데이터
+     * @param data    반환할 데이터
      * @return ResponseEntity의 Body
      */
     private <T> BasicResponse<T> makeBasicResponse(String message, T data) {

@@ -6,12 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 import planeat.api.dto.common.BasicResponse;
-import planeat.api.dto.nutrient.NutrientDto;
-import planeat.api.dto.nutrient.NutrientRequest;
-import planeat.api.dto.nutrient.NutrientResponse;
-import planeat.api.dto.nutrient.NutrientSearchResponse;
 import planeat.api.dto.usernutrient.NutrientHistoryDateResponse;
 import planeat.api.dto.usernutrient.NutrientHistoryRequest;
 import planeat.api.dto.usernutrient.UserNutrientRequest;
@@ -37,7 +32,6 @@ public class UserNutrientController {
 
     static final String SUCCESS = "success";
 
-    //등록 로직 해야함
     @PostMapping("/history/{userId}")
     @ApiOperation(value = "영양제 섭취기록 등록", notes = "영양제 섭취기록 request를 받아 Table[영양제 섭취기록]에 등록한다")
     public ResponseEntity<BasicResponse<Long>> createNutrientHistory(@PathVariable("userId") Long userId, @RequestBody NutrientHistoryRequest request){
@@ -52,22 +46,12 @@ public class UserNutrientController {
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , responseList), HttpStatus.OK);
     }
 
-    //등록과 수정에 pathvariable로 userid를 받게
-    //수정 로직해야함
     @PutMapping("/history/{userId}")
     @ApiOperation(value = "영양제 섭취기록 수정", notes = "영양제 섭취기록 정보를 받아 Table[영양제 섭취기록]을 수정한다")
     public ResponseEntity<BasicResponse<List<String>>> updateNutrientHistory(@PathVariable("userId") Long userId, @RequestBody NutrientHistoryRequest request){
         List<String> list = userNutrientService.updateNutrientHistory(userId, request);
         return new ResponseEntity<>(makeBasicResponse(SUCCESS , list), HttpStatus.OK);
     }
-
-    //삭제는 프론트에서 미사용
-//    @DeleteMapping("/history/{nutrientHistoryId}")
-//    @ApiOperation(value = "영양제 섭취기록 삭제", notes = "영양제 섭취기록 id를 받아 Table[영양제 섭취기록]에서 삭제한다")
-//    public ResponseEntity<BasicResponse<String>> deleteNutrientHistory(@PathVariable("nutrientHistoryId") Long nutrientHistoryId){
-//        userNutrientService.deleteNutrientHistory(nutrientHistoryId);
-//        return new ResponseEntity<>(makeBasicResponse(SUCCESS , " "), HttpStatus.OK);
-//    }
 
     @GetMapping("/user/list/{userId}")
     @ApiOperation(value = "유저의 영양제 목록 조회", notes = "유저 id를 받아 Table[유저 영양제, 영양제 섭취기록]을 조회한다")

@@ -36,7 +36,7 @@ public class FoodInfoController {
     /**
      * 식품 정보 등록
      *
-     * @param userId 유저 번호
+     * @param userId          유저 번호
      * @param foodInfoRequest 등록할 식품 정보가 담긴 Dto
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
@@ -64,11 +64,12 @@ public class FoodInfoController {
 
     }
 
+
     /**
      * 이름으로 식품 정보 조회
      *
      * @param userId 유저 번호
-     * @param name 식품 이름
+     * @param name   식품 이름
      * @return SUCCCESS, List<FoodInfoResponse>, HttpStatus.OK(200)
      */
     @GetMapping("/{userId}/{name}")
@@ -87,7 +88,7 @@ public class FoodInfoController {
     /**
      * 식품 정보 수정
      *
-     * @param userId 유저 번호
+     * @param userId          유저 번호
      * @param foodInfoRequest 수정될 식품 정보가 담긴 DTO
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
@@ -104,7 +105,7 @@ public class FoodInfoController {
     /**
      * 식품 정보 삭제
      *
-     * @param userId 유저 번호
+     * @param userId          유저 번호
      * @param foodInfoRequest 삭제될 식품 정보가 담긴 DTO
      * @return SUCCCESS, userId, HttpStatus.CREATED(200)
      */

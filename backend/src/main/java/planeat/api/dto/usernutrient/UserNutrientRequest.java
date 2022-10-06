@@ -20,10 +20,4 @@ public class UserNutrientRequest {
     Long userId;
     Long nutrientId;
     Integer intakeRecommend;
-
-//    public void createUserNutrientRequest(Long userId, Long nutrientId, Integer intakeRecommend) {
-//        this.userId = userId;
-//        this.nutrientId = nutrientId;
-//        this.intakeRecommend = intakeRecommend;
-//    }
 }

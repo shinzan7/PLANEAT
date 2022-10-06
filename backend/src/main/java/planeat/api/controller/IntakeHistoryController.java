@@ -22,7 +22,6 @@ import planeat.api.dto.intakehistory.IntakeHistoryResponse;
 import planeat.api.service.IntakeHistoryService;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
@@ -40,7 +39,7 @@ public class IntakeHistoryController {
     /**
      * 섭취 기록 등록
      *
-     * @param userId 유저 번호
+     * @param userId               유저 번호
      * @param intakeHistoryRequest 등록할 섭취 기록 정보가 담긴 Dto
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
@@ -57,7 +56,7 @@ public class IntakeHistoryController {
      * 날짜별 섭취 기록 정보 조회
      *
      * @param userId 유저 번호
-     * @param date 조회할 날짜
+     * @param date   조회할 날짜
      * @return SUCCCESS, List<MyDietResponse>, HttpStatus.OK(200)
      */
     @GetMapping("/{userId}/{date}")
@@ -76,7 +75,7 @@ public class IntakeHistoryController {
     /**
      * 섭취 기록 수정
      *
-     * @param userId 유저 번호
+     * @param userId               유저 번호
      * @param intakeHistoryRequest 수정할 섭취 기록 정보가 담긴 Dto
      * @return SUCCCESS, userId, HttpStatus.CREATED(201)
      */
@@ -93,7 +92,7 @@ public class IntakeHistoryController {
     /**
      * 섭취 기록 삭제
      *
-     * @param userId 유저 번호
+     * @param userId               유저 번호
      * @param intakeHistoryRequest 삭제할 섭취 기록 정보가 담긴 Dto
      * @return SUCCCESS, userId, HttpStatus.CREATED(200)
      */
@@ -119,7 +118,5 @@ public class IntakeHistoryController {
                 .data(data)
                 .build();
     }
-
-
 
 }

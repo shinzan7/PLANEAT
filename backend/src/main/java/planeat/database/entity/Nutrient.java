@@ -6,16 +6,12 @@ package planeat.database.entity;
  @author 신지한
  @since 2022-09-15
 */
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIdentityReference;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-import planeat.api.dto.nutrient.NutrientRequest;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -28,7 +24,8 @@ import java.util.List;
 @Table(name = "nutrient")
 public class Nutrient {
 
-    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "nutrient_id")
     private Long id;
 
@@ -39,7 +36,6 @@ public class Nutrient {
     private String wordCloudImagePath;
 
 
-//    @JsonIgnore
     @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "nutrient")
     List<NutrientIngredient> nutrientIngredientList = new ArrayList<>();
 
@@ -56,9 +52,9 @@ public class Nutrient {
 
     /**
      * @param nutrientName 영양제 이름
-     * @param company 제조회사
-     * @param description 상세설명
-     * @param imagePath 이미지 경로
+     * @param company      제조회사
+     * @param description  상세설명
+     * @param imagePath    이미지 경로
      * @return
      */
     public Nutrient createNutrient(String nutrientName, String company, String description, String imagePath, String wordCloudImagePath) {
@@ -71,27 +67,16 @@ public class Nutrient {
                 .build();
     }
 
-    public void putNutrientIngredient(NutrientIngredient nutrientIngredient){
+    public void putNutrientIngredient(NutrientIngredient nutrientIngredient) {
         this.nutrientIngredientList.add(nutrientIngredient);
     }
 
-    public void updateImagePath(String imagePath){
+    public void updateImagePath(String imagePath) {
         this.imagePath = imagePath;
     }
 
-    public void updateWordCloudImagePath(String wordCloudImagePath){
+    public void updateWordCloudImagePath(String wordCloudImagePath) {
         this.wordCloudImagePath = wordCloudImagePath;
     }
 
-    @Override
-    public String toString() {
-        return "Nutrient{" +
-                "id=" + id +
-                ", nutrientName='" + nutrientName + '\'' +
-                ", company='" + company + '\'' +
-                ", description='" + description + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                ", wordCloudImagePath='" + wordCloudImagePath + '\'' +
-                '}';
-    }
 }

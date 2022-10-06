@@ -97,13 +97,13 @@ public class UserInfoResponse {
             @ApiModelProperty(value = "필수 영양소 이름", example = "비타민C")
             String nutri_type;
 
-            @ApiModelProperty(value="필수 영양소 단위", example = "mg")
+            @ApiModelProperty(value = "필수 영양소 단위", example = "mg")
             String nutri_unit;
 
-            @ApiModelProperty(value="필수 영양소 권장 섭취량", example = "100.00")
+            @ApiModelProperty(value = "필수 영양소 권장 섭취량", example = "100.00")
             BigDecimal intake_rec;
 
-            @ApiModelProperty(value="필수 영양소 상한 섭취량", example = "2000.00")
+            @ApiModelProperty(value = "필수 영양소 상한 섭취량", example = "2000.00")
             BigDecimal intake_max;
 
             public Nutritions(Nutrition nutrition) {

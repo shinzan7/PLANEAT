@@ -6,10 +6,9 @@ package planeat.api.dto.usernutrient;
  @author 신지한
  @since 2022-09-26
 */
-import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
+import lombok.*;
+
 import java.util.List;
 
 @Getter
@@ -22,9 +21,10 @@ public class UserNutrientResponse {
     Integer intakeRecommend;
     List<NutriHistory> nutriHistoryList;
 
-    @Getter @Setter
+    @Getter
+    @Setter
     @AllArgsConstructor
-    public static class NutriHistory{
+    public static class NutriHistory {
         Long nutrientHistoryId;
         String intakeDate;
         Integer intakeReal;

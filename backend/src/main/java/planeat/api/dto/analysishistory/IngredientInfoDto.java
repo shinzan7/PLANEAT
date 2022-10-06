@@ -46,76 +46,107 @@ public class IngredientInfoDto implements Serializable {
 
     /**
      * 각 인덱스에 맞는 영양성분을 더한다
-     * @param ingredientId 영양성분 번호id
+     *
+     * @param ingredientId     영양성분 번호id
      * @param ingredientAmount 영양성분 함량
-     * @param intakeReal 실제섭취횟수
+     * @param intakeReal       실제섭취횟수
      */
-    public void addIngredient(Integer ingredientId, Float ingredientAmount, Integer intakeReal){
-        switch (ingredientId){
-            case 1: this.calorie += ingredientAmount * intakeReal;
-                    break;
-            case 2: this.protein += ingredientAmount * intakeReal;
+    public void addIngredient(Integer ingredientId, Float ingredientAmount, Integer intakeReal) {
+        switch (ingredientId) {
+            case 1:
+                this.calorie += ingredientAmount * intakeReal;
                 break;
-            case 3: this.fat += ingredientAmount * intakeReal;
+            case 2:
+                this.protein += ingredientAmount * intakeReal;
                 break;
-            case 4: this.carbohydrate += ingredientAmount * intakeReal;
+            case 3:
+                this.fat += ingredientAmount * intakeReal;
                 break;
-            case 5: this.sugar += ingredientAmount * intakeReal;
+            case 4:
+                this.carbohydrate += ingredientAmount * intakeReal;
                 break;
-
-            case 6: this.dietaryFiber += ingredientAmount * intakeReal;
-                break;
-            case 7: this.calcium += ingredientAmount * intakeReal;
-                break;
-            case 8: this.iron += ingredientAmount * intakeReal;
-                break;
-            case 9: this.magnesium += ingredientAmount * intakeReal;
-                break;
-            case 10: this.phosphorus += ingredientAmount * intakeReal;
+            case 5:
+                this.sugar += ingredientAmount * intakeReal;
                 break;
 
-            case 11: this.potassium += ingredientAmount * intakeReal;
+            case 6:
+                this.dietaryFiber += ingredientAmount * intakeReal;
                 break;
-            case 12: this.sodium += ingredientAmount * intakeReal;
+            case 7:
+                this.calcium += ingredientAmount * intakeReal;
                 break;
-            case 13: this.zinc += ingredientAmount * intakeReal;
+            case 8:
+                this.iron += ingredientAmount * intakeReal;
                 break;
-            case 14: this.copper += ingredientAmount * intakeReal;
+            case 9:
+                this.magnesium += ingredientAmount * intakeReal;
                 break;
-            case 15: this.manganese += ingredientAmount * intakeReal;
-                break;
-
-            case 16: this.selenium += ingredientAmount * intakeReal;
-                break;
-            case 17: this.vitaminA += ingredientAmount * intakeReal;
-                break;
-            case 18: this.vitaminD += ingredientAmount * intakeReal;
-                break;
-            case 19: this.vitaminB1 += ingredientAmount * intakeReal;
-                break;
-            case 20: this.vitaminB2 += ingredientAmount * intakeReal;
+            case 10:
+                this.phosphorus += ingredientAmount * intakeReal;
                 break;
 
-            case 21: this.vitaminB6 += ingredientAmount * intakeReal;
+            case 11:
+                this.potassium += ingredientAmount * intakeReal;
                 break;
-            case 22: this.folate += ingredientAmount * intakeReal;
+            case 12:
+                this.sodium += ingredientAmount * intakeReal;
                 break;
-            case 23: this.vitaminB12 += ingredientAmount * intakeReal;
+            case 13:
+                this.zinc += ingredientAmount * intakeReal;
                 break;
-            case 24: this.vitaminC += ingredientAmount * intakeReal;
+            case 14:
+                this.copper += ingredientAmount * intakeReal;
                 break;
-            case 25: this.cholesterol += ingredientAmount * intakeReal;
+            case 15:
+                this.manganese += ingredientAmount * intakeReal;
                 break;
 
-            case 26: this.fattyAcid += ingredientAmount * intakeReal;
+            case 16:
+                this.selenium += ingredientAmount * intakeReal;
                 break;
-            case 27: this.alphaLinoleicAcid += ingredientAmount * intakeReal;
+            case 17:
+                this.vitaminA += ingredientAmount * intakeReal;
                 break;
-            case 28: this.linoleicAcid += ingredientAmount * intakeReal;
+            case 18:
+                this.vitaminD += ingredientAmount * intakeReal;
                 break;
-            case 29: this.transFattyAcid += ingredientAmount * intakeReal;
+            case 19:
+                this.vitaminB1 += ingredientAmount * intakeReal;
                 break;
-            default: break;
+            case 20:
+                this.vitaminB2 += ingredientAmount * intakeReal;
+                break;
+
+            case 21:
+                this.vitaminB6 += ingredientAmount * intakeReal;
+                break;
+            case 22:
+                this.folate += ingredientAmount * intakeReal;
+                break;
+            case 23:
+                this.vitaminB12 += ingredientAmount * intakeReal;
+                break;
+            case 24:
+                this.vitaminC += ingredientAmount * intakeReal;
+                break;
+            case 25:
+                this.cholesterol += ingredientAmount * intakeReal;
+                break;
+
+            case 26:
+                this.fattyAcid += ingredientAmount * intakeReal;
+                break;
+            case 27:
+                this.alphaLinoleicAcid += ingredientAmount * intakeReal;
+                break;
+            case 28:
+                this.linoleicAcid += ingredientAmount * intakeReal;
+                break;
+            case 29:
+                this.transFattyAcid += ingredientAmount * intakeReal;
+                break;
+            default:
+                break;
         }
     }
 }

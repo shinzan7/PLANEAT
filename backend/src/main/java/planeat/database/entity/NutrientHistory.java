@@ -6,12 +6,12 @@ package planeat.database.entity;
  @author 신지한
  @since 2022-09-15
 */
+
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.DynamicUpdate;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -41,7 +41,7 @@ public class NutrientHistory {
         this.intakeReal = intakeReal;
     }
 
-    public static NutrientHistory createUserNutrientHistory(UserNutrient userNutrient, LocalDate intakeDate, Integer intakeReal){
+    public static NutrientHistory createUserNutrientHistory(UserNutrient userNutrient, LocalDate intakeDate, Integer intakeReal) {
         return NutrientHistory.builder()
                 .userNutrient(userNutrient)
                 .intakeDate(intakeDate)
@@ -56,12 +56,4 @@ public class NutrientHistory {
         return this;
     }
 
-    @Override
-    public String toString() {
-        return "NutrientHistory{" +
-                "id=" + id +
-                ", intakeDate=" + intakeDate +
-                ", intakeReal=" + intakeReal +
-                '}';
-    }
 }

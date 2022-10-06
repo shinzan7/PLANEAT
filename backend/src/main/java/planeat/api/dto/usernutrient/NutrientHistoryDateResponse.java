@@ -6,13 +6,12 @@ package planeat.api.dto.usernutrient;
  @author 신지한
  @since 2022-09-30
 */
+
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.format.annotation.DateTimeFormat;
 
-import java.time.LocalDate;
 
 @Getter
 @Setter
