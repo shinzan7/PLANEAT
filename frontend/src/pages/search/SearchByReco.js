@@ -32,10 +32,12 @@ function SearchByReco() {
   const today = new Date()
   const year = today.getFullYear().toString()
   const tmpMonth = today.getMonth() + 1
-  const month = tmpMonth < 11 ? "0" + tmpMonth-1 : "" + tmpMonth-1
+  const month = tmpMonth < 11 ? "0" + (tmpMonth-1) : "" + tmpMonth-1
   const tmpDay = today.getDate()
   const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
   const userId = localStorage.getItem('userId')
+
+  console.log(year, month, day)
 
   useEffect(() => {
     http.get(`/user-infos/${userId}`).then((response) => {
