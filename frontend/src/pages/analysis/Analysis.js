@@ -450,9 +450,13 @@ function Analysis() {
   async function getNutrientStat() {
     // 최근 7일 데이터
     if (value == 0) {
+      // console.log(new Date());
+      // console.log(new Date(new Date().setDate(new Date().getDate() + 1)));
       const response1 = await http.get(`nutrient/user/list/period`, {
         params: {
-          endDate: getDateStr(new Date()),
+          endDate: getDateStr(
+            new Date(new Date().setDate(new Date().getDate() + 1))
+          ),
           startDate: lastWeek(),
           userId: userInfo.userId,
         },
@@ -491,7 +495,9 @@ function Analysis() {
     else if (value == 1) {
       const response2 = await http.get(`nutrient/user/list/period`, {
         params: {
-          endDate: getDateStr(new Date()),
+          endDate: getDateStr(
+            new Date(new Date().setDate(new Date().getDate() + 1))
+          ),
           startDate: lastMonth(),
           userId: userInfo.userId,
         },
@@ -532,7 +538,9 @@ function Analysis() {
     else if (value == 2) {
       const response3 = await http.get(`nutrient/user/list/period`, {
         params: {
-          endDate: getDateStr(new Date()),
+          endDate: getDateStr(
+            new Date(new Date().setDate(new Date().getDate() + 1))
+          ),
           startDate: "1900-01-01",
           userId: userInfo.userId,
         },
