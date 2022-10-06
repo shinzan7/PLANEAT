@@ -537,6 +537,11 @@ export default function UserInfo() {
             <b>{name}</b>님의 현재 권장섭취량은 <b style={{ color: "orange" }}>{recoIntake}kcal</b>
             입니다.
           </Grid>
+          {/* {carbo}
+          <br />
+          {protein}
+          <br />
+          {fat} */}
         </Grid>
 
         {/* BMI */}

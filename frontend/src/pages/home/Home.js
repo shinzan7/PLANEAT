@@ -13,12 +13,15 @@ import SimpleTestModal from "components/modal/home/SimpleTestModal";
 import Google from "./Google";
 import Kakao from "./Kakao";
 import Naver from "./Naver";
+import KeyboardArrowUpRoundedIcon from "@mui/icons-material/KeyboardArrowUpRounded";
+import Fab from "@mui/material/Fab";
 
 import AOS from "aos";
 import "aos/dist/aos.css";
 import CountUp from "react-countup";
+import VisibilitySensor from "react-visibility-sensor";
 import longlogo from "assets/longlogo.png";
-import home1 from 'assets/home1.png'
+import home1 from "assets/home1.png";
 
 import {
   Paper,
@@ -65,61 +68,84 @@ function Home() {
     AOS.init();
   }, []);
 
+  const handleScroll = (e) => {
+    if (!window.scrollY) return;
+    // 현재 위치가 이미 최상단일 경우 return
+
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <div className="bgColor">
       <Grid container>
-        <Grid item lg={6} xs={12}>
+        <Grid item xs={2.5}></Grid>
+        <Grid item xs={7}>
           <Grid container>
-            <Grid item xs={2}></Grid>
+            <Grid item xs={6} sx={{ marginTop: "20vh", textAlign: "center" }}>
+              <div>
+                <img
+                  // className="floating"
+                  src="assets/slogan.png"
+                  data-aos="fade-right"
+                  data-aos-duration="3000"
+                  alt=""
+                  style={{
+                    width: "400px",
 
-            <Grid item xs={8}>
-              <img
-                src={longlogo}
-                data-aos="fade-right"
-                data-aos-duration="3000"
-                alt=""
-                style={logo}
-              />
-              <div
-                data-aos="fade-right"
-                data-aos-duration="3000"
-                style={{ marginLeft: "50%", fontSize: "16px" }}
-              >
-                간편 로그인
+                    marginBottom: "5vh",
+                    textAlign: "center",
+                  }}
+                />
               </div>
-              <div href="#" className="login" data-aos="fade-right" data-aos-duration="3000">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
+              <div>
+                <img
+                  className="floating"
+                  src="assets/shadow_logo.png"
+                  data-aos="fade-right"
+                  data-aos-duration="3000"
+                  data-aos-offset="30"
+                  data-aos-delay="1000"
+                  alt=""
+                  style={{ width: "300px" }}
+                />
+              </div>
+
+              {/* <img
+              src={longlogo}
+              // data-aos="fade-right"
+              // data-aos-duration="3000"
+              alt=""
+              style={logo}
+            /> */}
+            </Grid>
+            <Grid item xs={6} sx={{ marginTop: "35vh", textAlign: "center" }}>
+              <div
+                data-aos="fade-left"
+                data-aos-duration="3000"
+                href="#"
+                style={{
+                  display: "inline-block",
+                  padding: "20px",
+                  backgroundColor: "#190730",
+                  opacity: "1",
+                  borderRadius: "24px",
+                }}
+              >
+                <div style={{ marginBottom: "25px" }}>간편 로그인</div>
                 <Google />
                 <Naver />
                 <Kakao />
               </div>
             </Grid>
-
-            <Grid item xs={2}></Grid>
-          </Grid>
-        </Grid>
-
-        <Grid item xs={6}>
-          <Grid container>
-            <Grid item xs={1}></Grid>
-
-            <Grid item xs={7}>
-              {/* <img src="assets/longlogo.png" alt="" style={logo} /> */}
+            <Grid item xs={12} style={{ marginTop: "23vh", textAlign: "center" }}>
+              <img className="floating" src="assets/arrow.png" width="50px"></img>
             </Grid>
-
-            <Grid item xs={4}></Grid>
-
-            {/* <div style={chip}>
-              <BtnMain onClick={openModal} width="23vw" height="5vh">
-                PLANEAT 체험하기
-              </BtnMain>
-              <SimpleTestModal open={modalOpen} close={closeModal} />
-            </div> */}
           </Grid>
         </Grid>
+        <Grid item xs={2.5}></Grid>
       </Grid>
 
       <div className="section2" style={{ marginBottom: "50px" }}>
@@ -154,12 +180,18 @@ function Home() {
                 style={{ textAlign: "center", color: "white", fontSize: "30px" }}
                 start={0}
                 end={89962}
-                duration={5}
+                duration={3}
                 redraw={true}
                 useEasing={true}
                 useGrouping={true}
                 suffix="개"
-              ></CountUp>
+              >
+                {({ countUpRef, start }) => (
+                  <VisibilitySensor onChange={start} delayedCall>
+                    <span style={{ fontSize: "30px" }} ref={countUpRef} />
+                  </VisibilitySensor>
+                )}
+              </CountUp>
               <div style={{ marginTop: "20px", lineHeight: "1.5" }}>
                 등록한 식사 정보로 정확한
                 <br /> 영양 분석을 받을 수 있습니다.
@@ -181,11 +213,17 @@ function Home() {
                 style={{ textAlign: "center", color: "white", fontSize: "30px" }}
                 start={0}
                 end={5421}
-                duration={5}
+                duration={3}
                 useEasing={true}
                 useGrouping={true}
                 suffix="개"
-              ></CountUp>
+              >
+                {({ countUpRef, start }) => (
+                  <VisibilitySensor onChange={start} delayedCall>
+                    <span style={{ fontSize: "30px" }} ref={countUpRef} />
+                  </VisibilitySensor>
+                )}
+              </CountUp>
               <div style={{ marginTop: "20px", lineHeight: "1.5" }}>
                 영양제를 추천받고
                 <br />
@@ -208,11 +246,17 @@ function Home() {
                 style={{ textAlign: "center", color: "white", fontSize: "30px" }}
                 start={0}
                 end={979551}
-                duration={5}
+                duration={3}
                 useEasing={true}
                 useGrouping={true}
                 suffix="개"
-              ></CountUp>
+              >
+                {({ countUpRef, start }) => (
+                  <VisibilitySensor onChange={start} delayedCall>
+                    <span style={{ fontSize: "30px" }} ref={countUpRef} />
+                  </VisibilitySensor>
+                )}
+              </CountUp>
               <div style={{ marginTop: "20px", lineHeight: "1.5" }}>
                 사용자의 리뷰 키워드를
                 <br /> 시각화하여 볼 수 있습니다.
@@ -226,18 +270,29 @@ function Home() {
         <Grid container>
           <Grid item lg={0.9} xs={3}></Grid>
           <Grid item lg={4.8} xs={6}>
-            <Card variant="outlined" style={textcard}>
-              <p className="p">
-                내가 필요한 영양제를<br></br>
+            <div>
+              <div
+                style={{
+                  display: "inline-block",
+                  marginTop: "20%",
+                  marginBottom: "5px",
+                  borderRadius: "4px",
+                  backgroundColor: "#9DA6F8",
+                  width: "90px",
+                  height: "5px",
+                }}
+              ></div>
+              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+                나에게 필요한 영양제를<br></br>
                 쉽고 빠르게 찾아보세요
               </p>
-            </Card>
+            </div>
           </Grid>
           <Grid item lg={0.3} xs={3}></Grid>
           <Grid item lg={0.3} xs={3}></Grid>
           <Grid item lg={4.8} xs={6}>
             <Card variant="outlined" style={card}>
-              <img src={home1} style={{ width:'100%', height:'100%'}} />
+              <img src={home1} style={{ width: "100%", height: "100%" }} />
             </Card>
           </Grid>
           <Grid item lg={0.9} xs={3}></Grid>
@@ -255,15 +310,57 @@ function Home() {
           <Grid item lg={0.3} xs={3}></Grid>
           <Grid item lg={0.3} xs={3}></Grid>
           <Grid item lg={4.8} xs={6}>
-            <Card variant="outlined" style={textcard}>
-              <p className="p">
-                월간 통계를 통해<br></br>
-                식단을 점검해보세요
-              </p>
-            </Card>
+            <div
+              style={{
+                display: "inline-block",
+                marginTop: "20%",
+                marginBottom: "5px",
+                borderRadius: "4px",
+                backgroundColor: "#9DA6F8",
+                width: "90px",
+                height: "5px",
+              }}
+            ></div>
+            <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+              영양분석 통계를 통해<br></br>
+              식단을 점검해보세요
+            </p>
           </Grid>
           <Grid item lg={0.9} xs={3}></Grid>
         </Grid>
+      </div>
+
+      <div className="section3">
+        <Grid container>
+          <Grid item lg={0.9} xs={3}></Grid>
+          <Grid item lg={4.8} xs={6}>
+            <div
+              style={{
+                display: "inline-block",
+                marginTop: "20%",
+                marginBottom: "5px",
+                borderRadius: "4px",
+                backgroundColor: "#9DA6F8",
+                width: "90px",
+                height: "5px",
+              }}
+            ></div>
+            <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+              식사기록을 통해<br></br>
+            </p>
+          </Grid>
+          <Grid item lg={0.3} xs={3}></Grid>
+          <Grid item lg={0.3} xs={3}></Grid>
+          <Grid item lg={4.8} xs={6}>
+            <img src={home1} style={{ width: "100%", height: "100%" }} />
+          </Grid>
+          <Grid item lg={0.9} xs={3}></Grid>
+        </Grid>
+      </div>
+      <div style={{ paddingTop: "10%", paddingBottom: "3%" }}>
+        <Fab sx={{ float: "right", marginRight: "3%" }} color="primary" onClick={handleScroll}>
+          <KeyboardArrowUpRoundedIcon />
+        </Fab>
       </div>
 
       <br></br>
