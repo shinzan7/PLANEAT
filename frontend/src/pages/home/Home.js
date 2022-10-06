@@ -176,7 +176,7 @@ function Home() {
             height: "5px",
           }}
         ></div>
-        <div style={{ fontSize: "30px", marginBottom: "80px" }}>
+        <div style={{ fontSize: "2vw", marginBottom: "80px" }}>
           수십만개의 데이터를 활용한 정확한 식단 피드백
         </div>
         <Container maxWidth="md" component="main">
@@ -192,14 +192,14 @@ function Home() {
               sm={12}
               md={4}
             >
-              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>
+              <p style={{ fontSize: "1.2vw", fontWeight: "bolder" }}>
                 음식 데이터
               </p>
               <CountUp
                 style={{
                   textAlign: "center",
                   color: "white",
-                  fontSize: "30px",
+                  fontSize: "2vw",
                 }}
                 start={0}
                 end={89962}
@@ -211,11 +211,17 @@ function Home() {
               >
                 {({ countUpRef, start }) => (
                   <VisibilitySensor onChange={start} delayedCall>
-                    <span style={{ fontSize: "30px" }} ref={countUpRef} />
+                    <span style={{ fontSize: "2vw" }} ref={countUpRef} />
                   </VisibilitySensor>
                 )}
               </CountUp>
-              <div style={{ marginTop: "20px", lineHeight: "1.5" }}>
+              <div
+                style={{
+                  fontSize: "1vw",
+                  marginTop: "20px",
+                  lineHeight: "1.5",
+                }}
+              >
                 등록한 식사 정보로 정확한
                 <br /> 영양 분석을 받을 수 있습니다.
               </div>
@@ -231,14 +237,14 @@ function Home() {
               sm={12}
               md={4}
             >
-              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>
+              <p style={{ fontSize: "1.2vw", fontWeight: "bolder" }}>
                 영양제 데이터
               </p>
               <CountUp
                 style={{
                   textAlign: "center",
                   color: "white",
-                  fontSize: "30px",
+                  fontSize: "2vw",
                 }}
                 start={0}
                 end={5421}
@@ -249,14 +255,20 @@ function Home() {
               >
                 {({ countUpRef, start }) => (
                   <VisibilitySensor onChange={start} delayedCall>
-                    <span style={{ fontSize: "30px" }} ref={countUpRef} />
+                    <span style={{ fontSize: "2vw" }} ref={countUpRef} />
                   </VisibilitySensor>
                 )}
               </CountUp>
-              <div style={{ marginTop: "20px", lineHeight: "1.5" }}>
+              <div
+                style={{
+                  fontSize: "1vw",
+                  marginTop: "20px",
+                  lineHeight: "1.5",
+                }}
+              >
                 고민별, 성분별 검색과
                 <br />
-                영양제 추천을 받을 수 있습니다.
+                영양제를 추천받을 수 있습니다.
               </div>
             </Grid>
             <Grid
@@ -270,14 +282,14 @@ function Home() {
               sm={12}
               md={4}
             >
-              <p style={{ fontSize: "20px", fontWeight: "bolder" }}>
+              <p style={{ fontSize: "1.2vw", fontWeight: "bolder" }}>
                 리뷰 데이터
               </p>
               <CountUp
                 style={{
                   textAlign: "center",
                   color: "white",
-                  fontSize: "30px",
+                  fontSize: "2vw",
                 }}
                 start={0}
                 end={979551}
@@ -288,11 +300,17 @@ function Home() {
               >
                 {({ countUpRef, start }) => (
                   <VisibilitySensor onChange={start} delayedCall>
-                    <span style={{ fontSize: "30px" }} ref={countUpRef} />
+                    <span style={{ fontSize: "2vw" }} ref={countUpRef} />
                   </VisibilitySensor>
                 )}
               </CountUp>
-              <div style={{ marginTop: "20px", lineHeight: "1.5" }}>
+              <div
+                style={{
+                  fontSize: "1vw",
+                  marginTop: "20px",
+                  lineHeight: "1.5",
+                }}
+              >
                 사용자의 리뷰 키워드를
                 <br /> 시각화하여 볼 수 있습니다.
               </div>
@@ -329,7 +347,7 @@ function Home() {
                   height: "5px",
                 }}
               ></div>
-              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+              <p className="p" style={{ lineHeight: "1.8", fontSize: "1.4vw" }}>
                 영양분석 통계를 통해<br></br>
                 식단을 점검해보세요
               </p>
@@ -339,28 +357,27 @@ function Home() {
           <Grid item xs={12} md={6}>
             <img
               src="assets/home2.png"
-              width="600vh"
+              width="700vw"
               data-aos="fade-down-left"
               data-aos-offset="500"
               data-aos-duration="1000"
-              style={{ marginRight: "30%" }}
+              // style={{ marginRight: "30vw" }}
             />
           </Grid>
         </Grid>
       </div>
 
       <div
-        style={{ marginLeft: "10%", marginRight: "10%", textAlign: "start" }}
+        style={{ marginRight: "10%", marginLeft: "10%", textAlign: "start" }}
       >
         <Grid container>
           <Grid item xs={12} md={6}>
             <img
               src="assets/home3.png"
-              width="600vh"
+              width="700vw"
               data-aos="fade-down-right"
               data-aos-offset="500"
               data-aos-duration="1000"
-              style={{ marginLeft: "25%" }}
             />
           </Grid>
           <Grid item xs={12} md={6} sx={{ display: "table" }}>
@@ -382,7 +399,7 @@ function Home() {
                   height: "5px",
                 }}
               ></div>
-              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+              <p className="p" style={{ lineHeight: "1.8", fontSize: "1.4vw" }}>
                 나에게 필요한 영양제를<br></br>
                 쉽고 빠르게 찾아보세요
               </p>
@@ -412,7 +429,7 @@ function Home() {
                   height: "5px",
                 }}
               ></div>
-              <p className="p" style={{ lineHeight: "1.8", fontSize: "22px" }}>
+              <p className="p" style={{ lineHeight: "1.8", fontSize: "1.4vw" }}>
                 식사기록을 통해
                 <br />
                 부족한 영양분을 찾아보세요<br></br>
@@ -422,11 +439,11 @@ function Home() {
           <Grid item xs={12} md={6}>
             <img
               src="assets/home1.png"
-              width="600vh"
+              width="700vw"
               data-aos="fade-down-left"
               data-aos-offset="500"
               data-aos-duration="1000"
-              style={{ marginRight: "30%" }}
+              // style={{ marginRight: "30%" }}
             />
           </Grid>
         </Grid>
