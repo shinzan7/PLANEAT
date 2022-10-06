@@ -54,7 +54,7 @@ BE or FE-기능
 
 ### 2) 소셜 로그인
 
-<img width=30% src="/uploads/ce985962140dddcb448b276bd69fde0d/로그인.jpg">
+<img width=30% src="/uploads/b2eeb939c0316a143ef6c6c7e1504bd8/image.png">
 <p>소셜 로그인 후 서비스 이용이 가능합니다.</p>
 
 <p>나를 팔로우하는 유저, 내가 팔로우하는 유저를 볼 수 있습니다.</p>
