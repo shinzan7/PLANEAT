@@ -25,7 +25,14 @@ import { http } from "api/http";
 import { userState } from "states/userState";
 import { useRecoilValue } from "recoil";
 
-export default function TimelineStat({ value, list1, list2, list3, list4, list5 }) {
+export default function TimelineStat({
+  value,
+  list1,
+  list2,
+  list3,
+  list4,
+  list5,
+}) {
   const userInfo = useRecoilValue(userState);
 
   useEffect(() => {
@@ -53,7 +60,9 @@ export default function TimelineStat({ value, list1, list2, list3, list4, list5 
 
   // 1일전, 2일전, 3일전, 4일전, 5일전 음식 받아오기
   async function getFoodData() {
-    const response = await http.get(`intake-histories/${userInfo.userId}/${lastDay(1)}`);
+    const response = await http.get(
+      `intake-histories/${userInfo.userId}/${lastDay(1)}`
+    );
     console.log(response.data);
   }
 
@@ -101,7 +110,7 @@ export default function TimelineStat({ value, list1, list2, list3, list4, list5 
                 variant="body2"
                 color="text.secondary"
               >
-                {lastDay(1)}
+                {lastDay(0)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
@@ -135,7 +144,7 @@ export default function TimelineStat({ value, list1, list2, list3, list4, list5 
                 variant="body2"
                 color="text.secondary"
               >
-                {lastDay(2)}
+                {lastDay(1)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
@@ -171,7 +180,7 @@ export default function TimelineStat({ value, list1, list2, list3, list4, list5 
                 variant="body2"
                 color="text.secondary"
               >
-                {lastDay(3)}
+                {lastDay(2)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
@@ -206,12 +215,14 @@ export default function TimelineStat({ value, list1, list2, list3, list4, list5 
                 variant="body2"
                 color="text.secondary"
               >
-                {lastDay(4)}
+                {lastDay(3)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
                 <TimelineDot color="primary" variant="outlined">
-                  <TapasRoundedIcon sx={{ color: "#FFB3B3" }}></TapasRoundedIcon>
+                  <TapasRoundedIcon
+                    sx={{ color: "#FFB3B3" }}
+                  ></TapasRoundedIcon>
                 </TimelineDot>
                 <TimelineConnector />
               </TimelineSeparator>
@@ -241,7 +252,7 @@ export default function TimelineStat({ value, list1, list2, list3, list4, list5 
                 variant="body2"
                 color="text.secondary"
               >
-                {lastDay(5)}
+                {lastDay(4)}
               </TimelineOppositeContent>
               <TimelineSeparator>
                 <TimelineConnector />
