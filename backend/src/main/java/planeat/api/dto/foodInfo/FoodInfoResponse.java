@@ -189,7 +189,7 @@ public class FoodInfoResponse {
                 .servingUnit(foodInfo.getServingUnit())
                 .capacityG(foodInfo.getCapacityG())
                 .capacityMl(foodInfo.getCapacityMl())
-                .calorie(foodInfo.getCalorie())
+                .calorie((float) Math.round(foodInfo.getCalorie()))
                 .protein(foodInfo.getProtein())
                 .fat(foodInfo.getFat())
                 .carbohydrate(foodInfo.getCarbohydrate())

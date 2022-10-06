@@ -536,7 +536,7 @@ public class AnalysisHistoryService {
                 .badCount(badCount)
                 .normalCount(normalCount)
                 .goodCount(goodCount)
-                .calorie(calorie)
+                .calorie((float) Math.round(calorie))
                 .protein(protein)
                 .fat(fat)
                 .carbohydrate(carbohydrate)
