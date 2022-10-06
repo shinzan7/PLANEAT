@@ -20,8 +20,8 @@ export const userState = atom({
     name: localStorage.getItem("name"),
     // 로컬에서 확인해보고 싶을 때, 특정 id와 name 넣어보기
 
-    userId: "38",
-    name: "조혜아니아니",
+    // userId: "38",
+    // name: "조혜아니아니",
 
     birthYear: localStorage.getItem("birthYear"),
     gender: localStorage.getItem("gender"),

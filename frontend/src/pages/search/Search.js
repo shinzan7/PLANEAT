@@ -31,11 +31,9 @@ function Search() {
           textAlign="center"
           xs={12}
           style={{
-            background: "none",
             borderRadius: "25px",
             margin: "20px",
             padding: "20px",
-            boxShadow: "1px 2px 6px #c7c7c7",
           }}
         >
           {/* 문구 */}
