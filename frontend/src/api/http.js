@@ -43,6 +43,9 @@ function Instance() {
         response: { status },
       } = error
       const originalRequest = config
+      console.log("status : " + status)
+      console.log("config : " + config)
+      console.log("originalRequest._retry : " + originalRequest._retry)
       if (status === 401 && !originalRequest._retry) {
         console.log("request 에서 토큰 요청 할거유")
         // token refresh 요청
