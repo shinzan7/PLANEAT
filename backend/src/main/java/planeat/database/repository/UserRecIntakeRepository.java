@@ -20,8 +20,6 @@ public interface UserRecIntakeRepository extends JpaRepository<UserRecIntake, Lo
 
     List<UserRecIntake> findByUserOrderByUpdateDateAsc(User user);
 
-    boolean existsByUpdateDate(LocalDate updateDate);
-
     Optional<UserRecIntake> findFirstByUserOrderByUpdateDateDesc(User user);
 
     Optional<UserRecIntake> findFirstByUserOrderByUpdateDateAsc(User user);
