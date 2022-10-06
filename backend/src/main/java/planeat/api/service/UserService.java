@@ -196,7 +196,8 @@ public class UserService {
 
             userRecIntakeRepository.deleteAll(userRecIntakes);
 
-            UserRecIntake uri = UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo());
+            UserRecIntake uri = userRecIntakeRepository.findFirstByUpdateDate(userInfoRequest.getRecInfo().getUpdateDate())
+                                .orElse(UserRecIntake.createUserRecIntake(user, userInfoRequest.getRecInfo()));
             userRecIntakeRepository.save(uri);
             uri.getUser().getUserRecIntakeList().add(uri);
 
