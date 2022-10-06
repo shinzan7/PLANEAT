@@ -33,23 +33,15 @@ function Instance() {
   // response interceptor 요청 응답 받은 후 데이터 가공
   instance.interceptors.response.use(
     (response) => {
-      console.log("response 리턴 나왔슈")
       return response
     },
     async (error) => {
-      console.log("request 에러 났슈")
       const {
         config,
         response: { status },
       } = error
       const originalRequest = config
-      console.log("=================================")
-      console.log(JSON.stringify(error))
-      console.log(error.response)
-      console.log("=================================")
-      console.log("status : " + status)
-      console.log("config : " + config)
-      console.log("status : " + originalRequest._retry)
+
       if (status === 500 && originalRequest._retry == undefined) {
         console.log("request 에서 토큰 요청 할거유")
         // token refresh 요청
@@ -73,18 +65,15 @@ function Instance() {
         localStorage.setItem("accessToken", newAccessToken)
 
         localStorage.setItem("accessTokenExpiration", accessTokenExpiration)
-        console.log("request 토큰 저장했슈")
+
         instance.defaults.headers["refreshToken"] = localStorage.getItem("refreshToken")
         originalRequest.headers["accessToken"] = newAccessToken
         // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
-        console.log("이제 재요청 할거유")
         return axios(originalRequest)
       } else if (status === 403) {
-        console.log("권한없슈")
         // console.log("권한 없음")
         window.location.replace("/")
       }
-      console.log("request ㅇ여긴 어디냐?")
       return Promise.reject(error)
     }
   )
