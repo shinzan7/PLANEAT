@@ -131,7 +131,9 @@ function Analysis() {
   const [list5, setList5] = useState([]);
 
   async function getTimelineData() {
-    const response1 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(1)}`);
+    const response1 = await http.get(
+      `intake-histories/${userInfo.userId}/${lastDay(0)}`
+    );
     console.log("이거야이거", response1.data.data);
     let arr1 = [...response1.data.data];
     let total1 = [];
@@ -143,7 +145,9 @@ function Analysis() {
     }
     setList1(total1);
 
-    const response2 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(2)}`);
+    const response2 = await http.get(
+      `intake-histories/${userInfo.userId}/${lastDay(1)}`
+    );
     console.log("이거야이거", response2.data.data);
     let arr2 = [...response2.data.data];
     let total2 = [];
@@ -155,7 +159,9 @@ function Analysis() {
     }
     setList2(total2);
 
-    const response3 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(3)}`);
+    const response3 = await http.get(
+      `intake-histories/${userInfo.userId}/${lastDay(2)}`
+    );
     console.log("이거야이거", response3.data.data);
     let arr3 = [...response3.data.data];
     let total3 = [];
@@ -167,7 +173,9 @@ function Analysis() {
     }
     setList3(total3);
 
-    const response4 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(4)}`);
+    const response4 = await http.get(
+      `intake-histories/${userInfo.userId}/${lastDay(3)}`
+    );
     console.log("이거야이거", response4.data.data);
     let arr4 = [...response4.data.data];
     let total4 = [];
@@ -179,7 +187,9 @@ function Analysis() {
     }
     setList4(total4);
 
-    const response5 = await http.get(`intake-histories/${userInfo.userId}/${lastDay(5)}`);
+    const response5 = await http.get(
+      `intake-histories/${userInfo.userId}/${lastDay(4)}`
+    );
     console.log("이거야이거", response5.data.data);
     let arr5 = [...response5.data.data];
     let total5 = [];
@@ -278,7 +288,7 @@ function Analysis() {
     arr.push(Number((proteinCal * 4).toFixed(1)));
     arr.push(Number((fatCal * 9).toFixed(1)));
     setCalArr(arr);
-    setAllCal(allCal);
+    setAllCal((allCal / getData.length).toFixed(1));
     console.log("didididididididi");
     console.log(arr);
     console.log(allCal);
@@ -544,7 +554,10 @@ function Analysis() {
             if (infoArr[i].nutriHistoryList.length != 0) {
               // 처음 섭취한 날 부터 오늘까지의 날짜차이
               // console.log(userNutrientInfo[i].nutriHistoryList[0].intakeDate);
-              let date = getDiff(getToday(), infoArr[i].nutriHistoryList[0].intakeDate);
+              let date = getDiff(
+                getToday(),
+                infoArr[i].nutriHistoryList[0].intakeDate
+              );
             }
             // console.log(date);
             let intakes = 0; // 실제 섭취한 총 횟수
@@ -589,7 +602,9 @@ function Analysis() {
 
   return (
     <div>
-      <Container sx={{ width: "100%", marginTop: "100px", marginBottom: "50px" }}>
+      <Container
+        sx={{ width: "100%", marginTop: "100px", marginBottom: "50px" }}
+      >
         <Tabs
           sx={{ marginRight: "25px", marginLeft: "25px" }}
           value={value}
@@ -639,12 +654,20 @@ function Analysis() {
             </Grid>
             <Grid item xs={12} md={12}>
               {/* 섭취량 */}
-              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
+              <FoodStat
+                value={value}
+                data={analysisData}
+                percent={percentData}
+              ></FoodStat>
             </Grid>
 
             <Grid item xs={12} md={12}>
               {/* 영양제 */}
-              <NutrientStat value={value} nameDatas={nameDatas} perDatas={perDatas}></NutrientStat>
+              <NutrientStat
+                value={value}
+                nameDatas={nameDatas}
+                perDatas={perDatas}
+              ></NutrientStat>
             </Grid>
           </Grid>
         </TabPanel>
@@ -653,7 +676,11 @@ function Analysis() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
               {/* 변화기록 */}
-              <WeightStat value={value} data={analysisData} reco={recoData}></WeightStat>
+              <WeightStat
+                value={value}
+                data={analysisData}
+                reco={recoData}
+              ></WeightStat>
             </Grid>
             <Grid item xs={12} md={6}>
               {/* 플래닛지수 */}
@@ -677,12 +704,20 @@ function Analysis() {
             </Grid>
             <Grid item xs={12} md={12}>
               {/* 섭취량 */}
-              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
+              <FoodStat
+                value={value}
+                data={analysisData}
+                percent={percentData}
+              ></FoodStat>
             </Grid>
 
             <Grid item xs={12} md={12}>
               {/* 영양제 */}
-              <NutrientStat value={value} nameDatas={nameDatas} perDatas={perDatas}></NutrientStat>
+              <NutrientStat
+                value={value}
+                nameDatas={nameDatas}
+                perDatas={perDatas}
+              ></NutrientStat>
             </Grid>
           </Grid>
         </TabPanel>
@@ -691,7 +726,11 @@ function Analysis() {
           <Grid container spacing={4}>
             <Grid item xs={12} md={6}>
               {/* 변화기록 */}
-              <WeightStat value={value} data={analysisData} reco={recoData}></WeightStat>
+              <WeightStat
+                value={value}
+                data={analysisData}
+                reco={recoData}
+              ></WeightStat>
             </Grid>
             <Grid item xs={12} md={6}>
               {/* 플래닛지수 */}
@@ -715,12 +754,20 @@ function Analysis() {
             </Grid>
             <Grid item xs={12} md={12}>
               {/* 섭취량 */}
-              <FoodStat value={value} data={analysisData} percent={percentData}></FoodStat>
+              <FoodStat
+                value={value}
+                data={analysisData}
+                percent={percentData}
+              ></FoodStat>
             </Grid>
 
             <Grid item xs={12} md={12}>
               {/* 영양제 */}
-              <NutrientStat value={value} nameDatas={nameDatas} perDatas={perDatas}></NutrientStat>
+              <NutrientStat
+                value={value}
+                nameDatas={nameDatas}
+                perDatas={perDatas}
+              ></NutrientStat>
             </Grid>
           </Grid>
         </TabPanel>
