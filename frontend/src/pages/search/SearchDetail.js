@@ -66,6 +66,7 @@ function SearchDetail() {
               .replace(/1\)/gi, '\n').replace(/2\)/gi, '\n').replace(/3\)/gi, '\n').replace(/4\)/gi, '\n').replace(/5\)/gi, '\n')
               .replace(/1\./gi, '\n').replace(/2\./gi, '\n').replace(/3\./gi, '\n').replace(/4\./gi, '\n').replace(/5\./gi, '\n')
               .replace(/-/gi, '\n')
+              .replace(/\(가\)/gi, '\n').replace(/\(나\)/gi, '\n').replace(/\(다\)/gi, '\n').replace(/\(라\)/gi, '\n').replace(/\(마\)/gi, '\n')
 
   
   // const ingredients = []
@@ -118,13 +119,10 @@ function SearchDetail() {
               </div>
 
               <Grid container>
-                <Grid item xs={1}>
-          
-                </Grid>
                 {/* 영양제 이미지 */}
-                <grid item xs={8} style={text}>
+                <grid item xs={9} style={text}>
                   <Grid container>
-                    <Grid item xs={12} lg={2.5} style={{textAlign:'center'}}>
+                    <Grid item xs={12} md={2.5} style={{textAlign:'center'}}>
                       <CardNutrient pill={info}/>
                     </Grid>
                     <Grid item xs={0.5}>
