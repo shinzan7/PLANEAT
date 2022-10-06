@@ -23,6 +23,7 @@ function Instance() {
       console.log("request config 나왔슈")
       config.headers["accessToken"] = localStorage.getItem("accessToken")
       config.headers["refreshToken"] = localStorage.getItem("refreshToken")
+      console.log("config : " + config)
       return config
     },
     (error) => {
