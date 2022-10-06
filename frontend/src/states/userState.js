@@ -6,7 +6,7 @@ recoil userState
 @since 2022.09.28
 */
 
-import { atom, selector } from 'recoil';
+import { atom, selector } from "recoil";
 import { http } from "api/http";
 
 export const userState = atom({
@@ -16,12 +16,12 @@ export const userState = atom({
     // refreshToken: localStorage.getItem("refreshToken"),
     // accessTokenExpiration: localStorage.getItem("accessTokenExpiration"),
     // refreshTokenExpiration: localStorage.getItem("refreshTokenExpiration"),
-    userId: localStorage.getItem("userId"),
-    name: localStorage.getItem("name"),
+    // userId: localStorage.getItem("userId"),
+    // name: localStorage.getItem("name"),
     // 로컬에서 확인해보고 싶을 때, 특정 id와 name 넣어보기
 
-    userId: "38",
-    name: "조혜아니아니",
+    // userId: "38",
+    // name: "조혜아니아니",
 
     birthYear: localStorage.getItem("birthYear"),
     gender: localStorage.getItem("gender"),
@@ -36,11 +36,10 @@ export const userState = atom({
 });
 
 export const myTag = selector({
-  key:'tag',
-  get: async({get}) => {
+  key: "tag",
+  get: async ({ get }) => {
     // const response = await http.get(`/user-infos/${userId}`)
-    const response = await http.get('/user-infos/8')
-    return response.data.data
-  }
-})
-
+    const response = await http.get("/user-infos/8");
+    return response.data.data;
+  },
+});
