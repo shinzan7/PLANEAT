@@ -398,7 +398,7 @@ public class AnalysisHistoryService {
         );
         AnalysisHistoryPercentResponse response = new AnalysisHistoryPercentResponse();
 
-        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfterOrderByDateAsc(user, date);
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfterOrderByDateAscAnalysisTypeAsc(user, date);
         //기록이 없으면 빈값 넘겨주기
         if (historyList.size() == 0) {
             return response;
@@ -590,7 +590,7 @@ public class AnalysisHistoryService {
                 () -> new CustomException(CustomExceptionList.USER_NOT_FOUND_ERROR)
         );
 
-        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfterOrderByDateAsc(user, date);
+        List<AnalysisHistory> historyList = analysisHistoryRepository.findByUserAndDateAfterOrderByDateAscAnalysisTypeAsc(user, date);
         List<AnalysisHistoryResponse> responseList = new ArrayList<>(historyList.size());
 
         for (AnalysisHistory h : historyList) {
