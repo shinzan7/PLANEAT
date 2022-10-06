@@ -23,15 +23,12 @@ import { useRecoilValue } from "recoil";
 import { userState } from "states/userState";
 import { useRef } from "react";
 import { useEffect } from "react";
-
-import Button from "@mui/material/Button";
-import Tooltip, { tooltipClasses } from "@mui/material/Tooltip";
+import Tooltip from "@mui/material/Tooltip";
 import Typography from "@mui/material/Typography";
 import MealTypeModal from "components/modal/main/MealTypeModal";
 import PriorityHighIcon from "@mui/icons-material/PriorityHigh";
 
 import Chart from "react-apexcharts";
-import { Start } from "@mui/icons-material";
 export default function DailyMeal(props) {
   const userInfo = useRecoilValue(userState);
 
@@ -257,7 +254,81 @@ export default function DailyMeal(props) {
   }
 
   // 영양 상세정보 차트
-  function NutriDetailChart(props) {
+  function NutriDetailChart(props) { 
+    let series = [];
+
+    if (clickDateMeal.length != 0) { 
+      series = [{
+        data: [((props.real.sugar / props.rec.sugar) * 100).toFixed(1),
+          ((props.real.dietaryFiber / props.rec.dietaryFiber) * 100).toFixed(1),
+          ((props.real.calcium / props.rec.calcium) * 100).toFixed(1),
+          ((props.real.iron / props.rec.iron) * 100).toFixed(1),
+          ((props.real.zinc / props.rec.zinc) * 100).toFixed(1),
+          ((props.real.magnesium / props.rec.magnesium) * 100).toFixed(1),
+          ((props.real.vitaminC / props.rec.vitaminC) * 100).toFixed(1),
+          ((props.real.vitaminD / props.rec.vitaminD) * 100).toFixed(1),
+        ]
+      }];
+    } else {
+      series = [0, 0, 0, 0, 0, 0, 0, 0];
+    }
+
+    const options = {
+      colors: ["#9DA6F8"],
+      chart: {
+        type: "bar",
+        height: 350,
+      },
+      plotOptions: {
+        bar: {
+          borderRadius: 4,
+          horizontal: true,
+          barHeight: "50%",
+        },
+      },
+      dataLabels: {
+        enabled: true,
+        textAnchor: "start",
+        style: {
+          colors: ["#666666"],
+        },
+        formatter: function (val, opt) {
+          return val + "%";
+        },
+        offsetX: -10,
+      },
+      xaxis: {
+        categories: [
+          "당(g)",
+          "식이섬유(g)",
+          "칼슘(mg)",
+          "철(mg)",
+          "아연(mg)",
+          "마그네슘(mg)",
+          "비타민C(mg)",
+          "비타민D(mcg)",
+        ],
+        axisBorder: { show: false },
+        axisTicks: { show: false },
+        labels: { show: false },
+      },
+      legend: {
+        show: false,
+      },
+    };
+
+    return (
+      <div className="app">
+        <div id="chart">
+          <Chart options={options} series={series} type="bar" height={350} />
+        </div>
+      </div>
+    );
+  }
+
+
+
+  function NutriDetailChart1(props) {
     const series = [
       {
         name: "실제 섭취량",
