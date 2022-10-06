@@ -23,20 +23,10 @@ function Instance() {
       console.log("request config 나왔슈")
       config.headers["accessToken"] = localStorage.getItem("accessToken")
       config.headers["refreshToken"] = localStorage.getItem("refreshToken")
-      //console.log("config : " + JSON.stringify(config))
       return config
     },
     (error) => {
       console.log("request config 에러났슈")
-      const {
-        config,
-        response: { status },
-      } = error
-      const originalRequest = config
-      console.log("status : " + status)
-      console.log("config : " + JSON.stringify(config))
-      console.log("originalRequest._retry : " + originalRequest._retry)
-      console.log("===================================")
       return Promise.reject(error)
     }
   )
@@ -53,9 +43,13 @@ function Instance() {
         response: { status },
       } = error
       const originalRequest = config
+      console.log("=================================")
+      console.log(JSON.stringify(error))
+      console.log(error.response)
+      console.log("=================================")
       console.log("status : " + status)
-      console.log("config : " + JSON.stringify(config))
-      console.log("originalRequest._retry : " + originalRequest._retry)
+      console.log("config : " + config)
+      console.log("status : " + originalRequest._retry)
       if (status === 401 && !originalRequest._retry) {
         console.log("request 에서 토큰 요청 할거유")
         // token refresh 요청
