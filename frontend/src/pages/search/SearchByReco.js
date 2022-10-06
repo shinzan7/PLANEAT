@@ -12,6 +12,7 @@ import "./slick-theme.css";
 import "./Reco.css";
 import { Link } from "react-router-dom";
 import { http } from "api/http";
+import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
 
 function SearchByReco() {
   const name = localStorage.getItem("name");
@@ -19,22 +20,29 @@ function SearchByReco() {
   const [tag, setTag] = useState([]);
   const [info, setInfo] = useState([]);
   const [history, setHistory] = useState([]);
+  const [history2, setHistory2] = useState([]);
 
-  // const today = new Date()
-  // const year = today.getFullYear().toString()
-  // const tmpMonth = today.getMonth() + 1
-  // const month = tmpMonth + 1 < 10 ? "0" + tmpMonth : "" + tmpMonth
-  // const tmpDay = today.getDate()
-  // const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
-  // const userId = localStorage.getItem('userId')
+  function solution(arr) {
+    let answer = [],
+        sum = arr.reduce((acc, cur) => acc + cur, 0); // 수식, 시작값
+    answer = sum;
+    return answer;
+  }
 
-  // console.log('tag', tag)
-  // console.log('info', info)
-  // console.log('history', history)
+
+  const today = new Date()
+  const year = today.getFullYear().toString()
+  const tmpMonth = today.getMonth() + 1
+  const month = tmpMonth < 11 ? "0" + (tmpMonth-1) : "" + tmpMonth-1
+  const tmpDay = today.getDate()
+  const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
+  const userId = localStorage.getItem('userId')
+
+  console.log(year, month, day)
 
   useEffect(() => {
-    // http.get(`/user-infos/${userId}`)
-    http.get("/user-infos/8").then((response) => {
+    // http.get('user-infos/9').then((response) => {
+    http.get(`/user-infos/${userId}`).then((response) => {
       const data = response.data.data.categoriesList;
       const ran = Math.floor(Math.random() * (data.length + 1));
 
@@ -43,9 +51,9 @@ function SearchByReco() {
       });
       setTag(data);
     });
-
-    // http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`)
-    http.get("/analysis/percent?date=2022-09-26&userId=8").then((response) => {
+    
+    // 최근 한달 기록 기반으로 검색
+    http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`).then((response) => {
       const data2 = Object.entries(response.data.data);
       const data3 = [
         data2[10],
@@ -87,6 +95,7 @@ function SearchByReco() {
         setHistory(response.data.data);
       });
     });
+
   }, []);
 
   const settings = {
@@ -142,7 +151,8 @@ function SearchByReco() {
             {/* 유저 식단 기반 분석에서 부족한 영양소 성분 기반 추천 */}
             <p>
               &nbsp;&nbsp;PLANEAT이 <span style={bold}>{name}</span> 님에게
-              추천해요
+              추천해요 &nbsp;
+              <VolunteerActivismIcon />
             </p>
           </div>
           <div>
