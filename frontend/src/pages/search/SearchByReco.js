@@ -29,17 +29,16 @@ function SearchByReco() {
   }
 
 
-  // const today = new Date()
-  // const year = today.getFullYear().toString()
-  // const tmpMonth = today.getMonth() + 1
-  // const month = tmpMonth < 11 ? "0" + tmpMonth-1 : "" + tmpMonth-1
-  // const tmpDay = today.getDate()
-  // const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
-  // const userId = localStorage.getItem('userId')
+  const today = new Date()
+  const year = today.getFullYear().toString()
+  const tmpMonth = today.getMonth() + 1
+  const month = tmpMonth < 11 ? "0" + tmpMonth-1 : "" + tmpMonth-1
+  const tmpDay = today.getDate()
+  const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
+  const userId = localStorage.getItem('userId')
 
   useEffect(() => {
-    // http.get(`/user-infos/${userId}`)
-    http.get("/user-infos/8").then((response) => {
+    http.get(`/user-infos/${userId}`).then((response) => {
       const data = response.data.data.categoriesList;
       const ran = Math.floor(Math.random() * (data.length + 1));
 
@@ -50,8 +49,7 @@ function SearchByReco() {
     });
     
     // 최근 한달 기록 기반으로 검색
-    // http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`)
-    http.get("/analysis/percent?date=2022-09-26&userId=8").then((response) => {
+    http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`).then((response) => {
       const data2 = Object.entries(response.data.data);
       const data3 = [
         data2[10],
