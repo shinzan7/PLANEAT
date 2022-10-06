@@ -22,20 +22,6 @@ export default function IconMenu() {
           <ListItemButton
             style={{
               fontSize: "18px",
-              width: "100%",
-              padding: "30px",
-            }}
-            onClick={() => {
-              navigator("/search");
-            }}
-            id={location.pathname == "/search" ? "current" : null}
-          >
-            영양제 추천
-          </ListItemButton>
-          <Divider />
-          <ListItemButton
-            style={{
-              fontSize: "18px",
               height: "100%",
               padding: "30px",
             }}
@@ -59,6 +45,20 @@ export default function IconMenu() {
             id={location.pathname.includes("nutrient") ? "current" : null}
           >
             성분별 검색
+          </ListItemButton>
+          <Divider />
+          <ListItemButton
+            style={{
+              fontSize: "18px",
+              width: "100%",
+              padding: "30px",
+            }}
+            onClick={() => {
+              navigator("/search");
+            }}
+            id={location.pathname == "/search" ? "current" : null}
+          >
+            영양제 검색
           </ListItemButton>
         </List>
       </Paper>
