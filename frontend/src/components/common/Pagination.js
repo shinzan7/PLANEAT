@@ -52,7 +52,6 @@ function Pagination({ total, limit, page, setPage }) {
   );
 }
 
-// (Math.floor((Math.ceil(total/limit)-1)/10)*10)+1 <= page <= Math.ceil(total / limit)
 const Nav = styled.nav`
   display: flex;
   justify-content: center;

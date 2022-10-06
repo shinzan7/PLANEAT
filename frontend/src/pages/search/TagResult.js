@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import { http } from "api/http";
 import Pagination from "components/common/Pagination";
 import img from "assets/capsules.png";
-// import Pagination from 'react-js-pagination'
 
 function TagResult() {
   const tagname = useParams();
@@ -85,14 +84,6 @@ function TagResult() {
             {/* 태그 검색 결과  */}
             <Grid item xs={10}>
               <Grid container justifyContent="center">
-                {/* {info.map(function(data, i) { 
-                      return (
-                      <Link to={'/searchdetail/'+info[i].nutrientId} style={{textDecoration:'none'}}>
-                        <CardNutrient key={i} pill={data} />
-                      </Link>
-                      )
-                    })}       */}
-
                 {info.slice(offset, offset + limit).map(function (data, i) {
                   return (
                     <Link

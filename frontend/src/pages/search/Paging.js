@@ -1,3 +1,9 @@
+/*
+페이지네이션 적용안 // 폐기
+@author 전상현
+@since 2022.10.03
+*/
+
 import React from "react";
 import './Paging.css';
 import Pagination from "react-js-pagination";

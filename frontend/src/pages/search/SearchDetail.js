@@ -17,6 +17,7 @@ import ChipBlue from "components/common/ChipBlue";
 import ChipOrange from "components/common/ChipOrange";
 import CardNutrient from "components/common/CardNutrient";
 import './Detail.css'
+import { indigo } from "@mui/material/colors";
 
 function SearchDetail() {
 
@@ -62,11 +63,35 @@ function SearchDetail() {
 
   const des = info.description.replace(/\[/gi, '').replace(/\]/gi, '').replace(/\'/gi, '\n').replace(/,/gi, ' ')
               .replace(/①/gi, '\n').replace(/②/gi, '\n').replace(/③/gi, '\n').replace(/④/gi, '\n').replace(/⑤/gi, '\n')
-  // console.log(des)
+              .replace(/1\)/gi, '\n').replace(/2\)/gi, '\n').replace(/3\)/gi, '\n').replace(/4\)/gi, '\n').replace(/5\)/gi, '\n')
+              .replace(/1\./gi, '\n').replace(/2\./gi, '\n').replace(/3\./gi, '\n').replace(/4\./gi, '\n').replace(/5\./gi, '\n')
+
+  
+  // const ingredients = []
+  // for (var k=0; k<info.nutriIngredientList.length; k++) {
+  //   ingredients.push(info.nutriIngredientList[k].ingredientName)
+  // }
+
+
+  // const ingredientNames = ['단백질', '식이섬유', '칼슘', '철', '마그네슘', '칼륨', '아연', '구리', '망간',
+  //                         '셀레늄', '비타민A', '비타민D', '비타민B1', '비타민B2', '비타민B6', '엽산',
+  //                         '비타민B12', '비타민C', '오메가6', '오메가3']
+  // const ingredientNumbers= [2, 6, 7, 8, 9, 11, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 27, 28]
+  // const nums = []
+
+  // for (var x=0; x<ingredientNames.length; x++) {
+  //   for (var y=0; y<ingredients.length; y++) {
+  //     if (ingredients[y] === ingredientNames[x]) {
+  //       nums.push(ingredientNumbers[x])
+  //     }
+  //   }
+  // }
+  
+  
+
 
   return (
       <div style={section}>
-        <Header />
           <Grid container> 
             {/* 좌측 사이드바 */}
             <Grid item xs={1.5} style={section1}>
@@ -98,30 +123,24 @@ function SearchDetail() {
                 {/* 영양제 이미지 */}
                 <grid item xs={8} style={text}>
                   <Grid container>
-                    <Grid item xs={2.5} style={{textAlign:'center'}}>
-                      {/* <img src={info.imagePath} alt='' style={{ width:'15vw', height: '15vh'}}/>
-                      <br></br>
-                      <br></br>
-                      <p>{info.company}</p>
-                      <p style={bold}>{info.nutrientName} </p>  */}
+                    <Grid item xs={12} lg={2.5} style={{textAlign:'center'}}>
                       <CardNutrient pill={info}/>
                     </Grid>
-                    <Grid item xs={0.2}>
+                    <Grid item xs={0.5}>
 
                     </Grid>
-                    <Grid item xs={7.3}>
-                      <p>주요기능</p>
+                    <Grid item xs={7}>
+                      <p style={{ fontWeight:'bold', fontSize:'20px'}}>주요기능</p>
                       {tags.map((data, i) => (
                         <Link to={'/tagresult/'+ data} style={{textDecoration:'none'}}>
                           <ChipOrange key={i} label={data} style={{marginRight:'5px', marginBottom:'5px'}}/>
                         </Link>
                       ))}
-                      <p>성분</p>
+                      <p style={{ fontWeight:'bold', fontSize:'20px'}}>성분</p>
                       {info.nutriIngredientList.map((data, i) => (
-                          <ChipBlue key={i} label={data.ingredientName} style={{marginRight:'5px', marginBottom:'5px'}}/> 
+                        <ChipBlue key={i} label={data.ingredientName} style={{marginRight:'5px', marginBottom:'5px'}}/>               
                       ))}
-                      <p>상세정보</p>
-                      {/* <p>{info.description}</p> */}
+                      <p style={{ fontWeight:'bold', fontSize:'20px'}}>상세정보</p>
                       <p className="description">{des}</p>
                     </Grid>
                     <Grid item xs={2}>

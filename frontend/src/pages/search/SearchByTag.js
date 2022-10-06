@@ -144,11 +144,6 @@ function SearchByTag() {
     },
   ];
 
-  const section = { marginTop: "80px" };
-  const section1 = { textAlign: "center" };
-  const section2 = { marginTop: "5vh", textAlign: "center" };
-  const section3 = { marginTop: "10vh" };
-
   return (
     <div id="wrap">
       <Grid container>
