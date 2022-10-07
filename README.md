@@ -4,7 +4,7 @@
 
 ## 👉 [PLANEAT 체험해보기](https://j7a701.p.ssafy.io/)
 
-## 📹 시연 및 소개 영상 보기 (업로드 해야함) : [UCC 링크](https://www.youtube.com/)
+## 📹 시연 및 소개 영상 보기 : [UCC 링크](/uploads/d4d190081eb856476779c0370aa6136c/PLANEAT_UCC.mp4)
 
 </br>
 
@@ -29,7 +29,7 @@
 ## 🔎 PLANEAT - 개요
 
 - ### **쉽고 간편하게, PLAN & EAT!**
-  - PLANEAT은 ~?~?~? 자세한 소개 적을 예정.  
+  - PLANEAT은 식단 기록을 통한 부족한 영양분 분석 및 피드백 서비스 & 건강 고민에 적합한 영양제 추천 서비스 입니다.  
     PLANEAT은 **식습관 개선 / 건강 관리**에 관심 있는 사람들을 위한 식사 기록 분석 & 영양제 추천 웹 서비스입니다.
 
 </br>
@@ -173,12 +173,14 @@ planeat-front
   - 업무의 할당량을 정하여 Story Point를 설정하고, In-Progress -> Done 순으로 작업
 - 회의
   - 매일 아침마다 Webex Scrum 진행, 전날 진도량과 당일 해야할 목표량 설정
-  -
 - Notion
   - 회의가 있을때마다 회의록 기록
   - 개발 중 참고할만 하거나, 도움이 될 문서를 해당 기술 분야에 공유
   - 컨벤션 정리
-  - 스토리보드, 스퀀스다이어그램, 기능명세서 등 모두가 공유해야 하는 문서 관리
+  - 스토리보드, ERD, 기능명세서 등 모두가 공유해야 하는 문서 관리
+- GatherTown
+  - 화면 공유를 통해 함께 버그 해결
+  - 상태 메세지를 통해 현재 하는 일 공유
 
 ## 👨‍👩‍👧‍👦 팀원 역할 분배
 
@@ -190,8 +192,8 @@ planeat-front
 - 팀원 : [박윤하](https://github.com/0atx)
 - 팀원 : [여예원](https://github.com/)
 - 팀원 : [전상현](https://github.com/)
-- 팀원 : [조혜안](https://github.com/)
-- 팀원 : [한하평](https://github.com/)
+- 팀원 : [조혜안](https://github.com/chohyean)
+- 팀원 : [한하평](https://github.com/gks3075)
 
 ## 📋 프로젝트 산출물
 
@@ -207,6 +209,7 @@ planeat-front
 
 ## 🗃️ 프로젝트 결과물
 
-- [포팅매뉴얼]()
-- [중간발표자료]()
-- [최종발표자료]()
+- [포팅 매뉴얼](/uploads/02e7df52d51d010f9c45ea02cab37657/PLANEAT_포팅매뉴얼.pdf)
+- [시연 시나리오](/uploads/24d2afd19d26ad7b5d1ee72a46919e48/PLANEAT_시연_시나리오.pdf)
+- [중간 발표자료](/uploads/e99e1d9fc93b5096d727d9bc51309cc2/PLANEAT_중간발표.pdf)
+- [최종 발표자료](/uploads/f4903ce4cae0e67e79cd496d0ca3ea76/PLANEAT_최종_발표.pdf)
