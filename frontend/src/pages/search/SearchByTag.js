@@ -11,7 +11,6 @@ import SideBar from "components/common/SideBar";
 
 function SearchByTag() {
   const userTags = [
-    // 유저 카테고리 태그 id: 1 2 4 5 6 7 9 11 14 15 20 25 26 : 데이터 없음
     {
       id: "1",
       src: "assets/concerns/간건강.png",

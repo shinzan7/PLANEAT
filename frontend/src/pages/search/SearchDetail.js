@@ -6,7 +6,6 @@
 
 import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import Header from "components/nav/Header";
 import { Grid, Typography } from "@mui/material";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
@@ -15,7 +14,6 @@ import { userState } from "states/userState";
 import { useRecoilValue } from "recoil";
 import ChipBlue from "components/common/ChipBlue";
 import ChipOrange from "components/common/ChipOrange";
-import CardNutrient from "components/common/CardNutrient";
 import "./Detail.css";
 import { useRef } from "react";
 import BtnMain from "components/common/BtnMain";
@@ -70,9 +68,7 @@ function SimpleWordcloud(props) {
 
 function SearchDetail() {
   const { nutrientId } = useParams();
-  // console.log('params', nutrientId)
   const userInfo = useRecoilValue(userState);
-  // console.log(userInfo)
 
 
   const [info, setInfo] = useState({
@@ -298,7 +294,6 @@ function SearchDetail() {
           </Grid>
           <Grid
             container
-            // justifyContent="center"
             xs={10}
             style={{
               boxShadow: "1px 1px 6px #e6e8fd",

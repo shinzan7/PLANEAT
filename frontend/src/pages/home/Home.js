@@ -112,14 +112,6 @@ function Home() {
                   style={{ width: "300px" }}
                 />
               </div>
-
-              {/* <img
-              src={longlogo}
-              // data-aos="fade-right"
-              // data-aos-duration="3000"
-              alt=""
-              style={logo}
-            /> */}
             </Grid>
             <Grid item xs={6} sx={{ marginTop: "35vh", textAlign: "center" }}>
               <div
