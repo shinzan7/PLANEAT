@@ -4,7 +4,7 @@
 
 ## 👉 [PLANEAT 체험해보기](https://j7a701.p.ssafy.io/)
 
-## 📹 시연 및 소개 영상 보기 : [UCC 링크](https://drive.google.com/file/d/1W369R3rZRRMloHpSXgpSE9cFgpcQ1s_l/view?usp=sharing)
+## 📹 시연 및 소개 영상 보기 : [UCC 링크](/uploads/d4d190081eb856476779c0370aa6136c/PLANEAT_UCC.mp4)
 
 </br>
 
@@ -52,8 +52,8 @@
   - 설명~
     <br/>
 - ### 영양제 추천
-  - 설명~
-  - 설명~
+  - 유저가 최근 한 달간 권장 섭취량 대비 가장 부족하게 섭취한 영양소를 보충할 수 있는 영양제를 추천합니다.
+  - 유저가 관심을 가지고 있는 건강 고민에 도움이 되는 영양제를 추천합니다.
     <br/>
 
   </br>
@@ -84,6 +84,9 @@
 - Node.Js 16.17.1 LTS
 - React 18.2.0
 - Material UI 5.10.8
+- Styled-components 5.3.5
+- React-apexcharts 1.4.0
+- React-tagcloud 2.3.1
 
 
 **CI/CD**
@@ -190,7 +193,7 @@ planeat-front
 - 팀장 : [신지한](https://github.com/shinzan7)
 - 팀원 : [박윤하](https://github.com/0atx)
 - 팀원 : [여예원](https://github.com/)
-- 팀원 : [전상현](https://github.com/fridayhs)
+- 팀원 : [전상현](https://github.com/)
 - 팀원 : [조혜안](https://github.com/chohyean)
 - 팀원 : [한하평](https://github.com/gks3075)
 
