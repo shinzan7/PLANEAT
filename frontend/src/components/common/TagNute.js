@@ -1,55 +1,36 @@
 /*
 영양제 성분태그
+속성: tag(성분명)
 @author 전상현
 @since 2022.09.22
 */
 
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TagMain.css";
 
-const TagNute = ({ tag, clickedItems, clickedItemHandler, src }) => {
-  // tag의 클래스를 동적으로 바인딩할 변수
-  const [type, setType] = useState(null);
+const TagNute = ({ tag, index }) => {
+  const navigate = useNavigate();
 
   const onCheck = ({ target }) => {
-    // console.log("=====onCheck=====");
-    // console.log(target.className);
-
-    clickedItemHandler(target.className);
-
-    // css 변경을 위한 type 변경
-    // 이미 클릭된 태그인 경우 id에 삭제
-    if (clickedItems.includes(target.className)) {
-      setType("");
-    }
-    // 클릭 안된 태그인 경우
-    else {
-      setType("clicked");
-    }
+    console.log("=====onCheck=====");
+    console.log(target.id); // 영양성분의 아이디 (1,2,3, ... )
   };
 
   return (
     <>
       <div
-        id={type}
-        className={tag}
-        style={{
-          width: "130px",
-          height: "130px",
-          textAlign: "center",
-          borderRadius: "40px",
-          backgroundColor: "#EAEBF8",
-          boxShadow: "1px 3px 5px rgb(209, 215, 216)",
-          margin: "15px",
-        }}
+        id={index}
+        className="container"
         onClick={(e) => {
           onCheck(e);
         }}
       >
-        <div className={tag} style={{ fontWeight: "bold", fontSize: "15px"}}>
-          <br></br>
-          <br></br>
-          <br></br>
+        <div
+          id={index}
+          className="tag"
+          style={{ fontWeight: "bold", fontSize: "15px" }}
+        >
           {tag}
         </div>
       </div>

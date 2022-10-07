@@ -1,6 +1,7 @@
 import React from "react";
 import Router from "./Router";
 import "./App.css";
+import { RecoilRoot } from 'recoil'; 
 
 import { createTheme, ThemeProvider } from "@mui/material";
 
@@ -16,16 +17,21 @@ const theme = createTheme({
       main: "#F7BF87",
     },
     primary: {
-      main: "#9DA6F8",
+      main: "#E6E8FD",
+    },
+    secondary: {
+      main: "#F7BF87",
     },
   },
 });
 
 function App() {
   return (
-    <ThemeProvider theme={theme}>
-      <Router />
-    </ThemeProvider>
+    <RecoilRoot>
+      <ThemeProvider theme={theme}>
+        <Router />
+      </ThemeProvider>
+    </RecoilRoot>
   );
 }
 

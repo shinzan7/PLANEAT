@@ -2,3 +2,26 @@
     background: linear-gradient(#EAEBF8, #9DA6F8) !important;
     color: white;
 }
+
+/* 성분 검색 태그 css */
+.container {
+    width: 130px;
+    height: 130px;
+    border-radius: 40px;
+    background-color: #FDEDDE;
+    box-shadow: 1px 3px 5px rgb(209, 215, 216);
+    margin: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.container:hover {
+    background: #FDEDDE;
+    transform: scale(1.1);
+}
+
+/* todo: 체크하기 */
+.container1:hover {
+    transform: scale(1.1);
+}
