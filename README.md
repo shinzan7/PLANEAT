@@ -4,7 +4,7 @@
 
 ## 👉 [PLANEAT 체험해보기](https://j7a701.p.ssafy.io/)
 
-## 📹 시연 및 소개 영상 보기 : [UCC 링크](/uploads/d4d190081eb856476779c0370aa6136c/PLANEAT_UCC.mp4)
+## 📹 시연 및 소개 영상 보기 : [UCC 링크](https://drive.google.com/file/d/1W369R3rZRRMloHpSXgpSE9cFgpcQ1s_l/view?usp=sharing)
 
 </br>
 
@@ -190,7 +190,7 @@ planeat-front
 - 팀장 : [신지한](https://github.com/shinzan7)
 - 팀원 : [박윤하](https://github.com/0atx)
 - 팀원 : [여예원](https://github.com/)
-- 팀원 : [전상현](https://github.com/)
+- 팀원 : [전상현](https://github.com/fridayhs)
 - 팀원 : [조혜안](https://github.com/chohyean)
 - 팀원 : [한하평](https://github.com/gks3075)
 
