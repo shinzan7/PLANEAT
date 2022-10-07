@@ -313,11 +313,6 @@ function SearchByNutrient() {
     // },
   ];
 
-  const section = { marginTop: "80px" };
-  const section1 = { marginTop: "25vh", textAlign: "center" };
-  const section2 = { marginTop: "5vh", textAlign: "center" };
-  const section3 = { marginTop: "10vh" };
-
   return (
     <div id="wrap">
       <Grid container>

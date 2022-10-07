@@ -532,7 +532,7 @@ function Welcome() {
                 ml: 1,
               }}
             >
-              <StyledLink to="/main">PLANEAT 시작하기</StyledLink>
+              <StyledLink to="/analysis">PLANEAT 시작하기</StyledLink>
             </BtnMain>
           </DialogActions>
         </Grid>

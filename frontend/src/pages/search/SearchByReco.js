@@ -41,7 +41,6 @@ function SearchByReco() {
   console.log(year, month, day)
 
   useEffect(() => {
-    // http.get('user-infos/9').then((response) => {
     http.get(`/user-infos/${userId}`).then((response) => {
       const data = response.data.data.categoriesList;
       const ran = Math.floor(Math.random() * (data.length + 1));
