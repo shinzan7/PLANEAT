@@ -78,7 +78,7 @@ export default function TimelineStat({
         borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
-        height: 480,
+        height: 500,
         overflow: "auto",
         scrollbarWidth: "thin",
         "&::-webkit-scrollbar": {

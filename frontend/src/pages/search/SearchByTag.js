@@ -186,7 +186,7 @@ function SearchByTag() {
         {/* 태그 */}
         <Grid item xs={9} style={{ marginTop: "30px", marginBottom: "50px" }}>
           <Grid container justifyContent="center">
-            <Grid item xs={9}>
+            <Grid item xs={10}>
               <Grid container justifyContent="center">
                 {userTags.map((data, i) => (
                   <Link

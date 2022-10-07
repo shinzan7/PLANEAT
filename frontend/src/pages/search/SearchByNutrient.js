@@ -314,7 +314,7 @@ function SearchByNutrient() {
   ];
 
   return (
-    <div id="wrap">
+    <div id="wrap" style={{ height: "900px" }}>
       <Grid container>
         {/* 상단 문구 */}
         <Grid

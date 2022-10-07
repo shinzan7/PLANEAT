@@ -196,7 +196,7 @@ function Analysis() {
     for (let i = 0; i < arr5.length; i++) {
       let foods5 = [...arr5[i].intakeFoodsList];
       for (let j = 0; j < foods5.length; j++) {
-        total4.push(foods5[j].name);
+        total5.push(foods5[j].name);
       }
     }
     setList5(total5);
