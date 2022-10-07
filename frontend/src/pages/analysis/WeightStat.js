@@ -104,7 +104,13 @@ function ShowWeightIntakeCharts({ date, realIntake, recoIntake }) {
     <div className="app">
       <div className="row">
         <div className="mixed-chart">
-          <Chart options={options} series={series} type="line" width={500} height={350} />
+          <Chart
+            options={options}
+            series={series}
+            type="line"
+            width={500}
+            height={350}
+          />
         </div>
       </div>
     </div>
@@ -163,7 +169,7 @@ export default function WeightStat({ value, data, reco }) {
         borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
-        height: "470px",
+        height: 500,
       }}
     >
       {/* 최근 7일이면 0, 최근 30일이면 1, 전체 기간이면 2 */}
