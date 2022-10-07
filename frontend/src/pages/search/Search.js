@@ -4,52 +4,58 @@
 @since 2022.09.19
 */
 import React from "react";
-import Header from 'components/nav/Header';
-import { Grid } from '@mui/material';
+import { Grid, Typography } from "@mui/material";
 import SearchByReco from "../../pages/search/SearchByReco";
 import SideBar from "components/common/SideBar";
 import SearchBar from "components/common/SearchBar";
 
-const section = { marginTop:'80px' }
-const section1 = { marginTop:'25vh', textAlign:'center'}
-const section2 = { marginTop:'5vh', textAlign:'center'}
-const section3 = { marginTop:'10vh'}
+const section = { marginTop: "80px" };
+const section1 = { marginTop: "25vh", textAlign: "center" };
+const section2 = { marginTop: "5vh", textAlign: "center" };
+const section3 = { marginTop: "5vh" };
 
 function Search() {
-
-    return (
-        <div style={ section }>
-          <Header />
-          <Grid container> 
-            <Grid item xs={1.5} style={section1}>
-              <SideBar />
-            </Grid>
-
-            <Grid item xs={10.5} style={section2}>
-              <Grid container>
-                <Grid item xs={3}>
-
-                </Grid>
-                
-                <Grid item xs={4}>
-                  <SearchBar />
-      
-                </Grid>
-                <Grid item xs={5}>
-                  
-                </Grid>
-              </Grid>
-              
-              <div style={section3}>
-                
-              </div>
-              <SearchByReco />
-
-            </Grid>
+  return (
+    <div style={section}>
+      <Grid container>
+        {/* 상단 문구 */}
+        <Grid
+          container
+          justifyContent="center"
+          alignItems="center"
+          textAlign="center"
+          xs={12}
+          style={{
+            borderRadius: "25px",
+            margin: "20px",
+            padding: "20px",
+          }}
+        >
+          {/* 문구 */}
+          <Grid item xs={12}>
+            <Typography
+              variant="h5"
+              style={{ marginBottom: "10px", fontWeight: "bold" }}
+            >
+              제품명으로 검색하세요!
+            </Typography>
           </Grid>
-        </div>
-        
-    );
+          {/* 검색창 */}
+          <Grid item xs={4}>
+            <SearchBar />
+          </Grid>
+        </Grid>
+        {/* 좌측 사이드바 */}
+        <Grid item xs={2}>
+          <SideBar />
+        </Grid>
+        {/* 검색결과 */}
+        <Grid item xs={10}>
+          <SearchByReco />
+        </Grid>
+      </Grid>
+    </div>
+  );
 }
 
 export default Search;

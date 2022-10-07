@@ -20,14 +20,27 @@
   }
 }
 
+.floating { 
+  animation-name: floating;
+  animation-duration: 2s;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in-out;
+  margin-left: 30px;
+  margin-top: 5px;
+}
 
+@keyframes floating {
+  0% { transform: translate(0,  0px); }
+  50%  { transform: translate(0, 15px); }
+  100%   { transform: translate(0, -0px); }   
+}
 
 
 .login{
   position: relative;
   padding: 5%;
   margin-top: 5%;
-  color: #03e9f4;
+ 
   text-decoration: none;
   transition: 0.5s;
   letter-spacing: 4px;
@@ -122,9 +135,9 @@
 
 
 .section2 {
-  margin-top: 20%;
+  margin-top: 11%;
   text-align: center;
-  font-size: 3.3vw;
+  
 }
 
 .cardsection {
@@ -134,20 +147,20 @@
 .p {
   font-size: 1.5vw;
   color: white;
-  position: relative;
-  top: 40%;
+  /* position: relative; */
+
 }
 
 .section3 {
-  margin-top: 20%;
-  font-size: 1.5vw;
+  margin-top: 10%;
+  
   text-align: center;
   
 }
 
 .section4 {
-  margin-top: 20%;
-  font-size: 1.5vw;
+  margin-top: 10%;
+  
   text-align: center; 
 
 }

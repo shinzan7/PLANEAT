@@ -2,13 +2,13 @@
 .slick-slider
 {
     position: relative;
-    background-color: #F5F5F5;
+    background-color: white;
 
     display: block;
     box-sizing: border-box;
 
     -webkit-user-select: none;
-       -moz-user-select: none;
+        -moz-user-select: none;
         -ms-user-select: none;
             user-select: none;
 
@@ -18,6 +18,7 @@
         touch-action: pan-y;
     -webkit-tap-highlight-color: transparent;
 }
+
 
 .slick-list
 {
@@ -90,7 +91,7 @@
 .slick-slide img
 {
     display: block;
-    margin-left: 30%;
+    margin-left: 20%;
 }
 .slick-slide.slick-loading img
 {
@@ -117,5 +118,6 @@
     border: 1px solid transparent;
 }
 .slick-arrow.slick-hidden {
-    display: none;
+    display: block;
 }
+

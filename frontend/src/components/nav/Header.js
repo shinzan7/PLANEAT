@@ -7,6 +7,8 @@
 import * as React from "react";
 import MenuIcon from "@mui/icons-material/Menu";
 import SettingsIcon from "@mui/icons-material/Settings";
+import { Navigate, useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 import {
   AppBar,
   Box,
@@ -20,10 +22,23 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import longlogo from "assets/longlogo.png";
+import AccountCircleRoundedIcon from '@mui/icons-material/AccountCircleRounded';
 
-const pages = ["식사 기록", "영양제 검색", "내 영양분석"];
+const pages = ["식사 기록", "영양제 검색", "내 영양분석", "MY"];
 
 const ResponsiveAppBar = () => {
+  const location = useLocation();
+
+  // const mounted = useRef(false);
+  // useEffect(() => {
+  //   if (!mounted.current) {
+  //     mounted.current = true;
+  //   } else {
+  //   console.log(location.pathname);
+  //   }
+  // }, [location.pathname]);
+
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -44,18 +59,10 @@ const ResponsiveAppBar = () => {
 
   const StyledLink = styled(Link)`
     text-decoration: none;
-
-    color: black;
+    font-weight: ${(props) => (props.current ? "bold" : " ")};
+    color: ${(props) => (props.current ? "#9da6f8" : "black")};
 
     &:hover {
-      font-weight: bold;
-      color: #9da6f8;
-    }
-    &:focus {
-      font-weight: bold;
-      color: #9da6f8;
-    }
-    &:active {
       font-weight: bold;
       color: #9da6f8;
     }
@@ -76,7 +83,7 @@ const ResponsiveAppBar = () => {
           <StyledLink to="/main">
             <Box
               component="img"
-              src="assets/longlogo.png"
+              src={longlogo}
               sx={{ display: { xs: "none", md: "flex" }, width: "200px" }}
             ></Box>
           </StyledLink>
@@ -113,9 +120,15 @@ const ResponsiveAppBar = () => {
               {pages.map((page) => (
                 <MenuItem key={page} onClick={handleCloseNavMenu}>
                   <Typography textAlign="center">
-                    {page == "식사 기록" && <StyledLink to="/main">{page}</StyledLink>}
-                    {page == "영양제 검색" && <StyledLink to="/search">{page}</StyledLink>}
-                    {page == "내 영양분석" && <StyledLink to="/analysis">{page}</StyledLink>}
+                    {page == "식사 기록" && (
+                      <StyledLink to="/main">{page}</StyledLink>
+                    )}
+                    {page == "영양제 검색" && (
+                      <StyledLink to="/searchtag">{page}</StyledLink>
+                    )}
+                    {page == "내 영양분석" && (
+                      <StyledLink to="/analysis">{page}</StyledLink>
+                    )}
                   </Typography>
                 </MenuItem>
               ))}
@@ -140,24 +153,64 @@ const ResponsiveAppBar = () => {
             PLANEAT
           </Typography>
           {/* 중앙 메뉴 영역 (기본 사이즈) */}
-          <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" }, ml: "200px" }}>
+          <Box
+            sx={{
+              flexGrow: 1,
+              display: { xs: "none", md: "flex" },
+              ml: "200px",
+            }}
+          >
             {pages.map((page) => (
-              <Button
+              <Typography
                 key={page}
                 onClick={handleCloseNavMenu}
                 sx={{ my: 2, ml: "10%", color: "black", display: "block" }}
                 color="inherit"
               >
-                {page == "식사 기록" && <StyledLink to="/main">{page}</StyledLink>}
-                {page == "영양제 검색" && <StyledLink to="/search">{page}</StyledLink>}
-                {page == "내 영양분석" && <StyledLink to="/analysis">{page}</StyledLink>}
-              </Button>
+                {page == "식사 기록" && (
+                  <StyledLink to="/main" current={location.pathname == "/main"}>
+                    {page}
+                  </StyledLink>
+                )}
+                {page == "영양제 검색" && (
+                  <StyledLink
+                    to="/searchtag"
+                    current={
+                      location.pathname == "/search" ||
+                      location.pathname == "/searchtag" ||
+                      location.pathname == "/searchnutrient" ||
+                      location.pathname.includes("/searchdetail") ||
+                      location.pathname.includes("/tagresult") ||
+                      location.pathname.includes("/result") ||
+                      location.pathname.includes("/nutrientresult")
+                    }
+                  >
+                    {page}
+                  </StyledLink>
+                )}
+                {page == "내 영양분석" && (
+                  <StyledLink
+                    to="/analysis"
+                    current={location.pathname == "/analysis"}
+                  >
+                    {page}
+                  </StyledLink>
+                )}
+                {page == "MY" && (
+                  <StyledLink
+                    to="/myPage"
+                    current={location.pathname == "/myPage"}
+                  >
+                    {page}
+                  </StyledLink>
+                )}
+              </Typography>
             ))}
           </Box>
           {/* 우측 아이콘 영역(기본 사이즈) */}
           <Box sx={{ flexGrow: 0 }}>
             <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-              <SettingsIcon />
+              <AccountCircleRoundedIcon />
             </IconButton>
             <Menu
               sx={{ mt: "45px" }}
@@ -178,22 +231,12 @@ const ResponsiveAppBar = () => {
             >
               {/* 우측 아이콘 클릭시 나오는 메뉴 */}
               <MenuItem onClick={handleCloseUserMenu}>
-                <StyledLink to="/mypage">
-                  <Typography
-                    textAlign="center"
-                    onClick={() => {
-                      console.log("마이페이지");
-                    }}
-                  >
-                    마이페이지
-                  </Typography>
-                </StyledLink>
-              </MenuItem>
-              <MenuItem onClick={handleCloseUserMenu}>
                 <Typography
                   textAlign="center"
                   onClick={() => {
-                    console.log("마이페이지");
+                    localStorage.clear();
+                    window.location.replace("/");
+                    console.log("로그아웃");
                   }}
                 >
                   로그아웃
