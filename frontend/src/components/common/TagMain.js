@@ -14,13 +14,10 @@ const TagMain = ({ tag, clickedItems, clickedItemHandler, src, tagid }) => {
   const [type, setType] = useState(null);
 
   const onCheck = ({ target }) => {
-    // console.log("=====onCheck=====");
-    // console.log(target.className);
 
     clickedItemHandler(target.className);
 
     // css 변경을 위한 type 변경
-
     // 이미 클릭된 태그인 경우 id에 삭제
     if (clickedItems.includes(target.className)) {
       setType("");
@@ -36,12 +33,6 @@ const TagMain = ({ tag, clickedItems, clickedItemHandler, src, tagid }) => {
     }
   };
 
-  // const StyledDiv = styled.div`
-  //   &:hover {
-  //     transform: scale(1.1);
-  //   }
-  // `;
-  // todo: 체크하기
   return (
     <div className="container1">
       <div

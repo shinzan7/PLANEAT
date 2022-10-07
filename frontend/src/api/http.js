@@ -20,13 +20,11 @@ function Instance() {
   // request insterceptor 요청 전 헤더에 토큰 등록
   instance.interceptors.request.use(
     (config) => {
-      console.log("request config 나왔슈")
       config.headers["accessToken"] = localStorage.getItem("accessToken")
       config.headers["refreshToken"] = localStorage.getItem("refreshToken")
       return config
     },
     (error) => {
-      console.log("request config 에러났슈")
       return Promise.reject(error)
     }
   )
@@ -43,7 +41,6 @@ function Instance() {
       const originalRequest = config
 
       if (status === 500 && originalRequest._retry == undefined) {
-        console.log("request 에서 토큰 요청 할거유")
         // token refresh 요청
 
         const { data } = await axios.get(
@@ -54,7 +51,6 @@ function Instance() {
             },
           }
         )
-        console.log("토큰 요청 했슈")
         // 새로운 토큰 저장
         const {
           accessToken: newAccessToken,
@@ -71,7 +67,6 @@ function Instance() {
         // 401로 요청 실패했던 요청 새로운 accessToken으로 재요청
         return axios(originalRequest)
       } else if (status === 403) {
-        // console.log("권한 없음")
         window.location.replace("/")
       }
       return Promise.reject(error)
