@@ -81,11 +81,10 @@
 **Frontend - React**
 
 - Visual Studio Code IDE
-- Node.Js 16.16.0 LTS
-- Vue 2.7.7
-- Vuetify 2.6.7
-- Vuex 3.6.2
-- OpenVidu 2.22.0
+- Node.Js 16.17.1 LTS
+- React 18.2.0
+- Material UI 5.10.8
+
 
 **CI/CD**
 
