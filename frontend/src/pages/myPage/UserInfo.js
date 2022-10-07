@@ -29,7 +29,8 @@ import { useRecoilState } from "recoil";
 
 export default function UserInfo() {
   const [userInfo, setUserInfo] = useRecoilState(userState);
-  const [userRecIntakeInfo, setUserRecIntakeInfo] = useRecoilState(userRecIntake);
+  const [userRecIntakeInfo, setUserRecIntakeInfo] =
+    useRecoilState(userRecIntake);
 
   const [name, setName] = useState("");
   const [gender, setGender] = useState(""); // 성별
@@ -121,7 +122,8 @@ export default function UserInfo() {
       let score =
         622 -
         9.53 * parseFloat(age) +
-        parseFloat(activeAmount) * (15.91 * parseFloat(weight) + 539.6 * parseFloat(height) * 0.01);
+        parseFloat(activeAmount) *
+          (15.91 * parseFloat(weight) + 539.6 * parseFloat(height) * 0.01);
       setRecoIntake(score.toFixed(1));
     }
     // 여자일 때
@@ -129,7 +131,8 @@ export default function UserInfo() {
       let score =
         354 -
         6.91 * parseFloat(age) +
-        parseFloat(activeAmount) * (9.36 * parseFloat(weight) + 726 * parseFloat(height) * 0.01);
+        parseFloat(activeAmount) *
+          (9.36 * parseFloat(weight) + 726 * parseFloat(height) * 0.01);
       setRecoIntake(score.toFixed(1));
     }
   }
@@ -289,7 +292,7 @@ export default function UserInfo() {
   };
 
   return (
-    <Container component="main" sx={{ mb: 4, width: "650px", height: "700px" }}>
+    <Container component="main" sx={{ mb: 4, width: "650px", height: "800px" }}>
       <React.Fragment>
         <Typography variant="h5" gutterBottom>
           회원정보 수정
@@ -316,7 +319,11 @@ export default function UserInfo() {
               value={name}
               onChange={handleName}
               error={!validationName(name)}
-              helperText={!validationName(name) ? "이름은 한글 2글자~5글자로 만들어주세요!" : ""}
+              helperText={
+                !validationName(name)
+                  ? "이름은 한글 2글자~5글자로 만들어주세요!"
+                  : ""
+              }
             />
           </Grid>
         </Grid>
@@ -339,7 +346,12 @@ export default function UserInfo() {
         </Grid> */}
 
         {/* 성별 */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          sx={{ mb: 2 }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           <Grid item xs={3}>
             <div style={{ marginTop: "8px" }}>성별</div>
           </Grid>
@@ -386,7 +398,12 @@ export default function UserInfo() {
         </Grid>
 
         {/* 나이 */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          sx={{ mb: 2 }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           <Grid item xs={3}>
             나이
           </Grid>
@@ -404,7 +421,12 @@ export default function UserInfo() {
         </Grid>
 
         {/* 키 */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          sx={{ mb: 2 }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           <Grid item xs={3}>
             키
           </Grid>
@@ -423,7 +445,12 @@ export default function UserInfo() {
         </Grid>
 
         {/* 몸무게 */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          sx={{ mb: 2 }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           <Grid item xs={3}>
             몸무게
           </Grid>
@@ -441,7 +468,12 @@ export default function UserInfo() {
         </Grid>
 
         {/* 활동량 */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          sx={{ mb: 2 }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           <Grid item xs={3}>
             <div style={{ marginTop: "8px" }}>활동량</div>
           </Grid>
@@ -524,17 +556,29 @@ export default function UserInfo() {
         </Grid>
 
         {/* BMI */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          sx={{ mb: 2 }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           <Grid item xs>
-            <b>{name}</b>님의 현재 BMI지수는 <b style={{ color: "orange" }}>{bmi}</b>
+            <b>{name}</b>님의 현재 BMI지수는{" "}
+            <b style={{ color: "orange" }}>{bmi}</b>
             입니다.
           </Grid>
         </Grid>
 
         {/* 권장섭취량 */}
-        <Grid container sx={{ mb: 2 }} rowSpacing={1} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
+        <Grid
+          container
+          sx={{ mb: 2 }}
+          rowSpacing={1}
+          columnSpacing={{ xs: 1, sm: 2, md: 3 }}
+        >
           <Grid item xs>
-            <b>{name}</b>님의 현재 권장섭취량은 <b style={{ color: "orange" }}>{recoIntake}kcal</b>
+            <b>{name}</b>님의 현재 권장섭취량은{" "}
+            <b style={{ color: "orange" }}>{recoIntake}kcal</b>
             입니다.
           </Grid>
           {/* {carbo}
@@ -591,7 +635,10 @@ export default function UserInfo() {
         aria-describedby="alert-dialog-description"
       >
         <DialogContent>
-          <DialogContentText sx={{ textAlign: "center" }} id="alert-dialog-description">
+          <DialogContentText
+            sx={{ textAlign: "center" }}
+            id="alert-dialog-description"
+          >
             <img src="assets/planet.png" style={{ marginBottom: "5px" }}></img>
             <div
               style={{
@@ -607,7 +654,13 @@ export default function UserInfo() {
             </div>
           </DialogContentText>
         </DialogContent>
-        <DialogActions sx={{ display: "flex", justifyContent: "center", marginBottom: "10px" }}>
+        <DialogActions
+          sx={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "10px",
+          }}
+        >
           <BtnMain onClick={handleClose} width="100px" autoFocus>
             확인
           </BtnMain>
