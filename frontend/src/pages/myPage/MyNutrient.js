@@ -12,7 +12,13 @@ import {
   DialogTitle,
   Box,
 } from "@mui/material";
-import { Typography, Grid, TextField, Container, FormControl } from "@mui/material";
+import {
+  Typography,
+  Grid,
+  TextField,
+  Container,
+  FormControl,
+} from "@mui/material";
 import BtnMain from "components/common/BtnMain";
 import ToggleButton from "@mui/material/ToggleButton";
 import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
@@ -122,12 +128,18 @@ export default function UserInfo() {
   }));
 
   return (
-    <Container component="main" maxWidth="md" sx={{ mb: 4, width: "100%", height: "700px" }}>
+    <Container
+      component="main"
+      maxWidth="md"
+      sx={{ mb: 4, width: "100%", height: "800px" }}
+    >
       <React.Fragment>
         <Typography variant="h5" gutterBottom>
           영양제 관리
         </Typography>
-        <Typography variant="subtitle">복용 중인 영양제를 관리할 수 있습니다!</Typography>
+        <Typography variant="subtitle">
+          복용 중인 영양제를 관리할 수 있습니다!
+        </Typography>
         {/* 영양제 알림 서비스 */}
         <div style={{ marginTop: "20px", marginBottom: "10px" }}>
           영양제 알림 서비스
@@ -159,7 +171,10 @@ export default function UserInfo() {
             내 영양제 등록
           </Grid>
           <Grid item>
-            <AddCircleOutlineIcon color="secondary" onClick={showModal}></AddCircleOutlineIcon>
+            <AddCircleOutlineIcon
+              color="secondary"
+              onClick={showModal}
+            ></AddCircleOutlineIcon>
           </Grid>
         </Grid>
       </React.Fragment>
@@ -184,7 +199,9 @@ export default function UserInfo() {
       <Dialog open={open} onClose={handleClose} fullWidth>
         <DialogTitle color="#9DA6F8">내 영양제 등록하기</DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{ marginBottom: "20px" }}>영양제 이름</DialogContentText>
+          <DialogContentText sx={{ marginBottom: "20px" }}>
+            영양제 이름
+          </DialogContentText>
           <Autocomplete
             onChange={(event, newValue) => {
               // 등록한 내 영양제 아이디 받아오기
@@ -214,7 +231,9 @@ export default function UserInfo() {
           {/* <TextField autoFocus margin="dense" id="name" type="text" fullWidth variant="standard" /> */}
         </DialogContent>
         <DialogContent>
-          <DialogContentText sx={{ marginBottom: "20px" }}>하루 복용 횟수</DialogContentText>
+          <DialogContentText sx={{ marginBottom: "20px" }}>
+            하루 복용 횟수
+          </DialogContentText>
           <FormControl sx={{ minWidth: 120 }} size="small">
             <InputLabel id="demo-select-small">횟수</InputLabel>
             <Select value={intakeCnt} onChange={handleChangeCnt} label="횟수">

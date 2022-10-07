@@ -12,7 +12,7 @@ import "./slick-theme.css";
 import "./Reco.css";
 import { Link } from "react-router-dom";
 import { http } from "api/http";
-import VolunteerActivismIcon from '@mui/icons-material/VolunteerActivism';
+import VolunteerActivismIcon from "@mui/icons-material/VolunteerActivism";
 
 function SearchByReco() {
   const name = localStorage.getItem("name");
@@ -24,21 +24,20 @@ function SearchByReco() {
 
   function solution(arr) {
     let answer = [],
-        sum = arr.reduce((acc, cur) => acc + cur, 0); // 수식, 시작값
+      sum = arr.reduce((acc, cur) => acc + cur, 0); // 수식, 시작값
     answer = sum;
     return answer;
   }
 
+  const today = new Date();
+  const year = today.getFullYear().toString();
+  const tmpMonth = today.getMonth() + 1;
+  const month = tmpMonth < 11 ? "0" + (tmpMonth - 1) : "" + tmpMonth - 1;
+  const tmpDay = today.getDate();
+  const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay;
+  const userId = localStorage.getItem("userId");
 
-  const today = new Date()
-  const year = today.getFullYear().toString()
-  const tmpMonth = today.getMonth() + 1
-  const month = tmpMonth < 11 ? "0" + (tmpMonth-1) : "" + tmpMonth-1
-  const tmpDay = today.getDate()
-  const day = tmpDay < 10 ? "0" + tmpDay : "" + tmpDay
-  const userId = localStorage.getItem('userId')
-
-  console.log(year, month, day)
+  console.log(year, month, day);
 
   useEffect(() => {
     // http.get('user-infos/9').then((response) => {
@@ -51,51 +50,52 @@ function SearchByReco() {
       });
       setTag(data);
     });
-    
+
     // 최근 한달 기록 기반으로 검색
-    http.get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`).then((response) => {
-      const data2 = Object.entries(response.data.data);
-      const data3 = [
-        data2[10],
-        data2[17],
-        data2[9],
-        data2[23],
-        data2[11],
-        data2[12],
-        data2[18],
-        data2[19],
-        data2[20],
-        data2[31],
-        data2[32],
-        data2[22],
-        data2[25],
-        data2[24],
-        data2[21],
-        data2[16],
-      ];
-      const data4 = [];
-      for (var i = 0; i < data3.length; i++) {
-        data4.push(data3[i][1]);
-      }
-
-      const data5 = [];
-      for (var j = 0; j < data4.length; j++) {
-        if (data4[j] === Math.min.apply(null, data4)) {
-          data5.push(j);
+    http
+      .get(`/analysis/percent?date=${year}-${month}-${day}&userId=${userId}`)
+      .then((response) => {
+        const data2 = Object.entries(response.data.data);
+        const data3 = [
+          data2[10],
+          data2[17],
+          data2[9],
+          data2[23],
+          data2[11],
+          data2[12],
+          data2[18],
+          data2[19],
+          data2[20],
+          data2[31],
+          data2[32],
+          data2[22],
+          data2[25],
+          data2[24],
+          data2[21],
+          data2[16],
+        ];
+        const data4 = [];
+        for (var i = 0; i < data3.length; i++) {
+          data4.push(data3[i][1]);
         }
-      }
 
-      const numbers = [
-        7, 14, 6, 22, 8, 9, 15, 16, 17, 19, 20, 21, 23, 24, 18, 13,
-      ];
-      const ran2 = Math.floor(Math.random() * (data5.length + 1));
-      const num = numbers[data5[ran2]];
+        const data5 = [];
+        for (var j = 0; j < data4.length; j++) {
+          if (data4[j] === Math.min.apply(null, data4)) {
+            data5.push(j);
+          }
+        }
 
-      http.get(`/nutrient/ingredient/${num}`).then((response) => {
-        setHistory(response.data.data);
+        const numbers = [
+          7, 14, 6, 22, 8, 9, 15, 16, 17, 19, 20, 21, 23, 24, 18, 13,
+        ];
+        const ran2 = Math.floor(Math.random() * (data5.length + 1));
+        const num = numbers[data5[ran2]];
+
+        http.get(`/nutrient/ingredient/${num}`).then((response) => {
+          setHistory(response.data.data);
+        });
       });
-    });
-
   }, []);
 
   const settings = {
@@ -143,7 +143,7 @@ function SearchByReco() {
   const section3 = { marginTop: "10vh" };
 
   return (
-    <div>
+    <div style={{ height: "800px" }}>
       <Grid container>
         <Grid item xs={0.5}></Grid>
         <Grid item xs={9.8}>

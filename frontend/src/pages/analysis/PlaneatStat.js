@@ -3,11 +3,24 @@
 @author 조혜안
 @since 2022.10.01
 */
-import { Paper, Grid, List, ListItem, ListItemText, ListItemIcon } from "@mui/material";
+import {
+  Paper,
+  Grid,
+  List,
+  ListItem,
+  ListItemText,
+  ListItemIcon,
+} from "@mui/material";
 import { http } from "api/http";
 import { useEffect, useState, useRef } from "react";
 
-export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSoso }) {
+export default function PlaneatStat({
+  value,
+  score,
+  scoreBad,
+  scoreGood,
+  scoreSoso,
+}) {
   const [bad, setBad] = useState("");
 
   const mounted = useRef(false);
@@ -29,7 +42,7 @@ export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSo
         borderColor: "orange.main",
         color: "#747373",
         overflow: "auto",
-        height: 480,
+        height: 500,
         overflow: "auto",
         scrollbarWidth: "thin",
         "&::-webkit-scrollbar": {
@@ -56,19 +69,31 @@ export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSo
         <List>
           <ListItem sx={{ padding: "0px" }}>
             <ListItemIcon sx={{ minWidth: "30px" }}>
-              <img width="20" height="20" src="assets/score/score_bad.png"></img>
+              <img
+                width="20"
+                height="20"
+                src="assets/score/score_bad.png"
+              ></img>
             </ListItemIcon>
             <ListItemText secondary="총 칼로리, 탄수화물, 단백질, 지방, 당 권장섭취량의 +-60%를 벗어남" />
           </ListItem>
           <ListItem sx={{ padding: "0px" }}>
             <ListItemIcon sx={{ minWidth: "30px" }}>
-              <img width="20" height="20" src="assets/score/score_good.png"></img>
+              <img
+                width="20"
+                height="20"
+                src="assets/score/score_good.png"
+              ></img>
             </ListItemIcon>
             <ListItemText secondary="총 칼로리, 탄수화물, 단백질, 지방, 당 권장섭취량의 +-30%를 만족함" />
           </ListItem>
           <ListItem sx={{ padding: "0px" }}>
             <ListItemIcon sx={{ minWidth: "30px" }}>
-              <img width="20" height="20" src="assets/score/score_soso.png"></img>
+              <img
+                width="20"
+                height="20"
+                src="assets/score/score_soso.png"
+              ></img>
             </ListItemIcon>
             <ListItemText secondary="총 칼로리, 탄수화물, 단백질, 지방, 당 권장섭취량의 +-60%를 만족함" />
           </ListItem>
@@ -90,7 +115,14 @@ export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSo
                 style={{ display: "block" }}
                 src="assets/score/score_bad.png"
               ></img>
-              <p style={{ color: "#FFB3B3", fontWeight: "bold", textAlign: "center" }}>
+              <p
+                style={{
+                  color: "#FFB3B3",
+                  fontWeight: "bold",
+                  fontSize: "20px",
+                  textAlign: "center",
+                }}
+              >
                 {scoreBad}
               </p>
             </Grid>
@@ -101,7 +133,14 @@ export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSo
                 style={{ display: "block" }}
                 src="assets/score/score_good.png"
               ></img>
-              <p style={{ color: "#A9D5C7", fontWeight: "bold", textAlign: "center" }}>
+              <p
+                style={{
+                  color: "#A9D5C7",
+                  fontWeight: "bold",
+                  fontSize: "20px",
+                  textAlign: "center",
+                }}
+              >
                 {scoreGood}
               </p>
             </Grid>
@@ -112,7 +151,14 @@ export default function PlaneatStat({ value, score, scoreBad, scoreGood, scoreSo
                 style={{ display: "block" }}
                 src="assets/score/score_soso.png"
               ></img>
-              <p style={{ color: "#F7BF87", fontWeight: "bold", textAlign: "center" }}>
+              <p
+                style={{
+                  color: "#F7BF87",
+                  fontWeight: "bold",
+                  fontSize: "20px",
+                  textAlign: "center",
+                }}
+              >
                 {scoreSoso}
               </p>
             </Grid>
