@@ -1,6 +1,6 @@
 # ✨PLANEAT - 식단 기록 및 영양 분석 서비스
 
-<img src="/uploads/85cde0727437ca607614d620fa261758/PLANEAT_banner.png">
+![PLANEAT_banner](https://user-images.githubusercontent.com/97588187/204168918-72b03685-e364-443f-b3d0-89d25c3f6926.png)
 
 ## 👉 [PLANEAT 체험해보기](https://j7a701.p.ssafy.io/)
 
