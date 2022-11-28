@@ -69,25 +69,26 @@
 ## 🖥️ 화면 구성
 
 - ### 홈 화면
-![홈](/uploads/5368c535a1adb8e42aa69010ef26e1bb/홈.gif)
+![홈](https://user-images.githubusercontent.com/97588187/204309837-62844d50-5105-494d-a696-ea88f4b9ce48.gif)
 <br/>
 - ### 소셜로그인 후 회원가입 페이지
-![회원가입](/uploads/6b2e830e604d00cdcf2e1031a6788160/회원가입.gif)
+
+![회원가입](https://user-images.githubusercontent.com/97588187/204309874-cecca89e-8139-4dd1-956e-ceb8661b83f6.gif)
 <br/>
 - ### 회원 정보 수정
-![회원정보_수정](/uploads/5334d03d8818b965561adf33bb61f586/회원정보_수정.gif)
+![회원정보_수정](https://user-images.githubusercontent.com/97588187/204310355-011120cf-d391-43ae-a187-85018a461276.gif)
 <br/>
 - ### 영양제 추천 & 검색 페이지
-![영양제](/uploads/af6d9f35bed6450b2476aa476ee0fcbf/영양제.gif)
+![영양제](https://user-images.githubusercontent.com/97588187/204310457-581f240f-1e64-49a9-9d82-19cf4a1ca753.gif)
 <br/>
 - ### 식단 등록
-![식단등록](/uploads/a6fce52a9c4d27d074caa0a3e103050f/식단등록.gif)
+![식단등록](https://user-images.githubusercontent.com/97588187/204310520-3013cb38-d4c9-4b31-aef4-8d84190a2639.gif)
 <br/>
 - ### 식사 및 영양제 섭취 기록 페이지
-![식사기록_+_영양제_기록](/uploads/306b612db36f477121bef8d819508052/식사기록_+_영양제_기록.gif)
+![식사기록_+_영양제_기록](https://user-images.githubusercontent.com/97588187/204310601-66d316f6-fb06-4c6e-b194-8ceaf06d3f94.gif)
 <br/>
 - ### 섭취 기록 바탕 영양 분석 페이지
-![영양분석](/uploads/91acd711e4f2d99621bfd32016ae7df9/영양분석.gif)
+![영양분석](https://user-images.githubusercontent.com/97588187/204310673-c0428809-cc74-41ed-aab1-0fb7fd46c35d.gif)
 
 <br/>
 <br/>
@@ -135,13 +136,13 @@
 
 ## 📰 ERD
 
-![서비스_아키텍처](/uploads/a1fb8a6864073c6bab8c5c6fe33efa88/PLANEAT_ERD.png)
+![서비스_아키텍처](https://user-images.githubusercontent.com/97588187/204310740-31800019-bde7-450b-8dea-222d6be99abd.png)
 <br/>
 <br/>
 
 ## 📝 시스템 아키텍처
 
-![서비스_아키텍처](/uploads/0cac7b9d7d20b7cd68ceb3328730a4d4/PLANEAT_architecture.PNG)
+![서비스_아키텍처](https://user-images.githubusercontent.com/97588187/204310751-2a57c08d-2593-45e5-a7f5-a95b2aaf99e9.png)
 <br/>
 <br/>
 
@@ -233,7 +234,7 @@ planeat-front
 
 ---
 
-![역할 분배](/uploads/223cf45269bf23b9083e4077b138f9c7/PLANEAT_member.PNG)
+![역할 분배](https://user-images.githubusercontent.com/97588187/204310783-2ee0d9cf-b4b0-440c-9b66-ede56941f23e.png)
 
 - 팀장 : [신지한](https://github.com/shinzan7)
 - 팀원 : [박윤하](https://github.com/0atx)
